@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamApp", "TeamApp\TeamApp.csproj", "{E89C0BF5-E560-489A-A26E-97542A87575E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp", "TeamApp\TeamApp.csproj", "{E89C0BF5-E560-489A-A26E-97542A87575E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamApp.Test", "TeamApp.Test\TeamApp.Test.csproj", "{47954BD3-2EFC-43FE-8F11-2447514A21E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{E89C0BF5-E560-489A-A26E-97542A87575E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E89C0BF5-E560-489A-A26E-97542A87575E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E89C0BF5-E560-489A-A26E-97542A87575E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47954BD3-2EFC-43FE-8F11-2447514A21E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47954BD3-2EFC-43FE-8F11-2447514A21E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47954BD3-2EFC-43FE-8F11-2447514A21E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47954BD3-2EFC-43FE-8F11-2447514A21E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

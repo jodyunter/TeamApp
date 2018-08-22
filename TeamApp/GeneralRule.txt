@@ -1,0 +1,2 @@
+﻿When a season is over, a playoff needs to create their own standings and rankings.
+A playoff or season can be created based on previous competitions.  The rules should be something like "Get Team From League 1, Competition 2, Last Year", or "Get team From League 3, Competition 1, Current Year"
