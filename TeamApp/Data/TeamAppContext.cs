@@ -19,7 +19,7 @@ namespace TeamApp.Data
         public DbSet<SeasonDivision> SeasonDivisions { get; set; }
         public DbSet<Season> Seasons { get; set; }
         public DbSet<SeasonTeamStats> SeasonTeamStats { get; set; }
- }
-        
     }
+
+
 }
