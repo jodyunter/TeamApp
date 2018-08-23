@@ -11,8 +11,8 @@ namespace TeamApp.Domain.Competition.Season.Config
 
         public Team Team { get; set; }
         public Division Division { get; set; }
-        public int FirstYear { get; set; }
-        public int SecondYear { get; set; }
+        public int? FirstYear { get; set; }
+        public int? LastYear { get; set; }
         public int Type { get; set; }
 
     }

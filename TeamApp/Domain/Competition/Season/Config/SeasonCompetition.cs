@@ -9,8 +9,8 @@ namespace TeamApp.Domain.Competition.Season.Config
     {
         public string Name { get; set; }
         public League League { get; set; }
-        public int FirstYear { get; set; }
-        public int LastYear { get; set; }
+        public int? FirstYear { get; set; }
+        public int? LastYear { get; set; }
         public int Order { get; set; }
         public List<SeasonRule> Rules { get; set; }
     }
