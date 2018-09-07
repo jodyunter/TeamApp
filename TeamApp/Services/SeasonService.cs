@@ -18,48 +18,58 @@ namespace TeamApp.Services
             var divisions = new Dictionary<string, SeasonDivision>();
             var teams = new Dictionary<string, SeasonTeam>();
 
-            seasonConfig.Rules.ForEach(rule => {
-                switch(rule.Type)
+            AddDivisionsToSeason(seasonConfig.Rules, season, divisions, teams);
+        }
+        
+
+        public void AddDivisionsToSeason(List<SeasonRule> rules, Season season, Dictionary<string, SeasonDivision> seasonDivisions, Dictionary<string, SeasonTeam> seasonTeams)
+        {
+            rules.ForEach(rule => {
+                switch (rule.Type)
                 {
                     case SeasonRule.DIVISION:
-                        AddDivisionToSeason(season, divisions, teams, rule.Division);
+                        AddDivisionToSeason(season, seasonDivisions, seasonTeams, rule.Division);
                         break;
                     default:
                         throw new NotImplementedException("Season Rule Type: " + rule.Type + " is not implemented");
                 }
             });
         }
-        
-        public void AddDivisionToSeason(Season season, Dictionary<string, SeasonDivision> divisions, Dictionary<string, SeasonTeam> teams, Division divisionToAdd)
+
+        public void AddDivisionToSeason(Season season, Dictionary<string, SeasonDivision> seasonDivisions, Dictionary<string, SeasonTeam> seasonTeams, Division division)
         {
-            if (!divisions.ContainsKey(divisionToAdd.Name))
+            if (!seasonDivisions.ContainsKey(division.Name))
             {
                 //if the parent hasn't been created, create it first
-                if (!divisions.ContainsKey(divisionToAdd.Parent.Name))
+                if (!(division.Parent == null) && !seasonDivisions.ContainsKey(division.Parent.Name))
                 {
-                    AddDivisionToSeason(season, divisions, teams, divisionToAdd.Parent);
+                    AddDivisionToSeason(season, seasonDivisions, seasonTeams, division.Parent);
                 }
 
                 //add the current division
-                divisions.Add(divisionToAdd.Name, new SeasonDivision(season, divisions[divisionToAdd.Parent.Name], season.Year, divisionToAdd.Name, null));
-                var seasonDivision = divisions[divisionToAdd.Name];
-                //add the teams.  if they already exists, assume they are done
-                divisionToAdd.Teams.ForEach(team =>
-                {
-                    if (!teams.ContainsKey(team.Name))
-                    {
-                        var newTeam = new SeasonTeam(team.Name, team.Skill, team, season, seasonDivision, null, team.Owner, season.Year);
-                        newTeam.Stats = new SeasonTeamStats(newTeam);
+                seasonDivisions.Add(division.Name, new SeasonDivision(season, seasonDivisions[division.Parent.Name], season.Year, division.Name, null));                
 
-                        seasonDivision.Teams.Add(newTeam);
-                    }
-                });
+                //add the teams.  if they already exists, assume they are done
+                AddTeamsToDivision(season, division, seasonDivisions[division.Name], seasonTeams);
             }
-            else
+        
+            //assume we have already added the teams
+            
+        }
+        
+        public void AddTeamsToDivision(Season season, Division division, SeasonDivision seasonDivision, Dictionary<string, SeasonTeam> seasonTeams)
+        {
+            //add season teams to the season division based on the division
+            division.Teams.ForEach(team =>
             {
-                //assume we have already added the teams
-                return;
-            }
+                if (!seasonTeams.ContainsKey(team.Name))
+                {
+                    var newTeam = new SeasonTeam(team.Name, team.Skill, team, season, seasonDivision, null, team.Owner, season.Year);
+                    newTeam.Stats = new SeasonTeamStats(newTeam);
+
+                    seasonDivision.Teams.Add(newTeam);
+                }
+            });
         }
     }
 }

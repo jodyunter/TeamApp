@@ -9,8 +9,8 @@ namespace TeamApp.Domain
         string Name { get; set; }
         int Skill { get; set; }
         string Owner { get; set; }
-        int StartYear { get; set; }
-        int EndYear { get; set; }        
+        int? FirstYear { get; set; }
+        int? LastYear { get; set; }        
 
     }
 }

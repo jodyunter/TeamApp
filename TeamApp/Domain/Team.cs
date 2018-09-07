@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TeamApp.Domain
 {
-    public class Team:ITeam
+    public class Team:DataObject, ITeam
     {
         public string Name { get; set; }
         public int Skill { get; set; }
@@ -12,6 +12,13 @@ namespace TeamApp.Domain
         public int? FirstYear { get; set; }
         public int? LastYear { get; set; }
 
-
+        public Team(string name, int skill, string owner, int? firstYear, int? lastYear)
+        {
+            Name = name;
+            Skill = skill;
+            Owner = owner;
+            FirstYear = firstYear;
+            LastYear = lastYear;
+        }
     }
 }
