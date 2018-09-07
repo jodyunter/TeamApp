@@ -5,6 +5,7 @@ using TeamApp.Services;
 using static Xunit.Assert;
 using TeamApp.Test.Helpers;
 using TeamApp.Domain.Competition.Season.Config;
+using System.Linq;
 
 namespace TeamApp.Test.Services
 {
@@ -26,7 +27,11 @@ namespace TeamApp.Test.Services
             Equal(seasonName, season.Name);
             Equal(12, season.Teams.Count);
             Equal(3, season.Divisions.Count);
-                        
+            Equal(6, season.Divisions.Where(t => t.Name == "Division 1").First().Teams.Count);
+            Equal(6, season.Divisions.Where(t => t.Name == "Division 2").First().Teams.Count);
+            Equals("League 1", season.Divisions.Where(t => t.Name == "Division 1").First().ParentDivision.Name);
+            Equals("League 1", season.Divisions.Where(t => t.Name == "Division 2").First().ParentDivision.Name);
+
         }
     }
 }

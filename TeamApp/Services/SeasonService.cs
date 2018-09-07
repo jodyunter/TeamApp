@@ -15,23 +15,25 @@ namespace TeamApp.Services
             var season = new Season(seasonConfig, seasonName, year);            
 
             //setup divisions
-            var divisions = new Dictionary<string, SeasonDivision>();            
+            var divisions = new Dictionary<string, SeasonDivision>();
+            var teams = new Dictionary<string, SeasonTeam>();
 
-            ProcessRules(seasonConfig.Rules, season, divisions);
+            ProcessRules(seasonConfig.Rules, season, divisions, teams);
 
+            season.Divisions = divisions.Values.ToList();
+            season.Teams = teams.Values.ToList();
             return season;
         }
         
 
-        public void ProcessRules(List<SeasonRule> rules, Season season, Dictionary<string, SeasonDivision> seasonDivisions)
+        public void ProcessRules(List<SeasonRule> rules, Season season, Dictionary<string, SeasonDivision> seasonDivisions, Dictionary<string, SeasonTeam> teams)
         {
             rules.ForEach(rule => {
                 switch (rule.Type)
                 {
                     case SeasonRule.DIVISION:
                         AddDivisionToSeason(season, seasonDivisions,  rule.Division);
-                        AddTeamToDivision(rule.Team, seasonDivisions[rule.Division.Name]);
-
+                        AddTeamToDivision(rule.Team, seasonDivisions[rule.Division.Name], teams);                       
                         break;
                     default:
                         throw new NotImplementedException("Season Rule Type: " + rule.Type + " is not implemented");
@@ -57,12 +59,13 @@ namespace TeamApp.Services
                                
         }
         
-        public void AddTeamToDivision(Team team, SeasonDivision seasonDivision)
+        public void AddTeamToDivision(Team team, SeasonDivision seasonDivision, Dictionary<string, SeasonTeam> teams)
         {
             var newTeam = new SeasonTeam(team.Name, team.Skill, team, seasonDivision.Season, seasonDivision, null, team.Owner, seasonDivision.Season.Year);
             newTeam.Stats = new SeasonTeamStats(newTeam);
 
             seasonDivision.AddTeam(newTeam);
+            teams.Add(newTeam.Name, newTeam);
 
         }
     }
