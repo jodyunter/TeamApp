@@ -20,5 +20,11 @@ namespace TeamApp.Domain.Competition.Season
             Name = name;
             Teams = teams;
         }
+
+        internal void AddTeam(SeasonTeam newTeam)
+        {
+            if (Teams == null) Teams = new List<SeasonTeam>();
+            if (!Teams.Contains(newTeam)) Teams.Add(newTeam);
+        }
     }
 }

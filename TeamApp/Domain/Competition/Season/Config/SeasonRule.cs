@@ -15,5 +15,13 @@ namespace TeamApp.Domain.Competition.Season.Config
         public int? LastYear { get; set; }
         public int Type { get; set; }
 
+        public SeasonRule(Team team, Division division, int? firstYear, int? lastYear, int type)
+        {
+            Team = team;
+            Division = division;
+            FirstYear = firstYear;
+            LastYear = lastYear;
+            Type = type;
+        }
     }
 }

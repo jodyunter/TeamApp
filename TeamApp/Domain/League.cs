@@ -6,6 +6,6 @@ namespace TeamApp.Domain
 {
     public class League
     {
-        string Name { get; set; }        
+        public string Name { get; set; }        
     }
 }

@@ -14,8 +14,8 @@ namespace TeamApp.Domain.Competition.Season
         public SeasonDivision Division { get; set; }
         public SeasonTeamStats Stats { get; set; }
         public string Owner { get; set; }
-        public int StartYear { get; set; }
-        public int EndYear { get; set; }
+        public int? FirstYear { get; set; }
+        public int? LastYear { get; set; }
 
         public SeasonTeam(string name, int skill, Team parent, Season competition, SeasonDivision division, SeasonTeamStats stats, string owner, int year)
         {
@@ -26,8 +26,8 @@ namespace TeamApp.Domain.Competition.Season
             Division = division;
             Stats = stats;
             Owner = owner;
-            StartYear = year;
-            EndYear = year;
+            FirstYear = year;
+            LastYear = year;
         }
     }
 }
