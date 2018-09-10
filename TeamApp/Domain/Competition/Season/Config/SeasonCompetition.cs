@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace TeamApp.Domain.Competition.Season.Config
 {
@@ -25,6 +26,37 @@ namespace TeamApp.Domain.Competition.Season.Config
             StartDay = startDay;
             TeamRules = teamRules;
             DivisionRules = divisionRules;
+        }
+
+
+        public List<string> GetTeamsInDivision(string divisionName)
+        {
+            var list = new List<string>();
+
+            return GetTeamsInDivision(divisionName, list);
+        }
+
+        private List<string> GetTeamsInDivision(string divisionName, List<string> teams)
+        {
+            TeamRules.ForEach(rule =>
+            {
+                if (rule.Division.Equals(divisionName))
+                {
+                    teams.Add(rule.Team.Name);
+                }
+            });
+
+            DivisionRules.Where(r => r.ParentName != null && r.ParentName.Equals(divisionName)).ToList().ForEach(rule =>
+            {
+                teams.AddRange(GetTeamsInDivision(rule.DivisionName, teams));
+            });
+
+            return teams;
+        }        
+
+        public bool IsTeamInDivision(string teamName, string divisionName)
+        {
+            return GetTeamsInDivision(divisionName).Where(s => s.Equals(teamName)).FirstOrDefault() != null;
         }
     }
 }

@@ -32,15 +32,15 @@ namespace TeamApp.Services
             //first create all the divisions
             rules.ForEach(rule =>
             {
-                seasonDivisions.Add(rule.Name, new SeasonDivision(season, null, season.Year, rule.Name, null));    
+                seasonDivisions.Add(rule.DivisionName, new SeasonDivision(season, null, season.Year, rule.DivisionName, null));    
             });
 
             //now setup parent divisions relationships
             rules.ForEach(rule =>
             {
-                if (rule.Parent != null)
+                if (rule.ParentName != null)
                 {
-                    seasonDivisions[rule.Name].ParentDivision = seasonDivisions[rule.Parent];
+                    seasonDivisions[rule.DivisionName].ParentDivision = seasonDivisions[rule.ParentName];
                 }
             });
 
