@@ -18,7 +18,8 @@ namespace TeamApp.Services
             var divisions = new Dictionary<string, SeasonDivision>();
             var teams = new Dictionary<string, SeasonTeam>();
 
-            ProcessRules(seasonConfig.Rules, season, divisions, teams);
+            ProcessDivisionRules(seasonConfig.DivisionRules, season, divisions);
+            ProcessTeamRules(seasonConfig.TeamRules, season, divisions, teams);
 
             season.Divisions = divisions.Values.ToList();
             season.Teams = teams.Values.ToList();
@@ -26,38 +27,32 @@ namespace TeamApp.Services
         }
         
 
-        public void ProcessRules(List<SeasonRule> rules, Season season, Dictionary<string, SeasonDivision> seasonDivisions, Dictionary<string, SeasonTeam> teams)
+        public void ProcessDivisionRules(List<SeasonDivisionRule> rules, Season season, Dictionary<string, SeasonDivision> seasonDivisions)
         {
-            rules.ForEach(rule => {
-                switch (rule.Type)
+            //first create all the divisions
+            rules.ForEach(rule =>
+            {
+                seasonDivisions.Add(rule.Name, new SeasonDivision(season, null, season.Year, rule.Name, null));    
+            });
+
+            //now setup parent divisions relationships
+            rules.ForEach(rule =>
+            {
+                if (rule.Parent != null)
                 {
-                    case SeasonRule.DIVISION:
-                        AddDivisionToSeason(season, seasonDivisions,  rule.Division);
-                        AddTeamToDivision(rule.Team, seasonDivisions[rule.Division.Name], teams);                       
-                        break;
-                    default:
-                        throw new NotImplementedException("Season Rule Type: " + rule.Type + " is not implemented");
+                    seasonDivisions[rule.Name].ParentDivision = seasonDivisions[rule.Parent];
                 }
+            });
+
+        }
+        public void ProcessTeamRules(List<SeasonTeamRule> rules, Season season, Dictionary<string, SeasonDivision> seasonDivisions, Dictionary<string, SeasonTeam> teams)
+        {
+            rules.ForEach(rule =>
+            {
+                AddTeamToDivision(rule.Team, seasonDivisions[rule.Division], teams);
             });
         }
 
-        public void AddDivisionToSeason(Season season, Dictionary<string, SeasonDivision> seasonDivisions,Division division)
-        {
-            if (!seasonDivisions.ContainsKey(division.Name))
-            {                
-                //if the parent hasn't been created, create it first
-                if (!(division.Parent == null) && !seasonDivisions.ContainsKey(division.Parent.Name))
-                {
-                    AddDivisionToSeason(season, seasonDivisions, division.Parent);                    
-                }
-
-                var newParentDivision = division.Parent == null ? null : seasonDivisions[division.Parent.Name];
-                var newSeasonDivision = new SeasonDivision(season, newParentDivision, season.Year, division.Name, null);
-                
-                seasonDivisions.Add(division.Name, newSeasonDivision);                                     
-            }
-                               
-        }
         
         public void AddTeamToDivision(Team team, SeasonDivision seasonDivision, Dictionary<string, SeasonTeam> teams)
         {

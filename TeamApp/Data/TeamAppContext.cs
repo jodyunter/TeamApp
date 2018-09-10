@@ -11,8 +11,8 @@ namespace TeamApp.Data
     public class TeamAppContext
     {
         public DbSet<Team> Teams { get; set; }
-        public DbSet<Division> Divisions { get; set; }
-        public DbSet<SeasonRule> SeasonRules { get; set; }
+        public DbSet<SeasonDivisionRule> SeasonDivisionRules { get; set; }
+        public DbSet<SeasonTeamRule> SeasonTeamRules { get; set; }
         public DbSet<SeasonCompetition> SeasonCompetitions { get; set; }
 
         public DbSet<SeasonTeam> SeasonTeams { get; set; }

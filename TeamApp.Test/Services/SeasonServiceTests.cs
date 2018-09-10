@@ -25,12 +25,16 @@ namespace TeamApp.Test.Services
 
             Equal(seasonNumber, season.Year);
             Equal(seasonName, season.Name);
-            Equal(12, season.Teams.Count);
-            Equal(3, season.Divisions.Count);
-            Equal(6, season.Divisions.Where(t => t.Name == "Division 1").First().Teams.Count);
-            Equal(6, season.Divisions.Where(t => t.Name == "Division 2").First().Teams.Count);
-            Equals("League 1", season.Divisions.Where(t => t.Name == "Division 1").First().ParentDivision.Name);
-            Equals("League 1", season.Divisions.Where(t => t.Name == "Division 2").First().ParentDivision.Name);
+            Equal(20, season.Teams.Count);
+            Equal(6, season.Divisions.Count);
+            Equal(4, season.Divisions.Where(t => t.Name == "Atlantic").First().Teams.Count);
+            Equal(4, season.Divisions.Where(t => t.Name == "NorthEast").First().Teams.Count);
+            Equal(6, season.Divisions.Where(t => t.Name == "West").First().Teams.Count);
+            Equal(6, season.Divisions.Where(t => t.Name == "Central").First().Teams.Count);
+            Equals("EAST", season.Divisions.Where(t => t.Name == "Atlantic").First().ParentDivision.Name);
+            Equals("EAST", season.Divisions.Where(t => t.Name == "NorthEast").First().ParentDivision.Name);
+            Equals("NHL", season.Divisions.Where(t => t.Name == "West").First().ParentDivision.Name);
+            Equals("NHL", season.Divisions.Where(t => t.Name == "Central").First().ParentDivision.Name);
 
         }
     }
