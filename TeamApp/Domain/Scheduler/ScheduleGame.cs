@@ -7,17 +7,32 @@ namespace TeamApp.Domain.Scheduler
 {
     public class ScheduleGame
     {        
-        League League { get; set; }
-        int GameNumber { get; set; }
-        int Day { get; set; }
-        int Year { get; set; }
-        Team Team { get; set; }  //this unifies it among all competitions and history
-        Season Season { get; set; } //if null it is exhibition game
-        //future playoff option too
-        int HomeScore { get; set; }
-        int AwayScore { get; set; }
-        bool Complete { get; set; }
-        bool CanTie { get; set; }
-        int MaxOverTimePeriods { get; set; }
+        //team league and year can be used to get the proper season or playoff or other team        
+        public League League { get; set; }
+        public int GameNumber { get; set; }
+        public int Day { get; set; }
+        public int Year { get; set; }
+        public Team HomeTeam { get; set; }
+        public Team AwayTeam { get; set; }
+        public int HomeScore { get; set; }
+        public int AwayScore { get; set; }
+        public bool Complete { get; set; }
+        public bool CanTie { get; set; }
+        public int MaxOverTimePeriods { get; set; }
+
+        public ScheduleGame(League league, int gameNumber, int day, int year, Team homeTeam, Team awayTeam, int homeScore, int awayScore, bool complete, bool canTie, int maxOverTimePeriods)
+        {
+            League = league;
+            GameNumber = gameNumber;
+            Day = day;
+            Year = year;
+            HomeTeam = homeTeam;
+            AwayTeam = awayTeam;
+            HomeScore = homeScore;
+            AwayScore = awayScore;
+            Complete = complete;
+            CanTie = canTie;
+            MaxOverTimePeriods = maxOverTimePeriods;
+        }
     }
 }
