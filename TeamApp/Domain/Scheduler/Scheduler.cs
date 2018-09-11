@@ -57,15 +57,23 @@ namespace TeamApp.Domain.Scheduler
             //do the game numbers last so that they are in order by day
             foreach (KeyValuePair<int, ScheduleDay> data in days)
             {
-                lastGameNumber++;
 
-                data.Value.Games.ForEach(g => g.GameNumber = lastGameNumber);
+                lastGameNumber = UpdateGameNumbers(lastGameNumber, data.Value);
 
                 result.AddRange(data.Value.Games);
             }
 
             return result;
 
+        }
+
+        private static int UpdateGameNumbers(int lastGameNumber, ScheduleDay day)
+        {
+            lastGameNumber++;
+
+            day.Games.ForEach(g => { g.GameNumber = lastGameNumber; lastGameNumber++; });
+
+            return lastGameNumber;
         }
 
         public static int GetNextDay(int currentDay, int startDay, int maxDay, int daysToIncrement)
