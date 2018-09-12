@@ -51,13 +51,16 @@ namespace TeamApp.Domain.Scheduler
         public Dictionary<string, int> HomeTeamCounts { get; set; }
         public Dictionary<string, int> AwayTeamCounts { get; set; }
         public List<string> Messages { get; set; }
-
+        public int DayNumber { get; set; }
         public ScheduleDayValidator(ScheduleDay day)
         {
             HomeTeamCounts = new Dictionary<string, int>();
             AwayTeamCounts = new Dictionary<string, int>();
             Teams = new HashSet<string>();
             Messages = new List<string>();
+
+            DayNumber = day.DayNumber;
+
 
             day.Games.ForEach(g =>
             {
@@ -99,7 +102,14 @@ namespace TeamApp.Domain.Scheduler
 
                     Teams.ToList().ForEach(t =>
                     {
-                        valid = valid && GetTotalGamesByTeam(t) <= 1;
+                        var gamesForTeam = GetTotalGamesByTeam(t);
+                        var validForTeam = true;
+
+                        validForTeam = gamesForTeam <= 1;
+
+                        if (!validForTeam) Messages.Add(DayNumber + ": " + t + " has " + gamesForTeam + " games");
+
+                        valid = valid && validForTeam;
                     });
 
                     return valid;

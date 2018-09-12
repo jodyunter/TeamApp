@@ -9,7 +9,7 @@ namespace TeamApp.Domain.Scheduler
     public class Scheduler
     {
         //Assumption is that they can add days afterwards.  Different methods need to handle adding games to already established days
-        public static List<ScheduleGame> CreateGamesTwoDifferentGroups(League league, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, int iterations, bool homeAndAway, bool canTie, int maxOverTimePeriods)
+        public static Dictionary<int, ScheduleDay> CreateGamesTwoDifferentGroups(League league, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, int iterations, bool homeAndAway, bool canTie, int maxOverTimePeriods)
         {
 
             int totalDays = homeTeams.Count > awayTeams.Count ? homeTeams.Count : awayTeams.Count;
@@ -18,13 +18,13 @@ namespace TeamApp.Domain.Scheduler
 
             var days = new Dictionary<int, ScheduleDay>();
 
-            for (int i = 1; i <= totalDays; i++)
+            for (int i = 0 + startDay; i < totalDays + startDay; i++)
             {
                 days.Add(i, new ScheduleDay(i));
             }
 
             int currentDay = startDay;
-            int maxDay = totalDays + startDay;
+            int maxDay = totalDays + startDay - 1;
 
             int teamStartDay = currentDay;   
             
@@ -58,12 +58,10 @@ namespace TeamApp.Domain.Scheduler
             foreach (KeyValuePair<int, ScheduleDay> data in days)
             {
 
-                lastGameNumber = UpdateGameNumbers(lastGameNumber, data.Value);
-
-                result.AddRange(data.Value.Games);
+                lastGameNumber = UpdateGameNumbers(lastGameNumber, data.Value);                
             }
 
-            return result;
+            return days;
 
         }
 
@@ -78,13 +76,22 @@ namespace TeamApp.Domain.Scheduler
 
         public static int GetNextDay(int currentDay, int startDay, int maxDay, int daysToIncrement)
         {
+            //normalize to zero first
+            if (currentDay < startDay || currentDay > maxDay) throw new ApplicationException("Invalid Current Day value.");
+
+            currentDay -= startDay;
+            var totalDays = maxDay - startDay + 1;
+
             currentDay += daysToIncrement;
 
-            while (currentDay > maxDay) currentDay -= (maxDay - startDay);
-            while (currentDay < startDay) return currentDay += (maxDay - startDay);
+            currentDay = Mod(currentDay, totalDays);
+
+            currentDay += startDay;
 
             return currentDay;
         }
+
+        private static int Mod(int k, int n) { return ((k %= n) < 0) ? k + n : k; }
 
         public static List<ScheduleGame> CreateGamesSingleGroup(League league, int lastGameNumber, int startDay, List<Team> teams, int iterations, bool homeAndAway)
         {

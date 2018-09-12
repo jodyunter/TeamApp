@@ -12,41 +12,40 @@ namespace TeamApp.Test.Domain.SchedulerTests
     public class SchedulerTests
     {
         [Theory]
-        [InlineData(0, 1, 1, 0, 1)]
-        [InlineData(4, 1, 4, -1, 3)]
-        [InlineData(3, 1, 4, -1, 2)]
-        [InlineData(2, 1, 4, -1, 1)]
-        [InlineData(1, 1, 4, -1, 4)]
-        [InlineData(4, 1, 4, 1, 1)]
-        [InlineData(3, 1, 4, 1, 4)]
-        [InlineData(2, 1, 4, 1, 3)]
-        [InlineData(1, 1, 4, 1, 2)]
-        [InlineData(4, 1, 4, -4, 4)]
-        [InlineData(3, 1, 4, -4, 3)]
-        [InlineData(2, 1, 4, -4, 2)]
-        [InlineData(1, 1, 4, -4, 1)]
-        [InlineData(4, 1, 4, -5, 3)]
-        [InlineData(3, 1, 4, -5, 2)]
-        [InlineData(2, 1, 4, -5, 1)]
-        [InlineData(1, 1, 4, -5, 4)]
-        [InlineData(4, 1, 4, 4, 4)]
-        [InlineData(3, 1, 4, 4, 3)]
-        [InlineData(2, 1, 4, 4, 2)]
-        [InlineData(1, 1, 4, 4, 1)]
-        [InlineData(4, 1, 4, 5, 1)]
-        [InlineData(3, 1, 4, 5, 4)]
-        [InlineData(2, 1, 4, 5, 3)]
-        [InlineData(1, 1, 4, 5, 2)]
-        [InlineData(4, 1, 6, 24, 4)]
-        [InlineData(3, 1, 6, 15, 2)]
-        [InlineData(2, 1, 6, -12, 2)]
-        [InlineData(1, 1, 6, -15, 4)]
-        [InlineData(4, 1, 6, -25, 3)]
+        [InlineData(15, 5, 15, 1, 5)] //roll forward +1
+        [InlineData(5, 5, 15, -1, 15)] //roll backward -1
+        [InlineData(15, 5, 15, 45, 5)] //roll forward +1
         public void ShouldGetNextDay(int currentDay, int startDay, int maxDay, int daysToIncrement, int expected)
         {
-            Equals(expected, Scheduler.GetNextDay(currentDay, startDay, maxDay, daysToIncrement));
+            var nextDay = Scheduler.GetNextDay(currentDay, startDay, maxDay, daysToIncrement);
+            StrictEqual(expected, nextDay);
         }
 
+        [Fact]
+        public void ShouldCreateScheduleTwoDifferentGroups()
+        {
+            var league = new League("My League");
+            var days = Scheduler.CreateGamesTwoDifferentGroups(league, 1, 0, 1,
+                new List<Team> { new Team("Team 1", 1, null, 1, null),
+                                 new Team("Team 2", 1, null, 1, null),
+                                 new Team("Team 3", 1, null, 1, null) },
+                new List<Team> { new Team("Team 4", 1, null, 1, null),
+                                     new Team("Team 5", 1, null, 1, null),
+                                     new Team("Team 6", 1, null, 1, null) },
+                1, false, true, 0);
+
+            var messages = new List<string>();
+
+            days.Values.ToList().ForEach(d =>
+            {
+                var validator = new ScheduleDayValidator(d);
+
+                if (!validator.IsValid) messages.AddRange(validator.Messages);
+                
+            });
+
+            True(messages.Count == 0);
+        }
         //validate game numbers
         //validate no duplicate games
         //validate no bad days
