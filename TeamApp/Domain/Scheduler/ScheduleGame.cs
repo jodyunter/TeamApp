@@ -20,6 +20,7 @@ namespace TeamApp.Domain.Scheduler
         public bool CanTie { get; set; }
         public int MaxOverTimePeriods { get; set; }
 
+        public ScheduleGame() { }
         public ScheduleGame(League league, int gameNumber, int day, int year, Team homeTeam, Team awayTeam, int homeScore, int awayScore, bool complete, bool canTie, int maxOverTimePeriods)
         {
             League = league;

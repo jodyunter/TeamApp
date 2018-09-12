@@ -12,6 +12,7 @@ namespace TeamApp.Domain
         public int? FirstYear { get; set; }
         public int? LastYear { get; set; }
 
+        public Team() { }
         public Team(string name, int skill, string owner, int? firstYear, int? lastYear)
         {
             Name = name;

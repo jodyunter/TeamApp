@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using TeamApp.Domain.Scheduler;
+using TeamApp.Domain;
 using Xunit;
 using static Xunit.Assert;
+using System.Linq;
 
 namespace TeamApp.Test.Domain.SchedulerTests
 {
@@ -49,5 +51,15 @@ namespace TeamApp.Test.Domain.SchedulerTests
         //validate no duplicate games
         //validate no bad days
         //validate total games are equal per team
+        public static ScheduleDay CreateDay(int dayNumber, params ScheduleGame[] games)
+        {
+            return new ScheduleDay(dayNumber) { Games = new List<ScheduleGame>(games) };
+        }
+                        
+        public static ScheduleGame CreateGame(string homeTeamName, string awayTeamName)
+        {
+            return new ScheduleGame() { HomeTeam = new Team() { Name = homeTeamName }, AwayTeam = new Team() { Name = awayTeamName } };
+        }
+
     }
 }

@@ -90,18 +90,7 @@ namespace TeamApp.Domain.Scheduler
         {
             return null;
         }
-
-        private class ScheduleDay
-        {
-            public int DayNumber { get; set; }
-            public List<ScheduleGame> Games { get; set; }
-
-            public ScheduleDay(int dayNumber)
-            {
-                DayNumber = dayNumber;
-                Games = new List<ScheduleGame>();
-            }
-        }
     
+
     }
 }
