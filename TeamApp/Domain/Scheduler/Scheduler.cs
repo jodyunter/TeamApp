@@ -113,45 +113,32 @@ namespace TeamApp.Domain.Scheduler
         private static int Mod(int k, int n) { return ((k %= n) < 0) ? k + n : k; }
 
         public static Dictionary<int, ScheduleDay> CreateGamesSingleGroup(League league, int year, int lastGameNumber, int startDay, List<Team> teams, int iterations, bool homeAndAway, bool canTie, int maxOverTimePeriods)
-        {
+        {        
+
+            int[,] array = CreateArrayForScheduling(teams.Count);            
+
+            int totalDays = teams.Count % 2 == 0 ? teams.Count - 1 : teams.Count;
+            
+
             var days = new Dictionary<int, ScheduleDay>();
 
-            int totalDays = teams.Count;
-            if (teams.Count % 2 == 0) totalDays -= 1;
+            for (int i = 0; i < totalDays; i++) days.Add(i + startDay, new ScheduleDay(i + startDay));
+            //agorithm for swapping the values
 
-            for (int i = 1; i <= totalDays; i++) days.Add(i, new ScheduleDay(i + startDay));
-
-            int currentDay = 1;
-            int teamStartDay = 1;
-            for (int i = 0; i < teams.Count - 1; i++)
+            array = ProcessNextPosition(array);
+            for (int d = startDay; d < totalDays + startDay; d++)
             {
-                currentDay = teamStartDay;
-                for (int j = i + 1; j < teams.Count; j++)
+                for (int i = 0; i < array.Length; i++)
                 {
-                    var game = new ScheduleGame(league, 0, currentDay + startDay, year, teams[i], teams[j], 0, 0, false, canTie, maxOverTimePeriods);
-                    days[currentDay].Games.Add(game);
-                    currentDay = GetNextDay(currentDay, 1, totalDays, 1);
-                }
-
-                teamStartDay = GetNextDay(teamStartDay, 1, totalDays, -1);
-            }
-
-            //duplicate the schedule but reverse the home and away
-            if (homeAndAway)
-            {
-                for (int i = totalDays + 1; i <= totalDays * 2; i++)
-                {
-                    days.Add(i, new ScheduleDay(i + startDay));
-
-                    days[i - totalDays].Games.ForEach(game =>
+                    if (array[i, 0] != -1)
                     {
-                        var g = new ScheduleGame(game.League, 0, i, year, game.AwayTeam, game.HomeTeam, 0, 0, false, canTie, maxOverTimePeriods);
-                        days[i].Games.Add(g);
-                    });                    
-                }                
+                        var g = new ScheduleGame(league, 0, i, year, teams[array[i, 0]], teams[array[i, 1]], 0, 0, false, canTie, maxOverTimePeriods);
+                        days[d].Games.Add(g);
+                    }
+
+                }
             }
 
-            //do the game numbers last so that they are in order by day
             foreach (KeyValuePair<int, ScheduleDay> data in days)
             {
                 lastGameNumber = UpdateGameNumbers(lastGameNumber, data.Value);
@@ -159,7 +146,72 @@ namespace TeamApp.Domain.Scheduler
 
             return days;
         }
-    
+
+        public static int[,] CreateArrayForScheduling(int teams)
+        {
+            int firstSpot = 0;
+            int size = -1;
+            if (teams % 2 == 0)
+            {
+                size = teams / 2;
+            }
+            else
+            {
+                firstSpot = -1;
+                size = teams / 2 + 1;
+
+            }
+
+            int[,] newArray = new int[size, size];                                   
+
+            for (int i = 0; i < newArray.Length; i++)
+            {
+                for (int j = 0; j <= 1; j++)
+                {
+                    if (i == 0 && j == 0) newArray[i, j] = firstSpot;
+                    else
+                    {
+                        if (j == 0) newArray[i, j] = i + firstSpot;
+                        else newArray[i, j] = teams - i - 1;
+                    }
+                }
+            }
+
+            return newArray;
+
+        }
+        public static int[,] ProcessNextPosition(int[,] array)
+        {
+
+            int[,] oldArray = (int[,])array.Clone();
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                for (int j = 0; j <= 1; j++)
+                {
+                    //never change the 0,0 item, this is the pivot
+                    if (i != 0 && j != 0)
+                    {
+                        //first deal with the two side swapping cases
+                        //if we are in the first position, take it from the "top right"
+                        if (i == 1 && j == 0) array[i, j] = oldArray[0, 1];
+                        //if we are in the bottom right position, take it from the bottom left position
+                        else if (i == array.Length - 1 && j == array.Length - 1) array[array.Length - 1, array.Length - 1] = oldArray[0, array.Length - 1];
+
+                        //if we are on the left side somewhere, take the one above
+                        else if (j == 0) array[i, 0] = oldArray[i - 1, 0];
+                        //if we are on the right side somewhere, take the one below it
+                        else array[i, j] = oldArray[i + 1, 1];
+
+                    }
+                }
+            }
+
+
+            return array;
+        }
+
+
 
     }
 }
