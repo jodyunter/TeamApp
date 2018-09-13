@@ -8,7 +8,7 @@ namespace TeamApp.Domain.Scheduler
     public class ScheduleValidator
     {
         public Dictionary<string, int> TeamDaysPlayed { get; set; }
-
+        public Dictionary<string, int> TeamGamesPlayed { get; set; }
         public List<string> ErrorMessages { get; set; }
 
 
@@ -29,7 +29,9 @@ namespace TeamApp.Domain.Scheduler
         {
             //does the game match its rules?
             //does the home tema not equal away
-            return !game.HomeTeam.Name.Equals(game.AwayTeam.Name);
+            var validator = new ScheduleGameValidator(game).IsValid;
+
+            return validator;
         }
 
     }
@@ -42,6 +44,7 @@ namespace TeamApp.Domain.Scheduler
         {
             Messages = new List<string>();
             IsValid = !(game.HomeTeam.Name.Equals(game.AwayTeam.Name));
+            if (!IsValid) Messages.Add("Game:" + game.GameNumber + " day: " + game.Day + " has the same Home and Away team");
         }
     }
 

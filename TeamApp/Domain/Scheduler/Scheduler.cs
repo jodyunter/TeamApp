@@ -12,8 +12,27 @@ namespace TeamApp.Domain.Scheduler
         public static Dictionary<int, ScheduleDay> CreateGamesTwoDifferentGroups(League league, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, int iterations, bool homeAndAway, bool canTie, int maxOverTimePeriods)
         {
 
-            int totalDays = homeTeams.Count > awayTeams.Count ? homeTeams.Count : awayTeams.Count;
+            int initialDays = 0;
+            var aTeamList = new List<Team>();
+            var bTeamList = new List<Team>();
+            bool reverseHomeAndAway = false;
 
+            //the larger team list has to be the top loop
+            if (homeTeams.Count >= awayTeams.Count)
+            {
+                aTeamList = homeTeams;
+                bTeamList = awayTeams;
+                initialDays = homeTeams.Count;
+            }
+            else
+            {
+                bTeamList = homeTeams;
+                aTeamList = awayTeams;
+                reverseHomeAndAway = true;
+                initialDays = awayTeams.Count;
+            }
+
+            int totalDays = initialDays;
             if (homeAndAway) totalDays *= 2;
 
             var days = new Dictionary<int, ScheduleDay>();
@@ -23,41 +42,41 @@ namespace TeamApp.Domain.Scheduler
                 days.Add(i, new ScheduleDay(i));
             }
 
-            int currentDay = startDay;
-            int maxDay = totalDays + startDay - 1;
-
+            int currentDay = startDay;            
             int teamStartDay = currentDay;   
             
-            homeTeams.ForEach(home =>
+            aTeamList.ForEach(aTeam =>
             {
+                currentDay = teamStartDay;
                 //for each home team loop through the away teams, increment the day by one and add the next game.
-                awayTeams.ForEach(away =>
+                bTeamList.ForEach(bTeam =>
                 {
-                    var game = new ScheduleGame(league, 0, currentDay, year, home, away, 0, 0, false, canTie, maxOverTimePeriods);
+                    var game = new ScheduleGame(league, 0, currentDay, year,
+                        reverseHomeAndAway ? bTeam:aTeam, reverseHomeAndAway ? aTeam:bTeam,
+                        0, 0, false, canTie, maxOverTimePeriods);
                     days[currentDay].Games.Add(game);
-
-                    currentDay = GetNextDay(currentDay, startDay, maxDay, 1);
+                    
+                    currentDay = GetNextDay(currentDay, startDay, initialDays, 1);
 
                     if (homeAndAway)
                     {
                         int daysToSkip = totalDays / 2;
-                        int gameDay = GetNextDay(currentDay, startDay, maxDay, daysToSkip);
+                        int gameDay = GetNextDay(currentDay, startDay, totalDays, daysToSkip);
 
-                        var extraGame = new ScheduleGame(league, 0, gameDay, year, away, home, 0, 0, false, canTie, maxOverTimePeriods);
+                        var extraGame = new ScheduleGame(league, 0, gameDay, year, 
+                            reverseHomeAndAway ? aTeam : bTeam, reverseHomeAndAway ? bTeam : aTeam,
+                            0, 0, false, canTie, maxOverTimePeriods);
                         days[gameDay].Games.Add(game);
 
                     }
                 });
                 //when done the home team games, start on the previous day the last team started on and go through it again
-                teamStartDay = GetNextDay(teamStartDay, startDay, maxDay, -1);
+                teamStartDay = GetNextDay(teamStartDay, startDay, initialDays, -1);
             });
-
-            var result = new List<ScheduleGame>();
-
+            
             //do the game numbers last so that they are in order by day
             foreach (KeyValuePair<int, ScheduleDay> data in days)
             {
-
                 lastGameNumber = UpdateGameNumbers(lastGameNumber, data.Value);                
             }
 
@@ -93,9 +112,52 @@ namespace TeamApp.Domain.Scheduler
 
         private static int Mod(int k, int n) { return ((k %= n) < 0) ? k + n : k; }
 
-        public static List<ScheduleGame> CreateGamesSingleGroup(League league, int lastGameNumber, int startDay, List<Team> teams, int iterations, bool homeAndAway)
+        public static Dictionary<int, ScheduleDay> CreateGamesSingleGroup(League league, int year, int lastGameNumber, int startDay, List<Team> teams, int iterations, bool homeAndAway, bool canTie, int maxOverTimePeriods)
         {
-            return null;
+            var days = new Dictionary<int, ScheduleDay>();
+
+            int totalDays = teams.Count;
+            if (teams.Count % 2 == 0) totalDays -= 1;
+
+            for (int i = 1; i <= totalDays; i++) days.Add(i, new ScheduleDay(i + startDay));
+
+            int currentDay = 1;
+            int teamStartDay = 1;
+            for (int i = 0; i < teams.Count - 1; i++)
+            {
+                currentDay = teamStartDay;
+                for (int j = i + 1; j < teams.Count; j++)
+                {
+                    var game = new ScheduleGame(league, 0, currentDay + startDay, year, teams[i], teams[j], 0, 0, false, canTie, maxOverTimePeriods);
+                    days[currentDay].Games.Add(game);
+                    currentDay = GetNextDay(currentDay, 1, totalDays, 1);
+                }
+
+                teamStartDay = GetNextDay(teamStartDay, 1, totalDays, -1);
+            }
+
+            //duplicate the schedule but reverse the home and away
+            if (homeAndAway)
+            {
+                for (int i = totalDays + 1; i <= totalDays * 2; i++)
+                {
+                    days.Add(i, new ScheduleDay(i + startDay));
+
+                    days[i - totalDays].Games.ForEach(game =>
+                    {
+                        var g = new ScheduleGame(game.League, 0, i, year, game.AwayTeam, game.HomeTeam, 0, 0, false, canTie, maxOverTimePeriods);
+                        days[i].Games.Add(g);
+                    });                    
+                }                
+            }
+
+            //do the game numbers last so that they are in order by day
+            foreach (KeyValuePair<int, ScheduleDay> data in days)
+            {
+                lastGameNumber = UpdateGameNumbers(lastGameNumber, data.Value);
+            }
+
+            return days;
         }
     
 
