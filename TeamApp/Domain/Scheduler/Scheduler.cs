@@ -32,8 +32,7 @@ namespace TeamApp.Domain.Scheduler
                 initialDays = awayTeams.Count;
             }
 
-            int totalDays = initialDays;
-            if (homeAndAway) totalDays *= 2;
+            int totalDays = initialDays;            
 
             var days = new Dictionary<int, ScheduleDay>();
 
@@ -58,22 +57,13 @@ namespace TeamApp.Domain.Scheduler
                     
                     currentDay = GetNextDay(currentDay, startDay, initialDays, 1);
 
-                    if (homeAndAway)
-                    {
-                        int daysToSkip = totalDays / 2;
-                        int gameDay = GetNextDay(currentDay, startDay, totalDays, daysToSkip);
-
-                        var extraGame = new ScheduleGame(league, 0, gameDay, year, 
-                            reverseHomeAndAway ? aTeam : bTeam, reverseHomeAndAway ? bTeam : aTeam,
-                            0, 0, false, canTie, maxOverTimePeriods);
-                        days[gameDay].Games.Add(game);
-
-                    }
                 });
                 //when done the home team games, start on the previous day the last team started on and go through it again
                 teamStartDay = GetNextDay(teamStartDay, startDay, initialDays, -1);
             });
-            
+
+
+            if (homeAndAway) CreateAwayGamesForHomeAndAway(days, totalDays + startDay);
             //do the game numbers last so that they are in order by day
             foreach (KeyValuePair<int, ScheduleDay> data in days)
             {
@@ -125,10 +115,10 @@ namespace TeamApp.Domain.Scheduler
             for (int i = 0; i < totalDays; i++) days.Add(i + startDay, new ScheduleDay(i + startDay));
             //agorithm for swapping the values
 
-            array = ProcessNextPosition(array);
+            
             for (int d = startDay; d < totalDays + startDay; d++)
             {
-                for (int i = 0; i < array.Length; i++)
+                for (int i = 0; i < array.GetLength(0); i++)
                 {
                     if (array[i, 0] != -1)
                     {
@@ -137,13 +127,38 @@ namespace TeamApp.Domain.Scheduler
                     }
 
                 }
+
+                array = ProcessNextPosition(array);
             }
+
+            if (homeAndAway) CreateAwayGamesForHomeAndAway(days, totalDays + startDay);
 
             foreach (KeyValuePair<int, ScheduleDay> data in days)
             {
                 lastGameNumber = UpdateGameNumbers(lastGameNumber, data.Value);
             }
 
+            return days;
+        }
+
+        public static Dictionary<int, ScheduleDay> CreateAwayGamesForHomeAndAway(Dictionary<int, ScheduleDay> days, int dayToStartHomeAndAway)
+        {
+            int count = 0;
+
+            days.Keys.ToList().ForEach(dayNumber =>
+            {
+                int newDay = dayToStartHomeAndAway + count;
+                if (!days.ContainsKey(newDay)) days.Add(newDay,new ScheduleDay(dayToStartHomeAndAway + count));
+
+                days[dayNumber].Games.ForEach(game =>
+                {
+                    var g = new ScheduleGame(game.League, 0, newDay, game.Year, game.AwayTeam, game.HomeTeam, 0, 0, false, game.CanTie, game.MaxOverTimePeriods);
+                    days[newDay].Games.Add(g);
+
+                });
+
+                count++;
+            });
             return days;
         }
 
@@ -162,19 +177,15 @@ namespace TeamApp.Domain.Scheduler
 
             }
 
-            int[,] newArray = new int[size, size];                                   
+            int[,] newArray = new int[size, 2];
 
-            for (int i = 0; i < newArray.Length; i++)
+            newArray[0, 0] = firstSpot;
+
+            for (int i = 0; i < size; i++)
             {
-                for (int j = 0; j <= 1; j++)
-                {
-                    if (i == 0 && j == 0) newArray[i, j] = firstSpot;
-                    else
-                    {
-                        if (j == 0) newArray[i, j] = i + firstSpot;
-                        else newArray[i, j] = teams - i - 1;
-                    }
-                }
+                newArray[i, 1] = teams - 1 - i;
+                if (i == 0) newArray[0, 0] = firstSpot;
+                else newArray[i, 0] = firstSpot + i;
             }
 
             return newArray;
@@ -184,27 +195,35 @@ namespace TeamApp.Domain.Scheduler
         {
 
             int[,] oldArray = (int[,])array.Clone();
+            int size = array.GetLength(0);
 
-            for (int i = 0; i < array.Length; i++)
+            array[0, 0] = oldArray[0, 0]; //keep the pivot point
+
+            for (int i = 0; i < size; i++)
             {
-                for (int j = 0; j <= 1; j++)
+
+                if (i == 0)
                 {
-                    //never change the 0,0 item, this is the pivot
-                    if (i != 0 && j != 0)
-                    {
-                        //first deal with the two side swapping cases
-                        //if we are in the first position, take it from the "top right"
-                        if (i == 1 && j == 0) array[i, j] = oldArray[0, 1];
-                        //if we are in the bottom right position, take it from the bottom left position
-                        else if (i == array.Length - 1 && j == array.Length - 1) array[array.Length - 1, array.Length - 1] = oldArray[0, array.Length - 1];
-
-                        //if we are on the left side somewhere, take the one above
-                        else if (j == 0) array[i, 0] = oldArray[i - 1, 0];
-                        //if we are on the right side somewhere, take the one below it
-                        else array[i, j] = oldArray[i + 1, 1];
-
-                    }
+                    array[0, 0] = oldArray[0, 0];
+                    array[0, 1] = oldArray[1, 1];
                 }
+                else if (i == 1)
+                {
+                    array[1, 0] = oldArray[0, 1];
+                    if (size == 2) array[1, 1] = oldArray[1, 0];
+                    else array[1, 1] = oldArray[2, 1];
+                }  
+                else if (i == size - 1)
+                {
+                    array[size - 1, 0] = oldArray[size - 2, 0];
+                    array[size - 1, 1] = oldArray[size - 1, 0];
+                }
+                else
+                {
+                    array[i, 0] = oldArray[i - 1, 0];
+                    array[i, 1] = oldArray[i + 1, 1];
+                }
+
             }
 
 

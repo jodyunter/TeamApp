@@ -71,6 +71,22 @@ namespace TeamApp.Test.Domain.SchedulerTests
                                        3, 1, false, true, 5};
             yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3"),CreateTeam("Team 4") },
                                        3, 1, false, true, 5};
+            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3"),CreateTeam("Team 4"),
+                                                        CreateTeam("Team 5"), CreateTeam("Team 6"),CreateTeam("Team 7"),CreateTeam("Team 8")},
+                                       7, 1, false, true, 5};
+            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3"),CreateTeam("Team 4"),
+                                                        CreateTeam("Team 5"), CreateTeam("Team 6"),CreateTeam("Team 7"),CreateTeam("Team 8"), CreateTeam("Team 9")},
+                                       9, 1, false, true, 5};
+            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3") },
+                                       6, 1, true, true, 5};
+            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3"),CreateTeam("Team 4") },
+                                       6, 1, true, true, 5};
+            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3"),CreateTeam("Team 4"),
+                                                        CreateTeam("Team 5"), CreateTeam("Team 6"),CreateTeam("Team 7"),CreateTeam("Team 8")},
+                                       14, 1, true, true, 5};
+            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3"),CreateTeam("Team 4"),
+                                                        CreateTeam("Team 5"), CreateTeam("Team 6"),CreateTeam("Team 7"),CreateTeam("Team 8"), CreateTeam("Team 9")},
+                                       18, 1, true, true, 5};
         }
 
         [Theory]

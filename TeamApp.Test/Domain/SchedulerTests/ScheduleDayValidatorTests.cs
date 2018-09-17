@@ -21,6 +21,7 @@ namespace TeamApp.Test.Domain.SchedulerTests
             yield return new object[] { CreateDay(1, new ScheduleGame[] { CreateGame("Team 2", "Team 2"), CreateGame("Team 3", "Team 5"), CreateGame("Team 5", "Team 6") }), false }; //duplicate same team per game
 
         }
+
         [Theory]
         [MemberData(nameof(GetDays))]
         public void IsDayValid(ScheduleDay day, bool expected)
@@ -28,8 +29,7 @@ namespace TeamApp.Test.Domain.SchedulerTests
             var counts = new ScheduleDayValidator(day);
 
             StrictEqual(expected, counts.IsValid);
-
-
         }
+        
     }
 }

@@ -10,13 +10,40 @@ namespace TeamApp.Domain.Scheduler
         public Dictionary<string, int> TeamDaysPlayed { get; set; }
         public Dictionary<string, int> TeamGamesPlayed { get; set; }
         public List<string> ErrorMessages { get; set; }
+        public bool IsUnevenHomeAwayOkay { get; set; }        
+        public bool IsUnevenScheduleOkay { get; set; }
 
+        public Schedule Schedule { get; set; }
+        public bool IsValid {  get { return IsScheduleValid(); } }
 
-        public ScheduleValidator()
+        public ScheduleValidator(Schedule schedule)
         {
+
         }
 
+        public bool IsScheduleValid()
+        {
+            var gameMessages = new List<string>();
+            var dayMessages = new List<string>();
+            var scheduleMessages = new List<string>();
 
+            Schedule.Days.Keys.ToList().ForEach(dayNumber =>
+            {
+
+            });
+
+            if (!IsUnevenScheduleOkay)
+            {
+                //this means all teams must have the same number of games
+            }
+
+            if (!IsUnevenHomeAwayOkay)
+            {
+                //this means all teams must have even amount of home and away games
+            }
+
+            return false;
+        }
         //validates if there are any duplicate teams
         public bool IsDayValid(ScheduleDay day)
         {
