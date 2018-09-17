@@ -9,6 +9,7 @@ namespace TeamApp.Domain.Scheduler
     public class Scheduler
     {
         //Assumption is that they can add days afterwards.  Different methods need to handle adding games to already established days
+        //todo iterations!
         public static Dictionary<int, ScheduleDay> CreateGamesTwoDifferentGroups(League league, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, int iterations, bool homeAndAway, bool canTie, int maxOverTimePeriods)
         {
 
@@ -102,6 +103,7 @@ namespace TeamApp.Domain.Scheduler
 
         private static int Mod(int k, int n) { return ((k %= n) < 0) ? k + n : k; }
 
+        //todo iterations!
         public static Dictionary<int, ScheduleDay> CreateGamesSingleGroup(League league, int year, int lastGameNumber, int startDay, List<Team> teams, int iterations, bool homeAndAway, bool canTie, int maxOverTimePeriods)
         {        
 
