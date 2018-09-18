@@ -24,13 +24,24 @@ namespace TeamApp.Domain.Scheduler
 
         }
 
+        private void AddStringKeyToDictionary(string key, params Dictionary<string, int>[] dictionaries)
+        {
+            dictionaries.ToList().ForEach(dictionary =>
+            {
+                dictionary.Add(key, 0);
+            });
+        }
         public bool IsScheduleValid()
         {
             var gameMessages = new List<string>();
             var dayMessages = new List<string>();
             var scheduleMessages = new List<string>();
             var dayValidators = new List<ScheduleDayValidator>();
-            
+            TeamGamesPlayed = new Dictionary<string, int>();
+            TeamDaysPlayed = new Dictionary<string, int>();
+            TeamHomeGamesPlayed = new Dictionary<string, int>();
+            TeamAwayGamesPlayed = new Dictionary<string, int>();
+
             Schedule.Days.Keys.ToList().ForEach(dayNumber =>
             {
                 var day = Schedule.Days[dayNumber];
@@ -49,9 +60,31 @@ namespace TeamApp.Domain.Scheduler
                 {
                     dayMessages.AddRange(validator.Messages);
                 }
-
-                                
                 
+                foreach(KeyValuePair<string, int> pair in validator.HomeTeamCounts)
+                {
+                    if (!TeamHomeGamesPlayed.ContainsKey(pair.Key))
+                    {
+                        AddStringKeyToDictionary(pair.Key, TeamHomeGamesPlayed, TeamAwayGamesPlayed, TeamDaysPlayed, TeamGamesPlayed);
+                    }
+
+                    TeamHomeGamesPlayed[pair.Key] += pair.Value;
+                    TeamGamesPlayed[pair.Key] += pair.Value;
+                    TeamDaysPlayed[pair.Key] += pair.Value;
+                }
+
+                foreach (KeyValuePair<string, int> pair in validator.AwayTeamCounts)
+                {
+                    if (!TeamAwayGamesPlayed.ContainsKey(pair.Key))
+                    {
+                        AddStringKeyToDictionary(pair.Key, TeamHomeGamesPlayed, TeamAwayGamesPlayed, TeamDaysPlayed, TeamGamesPlayed);
+                    }
+
+                    TeamAwayGamesPlayed[pair.Key] += pair.Value;
+                    TeamGamesPlayed[pair.Key] += pair.Value;
+                    TeamDaysPlayed[pair.Key] += pair.Value;
+                }
+
             });
 
             if (!IsUnevenScheduleOkay)
