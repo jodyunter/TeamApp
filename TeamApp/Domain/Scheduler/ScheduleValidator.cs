@@ -9,6 +9,9 @@ namespace TeamApp.Domain.Scheduler
     {
         public Dictionary<string, int> TeamDaysPlayed { get; set; }
         public Dictionary<string, int> TeamGamesPlayed { get; set; }
+        public Dictionary<string, int> TeamHomeGamesPlayed { get; set; }
+        public Dictionary<string, int> TeamAwayGamesPlayed { get; set; }
+
         public List<string> ErrorMessages { get; set; }
         public bool IsUnevenHomeAwayOkay { get; set; }        
         public bool IsUnevenScheduleOkay { get; set; }
@@ -26,10 +29,29 @@ namespace TeamApp.Domain.Scheduler
             var gameMessages = new List<string>();
             var dayMessages = new List<string>();
             var scheduleMessages = new List<string>();
-
+            var dayValidators = new List<ScheduleDayValidator>();
+            
             Schedule.Days.Keys.ToList().ForEach(dayNumber =>
             {
+                var day = Schedule.Days[dayNumber];
+                var validator = new ScheduleDayValidator(Schedule.Days[dayNumber]);
 
+                day.Games.ForEach(game =>
+                {
+                    var gameValidator = new ScheduleGameValidator(game);
+                    if (!gameValidator.IsValid)
+                    {
+                        gameMessages.AddRange(gameValidator.Messages);
+                    }
+                });
+
+                if (!validator.IsValid)
+                {
+                    dayMessages.AddRange(validator.Messages);
+                }
+
+                                
+                
             });
 
             if (!IsUnevenScheduleOkay)
