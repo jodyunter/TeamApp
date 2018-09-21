@@ -14,12 +14,7 @@ namespace TeamApp.Test.Domain.SchedulerTests
     {
         public static IEnumerable<object[]> GetBalancedSchedule()
         {
-            yield return new object[] { CreateDay(1, new ScheduleGame[] { CreateGame("Team 1", "Team 2"), CreateGame("Team 3", "Team 4"), CreateGame("Team 5", "Team 6") }), true };
-            yield return new object[] { CreateDay(1, new ScheduleGame[] { CreateGame("Team 1", "Team 2"), CreateGame("Team 1", "Team 3"), CreateGame("Team 5", "Team 6") }), false }; //duplicate home team
-            yield return new object[] { CreateDay(1, new ScheduleGame[] { CreateGame("Team 1", "Team 2"), CreateGame("Team 3", "Team 2"), CreateGame("Team 5", "Team 6") }), false }; //duplicate away team
-            yield return new object[] { CreateDay(1, new ScheduleGame[] { CreateGame("Team 1", "Team 2"), CreateGame("Team 2", "Team 4"), CreateGame("Team 5", "Team 6") }), false }; //duplicate home and away
-            yield return new object[] { CreateDay(1, new ScheduleGame[] { CreateGame("Team 1", "Team 2"), CreateGame("Team 3", "Team 5"), CreateGame("Team 5", "Team 6") }), false }; //duplicate away and home
-            yield return new object[] { CreateDay(1, new ScheduleGame[] { CreateGame("Team 2", "Team 2"), CreateGame("Team 3", "Team 5"), CreateGame("Team 5", "Team 6") }), false }; //duplicate same team per game
+            yield return null;
 
         }
 

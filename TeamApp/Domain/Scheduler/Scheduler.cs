@@ -9,7 +9,7 @@ namespace TeamApp.Domain.Scheduler
     public class Scheduler
     {
         //Assumption is that they can add days afterwards.  Different methods need to handle adding games to already established days
-        //todo iterations!
+        //todo need to rework this
         public static Dictionary<int, ScheduleDay> CreateGamesTwoDifferentGroups(League league, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, int iterations, bool homeAndAway, bool canTie, int maxOverTimePeriods)
         {
 
@@ -103,8 +103,41 @@ namespace TeamApp.Domain.Scheduler
 
         private static int Mod(int k, int n) { return ((k %= n) < 0) ? k + n : k; }
 
-        //todo iterations!
+
+        //this returns the last day
+        //todo: when we had new games to already established days
+        public static int MergeDayMaps(Dictionary<int, ScheduleDay> initial, Dictionary<int, ScheduleDay> newDays)
+        {            
+
+            newDays.Keys.ToList().ForEach(dayNumber =>
+            {
+                if (!initial.ContainsKey(dayNumber)) initial[dayNumber] = new ScheduleDay(dayNumber);
+
+                initial[dayNumber].Games.AddRange(newDays[dayNumber].Games);
+
+            });
+
+            return initial.Keys.Max();
+        }
+
         public static Dictionary<int, ScheduleDay> CreateGamesSingleGroup(League league, int year, int lastGameNumber, int startDay, List<Team> teams, int iterations, bool homeAndAway, bool canTie, int maxOverTimePeriods)
+        {
+            var result = new Dictionary<int, ScheduleDay>();
+
+            for (int i = 0; i < iterations; i++)
+            {
+                MergeDayMaps(result, CreateGamesSingleGroup(league, year, lastGameNumber, startDay, teams, homeAndAway, canTie, maxOverTimePeriods));
+            }
+
+            //this will overwrite whatever game number work was done in the other methods
+            foreach (KeyValuePair<int, ScheduleDay> data in result)
+            {
+                lastGameNumber = UpdateGameNumbers(lastGameNumber, data.Value);
+            }
+
+            return result;
+        }
+        public static Dictionary<int, ScheduleDay> CreateGamesSingleGroup(League league, int year, int lastGameNumber, int startDay, List<Team> teams, bool homeAndAway, bool canTie, int maxOverTimePeriods)
         {        
 
             int[,] array = CreateArrayForScheduling(teams.Count);            
