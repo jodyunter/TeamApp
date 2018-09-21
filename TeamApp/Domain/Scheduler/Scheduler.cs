@@ -8,9 +8,42 @@ namespace TeamApp.Domain.Scheduler
 {
     public class Scheduler
     {
+        public static Dictionary<int, ScheduleDay> CreateGames(League league, int year, int lastGameNumber, int startDay, List<Team> teams, int iterations, bool homeAndAway, bool canTie, int maxOverTimePeriods)
+        {
+            return CreateGames(league, year, lastGameNumber, startDay, teams, null, iterations, homeAndAway, canTie, maxOverTimePeriods);
+        }
+        public static Dictionary<int, ScheduleDay> CreateGames(League league, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, int iterations, bool homeAndAway, bool canTie, int maxOverTimePeriods)
+        {
+            var result = new Dictionary<int, ScheduleDay>();
+
+            for (int i = 0; i < iterations; i++)
+            {
+                if (awayTeams == null || awayTeams.Count == 0) MergeDayMaps(result, CreateGamesSingleGroup(league, year, lastGameNumber, startDay, homeTeams, homeAndAway, canTie, maxOverTimePeriods));
+                else MergeDayMaps(result, CreateGamesTwoDifferentGroups(league, year, lastGameNumber, startDay, homeTeams, awayTeams, homeAndAway, canTie, maxOverTimePeriods));
+            }
+
+            //this will overwrite whatever game number work was done in the other methods
+            foreach (KeyValuePair<int, ScheduleDay> data in result)
+            {
+                lastGameNumber = UpdateGameNumbers(lastGameNumber, data.Value);
+            }
+
+            return result;
+        }
+
+        public static Dictionary<int, ScheduleDay> CreateGames(League league, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, bool homeAndAway, bool canTie, int maxOverTimePeriods)
+        {
+            var result = new Dictionary<int, ScheduleDay>();
+
+            if (awayTeams == null || awayTeams.Count == 0) result = CreateGamesSingleGroup(league, year, lastGameNumber, startDay, homeTeams, homeAndAway, canTie, maxOverTimePeriods);
+            else result = CreateGamesTwoDifferentGroups(league, year, lastGameNumber, startDay, homeTeams, awayTeams, homeAndAway, canTie, maxOverTimePeriods);
+
+            return result;
+
+        }
         //Assumption is that they can add days afterwards.  Different methods need to handle adding games to already established days
         //todo need to rework this
-        public static Dictionary<int, ScheduleDay> CreateGamesTwoDifferentGroups(League league, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, int iterations, bool homeAndAway, bool canTie, int maxOverTimePeriods)
+        public static Dictionary<int, ScheduleDay> CreateGamesTwoDifferentGroups(League league, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, bool homeAndAway, bool canTie, int maxOverTimePeriods)
         {
 
             int initialDays = 0;
@@ -120,23 +153,6 @@ namespace TeamApp.Domain.Scheduler
             return initial.Keys.Max();
         }
 
-        public static Dictionary<int, ScheduleDay> CreateGamesSingleGroup(League league, int year, int lastGameNumber, int startDay, List<Team> teams, int iterations, bool homeAndAway, bool canTie, int maxOverTimePeriods)
-        {
-            var result = new Dictionary<int, ScheduleDay>();
-
-            for (int i = 0; i < iterations; i++)
-            {
-                MergeDayMaps(result, CreateGamesSingleGroup(league, year, lastGameNumber, startDay, teams, homeAndAway, canTie, maxOverTimePeriods));
-            }
-
-            //this will overwrite whatever game number work was done in the other methods
-            foreach (KeyValuePair<int, ScheduleDay> data in result)
-            {
-                lastGameNumber = UpdateGameNumbers(lastGameNumber, data.Value);
-            }
-
-            return result;
-        }
         public static Dictionary<int, ScheduleDay> CreateGamesSingleGroup(League league, int year, int lastGameNumber, int startDay, List<Team> teams, bool homeAndAway, bool canTie, int maxOverTimePeriods)
         {        
 
