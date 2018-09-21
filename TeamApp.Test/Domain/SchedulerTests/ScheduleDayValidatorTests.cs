@@ -29,6 +29,34 @@ namespace TeamApp.Test.Domain.SchedulerTests
             var counts = new ScheduleDayValidator(day);
 
             StrictEqual(expected, counts.IsValid);
+            
+            
+        }
+
+        [Fact]
+        public void ShouldCountTeamsInDayCorrectly()
+        {
+            var day = CreateDay(1, new ScheduleGame[] { CreateGame("Team 1", "Team 2"), CreateGame("Team 3", "Team 4"), CreateGame("Team 5", "Team 6"), CreateGame("Team 6", "Team 5"), CreateGame("Team 6", "Team 2") });
+
+            var counts = new ScheduleDayValidator(day);
+
+            False(counts.IsValid);
+
+            StrictEqual(1, counts.GetHomeTeamCounts("Team 1"));
+            StrictEqual(0, counts.GetHomeTeamCounts("Team 2"));
+            StrictEqual(1, counts.GetHomeTeamCounts("Team 3"));
+            StrictEqual(0, counts.GetHomeTeamCounts("Team 4"));
+            StrictEqual(1, counts.GetHomeTeamCounts("Team 5"));
+            StrictEqual(2, counts.GetHomeTeamCounts("Team 6"));
+
+            StrictEqual(0, counts.GetAwayTeamCounts("Team 1"));
+            StrictEqual(2, counts.GetAwayTeamCounts("Team 2"));
+            StrictEqual(0, counts.GetAwayTeamCounts("Team 3"));
+            StrictEqual(1, counts.GetAwayTeamCounts("Team 4"));
+            StrictEqual(1, counts.GetAwayTeamCounts("Team 5"));
+            StrictEqual(1, counts.GetAwayTeamCounts("Team 6"));
+
+            StrictEqual(3, counts.Messages.Count);
         }
         
     }

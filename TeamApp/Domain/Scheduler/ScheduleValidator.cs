@@ -178,12 +178,29 @@ namespace TeamApp.Domain.Scheduler
             Teams.Add(teamName);
         }
 
+        public int GetTeamCount(Dictionary<string, int> counts, string name)
+        {
+            if (counts.ContainsKey(name)) return counts[name];
+            else return 0;
+        }
+
+        public int GetHomeTeamCounts(string name)
+        {
+            return GetTeamCount(HomeTeamCounts, name);
+        }
+
+        public int GetAwayTeamCounts(string name)
+        {
+            return GetTeamCount(AwayTeamCounts, name);
+        }
         public bool IsValid
         {
             get
             {
                 {
                     bool valid = true;
+
+                    Messages = new List<string>();
 
                     Teams.ToList().ForEach(t =>
                     {
