@@ -36,7 +36,7 @@ namespace TeamApp.Domain.Competition.Seasons
                 else
                 {
                     Teams.Where(t => t.Name.Equals(game.GetWinner().Name)).First().Stats.Wins++;
-                    Teams.Where(t => t.Name.Equals(game.GetLoser().Name)).First().Stats.Ties++;
+                    Teams.Where(t => t.Name.Equals(game.GetLoser().Name)).First().Stats.Loses++;
                 }
 
                 home.Stats.GoalsFor += game.HomeScore;

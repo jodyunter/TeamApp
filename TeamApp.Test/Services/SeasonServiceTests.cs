@@ -4,14 +4,15 @@ using System.Text;
 using TeamApp.Services;
 using static Xunit.Assert;
 using TeamApp.Test.Helpers;
-using TeamApp.Domain.Competition.Season.Config;
+using TeamApp.Domain.Competition.Seasons.Config;
 using System.Linq;
+using Xunit;
 
 namespace TeamApp.Test.Services
 {
     public class SeasonServiceTests
     {
-        [Xunit.Fact]
+        [Fact]
         public void ShouldCreateSeason()
         {
             var seasonName = "My Season";

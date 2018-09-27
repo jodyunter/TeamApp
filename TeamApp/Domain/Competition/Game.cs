@@ -1,33 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TeamApp.Domain.Competition.Seasons;
 
-namespace TeamApp.Domain.Scheduler
+namespace TeamApp.Domain.Competition
 {
-    public class ScheduleGame
-    {        
-        //todo should be a subclass of game
-        //league, gameNumber, year are unique
-        public League League { get; set; }
-        public int GameNumber { get; set; }
-        public int Day { get; set; }
-        public int Year { get; set; }
+    public class Game
+    {
         public Team HomeTeam { get; set; }
         public Team AwayTeam { get; set; }
         public int HomeScore { get; set; }
         public int AwayScore { get; set; }
         public bool Complete { get; set; }
         public bool CanTie { get; set; }
-        public int MaxOverTimePeriods { get; set; }
+        public int MaxOverTimePeriods { get; set; }        
 
-        public ScheduleGame() { }
-        public ScheduleGame(League league, int gameNumber, int day, int year, Team homeTeam, Team awayTeam, int homeScore, int awayScore, bool complete, bool canTie, int maxOverTimePeriods)
+        public Game() { }
+        public Game(Team homeTeam, Team awayTeam, int homeScore, int awayScore, bool complete, bool canTie, int maxOverTimePeriods)
         {
-            League = league;
-            GameNumber = gameNumber;
-            Day = day;
-            Year = year;
             HomeTeam = homeTeam;
             AwayTeam = awayTeam;
             HomeScore = homeScore;
@@ -49,6 +38,33 @@ namespace TeamApp.Domain.Scheduler
             if (HomeScore > AwayScore) return AwayTeam;
             else if (AwayScore > HomeScore) return HomeTeam;
             else return null;
+        }
+
+        public bool Play(Random r)
+        {
+            if (!Complete)
+            {
+                int HomeScore = r.Next(7);
+                int AwayScore = r.Next(6);
+                int currentPeriod = 1;
+                int regularPeriods = 1;
+
+                while (HomeScore == AwayScore && (!CanTie || currentPeriod <= regularPeriods + MaxOverTimePeriods))
+                {
+                    int next = r.Next(11) - 5;
+
+                    if (next < 0) AwayScore++;
+                    else if (next > 0) HomeScore++;
+
+                    currentPeriod++;
+                }
+
+                Complete = true;
+
+                return true;
+            }
+
+            return false;
         }
     }
 }
