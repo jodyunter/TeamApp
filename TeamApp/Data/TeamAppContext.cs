@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.Entity;
 using TeamApp.Domain;
-using TeamApp.Domain.Competition.Season.Config;
-using TeamApp.Domain.Competition.Season;
+using TeamApp.Domain.Competition.Seasons.Config;
+using TeamApp.Domain.Competition.Seasons;
 
 namespace TeamApp.Data
 {

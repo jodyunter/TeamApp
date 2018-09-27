@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TeamApp.Domain.Competition.Season;
+using TeamApp.Domain.Competition.Seasons;
 using System.Linq;
 
 namespace TeamApp.Domain.Scheduler
@@ -153,21 +153,23 @@ namespace TeamApp.Domain.Scheduler
 
         //this returns the last day
         //todo: when we had new games to already established days
-        public static int MergeSchedules(Schedule initial, Schedule newDays, int maxAllowedTeamsOnOneDay)
-        {
-            ScheduleDayValidator validator = new ScheduleDayValidator(null);
+        //we assume no team can play more than once a day
+        public static int MergeSchedules(Schedule initial, Schedule newDays)
+        {            
 
             newDays.Days.Keys.ToList().ForEach(dayNumber =>
             {
                 int initialDayNumber = dayNumber;
 
-                if (!initial.Days.ContainsKey(dayNumber)) initial.Days[dayNumber] = new ScheduleDay(dayNumber);
+                if (!initial.Days.ContainsKey(dayNumber)) initial.AddDay(dayNumber);
                 else
                 {
-                    //we need to determine if any allowed
+                    //todo how many games can a team play on a given day
                     if (initial.Days[dayNumber].DoesAnyTeamPlayInDay(newDays.Days[dayNumber]))
                     {
                         initialDayNumber = initial.Days.Keys.Max() + 1;
+                        initial.AddDay(initialDayNumber);
+
                     }
                 }
                 initial.Days[initialDayNumber].Games.AddRange(newDays.Days[dayNumber].Games);

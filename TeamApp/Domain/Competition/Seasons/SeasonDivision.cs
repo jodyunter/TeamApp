@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TeamApp.Domain.Competition.Season
+namespace TeamApp.Domain.Competition.Seasons
 {
     public class SeasonDivision
     {

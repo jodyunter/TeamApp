@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
-namespace TeamApp.Domain.Competition.Season.Config
+namespace TeamApp.Domain.Competition.Seasons.Config
 {
     //this is the configuration setup for seasons
     public class SeasonCompetition:ICompetition

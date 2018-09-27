@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TeamApp.Domain.Competition.Season.Config;
+using TeamApp.Domain.Competition.Seasons.Config;
 using System.Linq;
-using TeamApp.Domain.Competition.Season;
+using TeamApp.Domain.Competition.Seasons;
 using TeamApp.Domain;
 
 namespace TeamApp.Services

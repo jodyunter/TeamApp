@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TeamApp.Domain.Competition.Season;
+using TeamApp.Domain.Competition.Seasons;
 
 namespace TeamApp.Domain.Scheduler
 {
@@ -34,6 +34,20 @@ namespace TeamApp.Domain.Scheduler
             Complete = complete;
             CanTie = canTie;
             MaxOverTimePeriods = maxOverTimePeriods;
+        }
+
+        public Team GetWinner()
+        {
+            if (HomeScore > AwayScore) return HomeTeam;
+            else if (AwayScore > HomeScore) return AwayTeam;
+            else return null;
+        }
+
+        public Team GetLoser()
+        {
+            if (HomeScore > AwayScore) return AwayTeam;
+            else if (AwayScore > HomeScore) return HomeTeam;
+            else return null;
         }
     }
 }

@@ -8,6 +8,11 @@ namespace TeamApp.Domain.Scheduler
     {
         public Dictionary<int, ScheduleDay> Days { get; set; }
 
+        public Schedule()
+        {
+            Days = new Dictionary<int, ScheduleDay>();
+        }
+
         public void AddDay(int dayNumber)
         {
             Days.Add(dayNumber, new ScheduleDay(dayNumber));

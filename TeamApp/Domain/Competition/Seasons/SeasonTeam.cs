@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TeamApp.Domain.Competition.Season
+namespace TeamApp.Domain.Competition.Seasons
 {
     public class SeasonTeam:ITeam
     {
@@ -23,11 +23,12 @@ namespace TeamApp.Domain.Competition.Season
             Skill = skill;
             Parent = parent;
             Competition = competition;
-            Division = division;
-            Stats = stats;
+            Division = division;            
+            Stats = stats;            
             Owner = owner;
             FirstYear = year;
             LastYear = year;
+            if (Stats == null) Stats = new SeasonTeamStats(this);
         }
     }
 }

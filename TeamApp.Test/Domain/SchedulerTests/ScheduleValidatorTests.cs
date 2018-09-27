@@ -5,7 +5,6 @@ using static Xunit.Assert;
 using Xunit;
 using TeamApp.Domain.Scheduler;
 using static TeamApp.Test.Domain.SchedulerTests.SchedulerTests;
-using static TeamApp.Domain.Scheduler.ScheduleValidator;
 using TeamApp.Domain;
 
 namespace TeamApp.Test.Domain.SchedulerTests
