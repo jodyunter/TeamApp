@@ -12,11 +12,6 @@ namespace TeamApp.Test.Domain.SchedulerTests
 {
     public class ScheduleValidatorTests
     {
-        public static IEnumerable<object[]> GetBalancedSchedule()
-        {
-            yield return null;
-
-        }
 
         public static IEnumerable<object[]> GetUnbalancedSchedule()
         {
@@ -33,31 +28,50 @@ namespace TeamApp.Test.Domain.SchedulerTests
             yield return null;
         }
 
+        public static IEnumerable<object[]> GetBalancedSchedule()
+        {
+            yield return new object[] {1, CreateBalancedScheduleNoHomeAndAway(), true, false, true };
+            yield return new object[] {2, CreateBalancedScheduleNoHomeAndAway(), false, false, false };
+            yield return new object[] {3, CreateBalancedScheduleWithHomeAndAway(), false, false, true };
+
+        }
 
         [Theory]
         [MemberData(nameof(GetBalancedSchedule))]        
-        public void IsScheduleValid(Schedule schedule, bool expected)
+        public void IsScheduleValid(int testNumber, Schedule schedule, bool isUnevenHomeAndAwayOkay, bool isUnevenScheduleOkay, bool expected)
         {
             var counts = new ScheduleValidator(schedule);
+            counts.IsUnevenHomeAwayOkay = isUnevenHomeAndAwayOkay;
+            counts.IsUnevenScheduleOkay = isUnevenScheduleOkay;
 
-            StrictEqual(expected, counts.IsValid);
+            bool result = counts.IsValid;
+            StrictEqual(expected, result);
         }
         
-        public Schedule CreateBalancedScheduleNoHomeAndAway()
+        public static Schedule CreateBalancedScheduleNoHomeAndAway()
         {
             var league = new League("My League");
             var schedule = new Schedule();
 
-            schedule.Days = Scheduler.CreateGamesSingleGroup(league, 1, 5, 1,
+            schedule = Scheduler.CreateGames(league, 1, 5, 1,
                 new List<Team>()
                     { CreateTeam("Team 1"), CreateTeam("Team 2"), CreateTeam("Team 3"), CreateTeam("Team 4"), CreateTeam("Team 5"), CreateTeam("Team 6") },
-                1, false, true, 0);
-                    
-            
+                2, false, true, 0);                                
 
             return schedule;
         }
-        
-        
+
+        public static Schedule CreateBalancedScheduleWithHomeAndAway()
+        {
+            var league = new League("My League");
+            var schedule = new Schedule();
+
+            schedule = Scheduler.CreateGames(league, 1, 5, 1,
+                new List<Team>()
+                    { CreateTeam("Team 1"), CreateTeam("Team 2"), CreateTeam("Team 3"), CreateTeam("Team 4"), CreateTeam("Team 5"), CreateTeam("Team 6") },
+                2, true, true, 0);
+
+            return schedule;
+        }
     }
 }

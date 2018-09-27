@@ -21,7 +21,7 @@ namespace TeamApp.Domain.Scheduler
 
         public ScheduleValidator(Schedule schedule)
         {
-
+            this.Schedule = schedule;
         }
 
         private void AddStringKeyToDictionary(string key, params Dictionary<string, int>[] dictionaries)
@@ -33,6 +33,7 @@ namespace TeamApp.Domain.Scheduler
         }
         public bool IsScheduleValid()
         {
+            ErrorMessages = new List<string>();
             var gameMessages = new List<string>();
             var dayMessages = new List<string>();
             var scheduleMessages = new List<string>();
@@ -41,6 +42,8 @@ namespace TeamApp.Domain.Scheduler
             TeamDaysPlayed = new Dictionary<string, int>();
             TeamHomeGamesPlayed = new Dictionary<string, int>();
             TeamAwayGamesPlayed = new Dictionary<string, int>();
+
+            bool result = true;
 
             Schedule.Days.Keys.ToList().ForEach(dayNumber =>
             {
@@ -89,15 +92,35 @@ namespace TeamApp.Domain.Scheduler
 
             if (!IsUnevenScheduleOkay)
             {
-                //this means all teams must have the same number of games
+                int games = -1;
+
+                foreach (KeyValuePair<string, int> data in TeamGamesPlayed)
+                {
+                    if (games == -1) games = data.Value;
+
+                    if (data.Value != games) gameMessages.Add("Not all teams play the same number of games");                            
+                }
             }
 
             if (!IsUnevenHomeAwayOkay)
             {
-                //this means all teams must have even amount of home and away games
+                int homeGames = -1;
+                int awayGames = -1;
+
+                foreach(KeyValuePair<string, int> data in TeamGamesPlayed)
+                {
+                    if (homeGames == -1) homeGames = TeamHomeGamesPlayed[data.Key];
+                    if (awayGames == -1) awayGames = TeamAwayGamesPlayed[data.Key];
+
+                    if (homeGames != awayGames) gameMessages.Add("Team : " + data.Key + " has " + homeGames + " home games and " + awayGames + " away games");
+                }
             }
 
-            return false;
+            ErrorMessages.AddRange(gameMessages);
+            ErrorMessages.AddRange(scheduleMessages);
+            ErrorMessages.AddRange(dayMessages);
+
+            return ErrorMessages.Count == 0;
         }
         //validates if there are any duplicate teams
         public bool IsDayValid(ScheduleDay day)

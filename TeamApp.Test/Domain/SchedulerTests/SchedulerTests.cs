@@ -47,12 +47,12 @@ namespace TeamApp.Test.Domain.SchedulerTests
         public void ShouldCreateScheduleTwoDifferentGroups(List<Team> HomeTeams, List<Team> AwayTeams, int expectedDays, int iterations, bool homeAndAway, bool canTie, int maxOverTimePeriods)
         {
             var league = new League("My League");
-            var days = Scheduler.CreateGamesTwoDifferentGroups(league, 1, 0, 1,
+            var days = Scheduler.CreateGames(league, 1, 0, 1,
                 HomeTeams, AwayTeams, iterations, homeAndAway, canTie, maxOverTimePeriods);
 
             var messages = new List<string>();
 
-            days.Values.ToList().ForEach(d =>
+            days.Days.Values.ToList().ForEach(d =>
             {
                 var validator = new ScheduleDayValidator(d);
 
@@ -60,7 +60,7 @@ namespace TeamApp.Test.Domain.SchedulerTests
                 
             });
 
-            StrictEqual(expectedDays, days.Count);
+            StrictEqual(expectedDays, days.Days.Count);
 
             True(messages.Count == 0);
         }
@@ -94,12 +94,12 @@ namespace TeamApp.Test.Domain.SchedulerTests
         public void ShouldCreateScheduleForOneGroupofTeams(List<Team> Teams, int expectedDays, int iterations, bool homeAndAway, bool canTie, int maxOverTimePeriods)
         {
             var league = new League("My League");
-            var days = Scheduler.CreateGamesSingleGroup(league, 1, 0, 1,
+            var days = Scheduler.CreateGames(league, 1, 0, 1,
                 Teams, iterations, homeAndAway, canTie, maxOverTimePeriods);
 
             var messages = new List<string>();
 
-            days.Values.ToList().ForEach(d =>
+            days.Days.Values.ToList().ForEach(d =>
             {
                 var validator = new ScheduleDayValidator(d);
 
@@ -107,7 +107,7 @@ namespace TeamApp.Test.Domain.SchedulerTests
 
             });
 
-            StrictEqual(expectedDays, days.Count);
+            StrictEqual(expectedDays, days.Days.Count);
 
             True(messages.Count == 0);
         }
