@@ -15,7 +15,10 @@ namespace TeamApp.Domain.Scheduler
             Games = new List<ScheduleGame>();
         }
 
-
+        public bool IsComplete()
+        {
+            return Games.TrueForAll(g => g.Complete);
+        }
         public bool DoesTeamPlayInDay(string teamName)
         {
             var result = false;
