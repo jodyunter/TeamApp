@@ -25,30 +25,32 @@ namespace TeamApp.Test.Domain.SchedulerTests
             
         public static IEnumerable<object[]> TwoDifferentGroupsOfTeams()
         {
-            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3") },
-                                       new List<Team> { CreateTeam("Team 4"), CreateTeam("Team 5"),CreateTeam("Team 6") },
-                                       3, 1, false, true, 5};
+            var rules = new GameRules { CanTie = true, MinimumPeriods = 1, MaxOverTimePeriods = 5, HomeRange = 7, AwayRange = 6 };
 
             yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3") },
                                        new List<Team> { CreateTeam("Team 4"), CreateTeam("Team 5"),CreateTeam("Team 6") },
-                                       6, 1, true, true, 5};
+                                       3, 1, false, rules };
+
+            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3") },
+                                       new List<Team> { CreateTeam("Team 4"), CreateTeam("Team 5"),CreateTeam("Team 6") },
+                                       6, 1, true, rules };
 
             yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3"), CreateTeam("Team 7")},
                                        new List<Team> { CreateTeam("Team 4"), CreateTeam("Team 5"),CreateTeam("Team 6") },
-                                       8, 1, true, true, 5};
+                                       8, 1, true, rules };
 
             yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3") },
                                        new List<Team> { CreateTeam("Team 4"), CreateTeam("Team 5"),CreateTeam("Team 6"), CreateTeam("Team 7") },
-                                       8, 1, true, true, 5};
+                                       8, 1, true, rules };
         }
 
         [Theory]
         [MemberData(nameof(TwoDifferentGroupsOfTeams))]
-        public void ShouldCreateScheduleTwoDifferentGroups(List<Team> HomeTeams, List<Team> AwayTeams, int expectedDays, int iterations, bool homeAndAway, bool canTie, int maxOverTimePeriods)
+        public void ShouldCreateScheduleTwoDifferentGroups(List<Team> HomeTeams, List<Team> AwayTeams, int expectedDays, int iterations, bool homeAndAway, GameRules rules)
         {
             var league = new League("My League");
             var days = Scheduler.CreateGames(league, 1, 0, 1,
-                HomeTeams, AwayTeams, iterations, homeAndAway, canTie, maxOverTimePeriods);
+                HomeTeams, AwayTeams, iterations, homeAndAway, rules);
 
             var messages = new List<string>();
 
@@ -67,35 +69,37 @@ namespace TeamApp.Test.Domain.SchedulerTests
 
         public static IEnumerable<object[]> OneGroupOfTeams()
         {
-            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3") },                                      
-                                       3, 1, false, true, 5};
-            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3"),CreateTeam("Team 4") },
-                                       3, 1, false, true, 5};
-            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3"),CreateTeam("Team 4"),
-                                                        CreateTeam("Team 5"), CreateTeam("Team 6"),CreateTeam("Team 7"),CreateTeam("Team 8")},
-                                       7, 1, false, true, 5};
-            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3"),CreateTeam("Team 4"),
-                                                        CreateTeam("Team 5"), CreateTeam("Team 6"),CreateTeam("Team 7"),CreateTeam("Team 8"), CreateTeam("Team 9")},
-                                       9, 1, false, true, 5};
+            var rules = new GameRules { CanTie = true, MinimumPeriods = 1, MaxOverTimePeriods = 5, HomeRange = 7, AwayRange = 6 };
+
             yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3") },
-                                       6, 1, true, true, 5};
+                                       3, 1, false, rules };
             yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3"),CreateTeam("Team 4") },
-                                       6, 1, true, true, 5};
+                                       3, 1, false, rules };
             yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3"),CreateTeam("Team 4"),
                                                         CreateTeam("Team 5"), CreateTeam("Team 6"),CreateTeam("Team 7"),CreateTeam("Team 8")},
-                                       14, 1, true, true, 5};
+                                       7, 1, false, rules };
             yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3"),CreateTeam("Team 4"),
                                                         CreateTeam("Team 5"), CreateTeam("Team 6"),CreateTeam("Team 7"),CreateTeam("Team 8"), CreateTeam("Team 9")},
-                                       18, 1, true, true, 5};
+                                       9, 1, false, rules };
+            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3") },
+                                       6, 1, true, rules };
+            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3"),CreateTeam("Team 4") },
+                                       6, 1, true, rules };
+            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3"),CreateTeam("Team 4"),
+                                                        CreateTeam("Team 5"), CreateTeam("Team 6"),CreateTeam("Team 7"),CreateTeam("Team 8")},
+                                       14, 1, true, rules };
+            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3"),CreateTeam("Team 4"),
+                                                        CreateTeam("Team 5"), CreateTeam("Team 6"),CreateTeam("Team 7"),CreateTeam("Team 8"), CreateTeam("Team 9")},
+                                       18, 1, true, rules };
         }
 
         [Theory]
         [MemberData(nameof(OneGroupOfTeams))]
-        public void ShouldCreateScheduleForOneGroupofTeams(List<Team> Teams, int expectedDays, int iterations, bool homeAndAway, bool canTie, int maxOverTimePeriods)
+        public void ShouldCreateScheduleForOneGroupofTeams(List<Team> Teams, int expectedDays, int iterations, bool homeAndAway,GameRules rules)
         {
             var league = new League("My League");
             var days = Scheduler.CreateGames(league, 1, 0, 1,
-                Teams, iterations, homeAndAway, canTie, maxOverTimePeriods);
+                Teams, iterations, homeAndAway, rules);
 
             var messages = new List<string>();
 

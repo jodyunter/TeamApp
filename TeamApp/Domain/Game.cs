@@ -11,28 +11,19 @@ namespace TeamApp.Domain
         public int HomeScore { get; set; }
         public int AwayScore { get; set; }
         public bool Complete { get; set; }
-        public bool CanTie { get; set; }
-        public int MaxOverTimePeriods { get; set; }       
         public int CurrentPeriod { get; set; }
-        public int MinimumPeriods { get; set; }
-        public int HomeRange { get; set; }
-        public int AwayRange { get; set; }
 
+        public GameRules Rules { get; set; }
         public Game() { }
-        public Game(Team homeTeam, Team awayTeam, int homeScore, int awayScore, bool complete, bool canTie, int minimumPeriods, int maxOverTimePeriods, int currentPeriod)
+        public Game(Team homeTeam, Team awayTeam, int homeScore, int awayScore, bool complete,  int currentPeriod, GameRules rules)
         {
             HomeTeam = homeTeam;
             AwayTeam = awayTeam;
             HomeScore = homeScore;
             AwayScore = awayScore;
             Complete = complete;
-            CanTie = canTie;
-            MinimumPeriods = minimumPeriods;
-            MaxOverTimePeriods = maxOverTimePeriods;
+            Rules = rules;
             CurrentPeriod = currentPeriod;
-            HomeRange = 7;
-            AwayRange = 6;
-
         }
 
         public Team GetWinner()
@@ -52,7 +43,7 @@ namespace TeamApp.Domain
         public bool Play(Random r)
         {
             if (!Complete)
-            {                
+            {
 
                 while (!IsComplete())
                 {
@@ -73,8 +64,8 @@ namespace TeamApp.Domain
 
         public void PlayRegulationPeriod(Random r)
         {
-            HomeScore += r.Next(HomeRange);
-            AwayScore += r.Next(AwayRange);            
+            HomeScore += r.Next(Rules.HomeRange);
+            AwayScore += r.Next(Rules.AwayRange);
         }
 
         public void PlayOverTimePeriod(Random r)
@@ -83,16 +74,16 @@ namespace TeamApp.Domain
 
             if (next < 0) AwayScore++;
             else if (next > 0) HomeScore++;
-            
+
         }
 
         public bool IsCurrentPeriodRegulationPeriod()
         {
-            return CurrentPeriod <= MinimumPeriods;
+            return CurrentPeriod <= Rules.MinimumPeriods;
         }
         public bool IsComplete()
         {
-            bool regulationDone = CurrentPeriod > MinimumPeriods;  //are we in overtime?
+            bool regulationDone = CurrentPeriod > Rules.MinimumPeriods;  //are we in overtime?
             bool overTimeDone = true;
 
             if (regulationDone)
@@ -100,8 +91,8 @@ namespace TeamApp.Domain
                 if (HomeScore != AwayScore) overTimeDone = true;
                 else
                 {
-                    if (!CanTie) overTimeDone = false;
-                    else if (!(CurrentPeriod > (MaxOverTimePeriods + MinimumPeriods))) overTimeDone = false;
+                    if (!Rules.CanTie) overTimeDone = false;
+                    else if (!(CurrentPeriod > (Rules.MaxOverTimePeriods + Rules.MinimumPeriods))) overTimeDone = false;
                 }
 
             }
@@ -112,7 +103,7 @@ namespace TeamApp.Domain
         public override string ToString()
         {
             var formatter = "{0,10}: {1,3} - {2,3} :{3,-10} {4}";
-            var result = "";            
+            var result = "";
 
             if (Complete) result += " Final";
             else result += " " + CurrentPeriod.DisplayWithSuffix();
@@ -133,5 +124,14 @@ namespace TeamApp.Domain
             if (num.ToString().EndsWith("3")) return num.ToString() + "rd";
             return num.ToString() + "th";
         }
+    }
+
+    public class GameRules
+    {
+        public bool CanTie { get; set; }
+        public int MaxOverTimePeriods { get; set; }        
+        public int MinimumPeriods { get; set; }
+        public int HomeRange { get; set; }
+        public int AwayRange { get; set; }
     }
 }

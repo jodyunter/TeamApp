@@ -17,11 +17,12 @@ namespace TeamApp.Test.Domain.Competition.Seasons
         {
             var season = new Season(null, "Test", 1);
             var teams = new List<Team>() { CreateTeam("Team 1"), CreateTeam("Team 2"), CreateTeam("Team 3"), CreateTeam("Team 4") };
+            var rules = new GameRules { CanTie = true, MinimumPeriods = 1, MaxOverTimePeriods = 0, HomeRange = 7, AwayRange = 6 };
             var games = new List<ScheduleGame>()
             {
-                new ScheduleGame(null, 1, 1, 1, teams[0], teams[1], 1, 1, true, true, 0),
-                new ScheduleGame(null, 1, 1, 1, teams[0], teams[2], 3, 1, true, true, 0),
-                new ScheduleGame(null, 1, 1, 1, teams[0], teams[3], 1, 4, true, true, 0)                
+                new ScheduleGame(null, 1, 1, 1, teams[0], teams[1], 1, 1, true, 1, rules),
+                new ScheduleGame(null, 1, 1, 1, teams[0], teams[2], 3, 1, true, 1, rules),
+                new ScheduleGame(null, 1, 1, 1, teams[0], teams[3], 1, 4, true, 1, rules)  
             };
 
             var team1 = new SeasonTeam("Team 1", 5, teams[0], null, null, null, null, 1);

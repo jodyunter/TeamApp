@@ -46,16 +46,17 @@ namespace TeamApp.Test.Domain.SchedulerTests
             bool result = counts.IsValid;
             StrictEqual(expected, result);
         }
-        
+
         public static Schedule CreateBalancedScheduleNoHomeAndAway()
         {
             var league = new League("My League");
             var schedule = new Schedule();
+            var rules = new GameRules { CanTie = true, MinimumPeriods = 1, MaxOverTimePeriods = 0, HomeRange = 7, AwayRange = 6 };
 
             schedule = Scheduler.CreateGames(league, 1, 5, 1,
                 new List<Team>()
                     { CreateTeam("Team 1"), CreateTeam("Team 2"), CreateTeam("Team 3"), CreateTeam("Team 4"), CreateTeam("Team 5"), CreateTeam("Team 6") },
-                2, false, true, 0);                                
+                2, false, rules);
 
             return schedule;
         }
@@ -64,11 +65,12 @@ namespace TeamApp.Test.Domain.SchedulerTests
         {
             var league = new League("My League");
             var schedule = new Schedule();
+            var rules = new GameRules { CanTie = true, MinimumPeriods = 1, MaxOverTimePeriods = 0, HomeRange = 7, AwayRange = 6 };
 
             schedule = Scheduler.CreateGames(league, 1, 5, 1,
                 new List<Team>()
                     { CreateTeam("Team 1"), CreateTeam("Team 2"), CreateTeam("Team 3"), CreateTeam("Team 4"), CreateTeam("Team 5"), CreateTeam("Team 6") },
-                2, true, true, 0);
+                2, true, rules);
 
             return schedule;
         }

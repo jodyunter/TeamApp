@@ -9,18 +9,18 @@ namespace TeamApp.Domain.Scheduler
     //todo stop using the dictionaries and start using Schedules and merging scheudles instead
     public class Scheduler
     {
-        public static Schedule CreateGames(League league, int year, int lastGameNumber, int startDay, List<Team> teams, int iterations, bool homeAndAway, bool canTie, int maxOverTimePeriods)
+        public static Schedule CreateGames(League league, int year, int lastGameNumber, int startDay, List<Team> teams, int iterations, bool homeAndAway, GameRules rules)
         {
-            return CreateGames(league, year, lastGameNumber, startDay, teams, null, iterations, homeAndAway, canTie, maxOverTimePeriods);
+            return CreateGames(league, year, lastGameNumber, startDay, teams, null, iterations, homeAndAway, rules);
         }
-        public static Schedule CreateGames(League league, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, int iterations, bool homeAndAway, bool canTie, int maxOverTimePeriods)
+        public static Schedule CreateGames(League league, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, int iterations, bool homeAndAway, GameRules rules)
         {
             var result = new Schedule();
 
             for (int i = 0; i < iterations; i++)
             {                
-                if (awayTeams == null || awayTeams.Count == 0) lastGameNumber = MergeSchedules(result, CreateGamesSingleGroup(league, year, lastGameNumber, startDay, homeTeams, homeAndAway, canTie, maxOverTimePeriods));
-                else lastGameNumber = MergeSchedules(result, CreateGamesTwoDifferentGroups(league, year, lastGameNumber, startDay, homeTeams, awayTeams, homeAndAway, canTie, maxOverTimePeriods));
+                if (awayTeams == null || awayTeams.Count == 0) lastGameNumber = MergeSchedules(result, CreateGamesSingleGroup(league, year, lastGameNumber, startDay, homeTeams, homeAndAway, rules));
+                else lastGameNumber = MergeSchedules(result, CreateGamesTwoDifferentGroups(league, year, lastGameNumber, startDay, homeTeams, awayTeams, homeAndAway, rules));
             }
 
             //this will overwrite whatever game number work was done in the other methods
@@ -45,19 +45,19 @@ namespace TeamApp.Domain.Scheduler
             return maxDay;
         }
 
-        public static Schedule CreateGames(League league, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, bool homeAndAway, bool canTie, int maxOverTimePeriods)
+        public static Schedule CreateGames(League league, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, bool homeAndAway, GameRules rules)
         {
             var result = new Schedule();
 
-            if (awayTeams == null || awayTeams.Count == 0) result = CreateGamesSingleGroup(league, year, lastGameNumber, startDay, homeTeams, homeAndAway, canTie, maxOverTimePeriods);
-            else result = CreateGamesTwoDifferentGroups(league, year, lastGameNumber, startDay, homeTeams, awayTeams, homeAndAway, canTie, maxOverTimePeriods);
+            if (awayTeams == null || awayTeams.Count == 0) result = CreateGamesSingleGroup(league, year, lastGameNumber, startDay, homeTeams, homeAndAway, rules);
+            else result = CreateGamesTwoDifferentGroups(league, year, lastGameNumber, startDay, homeTeams, awayTeams, homeAndAway, rules);
 
             return result;
 
         }
         //Assumption is that they can add days afterwards.  Different methods need to handle adding games to already established days
         //todo need to rework this
-        public static Schedule CreateGamesTwoDifferentGroups(League league, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, bool homeAndAway, bool canTie, int maxOverTimePeriods)
+        public static Schedule CreateGamesTwoDifferentGroups(League league, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, bool homeAndAway, GameRules rules)
         {
 
             int initialDays = 0;
@@ -100,7 +100,7 @@ namespace TeamApp.Domain.Scheduler
                 {
                     var game = new ScheduleGame(league, 0, currentDay, year,
                         reverseHomeAndAway ? bTeam:aTeam, reverseHomeAndAway ? aTeam:bTeam,
-                        0, 0, false, canTie, maxOverTimePeriods);
+                        0, 0, false, 1, rules);
                     schedule.Days[currentDay].AddGame(game);
                     
                     currentDay = GetNextDay(currentDay, startDay, initialDays, 1);
@@ -111,7 +111,7 @@ namespace TeamApp.Domain.Scheduler
             });
 
 
-            if (homeAndAway) CreateAwayGamesForHomeAndAway(schedule, totalDays + startDay);
+            if (homeAndAway) CreateAwayGamesForHomeAndAway(schedule, totalDays + startDay, rules);
             //do the game numbers last so that they are in order by day
             foreach (KeyValuePair<int, ScheduleDay> data in schedule.Days)
             {
@@ -179,7 +179,7 @@ namespace TeamApp.Domain.Scheduler
             return initial.Days.Keys.Max();
         }
 
-        public static Schedule CreateGamesSingleGroup(League league, int year, int lastGameNumber, int startDay, List<Team> teams, bool homeAndAway, bool canTie, int maxOverTimePeriods)
+        public static Schedule CreateGamesSingleGroup(League league, int year, int lastGameNumber, int startDay, List<Team> teams, bool homeAndAway, GameRules rules)
         {        
 
             int[,] array = CreateArrayForScheduling(teams.Count);            
@@ -199,7 +199,7 @@ namespace TeamApp.Domain.Scheduler
                 {
                     if (array[i, 0] != -1)
                     {
-                        var g = new ScheduleGame(league, 0, i, year, teams[array[i, 0]], teams[array[i, 1]], 0, 0, false, canTie, maxOverTimePeriods);
+                        var g = new ScheduleGame(league, 0, i, year, teams[array[i, 0]], teams[array[i, 1]], 0, 0, false, 1, rules);
                         schedule.Days[d].Games.Add(g);
                     }
 
@@ -208,7 +208,7 @@ namespace TeamApp.Domain.Scheduler
                 array = ProcessNextPosition(array);
             }
 
-            if (homeAndAway) CreateAwayGamesForHomeAndAway(schedule, totalDays + startDay);
+            if (homeAndAway) CreateAwayGamesForHomeAndAway(schedule, totalDays + startDay, rules);
 
             foreach (KeyValuePair<int, ScheduleDay> data in schedule.Days)
             {
@@ -218,7 +218,7 @@ namespace TeamApp.Domain.Scheduler
             return schedule;
         }
 
-        public static Schedule CreateAwayGamesForHomeAndAway(Schedule schedule, int dayToStartHomeAndAway)
+        public static Schedule CreateAwayGamesForHomeAndAway(Schedule schedule, int dayToStartHomeAndAway, GameRules rules)
         {
             int count = 0;
 
@@ -229,7 +229,7 @@ namespace TeamApp.Domain.Scheduler
 
                 schedule.Days[dayNumber].Games.ForEach(game =>
                 {
-                    var g = new ScheduleGame(game.League, 0, newDay, game.Year, game.AwayTeam, game.HomeTeam, 0, 0, false, game.CanTie, game.MaxOverTimePeriods);
+                    var g = new ScheduleGame(game.League, 0, newDay, game.Year, game.AwayTeam, game.HomeTeam, 0, 0, false, 1, rules);
                     schedule.Days[newDay].Games.Add(g);
 
                 });
