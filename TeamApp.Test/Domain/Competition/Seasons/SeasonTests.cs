@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using TeamApp.Domain.Competition.Seasons;
 using TeamApp.Domain.Scheduler;
 using Xunit;
 using static Xunit.Assert;
 using static TeamApp.Test.Domain.SchedulerTests.SchedulerTests;
 using TeamApp.Domain;
+using TeamApp.Test.Helpers;
+using TeamApp.Services;
+using TeamApp.Domain.Competition.Seasons.Config;
 
 namespace TeamApp.Test.Domain.Competition.Seasons
 {
@@ -68,5 +71,48 @@ namespace TeamApp.Test.Domain.Competition.Seasons
         }
 
 
+        [Fact]
+        public void ShouldPlaySome()
+        {
+            var data = Data1.CreateBasicSeasonConfiguration();
+
+            var seasonService = new SeasonService();
+            var seasonCompetition = ((List<SeasonCompetition>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
+
+            var season = seasonService.CreateNewSeason(seasonCompetition, "Season 1", 1);
+
+            var schedule = Scheduler.CreateGames(season.Parent.League, season.Year, 1, 1, 
+               season.GetAllTeamsInDivision(season.GetDivisionByName("NHL")).Select(t => t.Parent).ToList(),
+                1, true, season.Parent.GameRules);
+            
+            season.Schedule = schedule;
+
+            var scheduleValidator = new ScheduleValidator(season.Schedule);
+
+            True(scheduleValidator.IsValid);
+
+            while (!season.Schedule.IsComplete())
+                season.PlayNextDay(new Random(12345));
+
+            StrictEqual(38, season.Teams.Where(t => t.Name.Equals("Boston")).First().Stats.Games);
+        }
+
+        [Fact]
+        public void ShouldGetAllTeamsInDivision()
+        {
+            var data = Data1.CreateBasicSeasonConfiguration();
+
+            var seasonService = new SeasonService();
+            var seasonCompetition = ((List<SeasonCompetition>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
+
+            var season = seasonService.CreateNewSeason(seasonCompetition, "Season 1", 1);
+
+            StrictEqual(20, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("NHL")).First()).Count);
+            StrictEqual(8, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("East")).First()).Count);
+            StrictEqual(6, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("West")).First()).Count);
+            StrictEqual(6, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("Central")).First()).Count);
+            StrictEqual(4, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("NorthEast")).First()).Count);
+            StrictEqual(4, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("Atlantic")).First()).Count);
+        }
     }
 }

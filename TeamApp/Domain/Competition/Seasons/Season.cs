@@ -21,6 +21,32 @@ namespace TeamApp.Domain.Competition.Seasons
             Name = name;
             Year = year;
         }
+
+        public void Playgame(ScheduleGame game, Random random)
+        {
+            game.Play(random);
+            ProcessGame(game);
+        }
+
+        public void PlayGames(List<ScheduleGame> games, Random random)
+        {
+            games.ForEach(g => { g.Play(random); ProcessGame(g); });
+        }
+
+        public void PlayDay(ScheduleDay day, Random random)
+        {
+            PlayGames(day.Games, random);
+        }
+
+        public void PlayNextDay(Random random)
+        {
+            var day = Schedule.GetNextInCompleteDay();
+
+            if (day != null)
+            {
+                PlayGames(day.Games, random);
+            }
+        }
         
         public void ProcessGame(ScheduleGame game)
         {
@@ -46,5 +72,24 @@ namespace TeamApp.Domain.Competition.Seasons
                 away.Stats.GoalsAgainst += game.HomeScore;
             }
         }
+
+        public SeasonDivision GetDivisionByName(string divisionName)
+        {
+            return Divisions.Where(d => d.Name.Equals(divisionName)).First();
+        }
+        public List<SeasonTeam> GetAllTeamsInDivision(SeasonDivision division)
+        {
+            var result = new List<SeasonTeam>();
+
+            if (division.Teams != null && division.Teams.Count > 0) result.AddRange(division.Teams);
+
+            Divisions.Where(d => d.ParentDivision != null && d.ParentDivision.Name.Equals(division.Name)).ToList().ForEach(div =>
+            {
+                result.AddRange(GetAllTeamsInDivision(div));
+            });
+
+            return result;
+        }
+
     }
 }

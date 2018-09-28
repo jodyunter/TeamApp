@@ -25,6 +25,6 @@ namespace TeamApp.Domain.Competition.Seasons
         {
             if (Teams == null) Teams = new List<SeasonTeam>();
             if (!Teams.Contains(newTeam)) Teams.Add(newTeam);
-        }
+        }        
     }
 }

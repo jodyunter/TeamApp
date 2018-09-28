@@ -33,11 +33,11 @@ namespace TeamApp.Domain.Scheduler
         }
 
 
-        public static int GetLastDay(Dictionary<int, ScheduleDay> days)
+        public static int GetLastDay(Schedule schedule)
         {
             int maxDay = -1;
 
-            days.Values.ToList().ForEach(day =>
+            schedule.Days.Values.ToList().ForEach(day =>
             {
                 if (day.DayNumber > maxDay) maxDay = -1;
             });
