@@ -12,6 +12,7 @@ namespace TeamApp.Test.Helpers
         public static string BASIC_SEASON_TEAM_RULE_LIST = "BASIC_SEASON_TEAM_RULE_LIST";
         public static string BASIC_SEASON_COMPETITION_LSIT = "BASIC_SEASON_COMPETITION_LIST";
         public static string BASIC_SEASON_DIV_RULE_LIST = "BAISC_SEASON_DIV_RULE_LIST";
+        public static string BASIC_SEASON_GAME_RULES = "BASIC_SEASON_GAME_RULES";
 
         
         public static Dictionary<string, object> CreateBasicSeasonConfiguration()
@@ -48,7 +49,9 @@ namespace TeamApp.Test.Helpers
            
             var teamMap = new Dictionary<string, Team>();
 
-            SeasonCompetition competition = new SeasonCompetition("My Season", league, 1, null, 1, 1, new List<SeasonTeamRule>(), new List<SeasonDivisionRule>());
+            var gameRules = new SeasonGameRules(null, true, 3, 1, 7, 6);
+        
+            SeasonCompetition competition = new SeasonCompetition("My Season", league, 1, null, 1, 1, new List<SeasonTeamRule>(), new List<SeasonDivisionRule>(), gameRules);
 
             var seasonCompetitionList = new List<SeasonCompetition>()
             {
@@ -76,6 +79,7 @@ namespace TeamApp.Test.Helpers
             objects.Add(BASIC_TEAM_MAP, teamMap);
             objects.Add(BASIC_SEASON_TEAM_RULE_LIST, competition.TeamRules);
             objects.Add(BASIC_SEASON_COMPETITION_LSIT, seasonCompetitionList);
+            objects.Add(BASIC_SEASON_GAME_RULES, competition.GameRules);
 
             return objects;
 

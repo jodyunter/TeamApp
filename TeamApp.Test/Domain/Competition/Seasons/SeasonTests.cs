@@ -17,7 +17,7 @@ namespace TeamApp.Test.Domain.Competition.Seasons
         {
             var season = new Season(null, "Test", 1);
             var teams = new List<Team>() { CreateTeam("Team 1"), CreateTeam("Team 2"), CreateTeam("Team 3"), CreateTeam("Team 4") };
-            var rules = new GameRules { CanTie = true, MinimumPeriods = 1, MaxOverTimePeriods = 0, HomeRange = 7, AwayRange = 6 };
+            var rules = new GameRules(true, 1, 0, 7, 6);
             var games = new List<ScheduleGame>()
             {
                 new ScheduleGame(null, 1, 1, 1, teams[0], teams[1], 1, 1, true, 1, rules),

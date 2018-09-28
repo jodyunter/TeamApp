@@ -21,8 +21,9 @@ namespace TeamApp.Test.Services
             var data = Data1.CreateBasicSeasonConfiguration();
 
             var seasonService = new SeasonService();
+            var seasonCompetition = ((List<SeasonCompetition>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
 
-            var season = seasonService.CreateNewSeason(((List<SeasonCompetition>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0], seasonName, seasonNumber);
+            var season = seasonService.CreateNewSeason(seasonCompetition, seasonName, seasonNumber);
 
             Equal(seasonNumber, season.Year);
             Equal(seasonName, season.Name);

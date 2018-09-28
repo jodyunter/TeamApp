@@ -13,7 +13,7 @@ namespace TeamApp.Domain.Competition.Seasons
         public int Year { get; set; }
         public List<SeasonDivision> Divisions { get; set; }
         public List<SeasonTeam> Teams { get; set; }
-        public Schedule Schedule { get; set; }
+        public Schedule Schedule { get; set; }        
 
         public Season(SeasonCompetition parent, string name, int year)
         {
