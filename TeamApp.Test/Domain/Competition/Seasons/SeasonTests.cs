@@ -92,7 +92,7 @@ namespace TeamApp.Test.Domain.Competition.Seasons
             True(scheduleValidator.IsValid);
 
             while (!season.Schedule.IsComplete())
-                season.PlayNextDay(new Random(12345));
+                season.PlayNextDay(new Random());
 
             StrictEqual(38, season.Teams.Where(t => t.Name.Equals("Boston")).First().Stats.Games);
         }
