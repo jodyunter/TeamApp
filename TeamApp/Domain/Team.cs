@@ -21,5 +21,10 @@ namespace TeamApp.Domain
             FirstYear = firstYear;
             LastYear = lastYear;
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

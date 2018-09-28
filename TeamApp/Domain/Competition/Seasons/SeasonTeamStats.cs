@@ -18,7 +18,7 @@ namespace TeamApp.Domain.Competition.Seasons
         }
         public SeasonTeamStats(SeasonTeam p, int wins, int loses, int ties, int goalsFor, int goalsAgainst)
         {
-            this.Team = p;
+            Team = p;
             Wins = wins;
             Loses = loses;
             Ties = ties;

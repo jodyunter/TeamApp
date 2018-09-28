@@ -41,9 +41,7 @@ namespace TeamApp.Domain.Scheduler
             TeamGamesPlayed = new Dictionary<string, int>();
             TeamDaysPlayed = new Dictionary<string, int>();
             TeamHomeGamesPlayed = new Dictionary<string, int>();
-            TeamAwayGamesPlayed = new Dictionary<string, int>();
-
-            bool result = true;
+            TeamAwayGamesPlayed = new Dictionary<string, int>();            
 
             Schedule.Days.Keys.ToList().ForEach(dayNumber =>
             {
