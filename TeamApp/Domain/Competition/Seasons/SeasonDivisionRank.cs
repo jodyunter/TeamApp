@@ -9,5 +9,12 @@ namespace TeamApp.Domain.Competition.Seasons
         public int Rank { get; set; }
         public SeasonDivision Division { get; set; }
         public SeasonTeam Team { get; set; }
+
+        public SeasonDivisionRank(int rank, SeasonDivision division, SeasonTeam team)
+        {
+            Rank = rank;
+            Division = division;
+            Team = team;
+        }
     }
 }

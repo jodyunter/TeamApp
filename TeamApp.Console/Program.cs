@@ -30,15 +30,20 @@ namespace TeamApp.Console
             var scheduleValidator = new ScheduleValidator(season.Schedule);
 
 
-            Random r = new Random(12345);
+            //Random r = new Random(12345);
+            Random r = new Random();
 
             while (!season.Schedule.IsComplete())
                 season.PlayNextDay(r);
 
             WriteLine(SeasonTeamStatsView.GetHeader());
-            season.Teams.ForEach(team =>
+
+            season.SortTeamByDivision("NHL");
+
+            season.Rankings["NHL"].ForEach(divisionRanking =>
             {
-                var view = new SeasonTeamStatsView(team.Stats, team.Name, team.Division.Name);
+             
+                var view = new SeasonTeamStatsView(divisionRanking);
                 WriteLine(view.GetView());
             });
 

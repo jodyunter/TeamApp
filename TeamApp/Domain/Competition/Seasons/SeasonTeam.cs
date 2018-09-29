@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TeamApp.Domain.Competition.Seasons
 {
-    public class SeasonTeam:ITeam
+    public class SeasonTeam:ITeam,IComparable<SeasonTeam>
     {
         public string Name { get; set; }
         public int Skill { get; set; }        
@@ -29,6 +29,21 @@ namespace TeamApp.Domain.Competition.Seasons
             FirstYear = year;
             LastYear = year;
             if (Stats == null) Stats = new SeasonTeamStats(this);
+        }
+
+        public int CompareTo(SeasonTeam other)
+        {
+            var thisStat = Stats;
+            var thatStats = other.Stats;
+
+            int statCompare = Stats.CompareTo(other.Stats);
+
+            if (statCompare == 0)
+            {
+                return Name.CompareTo(other.Name);
+            }
+            else
+                return statCompare;
         }
     }
 }

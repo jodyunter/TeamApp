@@ -14,12 +14,14 @@ namespace TeamApp.Domain.Competition.Seasons
         public List<SeasonDivision> Divisions { get; set; }
         public List<SeasonTeam> Teams { get; set; }
         public Schedule Schedule { get; set; }        
+        public Dictionary<string, List<SeasonDivisionRank>> Rankings { get; set; }
 
         public Season(SeasonCompetition parent, string name, int year)
         {
             Parent = parent;
             Name = name;
             Year = year;
+            Rankings = new Dictionary<string, List<SeasonDivisionRank>>();
         }
 
         public void Playgame(ScheduleGame game, Random random)
@@ -77,6 +79,7 @@ namespace TeamApp.Domain.Competition.Seasons
         {
             return Divisions.Where(d => d.Name.Equals(divisionName)).First();
         }
+
         public List<SeasonTeam> GetAllTeamsInDivision(SeasonDivision division)
         {
             var result = new List<SeasonTeam>();
@@ -89,6 +92,25 @@ namespace TeamApp.Domain.Competition.Seasons
             });
 
             return result;
+        }
+
+        public void SortTeamByDivision(string divisionName)
+        {
+            var division = GetDivisionByName(divisionName);
+
+            var listOfTeams = GetAllTeamsInDivision(division);
+
+            listOfTeams.Sort((a, b) => -1 * a.CompareTo(b)); // descending sort
+
+            int rank = 1;
+
+            Rankings[divisionName] = new List<SeasonDivisionRank>();
+
+            listOfTeams.ForEach(team =>
+            {
+                Rankings[divisionName].Add(new SeasonDivisionRank(rank, division, team));
+                rank++;
+            });
         }
 
     }

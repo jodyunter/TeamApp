@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TeamApp.Domain.Competition.Seasons
 {
-    public class SeasonTeamStats
+    public class SeasonTeamStats:IComparable<SeasonTeamStats>
     {
 
         public SeasonTeamStats(SeasonTeam team)
@@ -43,5 +43,37 @@ namespace TeamApp.Domain.Competition.Seasons
 
         public int PointsPerWin { get; set; }
         public int PointsPerTie { get; set; }
+
+        public int CompareTo(SeasonTeamStats other)
+        {
+            if (this.Points == other.Points)
+            {
+                if (this.Games == other.Games)
+                {
+                    if (this.Wins == other.Wins)
+                    {
+                        if (this.GoalDifference == other.GoalDifference)
+                        {
+                            if (this.GoalsFor == other.GoalsFor)
+                            {
+                                return 0;
+                            }
+                            else
+                                return this.GoalsFor - other.GoalsFor;
+                        }
+                        else
+                            return this.GoalDifference - other.GoalDifference;
+                    }
+                    else
+                        return this.Wins - other.Wins;
+                }
+                else
+                {
+                    return (this.Games - other.Games) * -1; // we want less games to be better
+                }
+            }
+            else
+                return this.Points - other.Points;
+        }
     }
 }

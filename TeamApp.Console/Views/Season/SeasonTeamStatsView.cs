@@ -10,15 +10,11 @@ namespace TeamApp.Console.Views.Season
 
         public static string formatter = "{0,3}. {1,-15}{2,5}{3,5}{4,5}{5,5}{6,5}{7,5}{8,5}{9,5}{10,15}";
 
-        public SeasonTeamStats Stats { get; set; }
-        public string TeamName { get; set; }
-        public string DivisionName { get; set; }
+        public SeasonDivisionRank Ranking;
 
-        public SeasonTeamStatsView(SeasonTeamStats stats, string teamName, string divisionName)
+        public SeasonTeamStatsView(SeasonDivisionRank ranking)
         {
-            Stats = stats;
-            TeamName = teamName;
-            DivisionName = divisionName;
+            Ranking = ranking;
         }
         public static string GetHeader()
         {
@@ -26,8 +22,12 @@ namespace TeamApp.Console.Views.Season
         }
         public string GetView()
         {
-            return string.Format(formatter, "-", TeamName, Stats.Wins, Stats.Loses, Stats.Ties, Stats.Points, Stats.Games, Stats.GoalsFor,
-                Stats.GoalsAgainst, Stats.GoalDifference, DivisionName);
+            var team = Ranking.Team;
+            var division = Ranking.Division;
+            var stats = team.Stats;
+
+            return string.Format(formatter, Ranking.Rank, team.Name, stats.Wins, stats.Loses, stats.Ties, stats.Points, stats.Games, stats.GoalsFor,
+                stats.GoalsAgainst, stats.GoalDifference, division.Name);
         }
     }
 }
