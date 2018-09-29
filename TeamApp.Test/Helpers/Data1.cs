@@ -23,8 +23,7 @@ namespace TeamApp.Test.Helpers
             var EAST = "East";
             var CENTRAL = "Central";
             var NORTHEAST = "NorthEast";
-            var ATLANTIC = "Atlantic";
-                
+            var ATLANTIC = "Atlantic";                           
 
             var divMap = new Dictionary<string, List<string>>()
             {
@@ -87,7 +86,7 @@ namespace TeamApp.Test.Helpers
 
 
         public static void CreateTeamsForDivision(SeasonCompetition competition, Dictionary<string, Team> teamMap, List<string> teamNames, string divisionName)
-        {
+        {            
             teamNames.ForEach(s =>
             {
                 var team = new Team(s, 5, null, 1, null);
