@@ -5,6 +5,7 @@ using TeamApp.Domain.Competition.Seasons.Config;
 using System.Linq;
 using TeamApp.Domain.Competition.Seasons;
 using TeamApp.Domain;
+using TeamApp.Domain.Scheduler;
 
 namespace TeamApp.Services
 {
@@ -62,6 +63,42 @@ namespace TeamApp.Services
             seasonDivision.AddTeam(newTeam);
             teams.Add(newTeam.Name, newTeam);
 
+        }
+        //todo game numbers are messed up
+        public void CreateSeasonSchedule(Season season, SeasonCompetition competition) 
+        {
+            int day = 1;
+
+            competition.ScheduleRules.ForEach(rule =>
+            {
+                var homeTeams = GetTeams(season, rule.HomeTeamType, rule.HomeTeamValue);
+                var awayTeams = GetTeams(season, rule.AwayTeamType, rule.AwayTeamValue);
+
+                var nextSchedule = Scheduler.CreateGames(season.Parent.League, season.Year, 1, day, homeTeams.Select(st => st.Parent).ToList(), awayTeams.Select(st => st.Parent).ToList(), rule.Iterations, rule.HomeAndAway, season.Parent.GameRules);
+
+                day = Scheduler.MergeSchedules(season.Schedule, nextSchedule);
+            });
+            
+        }
+        
+        public List<SeasonTeam> GetTeams(Season season, int teamType, string teamValue)
+        {
+            
+            var teams = new List<SeasonTeam>();   
+            
+            switch (teamType)
+            {
+                case SeasonScheduleRule.DIVISION_TYPE:
+                    teams.AddRange(season.GetAllTeamsInDivision(season.GetDivisionByName(teamValue)));
+                    break;
+                case SeasonScheduleRule.TEAM_TYPE:
+                    teams.Add(season.Teams.Where(t => t.Name.Equals(teamValue)).First());
+                    break;
+                case SeasonScheduleRule.NONE:
+                    return null;
+            }
+
+            return teams;
         }
     }
 }

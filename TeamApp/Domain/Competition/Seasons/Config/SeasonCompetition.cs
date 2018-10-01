@@ -17,7 +17,8 @@ namespace TeamApp.Domain.Competition.Seasons.Config
         public List<SeasonTeamRule> TeamRules { get; set; }
         public List<SeasonDivisionRule> DivisionRules { get; set; }
         public SeasonGameRules GameRules { get; set; }
-        public SeasonCompetition(string name, League league, int? firstYear, int? lastYear, int order, int startDay, List<SeasonTeamRule> teamRules, List<SeasonDivisionRule> divisionRules, SeasonGameRules gameRules)
+        public List<SeasonScheduleRule> ScheduleRules { get; set; }
+        public SeasonCompetition(string name, League league, int? firstYear, int? lastYear, int order, int startDay, List<SeasonTeamRule> teamRules, List<SeasonDivisionRule> divisionRules, SeasonGameRules gameRules, List<SeasonScheduleRules> scheduleRules)
         {
             Name = name;
             League = league;
@@ -29,6 +30,7 @@ namespace TeamApp.Domain.Competition.Seasons.Config
             DivisionRules = divisionRules;
             GameRules = gameRules;
             GameRules.Competition = this;
+            ScheduleRules = scheduleRules;
         }
 
 
