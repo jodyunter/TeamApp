@@ -9,6 +9,8 @@ namespace TeamApp.Domain.Scheduler
     //todo stop using the dictionaries and start using Schedules and merging scheudles instead
     public class Scheduler
     {
+
+        /* these are the two entry methods if multiple iterations of a series of games are needed */
         public static Schedule CreateGames(League league, int year, int lastGameNumber, int startDay, List<Team> teams, int iterations, bool homeAndAway, GameRules rules)
         {
             return CreateGames(league, year, lastGameNumber, startDay, teams, null, iterations, homeAndAway, rules);
@@ -35,26 +37,9 @@ namespace TeamApp.Domain.Scheduler
 
         public static int GetLastDay(Schedule schedule)
         {
-            int maxDay = -1;
-
-            schedule.Days.Values.ToList().ForEach(day =>
-            {
-                if (day.DayNumber > maxDay) maxDay = -1;
-            });
-
-            return maxDay;
+            return schedule.Days.Keys.Max();
         }
-
-        public static Schedule CreateGames(League league, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, bool homeAndAway, GameRules rules)
-        {
-            var result = new Schedule();
-
-            if (awayTeams == null || awayTeams.Count == 0) result = CreateGamesSingleGroup(league, year, lastGameNumber, startDay, homeTeams, homeAndAway, rules);
-            else result = CreateGamesTwoDifferentGroups(league, year, lastGameNumber, startDay, homeTeams, awayTeams, homeAndAway, rules);
-
-            return result;
-
-        }
+        
         //Assumption is that they can add days afterwards.  Different methods need to handle adding games to already established days
         //todo need to rework this
         public static Schedule CreateGamesTwoDifferentGroups(League league, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, bool homeAndAway, GameRules rules)
@@ -269,6 +254,10 @@ namespace TeamApp.Domain.Scheduler
             return schedule;
         }
 
+        //these methods setup an array to guarantee no duplicate games.
+        //we pick a pivot and we rotate around it.
+        //for even number of teams, one team is the pivot.
+        //for odd number of teams, a -1 is the pivot and the team paired with them gets a day off that day
         public static int[,] CreateArrayForScheduling(int teams)
         {
             int firstSpot = 0;
