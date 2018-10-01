@@ -33,6 +33,16 @@ namespace TeamApp.Test.Helpers
 
             };
 
+            var orderMap = new Dictionary<string, int[]>
+            {
+                { NHL, new int[] {1, 1 } },                
+                {EAST, new int[] {2, 1 } },
+                {WEST, new int[] {3, 1 } },
+                {CENTRAL, new int[] {3, 2 } },
+                {NORTHEAST, new int[] {3, 3 } },
+                {ATLANTIC, new int[] {3, 4 } }
+            };
+
             var teamNameMap = new Dictionary<string, List<string>>()
             {
                 {NORTHEAST, new List<string>() { "Toronto", "Montreal", "Ottawa", "Pittsburgh" } },
@@ -63,7 +73,7 @@ namespace TeamApp.Test.Helpers
                 data.Value.ForEach(divisionName =>
                 {
                     competition.DivisionRules.Add(
-                        new SeasonDivisionRule(competition, divisionName, data.Key == TOP ? null : data.Key, 1, null)
+                        new SeasonDivisionRule(competition, divisionName, data.Key == TOP ? null : data.Key, orderMap[divisionName][0], orderMap[divisionName][1], 1, null)
                         );
 
                     if (teamNameMap.ContainsKey(divisionName))

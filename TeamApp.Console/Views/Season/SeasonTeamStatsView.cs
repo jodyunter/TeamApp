@@ -29,5 +29,7 @@ namespace TeamApp.Console.Views.Season
             return string.Format(formatter, Ranking.Rank, team.Name, stats.Wins, stats.Loses, stats.Ties, stats.Points, stats.Games, stats.GoalsFor,
                 stats.GoalsAgainst, stats.GoalDifference, division.Name);
         }
+        
     }
+    
 }

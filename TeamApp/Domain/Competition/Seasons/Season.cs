@@ -94,6 +94,13 @@ namespace TeamApp.Domain.Competition.Seasons
             return result;
         }
 
+        public void SortAllTeams()
+        {
+            Divisions.ForEach(division =>
+            {
+                SortTeamByDivision(division.Name);
+            });
+        }
         public void SortTeamByDivision(string divisionName)
         {
             var division = GetDivisionByName(divisionName);

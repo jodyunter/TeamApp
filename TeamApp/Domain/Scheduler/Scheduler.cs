@@ -179,6 +179,36 @@ namespace TeamApp.Domain.Scheduler
             return initial.Days.Keys.Max();
         }
 
+        public static int AddGameToSchedule(Schedule schedule, ScheduleGame game, int dayToStartOn)
+        {
+            bool foundDayToAddTeamTo = false;
+            int currentDay = dayToStartOn;
+            int maxDay = schedule.Days.Keys.Max();
+
+            while (!foundDayToAddTeamTo && currentDay <= maxDay )
+            {
+                if (schedule.Days.ContainsKey(currentDay))
+                {
+                    bool canAdd = true;
+                    canAdd = canAdd && !schedule.Days[currentDay].DoesTeamPlayInDay(game.HomeTeam.Name);
+                    canAdd = canAdd && !schedule.Days[currentDay].DoesTeamPlayInDay(game.AwayTeam.Name);
+
+                    if (canAdd) foundDayToAddTeamTo = true;
+                }
+
+                currentDay++;
+            }
+
+            if (!foundDayToAddTeamTo)
+            {
+                schedule.AddDay(currentDay++);                
+            }
+
+            schedule.Days[currentDay].AddGame(game);
+
+            return currentDay;
+        }
+
         public static Schedule CreateGamesSingleGroup(League league, int year, int lastGameNumber, int startDay, List<Team> teams, bool homeAndAway, GameRules rules)
         {        
 

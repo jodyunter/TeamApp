@@ -38,13 +38,19 @@ namespace TeamApp.Console
 
             WriteLine(SeasonTeamStatsView.GetHeader());
 
-            season.SortTeamByDivision("NHL");
+            season.SortAllTeams();
 
-            season.Rankings["NHL"].ForEach(divisionRanking =>
+            season.Divisions.OrderBy(d => d.Level).ThenBy(d => d.Order).ToList().ForEach(div =>
             {
-             
-                var view = new SeasonTeamStatsView(divisionRanking);
-                WriteLine(view.GetView());
+                WriteLine(div.Name);
+                WriteLine(SeasonTeamStatsView.GetHeader());
+
+                season.Rankings[div.Name].OrderBy(d => d.Rank).ToList().ForEach(ranking =>
+                {
+                    WriteLine(new SeasonTeamStatsView(ranking).GetView());
+                });
+
+                WriteLine("\n");
             });
 
             WriteLine("Press Enter to continue");

@@ -11,6 +11,8 @@ namespace TeamApp.Domain.Competition.Seasons
         public int Year;
         public string Name { get; set; }
         public List<SeasonTeam> Teams { get; set; }
+        public int Level { get; set; }
+        public int Order { get; set; }
 
         public SeasonDivision(Season season, SeasonDivision parentDivision, int year, string name, int level, int order, List<SeasonTeam> teams)
         {
@@ -19,6 +21,8 @@ namespace TeamApp.Domain.Competition.Seasons
             Year = year;
             Name = name;
             Teams = teams;
+            Order = order;
+            Level = level;
         }
 
         internal void AddTeam(SeasonTeam newTeam)
