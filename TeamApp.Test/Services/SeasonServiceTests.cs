@@ -37,6 +37,7 @@ namespace TeamApp.Test.Services
             Equals("EAST", season.Divisions.Where(t => t.Name == "NorthEast").First().ParentDivision.Name);
             Equals("NHL", season.Divisions.Where(t => t.Name == "West").First().ParentDivision.Name);
             Equals("NHL", season.Divisions.Where(t => t.Name == "Central").First().ParentDivision.Name);
+            StrictEqual(72, season.Schedule.Days.Keys.Max());
 
         }
     }

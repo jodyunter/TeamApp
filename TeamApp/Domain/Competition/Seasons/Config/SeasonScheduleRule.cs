@@ -18,7 +18,15 @@ namespace TeamApp.Domain.Competition.Seasons.Config
         public int Iterations { get; set; }
         public bool HomeAndAway { get; set; }
 
-
-                
+        public SeasonScheduleRule(SeasonCompetition competition, int homeTeamType, string homeTeamValue, int awayTeamType, string awayTeamValue, int iterations, bool homeAndAway)
+        {
+            Competition = competition;
+            HomeTeamType = homeTeamType;
+            HomeTeamValue = homeTeamValue;
+            AwayTeamType = awayTeamType;
+            AwayTeamValue = awayTeamValue;
+            Iterations = iterations;
+            HomeAndAway = homeAndAway;
+        }
     }
 }

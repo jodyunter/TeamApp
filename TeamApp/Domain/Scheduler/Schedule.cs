@@ -42,5 +42,49 @@ namespace TeamApp.Domain.Scheduler
         {
             return GetNextInCompleteDay() == null;
         }
+
+        public Dictionary<string, int> GetHomeGamesVsTeams(string teamName, List<string> opponents)
+        {
+            var result = new Dictionary<string, int>();
+
+            Days.Values.ToList().ForEach(day =>
+            {                
+                day.Games.Where(g => g.HomeTeam.Name.Equals(teamName) && opponents.Contains(g.AwayTeam.Name)).ToList().ForEach(game =>
+                {
+                    if (!result.ContainsKey(game.AwayTeam.Name))
+                    {
+                        result[game.AwayTeam.Name] = 0;
+                    }
+
+                    result[game.AwayTeam.Name]++;
+                });
+
+                
+            });
+
+            return result;
+        }
+
+        public Dictionary<string, int> GetAwayGamesVsTeams(string teamName, List<string> opponents)
+        {
+            var result = new Dictionary<string, int>();
+
+            Days.Values.ToList().ForEach(day =>
+            {
+                day.Games.Where(g => g.AwayTeam.Name.Equals(teamName) && opponents.Contains(g.HomeTeam.Name)).ToList().ForEach(game =>
+                {
+                    if (!result.ContainsKey(game.HomeTeam.Name))
+                    {
+                        result[game.HomeTeam.Name] = 0;
+                    }
+
+                    result[game.HomeTeam.Name]++;
+                });
+
+
+            });
+
+            return result;
+        }
     }
 }

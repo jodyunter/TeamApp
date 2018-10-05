@@ -21,11 +21,11 @@ namespace TeamApp.Console
 
             var season = seasonService.CreateNewSeason(seasonCompetition, "Season 1", 1);
 
-            var schedule = Scheduler.CreateGames(season.Parent.League, season.Year, 1, 1,
+            /*var schedule = Scheduler.CreateGames(season.Parent.League, season.Year, 1, 1,
                season.GetAllTeamsInDivision(season.GetDivisionByName("NHL")).Select(t => t.Parent).ToList(),
                 1, true, season.Parent.GameRules);
 
-            season.Schedule = schedule;
+            season.Schedule = schedule; */
 
             var scheduleValidator = new ScheduleValidator(season.Schedule);
 
@@ -52,6 +52,16 @@ namespace TeamApp.Console
 
                 WriteLine("\n");
             });
+
+            var divName = "NHL";
+            var teamName = "Calgary";
+
+            var homGames = season.Schedule.GetHomeGamesVsTeams(teamName, season.GetAllTeamsInDivision(season.GetDivisionByName(divName)).Select(t => t.Name).ToList());
+            var awayGames = season.Schedule.GetHomeGamesVsTeams(teamName, season.GetAllTeamsInDivision(season.GetDivisionByName(divName)).Select(t => t.Name).ToList());
+            foreach (KeyValuePair<string, int> d in homGames)
+            {
+                WriteLine(d.Key + ": " + d.Value + " - " + awayGames[d.Key]);                
+            }
 
             WriteLine("Press Enter to continue");
             ReadLine();

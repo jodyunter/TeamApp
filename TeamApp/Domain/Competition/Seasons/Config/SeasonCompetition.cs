@@ -18,7 +18,7 @@ namespace TeamApp.Domain.Competition.Seasons.Config
         public List<SeasonDivisionRule> DivisionRules { get; set; }
         public SeasonGameRules GameRules { get; set; }
         public List<SeasonScheduleRule> ScheduleRules { get; set; }
-        public SeasonCompetition(string name, League league, int? firstYear, int? lastYear, int order, int startDay, List<SeasonTeamRule> teamRules, List<SeasonDivisionRule> divisionRules, SeasonGameRules gameRules, List<SeasonScheduleRules> scheduleRules)
+        public SeasonCompetition(string name, League league, int? firstYear, int? lastYear, int order, int startDay, List<SeasonTeamRule> teamRules, List<SeasonDivisionRule> divisionRules, SeasonGameRules gameRules, List<SeasonScheduleRule> scheduleRules)
         {
             Name = name;
             League = league;

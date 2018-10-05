@@ -44,7 +44,7 @@ namespace TeamApp.Domain.Scheduler
         //todo need to rework this
         public static Schedule CreateGamesTwoDifferentGroups(League league, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, bool homeAndAway, GameRules rules)
         {
-
+            
             int initialDays = 0;
             var aTeamList = new List<Team>();
             var bTeamList = new List<Team>();
@@ -64,12 +64,12 @@ namespace TeamApp.Domain.Scheduler
                 reverseHomeAndAway = true;
                 initialDays = awayTeams.Count;
             }
-
-            int totalDays = initialDays;
+            
+            int maxDay = initialDays + startDay - 1;
 
             var schedule = new Schedule();
 
-            for (int i = 0 + startDay; i < totalDays + startDay; i++)
+            for (int i = 0 + startDay; i <= maxDay; i++)
             {
                 schedule.AddDay(i);
             }
@@ -88,15 +88,15 @@ namespace TeamApp.Domain.Scheduler
                         0, 0, false, 1, rules);
                     schedule.Days[currentDay].AddGame(game);
                     
-                    currentDay = GetNextDay(currentDay, startDay, initialDays, 1);
+                    currentDay = GetNextDay(currentDay, startDay, maxDay, 1);
 
                 });
                 //when done the home team games, start on the previous day the last team started on and go through it again
-                teamStartDay = GetNextDay(teamStartDay, startDay, initialDays, -1);
+                teamStartDay = GetNextDay(teamStartDay, startDay, maxDay, -1);
             });
 
 
-            if (homeAndAway) CreateAwayGamesForHomeAndAway(schedule, totalDays + startDay, rules);
+            if (homeAndAway) CreateAwayGamesForHomeAndAway(schedule, maxDay + 1, rules);
             //do the game numbers last so that they are in order by day
             foreach (KeyValuePair<int, ScheduleDay> data in schedule.Days)
             {

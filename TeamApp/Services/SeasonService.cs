@@ -24,6 +24,9 @@ namespace TeamApp.Services
 
             season.Divisions = divisions.Values.ToList();
             season.Teams = teams.Values.ToList();
+
+            CreateSeasonSchedule(season, seasonConfig);
+
             return season;
         }
         
@@ -69,14 +72,29 @@ namespace TeamApp.Services
         {
             int day = 1;
 
+            season.Schedule = new Schedule();
+
             competition.ScheduleRules.ForEach(rule =>
             {
+                if (rule.HomeTeamType == rule.AwayTeamType && rule.HomeTeamValue == rule.AwayTeamValue)
+                {
+                    throw new ApplicationException("Can't have the same home and away types and values");
+                }
                 var homeTeams = GetTeams(season, rule.HomeTeamType, rule.HomeTeamValue);
                 var awayTeams = GetTeams(season, rule.AwayTeamType, rule.AwayTeamValue);
+                
+                var nextSchedule = Scheduler.CreateGames(
+                    season.Parent.League,
+                    season.Year, 
+                    1,
+                    day, 
+                    homeTeams.Select(st => st.Parent).ToList(), 
+                    (awayTeams == null || awayTeams.Count == 0) ? null: awayTeams.Select(st => st.Parent).ToList(), 
+                    rule.Iterations, 
+                    rule.HomeAndAway, 
+                    season.Parent.GameRules);
 
-                var nextSchedule = Scheduler.CreateGames(season.Parent.League, season.Year, 1, day, homeTeams.Select(st => st.Parent).ToList(), awayTeams.Select(st => st.Parent).ToList(), rule.Iterations, rule.HomeAndAway, season.Parent.GameRules);
-
-                day = Scheduler.MergeSchedules(season.Schedule, nextSchedule);
+                day = Scheduler.MergeSchedules(season.Schedule, nextSchedule) + 1;
             });
             
         }
