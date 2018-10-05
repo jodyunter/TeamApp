@@ -141,7 +141,7 @@ namespace TeamApp.Domain.Scheduler
         //we assume no team can play more than once a day
         public static int MergeSchedules(Schedule initial, Schedule newDays)
         {            
-
+            
             newDays.Days.Keys.ToList().ForEach(dayNumber =>
             {
                 int initialDayNumber = dayNumber;
@@ -162,6 +162,62 @@ namespace TeamApp.Domain.Scheduler
             });
 
             return initial.Days.Keys.Max();
+        }
+
+        public static int MergeSchedulesTryToCompress(Schedule initial, Schedule newDays)
+        {
+            //no more days to merge
+            if (newDays.Days.Count == 0)
+            {
+                return initial.Days.Keys.Max();
+            }
+
+            //this is the first schedule to merge
+            if (initial.Days.Count == 0)
+            {
+                newDays.Days.Values.ToList().ForEach(day =>
+                {
+                    initial.AddDay(day.DayNumber);
+                    initial.Days[day.DayNumber].AddGamesToDay(day.Games);
+                });
+                return initial.Days.Keys.Max();
+            }
+
+            var added = new Dictionary<int, bool>();
+
+            
+
+            initial.Days.Values.ToList().ForEach(currentDay =>
+            {
+                var dayList = newDays.Days.Keys.ToList();
+                
+                //try to add each day
+                dayList.ForEach(dayNumber =>
+                {
+                    if (!currentDay.DoesAnyTeamPlayInDay(newDays.Days[dayNumber]))
+                    {
+                        currentDay.AddGamesToDay(newDays.Days[dayNumber].Games);
+                        newDays.Days.Remove(dayNumber);
+                    }
+                });
+            });
+
+            //add one more day then try to recompress
+            if (newDays.Days.Count > 0)
+            {
+                int lastDay = initial.Days.Keys.Max();
+
+                initial.AddDay(lastDay + 1);
+                initial.Days[lastDay + 1].AddGamesToDay(newDays.Days[newDays.Days.Keys.ToList()[0]].Games);
+
+                newDays.Days.Remove(newDays.Days.Keys.ToList()[0]);
+
+                return MergeSchedulesTryToCompress(initial, newDays);
+            }
+            else
+            {
+                return initial.Days.Keys.Max();
+            }
         }
 
         public static int AddGameToSchedule(Schedule schedule, ScheduleGame game, int dayToStartOn)

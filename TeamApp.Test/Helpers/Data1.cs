@@ -66,7 +66,7 @@ namespace TeamApp.Test.Helpers
             competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, WEST, SeasonScheduleRule.DIVISION_TYPE, CENTRAL, 1, true));
             competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, EAST, SeasonScheduleRule.NONE, null, 3, true));
             competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, WEST, SeasonScheduleRule.NONE, null, 3, true));
-            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, CENTRAL, SeasonScheduleRule.NONE, null, 3, true));
+            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, CENTRAL, SeasonScheduleRule.NONE, null, 3, true));            
 
             var seasonCompetitionList = new List<SeasonCompetition>()
             {

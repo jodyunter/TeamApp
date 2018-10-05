@@ -7,6 +7,7 @@ using TeamApp.Test.Helpers;
 using TeamApp.Domain.Competition.Seasons.Config;
 using System.Linq;
 using Xunit;
+using TeamApp.Domain.Scheduler;
 
 namespace TeamApp.Test.Services
 {
@@ -37,7 +38,10 @@ namespace TeamApp.Test.Services
             Equals("EAST", season.Divisions.Where(t => t.Name == "NorthEast").First().ParentDivision.Name);
             Equals("NHL", season.Divisions.Where(t => t.Name == "West").First().ParentDivision.Name);
             Equals("NHL", season.Divisions.Where(t => t.Name == "Central").First().ParentDivision.Name);
-            StrictEqual(72, season.Schedule.Days.Keys.Max());
+            StrictEqual(80, season.Schedule.Days.Keys.Max());
+
+            var validator = new ScheduleValidator(season.Schedule);
+            True(validator.IsValid);
 
         }
     }

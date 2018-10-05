@@ -50,12 +50,12 @@ namespace TeamApp.Domain.Scheduler
             game.Day = DayNumber;
             Games.Add(game);
         }
-        public void AddGamesToDay(ScheduleDay day, List<ScheduleGame> games)
+        public void AddGamesToDay(List<ScheduleGame> games)
         {
             games.ForEach(g =>
             {
-                g.Day = day.DayNumber;
-                day.Games.Add(g);
+                g.Day = DayNumber;
+                Games.Add(g);
             });
         }
 

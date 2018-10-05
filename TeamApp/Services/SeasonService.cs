@@ -94,7 +94,7 @@ namespace TeamApp.Services
                     rule.HomeAndAway, 
                     season.Parent.GameRules);
 
-                day = Scheduler.MergeSchedules(season.Schedule, nextSchedule) + 1;
+                day = Scheduler.MergeSchedulesTryToCompress(season.Schedule, nextSchedule) + 1;
             });
             
         }
