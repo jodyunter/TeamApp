@@ -12,5 +12,6 @@ namespace TeamApp.Domain.Competition
         int? LastYear { get; set; }
         int Order { get; set; }
         //how do we setup generic rules?
+        Dictionary<string, ICompetition> Parents { get; set; } //this would be the list of competitions where they could get thier teams from
     }
 }

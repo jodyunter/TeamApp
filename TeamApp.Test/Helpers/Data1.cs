@@ -58,9 +58,11 @@ namespace TeamApp.Test.Helpers
            
             var teamMap = new Dictionary<string, Team>();
 
-            var gameRules = new SeasonGameRules(null, true, 3, 1, 7, 6);
+            var gameRules = new SeasonGameRules(null, null, true, 3, 1, 7, 6);
+
+            SeasonCompetition competition = new SeasonCompetition("My Season", league, 1, null, 1, 1, new List<SeasonTeamRule>(), new List<SeasonDivisionRule>(), gameRules, new List<SeasonScheduleRule>(), new Dictionary<string, TeamApp.Domain.Competition.ICompetition>());
+
             
-            SeasonCompetition competition = new SeasonCompetition("My Season", league, 1, null, 1, 1, new List<SeasonTeamRule>(), new List<SeasonDivisionRule>(), gameRules, new List<SeasonScheduleRule>());
 
             competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, NHL, SeasonScheduleRule.NONE, null, 1, true));
             competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, WEST, SeasonScheduleRule.DIVISION_TYPE, CENTRAL, 1, true));

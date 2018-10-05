@@ -8,8 +8,8 @@ namespace TeamApp.Domain.Competition.Seasons.Config
     {
         public SeasonCompetition Competition { get; set; }
 
-        public SeasonGameRules(SeasonCompetition competition, bool canTie, int maxOverTimePeriods, int minimumPeriods, int homeRange, int awayRange)
-            : base(canTie, maxOverTimePeriods, minimumPeriods, homeRange, awayRange)
+        public SeasonGameRules(SeasonCompetition competition, string name, bool canTie, int maxOverTimePeriods, int minimumPeriods, int homeRange, int awayRange)
+            : base(name, canTie, maxOverTimePeriods, minimumPeriods, homeRange, awayRange)
         {
             Competition = competition;
         }

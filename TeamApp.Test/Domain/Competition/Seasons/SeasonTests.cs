@@ -20,7 +20,7 @@ namespace TeamApp.Test.Domain.Competition.Seasons
         {
             var season = new Season(null, "Test", 1);
             var teams = new List<Team>() { CreateTeam("Team 1"), CreateTeam("Team 2"), CreateTeam("Team 3"), CreateTeam("Team 4") };
-            var rules = new GameRules(true, 1, 0, 7, 6);
+            var rules = new GameRules(null, true, 1, 0, 7, 6);
             var games = new List<ScheduleGame>()
             {
                 new ScheduleGame(null, 1, 1, 1, teams[0], teams[1], 1, 1, true, 1, rules),
@@ -81,9 +81,9 @@ namespace TeamApp.Test.Domain.Competition.Seasons
 
             var season = seasonService.CreateNewSeason(seasonCompetition, "Season 1", 1);
 
-            var schedule = Scheduler.CreateGames(season.Parent.League, season.Year, 1, 1, 
+            var schedule = Scheduler.CreateGames(season.CompetitionConfig.League, season.Year, 1, 1, 
                season.GetAllTeamsInDivision(season.GetDivisionByName("NHL")).Select(t => t.Parent).ToList(),
-                1, true, season.Parent.GameRules);
+                1, true, season.CompetitionConfig.GameRules);
             
             season.Schedule = schedule;
 

@@ -25,7 +25,7 @@ namespace TeamApp.Test.Domain.SchedulerTests
             
         public static IEnumerable<object[]> TwoDifferentGroupsOfTeams()
         {
-            var rules = new GameRules(true, 1, 5, 7, 6);
+            var rules = new GameRules(null, true, 1, 5, 7, 6);
 
             yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3") },
                                        new List<Team> { CreateTeam("Team 4"), CreateTeam("Team 5"),CreateTeam("Team 6") },
@@ -69,7 +69,7 @@ namespace TeamApp.Test.Domain.SchedulerTests
 
         public static IEnumerable<object[]> OneGroupOfTeams()
         {
-            var rules = new GameRules(true, 1, 5, 7, 6);
+            var rules = new GameRules(null, true, 1, 5, 7, 6);
 
             yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3") },
                                        3, 1, false, rules };

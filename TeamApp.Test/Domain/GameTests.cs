@@ -14,7 +14,7 @@ namespace TeamApp.Test.Domain
         [Fact]
         public void ShouldGetWinnerAndLoser()
         {
-            var rules = new GameRules(true, 1, 0, 7, 6);
+            var rules = new GameRules(null, true, 1, 0, 7, 6);
         
             var g = new Game(CreateTeam("Team 1"), CreateTeam("Team 2"), 5, 3, true, 0, rules);
 
@@ -26,7 +26,7 @@ namespace TeamApp.Test.Domain
         [Fact]
         public void ShouldGetTier()
         {
-            var rules = new GameRules(true, 1, 0, 7, 6);
+            var rules = new GameRules(null, true, 1, 0, 7, 6);
 
             var g = new Game(CreateTeam("Team 1"), CreateTeam("Team 2"), 3, 3, true, 0, rules);
             Null(g.GetWinner());
@@ -36,9 +36,9 @@ namespace TeamApp.Test.Domain
 
         public static IEnumerable<object[]> GetShouldPlayGamesData()
         {
-            var rules1 = new GameRules(true, 3, 0, 7, 6);
-            var rules2 = new GameRules(true, 3, 3, 7, 6);
-            var rules3 = new GameRules(false, 3, 1, 7, 6);
+            var rules1 = new GameRules(null, true, 3, 0, 7, 6);
+            var rules2 = new GameRules(null, true, 3, 3, 7, 6);
+            var rules3 = new GameRules(null, false, 3, 1, 7, 6);
 
             yield return new object[] { 1, new Game(CreateTeam("Team 1"), CreateTeam("Team 2"), 0, 0, false, 1, rules1), new int[] { 1, 0, 2, 3, 0, 0 }, 3, 3, 4 };            
             yield return new object[] { 2, new Game(CreateTeam("Team 3"), CreateTeam("Team 4"), 0, 0, false, 1, rules2), new int[] { 1, 0, 2, 3, 0, 0, 5, 5, 5 }, 3, 3, 7 };
@@ -65,10 +65,10 @@ namespace TeamApp.Test.Domain
 
         public static IEnumerable<object[]> GetIsGameCompleteData()
         {
-            var rules1 = new GameRules(true, 1, 0, 7, 6);
-            var rules2 = new GameRules(true, 1, 0, 7, 6);
-            var rules3 = new GameRules(false, 1, 2, 7, 6);
-            var rules4 = new GameRules(true, 5, 2, 7, 6);
+            var rules1 = new GameRules(null, true, 1, 0, 7, 6);
+            var rules2 = new GameRules(null, true, 1, 0, 7, 6);
+            var rules3 = new GameRules(null, false, 1, 2, 7, 6);
+            var rules4 = new GameRules(null, true, 5, 2, 7, 6);
 
             yield return new object[] { 1, new Game(CreateTeam("Team 1"), CreateTeam("Team 2"), 0, 0, true, 1, rules1), false };
             yield return new object[] { 2, new Game(CreateTeam("Team 1"), CreateTeam("Team 2"), 0, 0, true, 2, rules2), true };
@@ -88,7 +88,7 @@ namespace TeamApp.Test.Domain
         [Fact]
         public void ShouldPlayOverTimePeriod()
         {
-            var rules = new GameRules(true, 1, 0, 7, 6);
+            var rules = new GameRules(null, true, 1, 0, 7, 6);
 
             var g = new Game(CreateTeam("Team 1"), CreateTeam("Team 2"), 0, 0, false, 1, rules);
 
@@ -115,7 +115,7 @@ namespace TeamApp.Test.Domain
         [Fact]
         public void ShouldPlayRegulationPeriod()
         {
-            var rules = new GameRules(true, 1, 0, 7, 6);
+            var rules = new GameRules(null, true, 1, 0, 7, 6);
 
             var g = new Game(CreateTeam("Team 1"), CreateTeam("Team 2"), 0, 0, false, 1, rules);
 

@@ -128,15 +128,16 @@ namespace TeamApp.Domain
 
     public class GameRules
     {
-
+        public string Name { get; set; }
         public bool CanTie { get; set; }
         public int MaxOverTimePeriods { get; set; }        
         public int MinimumPeriods { get; set; }
         public int HomeRange { get; set; }
         public int AwayRange { get; set; }
 
-        public GameRules(bool canTie, int minimumPeriods, int maxOverTimePeriods, int homeRange, int awayRange)
+        public GameRules(string name, bool canTie, int minimumPeriods, int maxOverTimePeriods, int homeRange, int awayRange)
         {
+            Name = name;
             CanTie = canTie;
             MaxOverTimePeriods = maxOverTimePeriods;
             MinimumPeriods = minimumPeriods;

@@ -18,7 +18,8 @@ namespace TeamApp.Domain.Competition.Seasons.Config
         public List<SeasonDivisionRule> DivisionRules { get; set; }
         public SeasonGameRules GameRules { get; set; }
         public List<SeasonScheduleRule> ScheduleRules { get; set; }
-        public SeasonCompetition(string name, League league, int? firstYear, int? lastYear, int order, int startDay, List<SeasonTeamRule> teamRules, List<SeasonDivisionRule> divisionRules, SeasonGameRules gameRules, List<SeasonScheduleRule> scheduleRules)
+        public Dictionary<string, ICompetition> Parents { get; set; }
+        public SeasonCompetition(string name, League league, int? firstYear, int? lastYear, int order, int startDay, List<SeasonTeamRule> teamRules, List<SeasonDivisionRule> divisionRules, SeasonGameRules gameRules, List<SeasonScheduleRule> scheduleRules, Dictionary<string, ICompetition> parents)
         {
             Name = name;
             League = league;
@@ -31,6 +32,7 @@ namespace TeamApp.Domain.Competition.Seasons.Config
             GameRules = gameRules;
             GameRules.Competition = this;
             ScheduleRules = scheduleRules;
+            Parents = parents;
         }
 
 

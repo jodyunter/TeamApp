@@ -51,7 +51,7 @@ namespace TeamApp.Test.Domain.SchedulerTests
         {
             var league = new League("My League");
             var schedule = new Schedule();
-            var rules = new GameRules(true, 1, 0, 7, 6);
+            var rules = new GameRules(null, true, 1, 0, 7, 6);
 
             schedule = Scheduler.CreateGames(league, 1, 5, 1,
                 new List<Team>()
@@ -65,7 +65,7 @@ namespace TeamApp.Test.Domain.SchedulerTests
         {
             var league = new League("My League");
             var schedule = new Schedule();
-            var rules = new GameRules(true, 1, 0, 7, 6);
+            var rules = new GameRules(null, true, 1, 0, 7, 6);
 
             schedule = Scheduler.CreateGames(league, 1, 5, 1,
                 new List<Team>()
