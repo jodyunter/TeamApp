@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TeamApp.Domain.Scheduler;
 
 namespace TeamApp.Domain.Competition
 {
     public interface ICompetition
     {
-        string Name { get; set; }
-        League League { get; set; }
-        int? FirstYear { get; set; }
-        int? LastYear { get; set; }
-        int Order { get; set; }
-        //how do we setup generic rules?
-        Dictionary<string, ICompetition> Parents { get; set; } //this would be the list of competitions where they could get thier teams from
+        Schedule Schedule { get; set; }
+        void ProcessGame(ScheduleGame game);
     }
 }

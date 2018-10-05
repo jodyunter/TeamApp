@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TeamApp.Domain.Competition.Seasons.Config
 {
-    public class SeasonScheduleRule
+    public class SeasonScheduleRule:ITimePeriod
     {
         public const int TEAM_TYPE = 0;
         public const int DIVISION_TYPE = 1;
@@ -17,8 +17,10 @@ namespace TeamApp.Domain.Competition.Seasons.Config
         public string AwayTeamValue { get; set; } //team or division name
         public int Iterations { get; set; }
         public bool HomeAndAway { get; set; }
+        public int? FirstYear { get; set; }
+        public int? LastYear { get; set; }
 
-        public SeasonScheduleRule(SeasonCompetition competition, int homeTeamType, string homeTeamValue, int awayTeamType, string awayTeamValue, int iterations, bool homeAndAway)
+        public SeasonScheduleRule(SeasonCompetition competition, int homeTeamType, string homeTeamValue, int awayTeamType, string awayTeamValue, int iterations, bool homeAndAway, int? firstYear, int? lastYear)
         {
             Competition = competition;
             HomeTeamType = homeTeamType;
@@ -27,6 +29,8 @@ namespace TeamApp.Domain.Competition.Seasons.Config
             AwayTeamValue = awayTeamValue;
             Iterations = iterations;
             HomeAndAway = homeAndAway;
+            FirstYear = firstYear;
+            LastYear = lastYear;                   
         }
     }
 }

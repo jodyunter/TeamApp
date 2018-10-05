@@ -10,6 +10,7 @@ using TeamApp.Domain;
 using TeamApp.Test.Helpers;
 using TeamApp.Services;
 using TeamApp.Domain.Competition.Seasons.Config;
+using TeamApp.Domain.Competition;
 
 namespace TeamApp.Test.Domain.Competition.Seasons
 {
@@ -81,9 +82,9 @@ namespace TeamApp.Test.Domain.Competition.Seasons
 
             var season = seasonService.CreateNewSeason(seasonCompetition, "Season 1", 1);
 
-            var schedule = Scheduler.CreateGames(season.CompetitionConfig.League, season.Year, 1, 1, 
+            var schedule = Scheduler.CreateGames(season.CompetitionRule.League, season.Year, 1, 1, 
                season.GetAllTeamsInDivision(season.GetDivisionByName("NHL")).Select(t => t.Parent).ToList(),
-                1, true, season.CompetitionConfig.GameRules);
+                1, true, season.CompetitionRule.GameRules);
             
             season.Schedule = schedule;
 
@@ -92,7 +93,7 @@ namespace TeamApp.Test.Domain.Competition.Seasons
             True(scheduleValidator.IsValid);
 
             while (!season.Schedule.IsComplete())
-                season.PlayNextDay(new Random());
+                ((ICompetition)season).PlayNextDay(new Random());            
 
             StrictEqual(38, season.Teams.Where(t => t.Name.Equals("Boston")).First().Stats.Games);
         }

@@ -4,8 +4,8 @@ using System.Text;
 
 namespace TeamApp.Domain.Competition.Seasons.Config
 {
-    public class SeasonDivisionRule
-    {
+    public class SeasonDivisionRule:ITimePeriod
+    { 
         public SeasonCompetition Competition { get; set; }
         public string DivisionName { get; set; }
         public string ParentName { get; set; }

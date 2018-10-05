@@ -6,7 +6,7 @@ using System.Linq;
 namespace TeamApp.Domain.Competition.Seasons.Config
 {
     //this is the configuration setup for seasons
-    public class SeasonCompetition:ICompetition
+    public class SeasonCompetition:ICompetitionRule
     {
         public string Name { get; set; }
         public League League { get; set; }
@@ -16,10 +16,14 @@ namespace TeamApp.Domain.Competition.Seasons.Config
         public int StartDay { get; set; }
         public List<SeasonTeamRule> TeamRules { get; set; }
         public List<SeasonDivisionRule> DivisionRules { get; set; }
-        public SeasonGameRules GameRules { get; set; }
+        
         public List<SeasonScheduleRule> ScheduleRules { get; set; }
-        public Dictionary<string, ICompetition> Parents { get; set; }
-        public SeasonCompetition(string name, League league, int? firstYear, int? lastYear, int order, int startDay, List<SeasonTeamRule> teamRules, List<SeasonDivisionRule> divisionRules, SeasonGameRules gameRules, List<SeasonScheduleRule> scheduleRules, Dictionary<string, ICompetition> parents)
+        public Dictionary<string, ICompetitionRule> Parents { get; set; }
+        public GameRules GameRules { get { return SeasonGamesRules; } set { if (value is SeasonGamesRules) SeasonGamesRules = (SeasonGamesRules)value; else throw new ApplicationException("Can't assign non-season games rules to season games rules");  } }
+
+        private SeasonGamesRules SeasonGamesRules { get; set; }
+
+        public SeasonCompetition(string name, League league, int? firstYear, int? lastYear, int order, int startDay, List<SeasonTeamRule> teamRules, List<SeasonDivisionRule> divisionRules, SeasonGamesRules gameRules, List<SeasonScheduleRule> scheduleRules, Dictionary<string, ICompetitionRule> parents)
         {
             Name = name;
             League = league;
@@ -29,8 +33,7 @@ namespace TeamApp.Domain.Competition.Seasons.Config
             StartDay = startDay;
             TeamRules = teamRules;
             DivisionRules = divisionRules;
-            GameRules = gameRules;
-            GameRules.Competition = this;
+            SeasonGamesRules = gameRules;
             ScheduleRules = scheduleRules;
             Parents = parents;
         }

@@ -6,9 +6,9 @@ using TeamApp.Domain.Scheduler;
 
 namespace TeamApp.Domain.Competition.Seasons
 {
-    public class Season
+    public class Season:ICompetition
     {
-        public SeasonCompetition CompetitionConfig { get; set; }
+        public ICompetitionRule CompetitionRule { get; set; }
         public string Name { get; set; }
         public int Year { get; set; }
         public List<SeasonDivision> Divisions { get; set; }
@@ -16,14 +16,15 @@ namespace TeamApp.Domain.Competition.Seasons
         public Schedule Schedule { get; set; }        
         public Dictionary<string, List<SeasonDivisionRank>> Rankings { get; set; }
 
-        public Season(SeasonCompetition competitionConfig, string name, int year)
+        public Season(SeasonCompetition competitionRule, string name, int year)
         {
-            CompetitionConfig = competitionConfig;
+            CompetitionRule = competitionRule;
             Name = name;
             Year = year;
             Rankings = new Dictionary<string, List<SeasonDivisionRank>>();
         }
 
+        /*
         public void Playgame(ScheduleGame game, Random random)
         {
             game.Play(random);
@@ -48,7 +49,7 @@ namespace TeamApp.Domain.Competition.Seasons
             {
                 PlayGames(day.Games, random);
             }
-        }
+        }*/
         
         public void ProcessGame(ScheduleGame game)
         {

@@ -7,6 +7,7 @@ using TeamApp.Test.Helpers;
 using static System.Console;
 using System.Linq;
 using TeamApp.Console.Views.Season;
+using TeamApp.Domain.Competition;
 
 namespace TeamApp.Console
 {
@@ -19,7 +20,7 @@ namespace TeamApp.Console
             var seasonService = new SeasonService();
             var seasonCompetition = ((List<SeasonCompetition>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
 
-            var season = seasonService.CreateNewSeason(seasonCompetition, "Season 1", 1);
+            var season = seasonService.CreateNewSeason(seasonCompetition, "Season 1", 1);        
 
             /*var schedule = Scheduler.CreateGames(season.Parent.League, season.Year, 1, 1,
                season.GetAllTeamsInDivision(season.GetDivisionByName("NHL")).Select(t => t.Parent).ToList(),

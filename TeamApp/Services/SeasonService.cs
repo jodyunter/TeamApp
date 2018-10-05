@@ -84,7 +84,7 @@ namespace TeamApp.Services
                 var awayTeams = GetTeams(season, rule.AwayTeamType, rule.AwayTeamValue);
                 
                 var nextSchedule = Scheduler.CreateGames(
-                    season.CompetitionConfig.League,
+                    season.CompetitionRule.League,
                     season.Year, 
                     1,
                     day, 
@@ -92,7 +92,7 @@ namespace TeamApp.Services
                     (awayTeams == null || awayTeams.Count == 0) ? null: awayTeams.Select(st => st.Parent).ToList(), 
                     rule.Iterations, 
                     rule.HomeAndAway, 
-                    season.CompetitionConfig.GameRules);
+                    season.CompetitionRule.GameRules);
 
                 day = Scheduler.MergeSchedulesTryToCompress(season.Schedule, nextSchedule) + 1;
             });

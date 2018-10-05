@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TeamApp.Domain.Competition.Seasons.Config
 {    
-    public class SeasonTeamRule
+    public class SeasonTeamRule:ITimePeriod
     {
         public const int TEAM = 0;        
 

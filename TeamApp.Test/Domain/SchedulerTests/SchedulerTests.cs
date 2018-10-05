@@ -122,7 +122,7 @@ namespace TeamApp.Test.Domain.SchedulerTests
 
         public static Team CreateTeam(string name)
         {
-            return new Team(name, 5, null, 1, null);
+            return new Team(name, 5, null, 1, null, true);
         }            
         public static ScheduleDay CreateDay(int dayNumber, params ScheduleGame[] games)
         {

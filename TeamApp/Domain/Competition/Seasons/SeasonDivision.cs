@@ -13,6 +13,7 @@ namespace TeamApp.Domain.Competition.Seasons
         public List<SeasonTeam> Teams { get; set; }
         public int Level { get; set; }
         public int Order { get; set; }
+        //need to add the ranking rules
 
         public SeasonDivision(Season season, SeasonDivision parentDivision, int year, string name, int level, int order, List<SeasonTeam> teams)
         {
