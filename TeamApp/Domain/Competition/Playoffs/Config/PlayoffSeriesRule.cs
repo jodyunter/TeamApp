@@ -22,7 +22,7 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
         public GameRules GameRules { get; set; } //can be different!
 
         public int HomeFromType { get; set; }
-        public string HomeFromName { get; set; } //series or division or pool name
+        public string HomeFromName { get; set; } //ranking group name
         public int HomeFromValue { get; set; } //ranking number, or winner or loser
         public int AwayFromType { get; set; }
         public string AwayFromName { get; set; }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TeamApp.Domain.Competition.Seasons
 {
-    public class SeasonTeam:ITeam,IComparable<SeasonTeam>
+    public class SeasonTeam:ISingleYearTeam,IComparable<SeasonTeam>
     {
         public string Name { get; set; }
         public int Skill { get; set; }        

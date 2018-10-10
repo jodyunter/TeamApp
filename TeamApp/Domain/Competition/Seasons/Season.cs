@@ -116,7 +116,7 @@ namespace TeamApp.Domain.Competition.Seasons
 
             listOfTeams.ForEach(team =>
             {
-                Rankings[divisionName].Add(new SeasonDivisionRank(rank, division, team));
+                Rankings[divisionName].Add(new SeasonDivisionRank(rank, division.Name, team));
                 rank++;
             });
         }
