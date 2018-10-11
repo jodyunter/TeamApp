@@ -9,7 +9,7 @@ namespace TeamApp.Domain.Competition.Seasons
         public string Name { get; set; }
         public int Skill { get; set; }        
         public Team Parent { get; set; }
-        public Season Competition { get; set; }
+        public ICompetition Competition { get; set; }
 
         public SeasonDivision Division { get; set; }
         public SeasonTeamStats Stats { get; set; }

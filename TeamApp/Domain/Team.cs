@@ -4,6 +4,7 @@ using System.Text;
 
 namespace TeamApp.Domain
 {
+   
     public class Team:DataObject, ITeam, ITimePeriod
     {
         public string Name { get; set; }
