@@ -6,7 +6,7 @@ using System.Linq;
 namespace TeamApp.Domain.Competition.Seasons.Config
 {
     //this is the configuration setup for seasons
-    public class SeasonCompetition:ICompetitionRule
+    public class SeasonCompetition:CompetitionConfig
     {
         public string Name { get; set; }
         public League League { get; set; }
@@ -18,12 +18,12 @@ namespace TeamApp.Domain.Competition.Seasons.Config
         public List<SeasonDivisionRule> DivisionRules { get; set; }
         
         public List<SeasonScheduleRule> ScheduleRules { get; set; }
-        public Dictionary<string, ICompetitionRule> Parents { get; set; }
+        public Dictionary<string, CompetitionConfig> Parents { get; set; }
         public GameRules GameRules { get { return SeasonGamesRules; } set { if (value is SeasonGamesRules) SeasonGamesRules = (SeasonGamesRules)value; else throw new ApplicationException("Can't assign non-season games rules to season games rules");  } }
 
         private SeasonGamesRules SeasonGamesRules { get; set; }
 
-        public SeasonCompetition(string name, League league, int? firstYear, int? lastYear, int order, int startDay, List<SeasonTeamRule> teamRules, List<SeasonDivisionRule> divisionRules, SeasonGamesRules gameRules, List<SeasonScheduleRule> scheduleRules, Dictionary<string, ICompetitionRule> parents)
+        public SeasonCompetition(string name, League league, int? firstYear, int? lastYear, int order, int startDay, List<SeasonTeamRule> teamRules, List<SeasonDivisionRule> divisionRules, SeasonGamesRules gameRules, List<SeasonScheduleRule> scheduleRules, Dictionary<string, CompetitionConfig> parents)
         {
             Name = name;
             League = league;

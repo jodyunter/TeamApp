@@ -60,7 +60,7 @@ namespace TeamApp.Test.Helpers
 
             var gameRules = new SeasonGamesRules(null, 1, null, null, true, 3, 1, 7, 6);
 
-            SeasonCompetition competition = new SeasonCompetition("My Season", league, 1, null, 1, 1, new List<SeasonTeamRule>(), new List<SeasonDivisionRule>(), gameRules, new List<SeasonScheduleRule>(), new Dictionary<string, TeamApp.Domain.Competition.ICompetitionRule>());
+            SeasonCompetition competition = new SeasonCompetition("My Season", league, 1, null, 1, 1, new List<SeasonTeamRule>(), new List<SeasonDivisionRule>(), gameRules, new List<SeasonScheduleRule>(), new Dictionary<string, TeamApp.Domain.Competition.CompetitionConfig>());
 
             
 

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TeamApp.Domain.Competition.Playoffs.Config
 {
-    public class PlayoffCompetition:ICompetitionRule
+    public class PlayoffCompetition:CompetitionConfig
     {
         public string Name { get; set; }
         public League League { get; set; }
@@ -12,6 +12,7 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
         public GameRules GameRules { get; set; }
         public int? FirstYear { get; set; }
         public int? LastYear { get; set; }
-        public Dictionary<string, ICompetitionRule> Parents { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<PlayoffSeriesRule> SeriesRules { get; set; }
+        public Dictionary<string, CompetitionConfig> Parents { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }        
     }
 }

@@ -32,6 +32,7 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
         //derrived info
         public int RequiredWins { get { return SeriesNumber; } set { SeriesNumber = value; } }
         public int RequiredGames { get { return SeriesNumber; } set { SeriesNumber = value; } }
+        public string[] HomeGameProgression { get; set; }
 
     }
 }
