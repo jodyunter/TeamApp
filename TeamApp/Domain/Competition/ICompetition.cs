@@ -7,7 +7,7 @@ namespace TeamApp.Domain.Competition
 {
     public interface ICompetition
     {
-        CompetitionConfig CompetitionRule { get; set; }
+        ICompetitionConfig CompetitionConfig { get; set; }
         string Name { get; set; }
         int Year { get; set; }
         Schedule Schedule { get; set; }

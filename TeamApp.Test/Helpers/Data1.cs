@@ -60,7 +60,7 @@ namespace TeamApp.Test.Helpers
 
             var gameRules = new SeasonGamesRules(null, 1, null, null, true, 3, 1, 7, 6);
 
-            SeasonCompetition competition = new SeasonCompetition("My Season", league, 1, null, 1, 1, new List<SeasonTeamRule>(), new List<SeasonDivisionRule>(), gameRules, new List<SeasonScheduleRule>(), new Dictionary<string, TeamApp.Domain.Competition.CompetitionConfig>());
+            SeasonCompetitionConfig competition = new SeasonCompetitionConfig("My Season", league, 1, null, 1, 1, new List<SeasonTeamRule>(), new List<SeasonDivisionRule>(), gameRules, new List<SeasonScheduleRule>(), new Dictionary<string, TeamApp.Domain.Competition.ICompetitionConfig>());
 
             
 
@@ -70,7 +70,7 @@ namespace TeamApp.Test.Helpers
             competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, WEST, SeasonScheduleRule.NONE, null, 3, true, 1, null));
             competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, CENTRAL, SeasonScheduleRule.NONE, null, 3, true, 1, null));            
 
-            var seasonCompetitionList = new List<SeasonCompetition>()
+            var seasonCompetitionList = new List<SeasonCompetitionConfig>()
             {
                 competition   
             };
@@ -103,7 +103,7 @@ namespace TeamApp.Test.Helpers
         }
 
 
-        public static void CreateTeamsForDivision(SeasonCompetition competition, Dictionary<string, Team> teamMap, List<string> teamNames, string divisionName)
+        public static void CreateTeamsForDivision(SeasonCompetitionConfig competition, Dictionary<string, Team> teamMap, List<string> teamNames, string divisionName)
         {            
             teamNames.ForEach(s =>
             {

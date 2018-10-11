@@ -11,7 +11,7 @@ namespace TeamApp.Services
 {
     public class SeasonService
     {
-        public Season CreateNewSeason(SeasonCompetition seasonConfig, string seasonName, int year)
+        public Season CreateNewSeason(SeasonCompetitionConfig seasonConfig, string seasonName, int year)
         {
             var season = new Season(seasonConfig, seasonName, year);            
 
@@ -68,7 +68,7 @@ namespace TeamApp.Services
 
         }
         //todo game numbers are messed up
-        public void CreateSeasonSchedule(Season season, SeasonCompetition competition) 
+        public void CreateSeasonSchedule(Season season, SeasonCompetitionConfig competition) 
         {
             int day = 1;
 
@@ -84,7 +84,7 @@ namespace TeamApp.Services
                 var awayTeams = GetTeams(season, rule.AwayTeamType, rule.AwayTeamValue);
                 
                 var nextSchedule = Scheduler.CreateGames(
-                    season.CompetitionRule.League,
+                    season.CompetitionConfig.League,
                     season.Year, 
                     1,
                     day, 
@@ -92,7 +92,7 @@ namespace TeamApp.Services
                     (awayTeams == null || awayTeams.Count == 0) ? null: awayTeams.Select(st => st.Parent).ToList(), 
                     rule.Iterations, 
                     rule.HomeAndAway, 
-                    season.CompetitionRule.GameRules);
+                    season.CompetitionConfig.GameRules);
 
                 day = Scheduler.MergeSchedulesTryToCompress(season.Schedule, nextSchedule) + 1;
             });

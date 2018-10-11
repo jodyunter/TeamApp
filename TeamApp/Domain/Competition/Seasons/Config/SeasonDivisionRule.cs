@@ -6,7 +6,7 @@ namespace TeamApp.Domain.Competition.Seasons.Config
 {
     public class SeasonDivisionRule:ITimePeriod
     { 
-        public SeasonCompetition Competition { get; set; }
+        public SeasonCompetitionConfig Competition { get; set; }
         public string DivisionName { get; set; }
         public string ParentName { get; set; }
         public int Level { get; set; }
@@ -14,7 +14,7 @@ namespace TeamApp.Domain.Competition.Seasons.Config
         public int? FirstYear { get; set; }
         public int? LastYear { get; set; }
 
-        public SeasonDivisionRule(SeasonCompetition competition, string divisionName, string parentName, int level, int order, int? firstYear, int? lastYear)
+        public SeasonDivisionRule(SeasonCompetitionConfig competition, string divisionName, string parentName, int level, int order, int? firstYear, int? lastYear)
         {
             Competition = competition;
             DivisionName = divisionName;

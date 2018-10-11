@@ -8,7 +8,7 @@ namespace TeamApp.Domain.Competition.Seasons
 {
     public class Season:ICompetition
     {
-        public CompetitionConfig CompetitionRule { get; set; }
+        public ICompetitionConfig CompetitionConfig { get; set; }
         public string Name { get; set; }
         public int Year { get; set; }
         public List<SeasonDivision> Divisions { get; set; }
@@ -16,9 +16,9 @@ namespace TeamApp.Domain.Competition.Seasons
         public Schedule Schedule { get; set; }        
         public Dictionary<string, List<SeasonDivisionRank>> Rankings { get; set; }
 
-        public Season(SeasonCompetition competitionRule, string name, int year)
+        public Season(SeasonCompetitionConfig competitionRule, string name, int year)
         {
-            CompetitionRule = competitionRule;
+            CompetitionConfig = competitionRule;
             Name = name;
             Year = year;
             Rankings = new Dictionary<string, List<SeasonDivisionRank>>();

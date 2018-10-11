@@ -78,13 +78,13 @@ namespace TeamApp.Test.Domain.Competition.Seasons
             var data = Data1.CreateBasicSeasonConfiguration();
 
             var seasonService = new SeasonService();
-            var seasonCompetition = ((List<SeasonCompetition>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
+            var seasonCompetition = ((List<SeasonCompetitionConfig>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
 
             var season = seasonService.CreateNewSeason(seasonCompetition, "Season 1", 1);
 
-            var schedule = Scheduler.CreateGames(season.CompetitionRule.League, season.Year, 1, 1, 
+            var schedule = Scheduler.CreateGames(season.CompetitionConfig.League, season.Year, 1, 1, 
                season.GetAllTeamsInDivision(season.GetDivisionByName("NHL")).Select(t => t.Parent).ToList(),
-                1, true, season.CompetitionRule.GameRules);
+                1, true, season.CompetitionConfig.GameRules);
             
             season.Schedule = schedule;
 
@@ -104,7 +104,7 @@ namespace TeamApp.Test.Domain.Competition.Seasons
             var data = Data1.CreateBasicSeasonConfiguration();
 
             var seasonService = new SeasonService();
-            var seasonCompetition = ((List<SeasonCompetition>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
+            var seasonCompetition = ((List<SeasonCompetitionConfig>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
 
             var season = seasonService.CreateNewSeason(seasonCompetition, "Season 1", 1);
 

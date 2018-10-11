@@ -10,7 +10,7 @@ namespace TeamApp.Domain.Competition.Seasons.Config
         public const int DIVISION_TYPE = 1;
         public const int NONE = 2;
 
-        public SeasonCompetition Competition { get; set; }
+        public SeasonCompetitionConfig Competition { get; set; }
         public int HomeTeamType { get; set; } //division or team
         public string HomeTeamValue { get; set; } //team or division name
         public int AwayTeamType { get; set; } //division or team
@@ -20,7 +20,7 @@ namespace TeamApp.Domain.Competition.Seasons.Config
         public int? FirstYear { get; set; }
         public int? LastYear { get; set; }
 
-        public SeasonScheduleRule(SeasonCompetition competition, int homeTeamType, string homeTeamValue, int awayTeamType, string awayTeamValue, int iterations, bool homeAndAway, int? firstYear, int? lastYear)
+        public SeasonScheduleRule(SeasonCompetitionConfig competition, int homeTeamType, string homeTeamValue, int awayTeamType, string awayTeamValue, int iterations, bool homeAndAway, int? firstYear, int? lastYear)
         {
             Competition = competition;
             HomeTeamType = homeTeamType;

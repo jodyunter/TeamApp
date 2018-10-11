@@ -21,7 +21,7 @@ namespace TeamApp.Test.Domain.Competition.Seasons.Config
         {
             var data = Data1.CreateBasicSeasonConfiguration();
 
-            var competition = ((List<SeasonCompetition>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
+            var competition = ((List<SeasonCompetitionConfig>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
 
             Equals(expected, competition.GetTeamsInDivision(divisionName));
         }
@@ -38,7 +38,7 @@ namespace TeamApp.Test.Domain.Competition.Seasons.Config
         {
             var data = Data1.CreateBasicSeasonConfiguration();
 
-            var competition = ((List<SeasonCompetition>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
+            var competition = ((List<SeasonCompetitionConfig>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
 
             StrictEqual(expected, competition.IsTeamInDivision(teamName, divisionName));
 

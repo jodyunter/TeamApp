@@ -22,7 +22,7 @@ namespace TeamApp.Test.Services
             var data = Data1.CreateBasicSeasonConfiguration();
 
             var seasonService = new SeasonService();
-            var seasonCompetition = ((List<SeasonCompetition>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
+            var seasonCompetition = ((List<SeasonCompetitionConfig>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
 
             var season = seasonService.CreateNewSeason(seasonCompetition, seasonName, seasonNumber);
 
