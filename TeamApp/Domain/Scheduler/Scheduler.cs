@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TeamApp.Domain.Competition.Seasons;
 using System.Linq;
+using TeamApp.Domain.Competition.Playoffs;
 
 namespace TeamApp.Domain.Scheduler
 {
@@ -380,6 +381,18 @@ namespace TeamApp.Domain.Scheduler
 
 
             return array;
+        }
+
+        public void SchedulePlayoffSeriesGames(Schedule schedule, int startingDay, PlayoffSeries series)
+        {
+            if (schedule.Days[startingDay] == null) schedule.AddDay(startingDay);
+
+            int gamesToCreate = series.NumberOfGamesNeeded();
+
+            for (int i = 0; i < gamesToCreate; i++)
+            {
+                series.GetHomeTeamForGame(i + 1);
+            }
         }
 
     }

@@ -15,6 +15,7 @@ namespace TeamApp.Domain.Scheduler
 
         public void AddDay(int dayNumber)
         {
+            if (Days[dayNumber] != null) throw new ApplicationException("Day already exists");
             Days.Add(dayNumber, new ScheduleDay(dayNumber));
         }
 
