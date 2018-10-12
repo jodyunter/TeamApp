@@ -43,7 +43,7 @@ namespace TeamApp.Domain.Competition.Playoffs
         {
             if (Games == null) return 0;
 
-            return Games.Select(g => !g.IsComplete()).Count();
+            return Games.Select(g => !g.Complete).Count();
         }
 
 

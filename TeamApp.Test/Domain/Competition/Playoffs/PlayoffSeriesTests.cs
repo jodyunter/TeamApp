@@ -61,13 +61,41 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
             yield return new object[] { 8, new TotalGoalsSeries(null, null, 1, null, null, 0, 1, 3, 5, null, null), 0 };
             yield return new object[] { 8, new TotalGoalsSeries(null, null, 1, null, null, 0, 2, 3, 3, null, null), 0 };
             yield return new object[] { 8, new TotalGoalsSeries(null, null, 1, null, null, 2, 0, 3, 3, null, null), 0 };
+            
         }
+
 
         [Theory]
         [MemberData(nameof(SeriesForGamesNeededTests))]
         public void ShouldGetExpectedNeededGames(int testNo, PlayoffSeries series, int expectedNeededGames)
         {
             StrictEqual(expectedNeededGames, series.NumberOfGamesNeeded());
+        }
+
+        public static IEnumerable<object[]> SeriesForInCompleteGames()
+        {
+            List<PlayoffGame> inCompleteGamesNull = null;
+            var inCompleteGames0 = new List<PlayoffGame>();
+            var inCompleteGames1 = new List<PlayoffGame> { new PlayoffGame() { Complete = false } };
+            var inCompleteGames2 = new List<PlayoffGame> { new PlayoffGame() { Complete = false }, new PlayoffGame() { Complete = true } };
+            var inCompleteGames3 = new List<PlayoffGame> { new PlayoffGame() { Complete = false }, new PlayoffGame() { Complete = false }, new PlayoffGame() { Complete = true } };
+            var inCompleteGames4 = new List<PlayoffGame> { new PlayoffGame() { Complete = false }, new PlayoffGame() { Complete = false }, new PlayoffGame() { Complete = false }, new PlayoffGame() { Complete = true } };
+            var inCompleteGames5 = new List<PlayoffGame> { new PlayoffGame() { Complete = false }, new PlayoffGame() { Complete = false }, new PlayoffGame() { Complete = false }, new PlayoffGame() { Complete = false }, new PlayoffGame() { Complete = true } };
+
+            yield return new object[] { 1, new BestOfSeries(null, null, 1, null, null, 1, 2, 2, inCompleteGamesNull, null), 0 };
+            yield return new object[] { 2, new BestOfSeries(null, null, 1, null, null, 1, 2, 2, inCompleteGames0, null), 0 };
+            yield return new object[] { 3, new BestOfSeries(null, null, 1, null, null, 1, 2, 2, inCompleteGames1, null), 0 };
+            yield return new object[] { 4, new BestOfSeries(null, null, 1, null, null, 1, 2, 2, inCompleteGames2, null), 1 };
+            yield return new object[] { 5, new BestOfSeries(null, null, 1, null, null, 1, 2, 2, inCompleteGames3, null), 2 };
+            yield return new object[] { 6, new BestOfSeries(null, null, 1, null, null, 1, 2, 2, inCompleteGames4, null), 3 };
+            yield return new object[] { 7, new BestOfSeries(null, null, 1, null, null, 1, 2, 2, inCompleteGames5, null), 4 };
+        }
+
+        [Theory]
+        [MemberData(nameof(SeriesForInCompleteGames))]
+        public void ShouldGetInCompleteGames(int testNo, PlayoffSeries series, int expectedInCompleteGames)
+        {
+            StrictEqual(expectedInCompleteGames, series.NumberOfGamesNeeded());
         }
     }
 }
