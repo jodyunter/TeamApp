@@ -38,7 +38,7 @@ namespace TeamApp.Domain.Competition.Playoffs.Series
         public override int NumberOfGamesNeeded()
         {
             int completeGames = GamesPlayed;
-            int incompleteGames = GetIncomleteGames();
+            int incompleteGames = GetInCompleteGames();
             if (!IsComplete() && incompleteGames == 0)
                 return completeGames >= MinimumGames ? 1 : MinimumGames - completeGames;
             else

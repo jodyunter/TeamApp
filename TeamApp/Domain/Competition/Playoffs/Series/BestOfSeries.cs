@@ -44,7 +44,7 @@ namespace TeamApp.Domain.Competition.Playoffs.Series
 
         public override int NumberOfGamesNeeded()
         {
-            int incompleteGames = GetIncomleteGames();
+            int incompleteGames = GetInCompleteGames();
             if (!IsComplete())
             {
                 int neededWins = HomeWins > AwayWins ? RequiredWins - HomeWins : RequiredWins - AwayWins;

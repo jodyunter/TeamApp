@@ -39,11 +39,11 @@ namespace TeamApp.Domain.Competition.Playoffs
             ProcessSeriesGame(game);            
         }        
 
-        public int GetIncomleteGames()
+        public int GetInCompleteGames()
         {
             if (Games == null) return 0;
 
-            return Games.Select(g => !g.Complete).Count();
+            return Games.Where(g => !g.Complete).ToList().Count();
         }
 
 

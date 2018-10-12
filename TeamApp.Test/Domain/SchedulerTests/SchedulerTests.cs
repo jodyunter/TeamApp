@@ -131,7 +131,7 @@ namespace TeamApp.Test.Domain.SchedulerTests
                         
         public static ScheduleGame CreateGame(string homeTeamName, string awayTeamName)
         {
-            return new ScheduleGame() { HomeTeam = new Team() { Name = homeTeamName }, AwayTeam = new Team() { Name = awayTeamName } };
+            return new ScheduleGame(null, -1, -1, -1, CreateTeam(homeTeamName), CreateTeam(awayTeamName), 0, 0, false, 1, null);
         }
 
     }

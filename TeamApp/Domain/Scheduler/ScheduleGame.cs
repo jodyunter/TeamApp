@@ -17,7 +17,6 @@ namespace TeamApp.Domain.Scheduler
         //todo set this into the constructors?
         public ICompetition Competition { get; set; }
 
-        public ScheduleGame() { }
         public ScheduleGame(League league, int gameNumber, int day, int year, Team homeTeam, Team awayTeam, int homeScore, int awayScore, bool complete, int currentPeriod, GameRules rules)
             :base(homeTeam, awayTeam, homeScore, awayScore, complete, currentPeriod, rules)
         {
