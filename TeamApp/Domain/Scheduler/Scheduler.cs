@@ -391,7 +391,9 @@ namespace TeamApp.Domain.Scheduler
 
             for (int i = 0; i < gamesToCreate; i++)
             {
-                series.GetHomeTeamForGame(i + 1);
+                //todo
+                var g = new PlayoffGame();
+                series.GetHomeTeamForGameNumber(i + 1);
             }
         }
 

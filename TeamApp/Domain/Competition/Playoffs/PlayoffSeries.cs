@@ -22,13 +22,37 @@ namespace TeamApp.Domain.Competition.Playoffs
         public int GamesPlayed { get; set; }
         public List<PlayoffGame> Games { get; set; }
         public int[] HomeGameProgression { get; set; }
-        //add games, and wins
 
+        public PlayoffSeries(Playoff playoff, string name, int round, PlayoffTeam homeTeam, PlayoffTeam awayTeam, 
+            int seriesType, int homeScore, int awayScore, int minimumGames, int gamesPlayed, 
+            List<PlayoffGame> games, int[] homeGameProgression)
+        {
+            Playoff = playoff;
+            Name = name;
+            Round = round;
+            HomeTeam = homeTeam;
+            AwayTeam = awayTeam;
+            SeriesType = seriesType;
+            HomeScore = homeScore;
+            AwayScore = awayScore;
+            MinimumGames = minimumGames;            
+            GamesPlayed = gamesPlayed;
+            Games = games;
+            HomeGameProgression = homeGameProgression;
+        }
+
+        //add games, and wins             
         public bool IsComplete()
         {
-            return ((GamesPlayed >= MinimumGames) && (HomeScore != AwayScore)) ||
-                ((HomeWins == RequiredWins) || (AwayWins == RequiredWins));
-            
+            switch (SeriesType)
+            {
+                case PlayoffSeriesRule.TOTAL_GOALS:
+                    return ((GamesPlayed >= MinimumGames) && (HomeScore != AwayScore));
+                case PlayoffSeriesRule.BEST_OF_SERIES:
+                    return ((HomeWins == RequiredWins) || (AwayWins == RequiredWins));
+                default:
+                    throw new ApplicationException("Bad Series Type. ");
+            }
         }
 
         public void ProcessGame(PlayoffGame game)
@@ -67,6 +91,8 @@ namespace TeamApp.Domain.Competition.Playoffs
 
         public int GetIncomleteGames()
         {
+            if (Games == null) return 0;
+
             return Games.Select(g => !g.IsComplete()).Count();
         }
 

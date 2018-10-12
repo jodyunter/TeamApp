@@ -54,6 +54,6 @@ namespace TeamApp.Domain.Competition.Playoffs
 
             return complete;
         }
-}
+
     }
 }
