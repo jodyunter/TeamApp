@@ -74,8 +74,8 @@ namespace TeamApp.Domain.Competition.Playoffs
             }
         }
         public PlayoffGame CreateGameForSeries(int gameNumber)
-        {
-            return null;
+        {            
+            return new PlayoffGame(Playoff.CompetitionConfig.League, this, gameNumber, -1, Playoff.Year, homeTeam, awayTeam, 0, 0, false, 1, Playoff.CompetitionConfig.GameRules);
         }
     }
 }
