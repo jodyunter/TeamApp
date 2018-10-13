@@ -73,5 +73,9 @@ namespace TeamApp.Domain.Competition.Playoffs
                 else return AwayTeam;
             }
         }
+        public PlayoffGame CreateGameForSeries(int gameNumber)
+        {
+            return null;
+        }
     }
 }

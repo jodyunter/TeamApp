@@ -144,5 +144,6 @@ namespace TeamApp.Domain
             HomeRange = homeRange;
             AwayRange = awayRange;
         }
+
     }
 }

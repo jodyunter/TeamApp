@@ -15,7 +15,7 @@ namespace TeamApp.Domain.Competition.Playoffs
         public int? FirstYear { get; set; }
         public int? LastYear { get; set; }
 
-        public PlayoffTeam(string name, int skill, Playoff competition, Team parent, string owner, int? firstYear, int? lastYear)
+        public PlayoffTeam(string name, int skill, Playoff competition, Team parent, string owner, int? firstYear)
         {
             Name = name;
             Skill = skill;
@@ -23,7 +23,7 @@ namespace TeamApp.Domain.Competition.Playoffs
             Parent = parent;
             Owner = owner;
             FirstYear = firstYear;
-            LastYear = lastYear;
+            LastYear = firstYear;
         }
     }
 }

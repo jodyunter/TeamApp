@@ -14,5 +14,6 @@ namespace TeamApp.Domain.Competition.Playoffs
         {
             Series = series;
         }
+
     }
 }

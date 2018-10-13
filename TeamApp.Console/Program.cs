@@ -8,6 +8,9 @@ using static System.Console;
 using System.Linq;
 using TeamApp.Console.Views.Season;
 using TeamApp.Domain.Competition;
+using TeamApp.Domain.Competition.Seasons;
+using TeamApp.Domain.Competition.Playoffs;
+using TeamApp.Domain.Competition.Playoffs.Series;
 
 namespace TeamApp.Console
 {
@@ -63,6 +66,16 @@ namespace TeamApp.Console
             {
                 WriteLine(d.Key + ": " + d.Value + " - " + awayGames[d.Key]);                
             }
+
+            var nhlRankings = season.Rankings.Where(m => m.Key == "NHL").First().Value;
+
+            var team1Parent = nhlRankings.Where(rank => rank.Rank == 1).First().Team;
+            var team2Parent = nhlRankings.Where(rank => rank.Rank == 2).First().Team;
+
+            var team1 = new PlayoffTeam(team1Parent.Name, team1Parent.Skill, null, team1Parent.Parent, null, 1);
+            var team2 = new PlayoffTeam(team1Parent.Name, team1Parent.Skill, null, team1Parent.Parent, null, 1);
+
+            var series = new BestOfSeries(null, "Series 1", 1, team1, team2, 0, 0, KeyAvailable 4, new List<PlayoffGame>(), new int[] { 0, 0, 1, 1, 0, 1, 0 });
 
             WriteLine("Press Enter to continue");
             ReadLine();
