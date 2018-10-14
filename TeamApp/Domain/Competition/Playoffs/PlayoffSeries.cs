@@ -74,8 +74,28 @@ namespace TeamApp.Domain.Competition.Playoffs
             }
         }
         public PlayoffGame CreateGameForSeries(int gameNumber)
-        {            
-            return new PlayoffGame(Playoff.CompetitionConfig.League, this, gameNumber, -1, Playoff.Year, homeTeam, awayTeam, 0, 0, false, 1, Playoff.CompetitionConfig.GameRules);
+        {
+            var homeValue = GetHomeValueForGame(gameNumber);
+
+
+            return new PlayoffGame(Playoff.CompetitionConfig.League, this, gameNumber, -1, Playoff.Year, 
+                homeValue == 0 ? HomeTeam.Parent: AwayTeam.Parent, homeValue == 0 ? AwayTeam.Parent: HomeTeam.Parent,
+                0, 0, false, 1, Playoff.CompetitionConfig.GameRules);
+        }
+
+        public int GetHomeValueForGame(int gameNumber)
+        {
+            if (HomeGameProgression.Length > gameNumber)
+            {
+                if (gameNumber % 2 == 0)
+                    return 0;
+                else
+                    return 1;
+            } 
+            else
+            {
+                return HomeGameProgression[gameNumber - 1];
+            }
         }
     }
 }

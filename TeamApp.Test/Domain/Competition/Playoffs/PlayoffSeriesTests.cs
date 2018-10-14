@@ -158,5 +158,11 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
             StrictEqual(2, series.NumberOfGamesNeeded());
 
         }
+
+        [Fact]
+        public void ShouldGetProperTeamForGameNumber()
+        {
+
+        }
     }
 }
