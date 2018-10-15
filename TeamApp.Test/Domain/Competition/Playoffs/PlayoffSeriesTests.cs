@@ -264,5 +264,48 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
             
             True(series.IsComplete());
         }
+
+        [Fact]
+        public void ShouldGetWinnerAndLoserForBestOf()
+        {
+
+            var homeTeam = CreateTeam("A Team");
+            var awayTeam = CreateTeam("B Team");
+
+            var series1 = new BestOfSeries(null, "Test", 1, 2, homeTeam, awayTeam, 0, 0, 2, null, null);
+            var series2 = new BestOfSeries(null, "Test", 1, 1, homeTeam, awayTeam, 0, 0, 2, null, null);
+            var series3 = new BestOfSeries(null, "Test", 1, 1, homeTeam, awayTeam, 0, 0, 2, null, null);
+
+            Equals("A Team", series1.GetWinner());
+            Equals("B Team", series1.GetLoser());
+
+            Equals("B Team", series2.GetWinner());
+            Equals("A Team", series2.GetLoser());
+                        
+            Null(series3.GetWinner());
+            Null(series3.GetLoser());
+        }
+
+
+        [Fact]
+        public void ShouldGetWinnerAndLoserForTotalGoals()
+        {
+
+            var homeTeam = CreateTeam("A Team");
+            var awayTeam = CreateTeam("B Team");
+
+            var series1 = new TotalGoalsSeries(null, "Test", 1, 1, homeTeam, awayTeam, 3, 0, 2, 2, null, null);
+            var series2 = new TotalGoalsSeries(null, "Test", 1, 1, homeTeam, awayTeam, 2, 5, 2, 2, null, null);
+            var series3 = new TotalGoalsSeries(null, "Test", 1, 0, homeTeam, awayTeam, 16, 12, 2, 1, null, null);
+
+            Equals("A Team", series1.GetWinner());
+            Equals("B Team", series1.GetLoser());
+
+            Equals("B Team", series2.GetWinner());
+            Equals("A Team", series2.GetLoser());
+
+            Null(series3.GetWinner());
+            Null(series3.GetLoser());
+        }
     }
 }

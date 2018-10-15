@@ -29,10 +29,24 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
         public int AwayFromValue { get; set; }
         public int? FirstYear { get; set; }
         public int? LastYear { get; set; }
-        //derrived info
-        public int RequiredWins { get { return SeriesNumber; } set { SeriesNumber = value; } }
-        public int RequiredGames { get { return SeriesNumber; } set { SeriesNumber = value; } }
         public int[] HomeGameProgression { get; set; }
 
+        public PlayoffSeriesRule(string name, int round, int seriesType, int seriesNumber, GameRules gameRules, int homeFromType, string homeFromName, int homeFromValue, int awayFromType, string awayFromName, int awayFromValue, int? firstYear, int? lastYear, int[] homeGameProgression)
+        {
+            Name = name;
+            Round = round;
+            SeriesType = seriesType;
+            SeriesNumber = seriesNumber;
+            GameRules = gameRules;
+            HomeFromType = homeFromType;
+            HomeFromName = homeFromName;
+            HomeFromValue = homeFromValue;
+            AwayFromType = awayFromType;
+            AwayFromName = awayFromName;
+            AwayFromValue = awayFromValue;
+            FirstYear = firstYear;
+            LastYear = lastYear;
+            HomeGameProgression = homeGameProgression;
+        }
     }
 }

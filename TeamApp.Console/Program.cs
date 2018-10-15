@@ -93,7 +93,7 @@ namespace TeamApp.Console
             playoff.AddSeries(series1);
             playoff.AddSeries(series2);            
 
-            playoff.Setup();
+            //playoff.Setup();
 
             while (!playoff.IsComplete())
             {

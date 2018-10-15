@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TeamApp.Domain.Schedules;
 using System.Linq;
 using TeamApp.Domain.Competition.Playoffs.Config;
+using TeamApp.Domain.Competition.Playoffs.Series;
 
 namespace TeamApp.Domain.Competition.Playoffs
 {
@@ -15,9 +16,9 @@ namespace TeamApp.Domain.Competition.Playoffs
         public int CurrentRound { get; set; }
         public List<PlayoffSeries> Series { get; set; }
         public Schedule Schedule { get; set; }
-        public Dictionary<string, TeamRanking> Rankings { get; set; }
+        public List<TeamRanking> Rankings { get; set; }
 
-        public Playoff(ICompetitionConfig competitionConfig, string name, int year, int startingDay, int currentRound, List<PlayoffSeries> series, Schedule schedule, Dictionary<string, TeamRanking> rankings)
+        public Playoff(ICompetitionConfig competitionConfig, string name, int year, int startingDay, int currentRound, List<PlayoffSeries> series, Schedule schedule, List<TeamRanking> rankings)
         {
             CompetitionConfig = competitionConfig;
             StartingDay = startingDay;
@@ -29,16 +30,27 @@ namespace TeamApp.Domain.Competition.Playoffs
             CurrentRound = currentRound;
         }
 
-        public void Setup()
+        public void SetupRound(int roundNumber)
         {
-            var seriesForRound = Series.Where(s => s.Round == CurrentRound);
-
-            Series.Where(s => s.Round == CurrentRound).ToList().ForEach(s =>
+            if (!IsRoundSetup(roundNumber))
             {
-                SetupSeriesGames(s);
-            });
+                var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
+
+                playoffConfig.SeriesRules.Where(sr => sr.Round == CurrentRound).ToList().ForEach(sr => { Series.Add(CreateSeriesFromRule(sr)); });
+
+                Series.Where(s => s.Round == roundNumber).ToList().ForEach(s =>
+                {
+                    SetupSeriesGames(s);
+                });
+            }
+            else
+                throw new ApplicationException("Round " + roundNumber + " is already setup");
         }
 
+        public bool IsRoundSetup(int roundNumber)
+        {
+            return Series.Where(s => s.Round == roundNumber).Count() > 0;
+        }
         public void SetupSeriesGames(PlayoffSeries series)
         {
             var newGames = series.CreateNeededGamesForSeries();
@@ -93,11 +105,52 @@ namespace TeamApp.Domain.Competition.Playoffs
             return complete;
         }
 
-        public void CreateSeriesFromRule(PlayoffSeriesRule rule)
+        public PlayoffSeries CreateSeriesFromRule(PlayoffSeriesRule rule)
         {
-            PlayoffTeam homeTeam = null;
-            PlayoffTeam awayTeam = null;
+            var homeTeam = GetTeamByRule(rule.HomeFromType, rule.HomeFromName, rule.HomeFromValue);
+            var awayTeam = GetTeamByRule(rule.AwayFromType, rule.AwayFromName, rule.AwayFromValue);
+
+            var series = CreateSeries(rule.SeriesType, rule.Name, rule.Round, -1, homeTeam, awayTeam, rule.SeriesNumber, rule.HomeGameProgression);
+
+            return series;
         }        
+        
+        public PlayoffSeries CreateSeries(int seriesType, string name, int round, int startingDay, PlayoffTeam homeTeam, PlayoffTeam awayTeam,
+            int seriesNumber, int[] homeGameProgression)
+        {
+            switch(seriesType)
+            {
+                case PlayoffSeriesRule.BEST_OF_SERIES:
+                    return new BestOfSeries(this, name, round, startingDay, homeTeam, awayTeam, 0, 0, seriesNumber, new List<PlayoffGame>(), homeGameProgression);
+                case PlayoffSeriesRule.TOTAL_GOALS:
+                    return new TotalGoalsSeries(this, name, round, startingDay, homeTeam, awayTeam, 0, 0, seriesNumber, 0, new List<PlayoffGame>(), homeGameProgression);                    
+                default:
+                    throw new ApplicationException("Bad series type from Playoff Series rule: " + seriesType);
+            }
+        }
+        public PlayoffTeam GetTeamByRule(int fromType, string fromName, int fromValue)
+        {
+            switch (fromType)
+            {
+                case PlayoffSeriesRule.FROM_RANKING:
+                    var ranking = Rankings.Where(r => r.Group == fromName && r.Rank == fromValue).ToList().First();
+                    return new PlayoffTeam(ranking.Team.Name, ranking.Team.Skill, this, ranking.Team.Parent, ranking.Team.Owner, Year);                    
+                case PlayoffSeriesRule.FROM_SERIES:
+                    var series = Series.Where(s => s.Name.Equals(fromName)).FirstOrDefault();
+                    switch (fromValue)
+                    {
+                        case PlayoffSeriesRule.GET_WINNER:
+                            return series.GetWinner();                            
+                        case PlayoffSeriesRule.GET_LOSER:
+                            return series.GetLoser();                            
+                        default:
+                            throw new ApplicationException("Bad From value in Playoff series rule: " + fromValue);
+
+                    }                    
+                default:
+                    throw new ApplicationException("Bad From Team Type in Playoff Series Rule: " + fromType);
+            }
+        }
         
     }
 }

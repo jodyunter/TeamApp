@@ -45,5 +45,24 @@ namespace TeamApp.Domain.Competition.Playoffs.Series
                 return 0;
         }
 
+        public override PlayoffTeam GetWinner()
+        {
+            if (IsComplete())
+            {
+                return HomeScore > AwayScore ? HomeTeam : AwayTeam;
+            }
+
+            return null;
+        }
+
+        public override PlayoffTeam GetLoser()
+        {
+            if (IsComplete())
+            {
+                return HomeScore > AwayScore ? AwayTeam : HomeTeam;
+            }
+
+            return null;
+        }
     }
 }

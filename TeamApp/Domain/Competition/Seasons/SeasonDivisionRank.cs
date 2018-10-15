@@ -6,11 +6,8 @@ namespace TeamApp.Domain.Competition.Seasons
 {
     public class SeasonDivisionRank:TeamRanking
     {                       
-        public SeasonDivisionRank(int rank, string group, SeasonTeam team)
+        public SeasonDivisionRank(int rank, string group, SeasonTeam team):base(rank, group, team)
         {
-            Rank = rank;
-            Group = group;
-            Team = team;
         }
     }
 }
