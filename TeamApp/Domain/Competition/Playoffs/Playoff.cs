@@ -34,16 +34,15 @@ namespace TeamApp.Domain.Competition.Playoffs
 
             Series.Where(s => s.Round == CurrentRound).ToList().ForEach(s =>
             {
-                var seriesRoundStartingDay = StartingDay;
-
-                //set the starting day for the series if it hasn't been set yet
-                if (s.StartingDay < 0)
-                    if (CurrentRound != 1) seriesRoundStartingDay = Schedule.Days.Keys.Max() + 1;
-                    else               
-                        s.StartingDay = seriesRoundStartingDay;
-
-                Scheduler.AddGamesToSchedule(Schedule, s.CreateNeededGamesForSeries().ToList<ScheduleGame>(), s.StartingDay);
+                SetupSeriesGames(s);
             });
+        }
+
+        public void SetupSeriesGames(PlayoffSeries series)
+        {
+            var newGames = series.CreateNeededGamesForSeries();
+
+            Scheduler.AddGamesToSchedule(Schedule, newGames.ToList<ScheduleGame>(), series.StartingDay > 0 ? series.StartingDay: StartingDay);
         }
 
         public void AddSeries(PlayoffSeries series)
@@ -64,7 +63,8 @@ namespace TeamApp.Domain.Competition.Playoffs
 
             var playoffGame = (PlayoffGame)game;
 
-            playoffGame.Series.ProcessSeriesGame(playoffGame);                       
+            playoffGame.Series.ProcessSeriesGame(playoffGame);
+            SetupSeriesGames(playoffGame.Series);
             
         }
 
@@ -92,9 +92,5 @@ namespace TeamApp.Domain.Competition.Playoffs
             return complete;
         }
 
-        public void PostDayProcess()
-        {
-            Setup();            
-        }
     }
 }

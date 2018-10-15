@@ -11,7 +11,6 @@ namespace TeamApp.Domain.Competition
         string Name { get; set; }
         int Year { get; set; }
         Schedule Schedule { get; set; }
-        void ProcessGame(ScheduleGame game);
-        void PostDayProcess();
+        void ProcessGame(ScheduleGame game);        
     }
 }

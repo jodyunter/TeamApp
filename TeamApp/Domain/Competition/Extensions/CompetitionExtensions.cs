@@ -34,9 +34,7 @@ namespace TeamApp.Domain.Competition
             if (day != null)
             {
                 competition.PlayGames(day.Games, random);
-            }
-
-            competition.PostDayProcess();
+            }            
 
             return day.Games;
         }

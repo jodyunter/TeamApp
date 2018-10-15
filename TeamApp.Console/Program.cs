@@ -88,9 +88,10 @@ namespace TeamApp.Console
 
 
             var series1 = new BestOfSeries(playoff, "Series 1", 1, -1, team1, team2, 0, 0, 4, new List<PlayoffGame>(), new int[] { 0, 0, 1, 1, 0, 1, 0 });
-            var series2 = new BestOfSeries(playoff, "Series 2", 1, -1, team3, team4, 0, 0, 4, new List<PlayoffGame>(), new int[] { 0, 0, 1, 1, 0, 1, 0 });
+            var series2 = new BestOfSeries(playoff, "Series 2", 1, -1, team3, team4, 0, 0, 4, new List<PlayoffGame>(), new int[] { 0, 0, 1, 1, 0, 1, 0 });            
+
             playoff.AddSeries(series1);
-            playoff.AddSeries(series2);
+            playoff.AddSeries(series2);            
 
             playoff.Setup();
 

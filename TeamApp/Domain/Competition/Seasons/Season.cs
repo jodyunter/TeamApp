@@ -24,8 +24,6 @@ namespace TeamApp.Domain.Competition.Seasons
             Rankings = new Dictionary<string, List<SeasonDivisionRank>>();
         }
 
-        public void PostDayProcess() { }
-        
         public void ProcessGame(ScheduleGame game)
         {
             if (game.Complete)
