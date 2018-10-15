@@ -24,32 +24,7 @@ namespace TeamApp.Domain.Competition.Seasons
             Rankings = new Dictionary<string, List<SeasonDivisionRank>>();
         }
 
-        /*
-        public void Playgame(ScheduleGame game, Random random)
-        {
-            game.Play(random);
-            ProcessGame(game);
-        }
-
-        public void PlayGames(List<ScheduleGame> games, Random random)
-        {
-            games.ForEach(g => { g.Play(random); ProcessGame(g); });
-        }
-
-        public void PlayDay(ScheduleDay day, Random random)
-        {
-            PlayGames(day.Games, random);
-        }
-
-        public void PlayNextDay(Random random)
-        {
-            var day = Schedule.GetNextInCompleteDay();
-
-            if (day != null)
-            {
-                PlayGames(day.Games, random);
-            }
-        }*/
+        public void PostDayProcess() { }
         
         public void ProcessGame(ScheduleGame game)
         {

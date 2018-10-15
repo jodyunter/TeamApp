@@ -15,23 +15,23 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
         public static IEnumerable<object[]> SeriesForIsCompleteTests()
         {
             //best of cases            
-            yield return new object[] { 1, new BestOfSeries(null, null, 1, null, null, 0, 1, 2, null, null), false };
-            yield return new object[] { 2, new BestOfSeries(null, null, 1, null, null, 1, 0, 2, null, null), false };
-            yield return new object[] { 3, new BestOfSeries(null, null, 1, null, null, 1, 1, 2, null, null), false };
-            yield return new object[] { 4, new BestOfSeries(null, null, 1, null, null, 1, 2, 2, null, null), true };
-            yield return new object[] { 5, new BestOfSeries(null, null, 1, null, null, 2, 1, 2, null, null), true };
-            yield return new object[] { 6, new BestOfSeries(null, null, 1, null, null, 0, 2, 2, null, null), true };
-            yield return new object[] { 7, new BestOfSeries(null, null, 1, null, null, 2, 0, 2, null, null), true };
-            yield return new object[] { 8, new BestOfSeries(null, null, 1, null, null, 0, 0, 2, null, null), false };
+            yield return new object[] { 1, new BestOfSeries(null, null, 1, 1, null, null, 0, 1, 2, null, null), false };
+            yield return new object[] { 2, new BestOfSeries(null, null, 1, 1, null, null, 1, 0, 2, null, null), false };
+            yield return new object[] { 3, new BestOfSeries(null, null, 1, 1, null, null, 1, 1, 2, null, null), false };
+            yield return new object[] { 4, new BestOfSeries(null, null, 1, 1, null, null, 1, 2, 2, null, null), true };
+            yield return new object[] { 5, new BestOfSeries(null, null, 1, 1, null, null, 2, 1, 2, null, null), true };
+            yield return new object[] { 6, new BestOfSeries(null, null, 1, 1, null, null, 0, 2, 2, null, null), true };
+            yield return new object[] { 7, new BestOfSeries(null, null, 1, 1, null, null, 2, 0, 2, null, null), true };
+            yield return new object[] { 8, new BestOfSeries(null, null, 1, 1, null, null, 0, 0, 2, null, null), false };
             //total goals cases
-            yield return new object[] { 9, new TotalGoalsSeries(null, null, 1, null, null, 0, 0, 3, 0, null, null), false };
-            yield return new object[] { 10, new TotalGoalsSeries(null, null, 1, null, null, 2, 0, 3, 1, null, null), false };
-            yield return new object[] { 11, new TotalGoalsSeries(null, null, 1, null, null, 2, 3, 3, 2, null, null), false };
-            yield return new object[] { 12, new TotalGoalsSeries(null, null, 1, null, null, 4, 3, 3, 3, null, null), true };
-            yield return new object[] { 13, new TotalGoalsSeries(null, null, 1, null, null, 3, 3, 3, 3, null, null), false };
-            yield return new object[] { 14, new TotalGoalsSeries(null, null, 1, null, null, 3, 3, 3, 4, null, null), false };
-            yield return new object[] { 15, new TotalGoalsSeries(null, null, 1, null, null, 3, 3, 3, 5, null, null), false };
-            yield return new object[] { 16, new TotalGoalsSeries(null, null, 1, null, null, 3, 12, 3, 6, null, null), true };
+            yield return new object[] { 9, new TotalGoalsSeries(null, null, 1, 1, null, null, 0, 0, 3, 0, null, null), false };
+            yield return new object[] { 10, new TotalGoalsSeries(null, null, 1, 1, null, null, 2, 0, 3, 1, null, null), false };
+            yield return new object[] { 11, new TotalGoalsSeries(null, null, 1, 1, null, null, 2, 3, 3, 2, null, null), false };
+            yield return new object[] { 12, new TotalGoalsSeries(null, null, 1, 1, null, null, 4, 3, 3, 3, null, null), true };
+            yield return new object[] { 13, new TotalGoalsSeries(null, null, 1, 1, null, null, 3, 3, 3, 3, null, null), false };
+            yield return new object[] { 14, new TotalGoalsSeries(null, null, 1, 1, null, null, 3, 3, 3, 4, null, null), false };
+            yield return new object[] { 15, new TotalGoalsSeries(null, null, 1, 1, null, null, 3, 3, 3, 5, null, null), false };
+            yield return new object[] { 16, new TotalGoalsSeries(null, null, 1, 1, null, null, 3, 12, 3, 6, null, null), true };
         }
 
         [Theory]
@@ -45,23 +45,23 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
         {
             //no games in list cases
             //best of cases
-            yield return new object[] { 1, new BestOfSeries(null, null, 1, null, null, 0, 0, 2, null, null), 2 };
-            yield return new object[] { 1, new BestOfSeries(null, null, 1, null, null, 0, 1, 2, null, null), 1 };
-            yield return new object[] { 2, new BestOfSeries(null, null, 1, null, null, 1, 0, 2, null, null), 1 };
-            yield return new object[] { 3, new BestOfSeries(null, null, 1, null, null, 1, 1, 2, null, null), 1 };
-            yield return new object[] { 4, new BestOfSeries(null, null, 1, null, null, 1, 2, 2, null, null), 0 };
-            yield return new object[] { 5, new BestOfSeries(null, null, 1, null, null, 2, 1, 2, null, null), 0 };
-            yield return new object[] { 6, new BestOfSeries(null, null, 1, null, null, 0, 2, 2, null, null), 0 };
-            yield return new object[] { 7, new BestOfSeries(null, null, 1, null, null, 2, 0, 2, null, null), 0 };
+            yield return new object[] { 1, new BestOfSeries(null, null, 1, 1, null, null, 0, 0, 2, null, null), 2 };
+            yield return new object[] { 1, new BestOfSeries(null, null, 1, 1, null, null, 0, 1, 2, null, null), 1 };
+            yield return new object[] { 2, new BestOfSeries(null, null, 1, 1, null, null, 1, 0, 2, null, null), 1 };
+            yield return new object[] { 3, new BestOfSeries(null, null, 1, 1, null, null, 1, 1, 2, null, null), 1 };
+            yield return new object[] { 4, new BestOfSeries(null, null, 1, 1, null, null, 1, 2, 2, null, null), 0 };
+            yield return new object[] { 5, new BestOfSeries(null, null, 1, 1, null, null, 2, 1, 2, null, null), 0 };
+            yield return new object[] { 6, new BestOfSeries(null, null, 1, 1, null, null, 0, 2, 2, null, null), 0 };
+            yield return new object[] { 7, new BestOfSeries(null, null, 1, 1, null, null, 2, 0, 2, null, null), 0 };
             //total goals cases
-            yield return new object[] { 8, new TotalGoalsSeries(null, null, 1, null, null, 0, 0, 3, 0, null, null), 3 };
-            yield return new object[] { 8, new TotalGoalsSeries(null, null, 1, null, null, 0, 0, 3, 1, null, null), 2 };
-            yield return new object[] { 8, new TotalGoalsSeries(null, null, 1, null, null, 0, 0, 3, 2, null, null), 1 };
-            yield return new object[] { 8, new TotalGoalsSeries(null, null, 1, null, null, 0, 0, 3, 3, null, null), 1 };
-            yield return new object[] { 8, new TotalGoalsSeries(null, null, 1, null, null, 0, 0, 3, 4, null, null), 1 };
-            yield return new object[] { 8, new TotalGoalsSeries(null, null, 1, null, null, 0, 1, 3, 5, null, null), 0 };
-            yield return new object[] { 8, new TotalGoalsSeries(null, null, 1, null, null, 0, 2, 3, 3, null, null), 0 };
-            yield return new object[] { 8, new TotalGoalsSeries(null, null, 1, null, null, 2, 0, 3, 3, null, null), 0 };
+            yield return new object[] { 8, new TotalGoalsSeries(null, null, 1, 1, null, null, 0, 0, 3, 0, null, null), 3 };
+            yield return new object[] { 8, new TotalGoalsSeries(null, null, 1, 1, null, null, 0, 0, 3, 1, null, null), 2 };
+            yield return new object[] { 8, new TotalGoalsSeries(null, null, 1, 1, null, null, 0, 0, 3, 2, null, null), 1 };
+            yield return new object[] { 8, new TotalGoalsSeries(null, null, 1, 1, null, null, 0, 0, 3, 3, null, null), 1 };
+            yield return new object[] { 8, new TotalGoalsSeries(null, null, 1, 1, null, null, 0, 0, 3, 4, null, null), 1 };
+            yield return new object[] { 8, new TotalGoalsSeries(null, null, 1, 1, null, null, 0, 1, 3, 5, null, null), 0 };
+            yield return new object[] { 8, new TotalGoalsSeries(null, null, 1, 1, null, null, 0, 2, 3, 3, null, null), 0 };
+            yield return new object[] { 8, new TotalGoalsSeries(null, null, 1, 1, null, null, 2, 0, 3, 3, null, null), 0 };
             
         }
 
@@ -85,13 +85,13 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
             var inCompleteGames4 = new List<PlayoffGame> { CreateGameWithCompleteStatus(false, team1, team2), CreateGameWithCompleteStatus(false, team1, team2), CreateGameWithCompleteStatus(false, team1, team2), CreateGameWithCompleteStatus(true, team1, team2) };
             var inCompleteGames5 = new List<PlayoffGame> { CreateGameWithCompleteStatus(false, team1, team2), CreateGameWithCompleteStatus(false, team1, team2), CreateGameWithCompleteStatus(false, team1, team2), CreateGameWithCompleteStatus(false, team1, team2), CreateGameWithCompleteStatus(true, team1, team2) };
 
-            yield return new object[] { 1, new BestOfSeries(null, null, 1, team1, team2, 1, 2, 2, inCompleteGamesNull, null), 0 };
-            yield return new object[] { 2, new BestOfSeries(null, null, 1, team1, team2, 1, 2, 2, inCompleteGames0, null), 0 };
-            yield return new object[] { 3, new BestOfSeries(null, null, 1, team1, team2, 1, 2, 2, inCompleteGames1, null), 1 };
-            yield return new object[] { 4, new BestOfSeries(null, null, 1, team1, team2, 1, 2, 2, inCompleteGames2, null), 1 };
-            yield return new object[] { 5, new BestOfSeries(null, null, 1, team1, team2, 1, 2, 2, inCompleteGames3, null), 2 };
-            yield return new object[] { 6, new BestOfSeries(null, null, 1, team1, team2, 1, 2, 2, inCompleteGames4, null), 3 };
-            yield return new object[] { 7, new BestOfSeries(null, null, 1, team1, team2, 1, 2, 2, inCompleteGames5, null), 4 };
+            yield return new object[] { 1, new BestOfSeries(null, null, 1, 1, team1, team2, 1, 2, 2, inCompleteGamesNull, null), 0 };
+            yield return new object[] { 2, new BestOfSeries(null, null, 1, 1, team1, team2, 1, 2, 2, inCompleteGames0, null), 0 };
+            yield return new object[] { 3, new BestOfSeries(null, null, 1, 1, team1, team2, 1, 2, 2, inCompleteGames1, null), 1 };
+            yield return new object[] { 4, new BestOfSeries(null, null, 1, 1, team1, team2, 1, 2, 2, inCompleteGames2, null), 1 };
+            yield return new object[] { 5, new BestOfSeries(null, null, 1, 1, team1, team2, 1, 2, 2, inCompleteGames3, null), 2 };
+            yield return new object[] { 6, new BestOfSeries(null, null, 1, 1, team1, team2, 1, 2, 2, inCompleteGames4, null), 3 };
+            yield return new object[] { 7, new BestOfSeries(null, null, 1, 1, team1, team2, 1, 2, 2, inCompleteGames5, null), 4 };
         }
 
         public static PlayoffGame CreateGameWithCompleteStatus(bool complete, PlayoffTeam team1, PlayoffTeam team2)
@@ -119,7 +119,7 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
             var teamA = CreateTeam("Team A");
             var teamB = CreateTeam("Team B");
 
-            var series = new BestOfSeries(null, "Test", 1, teamA, teamB, 0, 0, 4, new List<PlayoffGame>(), new int[] { 0, 0, 1, 1, 0, 1, 0 });
+            var series = new BestOfSeries(null, "Test", 1, 1, teamA, teamB, 0, 0, 4, new List<PlayoffGame>(), new int[] { 0, 0, 1, 1, 0, 1, 0 });
 
             var game1 = CreateGame(1, 0, true, teamA, teamB);
             var game2 = CreateGame(0, 0, false, teamA, teamB);
@@ -180,7 +180,7 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
         [InlineData(14, 10, new int[] { 1, 1, 0, 0, 1 }, 1)]
         public void ShouldGetProperTeamForGameNumber(int testNo, int gameToTest, int[] homeTeamProgression, int expectedResult)
         {
-            var series = new BestOfSeries(null, null, 1, null, null, 0, 0, 0, null, homeTeamProgression);
+            var series = new BestOfSeries(null, null, 1, 1, null, null, 0, 0, 0, null, homeTeamProgression);
 
             StrictEqual(expectedResult, series.GetHomeValueForGame(gameToTest));
         }
@@ -207,7 +207,7 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
         {
             var gameRules = new GameRules("Test", false, 3, 1, 7, 6);
             var playoffConfig = new PlayoffCompetitionConfig("My Playoff", null, 1, gameRules, 1, null, null, null); //todo eventually can't use this constructor
-            var playoff = new Playoff(playoffConfig, "My Playoff", 1, 1, null, null, null);
+            var playoff = new Playoff(playoffConfig, "My Playoff", 1, 1, 1, null, null, null);
             
             playoff.CompetitionConfig = playoffConfig;
             playoffConfig.GameRules = gameRules;
@@ -215,7 +215,7 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
             var homeTeam = CreateTeam("A Team");
             var awayTeam = CreateTeam("B Team");
 
-            var series = new BestOfSeries(playoff, "Test", 1, homeTeam, awayTeam, 0, 0, 0, null, homeTeamProgression);
+            var series = new BestOfSeries(playoff, "Test", 1, 1, homeTeam, awayTeam, 0, 0, 0, null, homeTeamProgression);
 
             var game = series.CreateGameForSeries(gameToTest);
 
@@ -238,7 +238,7 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
             var homeTeam = CreateTeam("A Team");
             var awayTeam = CreateTeam("B Team");
 
-            var series = new BestOfSeries(null, "Test", 1, homeTeam, awayTeam, 0, 0, 2, null, null);
+            var series = new BestOfSeries(null, "Test", 1, 1, homeTeam, awayTeam, 0, 0, 2, null, null);
 
             var game1 = CreateGame(5, 4, true, homeTeam, awayTeam);
             var game2 = CreateGame(8, 3, true, awayTeam, homeTeam);

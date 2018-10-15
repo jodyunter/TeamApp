@@ -12,10 +12,10 @@ namespace TeamApp.Domain.Competition.Playoffs.Series
         public int AwayScore { get; set; }
         public int MinimumGames { get; set; }
 
-        public TotalGoalsSeries(Playoff playoff, string name, int round, PlayoffTeam homeTeam, PlayoffTeam awayTeam,
+        public TotalGoalsSeries(Playoff playoff, string name, int round, int startingDay, PlayoffTeam homeTeam, PlayoffTeam awayTeam,
                 int homeScore, int awayScore, int minimumGames, int gamesPlayed,
                 List<PlayoffGame> games, int[] homeGameProgression)
-            :base(playoff, name, round, homeTeam, awayTeam, games, homeGameProgression)            
+            :base(playoff, name, round, startingDay, homeTeam, awayTeam, games, homeGameProgression)            
         {
             HomeScore = homeScore;
             AwayScore = awayScore;

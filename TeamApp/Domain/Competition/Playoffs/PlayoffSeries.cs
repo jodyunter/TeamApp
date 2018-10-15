@@ -10,17 +10,19 @@ namespace TeamApp.Domain.Competition.Playoffs
         public Playoff Playoff { get; set; }
         public string Name { get; set; }
         public int Round { get; set; }
+        public int StartingDay { get; set; }
         public PlayoffTeam HomeTeam { get; set; }
         public PlayoffTeam AwayTeam { get; set; }        
         public List<PlayoffGame> Games { get; set; }
         public int[] HomeGameProgression { get; set; }
 
-        public PlayoffSeries(Playoff playoff, string name, int round, PlayoffTeam homeTeam, PlayoffTeam awayTeam,            
+        public PlayoffSeries(Playoff playoff, string name, int round, int startingDay, PlayoffTeam homeTeam, PlayoffTeam awayTeam,            
             List<PlayoffGame> games, int[] homeGameProgression)
         {
             Playoff = playoff;
             Name = name;
             Round = round;
+            StartingDay = startingDay;
             HomeTeam = homeTeam;
             AwayTeam = awayTeam;            
             Games = games;

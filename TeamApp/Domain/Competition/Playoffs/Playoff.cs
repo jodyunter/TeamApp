@@ -11,11 +11,12 @@ namespace TeamApp.Domain.Competition.Playoffs
         public string Name { get; set; }
         public int Year { get; set; }
         public int StartingDay { get; set; }
+        public int CurrentRound { get; set; }
         public List<PlayoffSeries> Series { get; set; }
         public Schedule Schedule { get; set; }
         public Dictionary<string, TeamRanking> Rankings { get; set; }
 
-        public Playoff(ICompetitionConfig competitionConfig, string name, int year, int startingDay, List<PlayoffSeries> series, Schedule schedule, Dictionary<string, TeamRanking> rankings)
+        public Playoff(ICompetitionConfig competitionConfig, string name, int year, int startingDay, int currentRound, List<PlayoffSeries> series, Schedule schedule, Dictionary<string, TeamRanking> rankings)
         {
             CompetitionConfig = competitionConfig;
             StartingDay = startingDay;
@@ -24,12 +25,25 @@ namespace TeamApp.Domain.Competition.Playoffs
             Series = series;
             Schedule = schedule;
             Rankings = rankings;
+            CurrentRound = currentRound;
         }
 
         public void Setup()
-        {            
-            //todo series starting days
-            Series.ForEach(s => { Scheduler.AddGamesToSchedule(Schedule, s.CreateNeededGamesForSeries().ToList<ScheduleGame>(), StartingDay); });
+        {
+            var seriesForRound = Series.Where(s => s.Round == CurrentRound);
+
+            Series.Where(s => s.Round == CurrentRound).ToList().ForEach(s =>
+            {
+                var seriesRoundStartingDay = StartingDay;
+
+                //set the starting day for the series if it hasn't been set yet
+                if (s.StartingDay < 0)
+                    if (CurrentRound != 1) seriesRoundStartingDay = Schedule.Days.Keys.Max() + 1;
+                    else               
+                        s.StartingDay = seriesRoundStartingDay;
+
+                Scheduler.AddGamesToSchedule(Schedule, s.CreateNeededGamesForSeries().ToList<ScheduleGame>(), s.StartingDay);
+            });
         }
 
         public void AddSeries(PlayoffSeries series)
@@ -78,5 +92,9 @@ namespace TeamApp.Domain.Competition.Playoffs
             return complete;
         }
 
+        public void PostDayProcess()
+        {
+            Setup();            
+        }
     }
 }

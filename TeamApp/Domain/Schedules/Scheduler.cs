@@ -234,6 +234,7 @@ namespace TeamApp.Domain.Schedules
         {
             bool foundDayToAddTeamTo = false;
             int currentDay = dayToStartOn;
+            int dayToAddTeamTo = currentDay;
             int maxDay = schedule.Days.Keys.Max();
 
             while (!foundDayToAddTeamTo && currentDay <= maxDay )
@@ -245,6 +246,8 @@ namespace TeamApp.Domain.Schedules
                     canAdd = canAdd && !schedule.Days[currentDay].DoesTeamPlayInDay(game.AwayTeam.Name);
 
                     if (canAdd) foundDayToAddTeamTo = true;
+
+                    dayToAddTeamTo = currentDay;
                 }
 
                 currentDay++;
@@ -252,10 +255,11 @@ namespace TeamApp.Domain.Schedules
 
             if (!foundDayToAddTeamTo)
             {
-                schedule.AddDay(currentDay);                
+                schedule.AddDay(currentDay);
+                dayToAddTeamTo = currentDay;
             }
 
-            schedule.Days[currentDay].AddGame(game);
+            schedule.Days[dayToAddTeamTo].AddGame(game);
 
             return currentDay;
         }

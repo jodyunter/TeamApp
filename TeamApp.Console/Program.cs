@@ -77,7 +77,7 @@ namespace TeamApp.Console
             var team4Parent = nhlRankings.Where(rank => rank.Rank == 4).First().Team;
 
             var playoffConfig = new PlayoffCompetitionConfig("My Playoff", null, 2, new Domain.GameRules("My Rules", false, 3, 1, 7, 6), 1, null, null, null);
-            var playoff = new Playoff(playoffConfig, "My Playoff", 1, 82, null, season.Schedule, null);
+            var playoff = new Playoff(playoffConfig, "My Playoff", 1, 82, 1, null, season.Schedule, null);
             playoff.CompetitionConfig = playoffConfig;
 
             var team1 = new PlayoffTeam(team1Parent.Name, team1Parent.Skill, null, team1Parent.Parent, null, 1);
@@ -87,8 +87,8 @@ namespace TeamApp.Console
             var team4 = new PlayoffTeam(team4Parent.Name, team4Parent.Skill, null, team4Parent.Parent, null, 1);
 
 
-            var series1 = new BestOfSeries(playoff, "Series 1", 1, team1, team2, 0, 0, 4, new List<PlayoffGame>(), new int[] { 0, 0, 1, 1, 0, 1, 0 });
-            var series2 = new BestOfSeries(playoff, "Series 2", 1, team3, team4, 0, 0, 4, new List<PlayoffGame>(), new int[] { 0, 0, 1, 1, 0, 1, 0 });
+            var series1 = new BestOfSeries(playoff, "Series 1", 1, -1, team1, team2, 0, 0, 4, new List<PlayoffGame>(), new int[] { 0, 0, 1, 1, 0, 1, 0 });
+            var series2 = new BestOfSeries(playoff, "Series 2", 1, -1, team3, team4, 0, 0, 4, new List<PlayoffGame>(), new int[] { 0, 0, 1, 1, 0, 1, 0 });
             playoff.AddSeries(series1);
             playoff.AddSeries(series2);
 
