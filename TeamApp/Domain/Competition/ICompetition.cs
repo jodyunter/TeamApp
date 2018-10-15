@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TeamApp.Domain.Scheduler;
+using TeamApp.Domain.Schedules;
 
 namespace TeamApp.Domain.Competition
 {

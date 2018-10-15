@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TeamApp.Domain.Competition.Seasons;
-using TeamApp.Domain.Scheduler;
+using TeamApp.Domain.Schedules;
 using Xunit;
 using static Xunit.Assert;
 using static TeamApp.Test.Domain.SchedulerTests.SchedulerTests;
@@ -24,9 +24,9 @@ namespace TeamApp.Test.Domain.Competition.Seasons
             var rules = new GameRules(null, true, 1, 0, 7, 6);
             var games = new List<ScheduleGame>()
             {
-                new ScheduleGame(null, 1, 1, 1, teams[0], teams[1], 1, 1, true, 1, rules),
-                new ScheduleGame(null, 1, 1, 1, teams[0], teams[2], 3, 1, true, 1, rules),
-                new ScheduleGame(null, 1, 1, 1, teams[0], teams[3], 1, 4, true, 1, rules)  
+                new ScheduleGame(null, 1, 1, 1, teams[0], teams[1], 1, 1, true, 1, rules, false),
+                new ScheduleGame(null, 1, 1, 1, teams[0], teams[2], 3, 1, true, 1, rules, false),
+                new ScheduleGame(null, 1, 1, 1, teams[0], teams[3], 1, 4, true, 1, rules, false)  
             };
 
             var team1 = new SeasonTeam("Team 1", 5, teams[0], null, null, null, null, 1);
@@ -82,7 +82,7 @@ namespace TeamApp.Test.Domain.Competition.Seasons
 
             var season = seasonService.CreateNewSeason(seasonCompetition, "Season 1", 1);
 
-            var schedule = Scheduler.CreateGames(season.CompetitionConfig.League, season.Year, 1, 1, 
+            var schedule = Scheduler.CreateGames(season, season.Year, 1, 1, 
                season.GetAllTeamsInDivision(season.GetDivisionByName("NHL")).Select(t => t.Parent).ToList(),
                 1, true, season.CompetitionConfig.GameRules);
             

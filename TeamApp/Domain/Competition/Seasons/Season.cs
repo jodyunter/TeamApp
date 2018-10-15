@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TeamApp.Domain.Competition.Seasons.Config;
-using TeamApp.Domain.Scheduler;
+using TeamApp.Domain.Schedules;
 
 namespace TeamApp.Domain.Competition.Seasons
 {

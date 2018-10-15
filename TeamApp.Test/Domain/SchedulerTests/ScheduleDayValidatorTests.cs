@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using static Xunit.Assert;
 using Xunit;
-using TeamApp.Domain.Scheduler;
+using TeamApp.Domain.Schedules;
 using static TeamApp.Test.Domain.SchedulerTests.SchedulerTests;
-using static TeamApp.Domain.Scheduler.ScheduleValidator;
+using static TeamApp.Domain.Schedules.ScheduleValidator;
 
 namespace TeamApp.Test.Domain.SchedulerTests
 {

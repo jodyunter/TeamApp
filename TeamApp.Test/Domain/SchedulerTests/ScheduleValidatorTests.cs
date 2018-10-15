@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using static Xunit.Assert;
 using Xunit;
-using TeamApp.Domain.Scheduler;
+using TeamApp.Domain.Schedules;
 using static TeamApp.Test.Domain.SchedulerTests.SchedulerTests;
 using TeamApp.Domain;
 
@@ -48,12 +46,11 @@ namespace TeamApp.Test.Domain.SchedulerTests
         }
 
         public static Schedule CreateBalancedScheduleNoHomeAndAway()
-        {
-            var league = new League("My League");
+        {         
             var schedule = new Schedule();
             var rules = new GameRules(null, true, 1, 0, 7, 6);
 
-            schedule = Scheduler.CreateGames(league, 1, 5, 1,
+            schedule = Scheduler.CreateGames(null, 1, 5, 1,
                 new List<Team>()
                     { CreateTeam("Team 1"), CreateTeam("Team 2"), CreateTeam("Team 3"), CreateTeam("Team 4"), CreateTeam("Team 5"), CreateTeam("Team 6") },
                 2, false, rules);
@@ -62,12 +59,11 @@ namespace TeamApp.Test.Domain.SchedulerTests
         }
 
         public static Schedule CreateBalancedScheduleWithHomeAndAway()
-        {
-            var league = new League("My League");
+        {            
             var schedule = new Schedule();
             var rules = new GameRules(null, true, 1, 0, 7, 6);
 
-            schedule = Scheduler.CreateGames(league, 1, 5, 1,
+            schedule = Scheduler.CreateGames(null, 1, 5, 1,
                 new List<Team>()
                     { CreateTeam("Team 1"), CreateTeam("Team 2"), CreateTeam("Team 3"), CreateTeam("Team 4"), CreateTeam("Team 5"), CreateTeam("Team 6") },
                 2, true, rules);

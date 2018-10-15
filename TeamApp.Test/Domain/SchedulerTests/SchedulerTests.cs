@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TeamApp.Domain.Scheduler;
+﻿using System.Collections.Generic;
+using TeamApp.Domain.Schedules;
 using TeamApp.Domain;
 using Xunit;
 using static Xunit.Assert;
@@ -47,9 +45,8 @@ namespace TeamApp.Test.Domain.SchedulerTests
         [Theory]
         [MemberData(nameof(TwoDifferentGroupsOfTeams))]
         public void ShouldCreateScheduleTwoDifferentGroups(List<Team> HomeTeams, List<Team> AwayTeams, int expectedDays, int iterations, bool homeAndAway, GameRules rules)
-        {
-            var league = new League("My League");
-            var days = Scheduler.CreateGames(league, 1, 0, 1,
+        {            
+            var days = Scheduler.CreateGames(null, 1, 0, 1,
                 HomeTeams, AwayTeams, iterations, homeAndAway, rules);
 
             var messages = new List<string>();
@@ -96,9 +93,8 @@ namespace TeamApp.Test.Domain.SchedulerTests
         [Theory]
         [MemberData(nameof(OneGroupOfTeams))]
         public void ShouldCreateScheduleForOneGroupofTeams(List<Team> Teams, int expectedDays, int iterations, bool homeAndAway,GameRules rules)
-        {
-            var league = new League("My League");
-            var days = Scheduler.CreateGames(league, 1, 0, 1,
+        {            
+            var days = Scheduler.CreateGames(null, 1, 0, 1,
                 Teams, iterations, homeAndAway, rules);
 
             var messages = new List<string>();
@@ -131,7 +127,7 @@ namespace TeamApp.Test.Domain.SchedulerTests
                         
         public static ScheduleGame CreateGame(string homeTeamName, string awayTeamName)
         {
-            return new ScheduleGame(null, -1, -1, -1, CreateTeam(homeTeamName), CreateTeam(awayTeamName), 0, 0, false, 1, null);
+            return new ScheduleGame(null, -1, -1, -1, CreateTeam(homeTeamName), CreateTeam(awayTeamName), 0, 0, false, 1, null,false);
         }
 
     }

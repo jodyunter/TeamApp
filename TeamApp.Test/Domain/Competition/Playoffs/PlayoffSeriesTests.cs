@@ -6,6 +6,7 @@ using TeamApp.Domain;
 using TeamApp.Domain.Competition.Playoffs.Series;
 using Xunit;
 using static Xunit.Assert;
+using TeamApp.Domain.Competition.Playoffs.Config;
 
 namespace TeamApp.Test.Domain.Competition.Playoffs
 {
@@ -99,11 +100,11 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
         }
         public static PlayoffGame CreateGame(int homeScore, int awayScore, bool complete, PlayoffTeam team1, PlayoffTeam team2)
         {
-            return new PlayoffGame(null, null, -1, -1, -1, team1.Parent, team2.Parent, homeScore, awayScore, complete, 1, null);
+            return new PlayoffGame(null, null, -1, -1, -1, team1.Parent, team2.Parent, homeScore, awayScore, complete, 1, null, false);
         }
         public static PlayoffTeam CreateTeam(string name)
         {
-            return new PlayoffTeam(name, 5, null, new Team(name, 5, null, 1, null, true), null, 1, null);
+            return new PlayoffTeam(name, 5, null, new Team(name, 5, null, 1, null, true), null, 1);
         }
         [Theory]
         [MemberData(nameof(SeriesForInCompleteGames))]
@@ -159,10 +160,109 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
 
         }
 
+        [Theory]
+        //first no progression
+        [InlineData(1, 1, null, 0)]
+        [InlineData(2, 2, null, 1)]
+        [InlineData(3, 3, null, 0)]
+        [InlineData(4, 4, null, 1)]
+        //next get it from the the progress
+        [InlineData(5, 1, new int[] { 1, 1, 0, 0, 1 }, 1)]
+        [InlineData(6, 2, new int[] { 1, 1, 0, 0, 1 }, 1)]
+        [InlineData(7, 3, new int[] { 1, 1, 0, 0, 1 }, 0)]
+        [InlineData(8, 4, new int[] { 1, 1, 0, 0, 1 }, 0)]
+        [InlineData(9, 5, new int[] { 1, 1, 0, 0, 1 }, 1)]
+        //next get it after the progression
+        [InlineData(10, 6, new int[] { 1, 1, 0, 0, 1 }, 1)]
+        [InlineData(11, 7, new int[] { 1, 1, 0, 0, 1 }, 0)]
+        [InlineData(12, 8, new int[] { 1, 1, 0, 0, 1 }, 1)]
+        [InlineData(13, 9, new int[] { 1, 1, 0, 0, 1 }, 0)]
+        [InlineData(14, 10, new int[] { 1, 1, 0, 0, 1 }, 1)]
+        public void ShouldGetProperTeamForGameNumber(int testNo, int gameToTest, int[] homeTeamProgression, int expectedResult)
+        {
+            var series = new BestOfSeries(null, null, 1, null, null, 0, 0, 0, null, homeTeamProgression);
+
+            StrictEqual(expectedResult, series.GetHomeValueForGame(gameToTest));
+        }
+
+        [Theory]
+        //first no progression
+        [InlineData(1, 1, null, 0)]
+        [InlineData(2, 2, null, 1)]
+        [InlineData(3, 3, null, 0)]
+        [InlineData(4, 4, null, 1)]
+        //next get it from the the progress
+        [InlineData(5, 1, new int[] { 1, 1, 0, 0, 1 }, 1)]
+        [InlineData(6, 2, new int[] { 1, 1, 0, 0, 1 }, 1)]
+        [InlineData(7, 3, new int[] { 1, 1, 0, 0, 1 }, 0)]
+        [InlineData(8, 4, new int[] { 1, 1, 0, 0, 1 }, 0)]
+        [InlineData(9, 5, new int[] { 1, 1, 0, 0, 1 }, 1)]
+        //next get it after the progression
+        [InlineData(10, 6, new int[] { 1, 1, 0, 0, 1 }, 1)]
+        [InlineData(11, 7, new int[] { 1, 1, 0, 0, 1 }, 0)]
+        [InlineData(12, 8, new int[] { 1, 1, 0, 0, 1 }, 1)]
+        [InlineData(13, 9, new int[] { 1, 1, 0, 0, 1 }, 0)]
+        [InlineData(14, 10, new int[] { 1, 1, 0, 0, 1 }, 1)]
+        public void ShouldCreateGameProperly(int testNo, int gameToTest, int[] homeTeamProgression, int expectedResult)
+        {
+            var gameRules = new GameRules("Test", false, 3, 1, 7, 6);
+            var playoffConfig = new PlayoffCompetitionConfig("My Playoff", null, 1, gameRules, 1, null, null, null); //todo eventually can't use this constructor
+            var playoff = new Playoff(playoffConfig, "My Playoff", 1, 1, null, null, null);
+            
+            playoff.CompetitionConfig = playoffConfig;
+            playoffConfig.GameRules = gameRules;
+
+            var homeTeam = CreateTeam("A Team");
+            var awayTeam = CreateTeam("B Team");
+
+            var series = new BestOfSeries(playoff, "Test", 1, homeTeam, awayTeam, 0, 0, 0, null, homeTeamProgression);
+
+            var game = series.CreateGameForSeries(gameToTest);
+
+            if (expectedResult == 0)
+            {
+                Equals("A Team", game.HomeTeam.Name);
+                Equals("B Team", game.AwayTeam.Name);
+            }
+            else
+            {
+                Equals("B Team", game.HomeTeam.Name);
+                Equals("A Team", game.AwayTeam.Name);
+            }
+        }
+
         [Fact]
-        public void ShouldGetProperTeamForGameNumber()
+        public void ShouldProcessSeriesGameBestOf()
         {
 
+            var homeTeam = CreateTeam("A Team");
+            var awayTeam = CreateTeam("B Team");
+
+            var series = new BestOfSeries(null, "Test", 1, homeTeam, awayTeam, 0, 0, 2, null, null);
+
+            var game1 = CreateGame(5, 4, true, homeTeam, awayTeam);
+            var game2 = CreateGame(8, 3, true, awayTeam, homeTeam);
+            var game3 = CreateGame(2, 3, true, awayTeam, homeTeam);
+
+            False(series.IsComplete());
+            series.ProcessGame(game1);
+
+            StrictEqual(1, series.HomeWins);
+            StrictEqual(0, series.AwayWins);
+
+            False(series.IsComplete());
+            series.ProcessGame(game2);
+
+            StrictEqual(1, series.HomeWins);
+            StrictEqual(1, series.AwayWins);
+
+            False(series.IsComplete());
+            series.ProcessGame(game3);
+
+            StrictEqual(2, series.HomeWins);
+            StrictEqual(1, series.AwayWins);
+            
+            True(series.IsComplete());
         }
     }
 }

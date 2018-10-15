@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TeamApp.Domain.Scheduler
+namespace TeamApp.Domain.Schedules
 {
     public class ScheduleDay
     {

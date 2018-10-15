@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TeamApp.Domain.Scheduler
+namespace TeamApp.Domain.Schedules
 {
     public class Schedule
     {

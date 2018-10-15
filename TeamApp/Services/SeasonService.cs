@@ -5,7 +5,7 @@ using TeamApp.Domain.Competition.Seasons.Config;
 using System.Linq;
 using TeamApp.Domain.Competition.Seasons;
 using TeamApp.Domain;
-using TeamApp.Domain.Scheduler;
+using TeamApp.Domain.Schedules;
 
 namespace TeamApp.Services
 {
@@ -84,7 +84,7 @@ namespace TeamApp.Services
                 var awayTeams = GetTeams(season, rule.AwayTeamType, rule.AwayTeamValue);
                 
                 var nextSchedule = Scheduler.CreateGames(
-                    season.CompetitionConfig.League,
+                    season,
                     season.Year, 
                     1,
                     day, 

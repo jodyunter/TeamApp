@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using TeamApp.Services;
 using static Xunit.Assert;
 using TeamApp.Test.Helpers;
 using TeamApp.Domain.Competition.Seasons.Config;
 using System.Linq;
 using Xunit;
-using TeamApp.Domain.Scheduler;
+using TeamApp.Domain.Schedules;
 
 namespace TeamApp.Test.Services
 {

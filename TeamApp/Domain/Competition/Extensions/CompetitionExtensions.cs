@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TeamApp.Domain.Competition.Seasons;
-using TeamApp.Domain.Scheduler;
+using TeamApp.Domain.Schedules;
 
 namespace TeamApp.Domain.Competition
 {
@@ -11,21 +11,23 @@ namespace TeamApp.Domain.Competition
 
         public static void PlayGame(this ICompetition competition, ScheduleGame game, Random random)
         {
-            game.Play(random);
-            competition.ProcessGame(game);
+            if (!game.IsComplete()) game.Play(random);
+            if (!game.Processed) { competition.ProcessGame(game); game.Processed = true; }
         }
 
-        public static void PlayGames(this ICompetition competition, List<ScheduleGame> games, Random random)
+        public static List<ScheduleGame> PlayGames(this ICompetition competition, List<ScheduleGame> games, Random random)
         {
             games.ForEach(g => { g.Play(random); competition.ProcessGame(g); });
+
+            return games;
         }
 
-        public static void PlayDay(this ICompetition competition, ScheduleDay day, Random random)
+        public static List<ScheduleGame> PlayDay(this ICompetition competition, ScheduleDay day, Random random)
         {
-            competition.PlayGames(day.Games, random);
+            return competition.PlayGames(day.Games, random);
         }
 
-        public static void PlayNextDay(this ICompetition competition, Random random)
+        public static List<ScheduleGame> PlayNextDay(this ICompetition competition, Random random)
         {
             var day = competition.Schedule.GetNextInCompleteDay();
 
@@ -33,6 +35,8 @@ namespace TeamApp.Domain.Competition
             {
                 competition.PlayGames(day.Games, random);
             }
+
+            return day.Games;
         }
     }
 }

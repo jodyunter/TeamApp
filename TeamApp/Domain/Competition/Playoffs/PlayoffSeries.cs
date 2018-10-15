@@ -36,7 +36,8 @@ namespace TeamApp.Domain.Competition.Playoffs
         {
             if (IsComplete()) throw new ApplicationException("Series is complete, why are we trying to play another game?");
 
-            ProcessSeriesGame(game);            
+            ProcessSeriesGame(game);    
+            
         }        
 
         public int GetInCompleteGames()
@@ -45,52 +46,52 @@ namespace TeamApp.Domain.Competition.Playoffs
 
             return Games.Where(g => !g.Complete).ToList().Count();
         }
-
-
-        public PlayoffTeam GetHomeTeamForGameNumber(int seriesGameNumber)
+                
+        public List<PlayoffGame> CreateNeededGamesForSeries()
         {
-            return GetTeamForGameNumber(seriesGameNumber, true);
-        }
+            var newGamesList = new List<PlayoffGame>();
 
-        public PlayoffTeam GetAwayTeamForGameNumber(int seriesGameNumber)
-        {
-            return GetTeamForGameNumber(seriesGameNumber, false);
-        }
-        public PlayoffTeam GetTeamForGameNumber(int seriesGameNumber, bool homeTeam)
-        {
-            if (HomeGameProgression.Length >= seriesGameNumber)
+            var neededGames = NumberOfGamesNeeded();
+
+            for (int i = 0; i < neededGames; i++)
             {
-                if (HomeGameProgression[seriesGameNumber] == 0)
-                    if (homeTeam) return HomeTeam;
-                    else return AwayTeam;
-                else                
-                    if (homeTeam) return AwayTeam;
-                    else return HomeTeam;
-            }
-            else
-            {
-                if (seriesGameNumber % 2 == 0) return HomeTeam;
-                else return AwayTeam;
-            }
+                var nextGame = CreateNextGameForSeries();
+                newGamesList.Add(nextGame);
+                Games.Add(nextGame);            
+            }            
+
+            return newGamesList;
         }
+        public PlayoffGame CreateNextGameForSeries()
+        {
+            if (!IsComplete())
+            {
+                int nextGameNumber = Games.Count + 1;
+                var nextGame =  CreateGameForSeries(nextGameNumber);
+
+                return nextGame;
+            }
+
+            return null;
+        }
+
         public PlayoffGame CreateGameForSeries(int gameNumber)
         {
             var homeValue = GetHomeValueForGame(gameNumber);
 
-
-            return new PlayoffGame(Playoff.CompetitionConfig.League, this, gameNumber, -1, Playoff.Year, 
+            return new PlayoffGame(Playoff, this, gameNumber, -1, Playoff.Year, 
                 homeValue == 0 ? HomeTeam.Parent: AwayTeam.Parent, homeValue == 0 ? AwayTeam.Parent: HomeTeam.Parent,
-                0, 0, false, 1, Playoff.CompetitionConfig.GameRules);
+                0, 0, false, 1, Playoff.CompetitionConfig.GameRules, false);
         }
 
         public int GetHomeValueForGame(int gameNumber)
-        {
-            if (HomeGameProgression.Length > gameNumber)
+        {            
+            if (HomeGameProgression == null || (gameNumber > HomeGameProgression.Length))
             {
                 if (gameNumber % 2 == 0)
-                    return 0;
-                else
                     return 1;
+                else
+                    return 0;
             } 
             else
             {

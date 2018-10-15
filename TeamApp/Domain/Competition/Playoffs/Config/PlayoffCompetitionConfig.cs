@@ -13,6 +13,18 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
         public int? FirstYear { get; set; }
         public int? LastYear { get; set; }
         public List<PlayoffSeriesRule> SeriesRules { get; set; }
-        public Dictionary<string, ICompetitionConfig> Parents { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }        
+        public Dictionary<string, ICompetitionConfig> Parents { get; set; }
+
+        public PlayoffCompetitionConfig(string name, League league, int order, GameRules gameRules, int? firstYear, int? lastYear, List<PlayoffSeriesRule> seriesRules, Dictionary<string, ICompetitionConfig> parents)
+        {
+            Name = name;
+            League = league;
+            Order = order;
+            GameRules = gameRules;
+            FirstYear = firstYear;
+            LastYear = lastYear;
+            SeriesRules = seriesRules;
+            Parents = parents;
+        }
     }
 }
