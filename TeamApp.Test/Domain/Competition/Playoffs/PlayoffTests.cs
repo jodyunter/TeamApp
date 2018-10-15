@@ -43,6 +43,7 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
 
             Equal(expectedHomeName, homeTeam.Name);
             Equal(expectedAwayName, awayTeam.Name);
+            
         }
     }
 }
