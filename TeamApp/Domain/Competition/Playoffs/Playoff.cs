@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TeamApp.Domain.Schedules;
 using System.Linq;
+using TeamApp.Domain.Competition.Playoffs.Config;
 
 namespace TeamApp.Domain.Competition.Playoffs
 {
@@ -92,5 +93,11 @@ namespace TeamApp.Domain.Competition.Playoffs
             return complete;
         }
 
+        public void CreateSeriesFromRule(PlayoffSeriesRule rule)
+        {
+            PlayoffTeam homeTeam = null;
+            PlayoffTeam awayTeam = null;
+        }        
+        
     }
 }

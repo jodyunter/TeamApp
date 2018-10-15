@@ -33,6 +33,8 @@ namespace TeamApp.Domain.Competition.Playoffs
         public abstract bool IsComplete();
         public abstract void ProcessSeriesGame(PlayoffGame game);
         public abstract int NumberOfGamesNeeded();
+        public abstract PlayoffTeam GetWinner();
+        public abstract PlayoffTeam GetLoser();
 
         public void ProcessGame(PlayoffGame game)
         {
