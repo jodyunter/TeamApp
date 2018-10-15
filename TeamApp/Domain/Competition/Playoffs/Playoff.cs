@@ -85,9 +85,22 @@ namespace TeamApp.Domain.Competition.Playoffs
         {
             var complete = true;
 
-            Series.Where(s => s.Round == round).ToList().ForEach(series =>
+            var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
+
+            //get all rules for this orund
+            var seriesRulesList = playoffConfig.SeriesRules.Where(sr => sr.Round == round).ToList();
+
+            //if no rules, then it is complete
+            if (seriesRulesList.Count == 0) return true;
+
+            //for each series rule, check to see if the series exists and if it does, is it complete?
+            seriesRulesList.ForEach(sr =>
             {
-                complete = complete && series.IsComplete();
+                var series = Series.Where(s => s.Name == sr.Name).FirstOrDefault();
+
+                if (series == null) complete = false;
+                else
+                    complete = complete && series.IsComplete();
             });
 
             return complete;
