@@ -50,7 +50,7 @@ namespace TeamApp.Domain.Competition.Playoffs
 
             return Games.Where(g => !g.Complete).ToList().Count();
         }
-                
+
         public List<PlayoffGame> CreateNeededGamesForSeries()
         {
             var newGamesList = new List<PlayoffGame>();
@@ -59,24 +59,14 @@ namespace TeamApp.Domain.Competition.Playoffs
 
             for (int i = 0; i < neededGames; i++)
             {
-                var nextGame = CreateNextGameForSeries();
-                newGamesList.Add(nextGame);
-                Games.Add(nextGame);            
-            }            
-
-            return newGamesList;
-        }
-        public PlayoffGame CreateNextGameForSeries()
-        {
-            if (!IsComplete())
-            {
                 int nextGameNumber = Games.Count + 1;
-                var nextGame =  CreateGameForSeries(nextGameNumber);
+                var nextGame = CreateGameForSeries(nextGameNumber);
 
-                return nextGame;
+                newGamesList.Add(nextGame);
+                Games.Add(nextGame);
             }
 
-            return null;
+            return newGamesList;
         }
 
         public PlayoffGame CreateGameForSeries(int gameNumber)
