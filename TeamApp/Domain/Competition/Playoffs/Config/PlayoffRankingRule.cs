@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TeamApp.Domain.Competition.Playoffs.Config
 {
-    public class PlayoffRankingRules
+    public class PlayoffRankingRule
     {
         //you will get the same competition for the current year
         public ICompetitionConfig SourceCompetition { get; set; }

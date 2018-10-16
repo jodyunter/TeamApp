@@ -24,7 +24,7 @@ namespace TeamApp.Console
             var seasonService = new SeasonService();
             var seasonCompetition = ((List<SeasonCompetitionConfig>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
 
-            var season = seasonService.CreateNewSeason(seasonCompetition, "Season 1", 1);        
+            var season = (Season)seasonCompetition.CreateCompetition(1, null);        
 
             /*var schedule = Scheduler.CreateGames(season.Parent.League, season.Year, 1, 1,
                season.GetAllTeamsInDivision(season.GetDivisionByName("NHL")).Select(t => t.Parent).ToList(),
@@ -76,7 +76,7 @@ namespace TeamApp.Console
             var team3Parent = nhlRankings.Where(rank => rank.Rank == 3).First().Team;
             var team4Parent = nhlRankings.Where(rank => rank.Rank == 4).First().Team;
 
-            var playoffConfig = new PlayoffCompetitionConfig("My Playoff", null, 2, new Domain.GameRules("My Rules", false, 3, 1, 7, 6), 1, null, null, null);
+            var playoffConfig = new PlayoffCompetitionConfig("My Playoff", null, 2, new Domain.GameRules("My Rules", false, 3, 1, 7, 6), 1, null, null, null, null);
             var playoff = new Playoff(playoffConfig, "My Playoff", 1, 82, 1, null, season.Schedule, null);
             playoff.CompetitionConfig = playoffConfig;
 

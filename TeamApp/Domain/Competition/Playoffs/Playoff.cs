@@ -16,9 +16,9 @@ namespace TeamApp.Domain.Competition.Playoffs
         public int CurrentRound { get; set; }
         public List<PlayoffSeries> Series { get; set; }
         public Schedule Schedule { get; set; }
-        public List<TeamRanking> Rankings { get; set; }
+        public Dictionary<string, List<TeamRanking>> Rankings { get; set; }
 
-        public Playoff(ICompetitionConfig competitionConfig, string name, int year, int startingDay, int currentRound, List<PlayoffSeries> series, Schedule schedule, List<TeamRanking> rankings)
+        public Playoff(ICompetitionConfig competitionConfig, string name, int year, int startingDay, int currentRound, List<PlayoffSeries> series, Schedule schedule, Dictionary<string, List<TeamRanking>> rankings)
         {
             CompetitionConfig = competitionConfig;
             StartingDay = startingDay;
@@ -146,7 +146,7 @@ namespace TeamApp.Domain.Competition.Playoffs
             switch (fromType)
             {
                 case PlayoffSeriesRule.FROM_RANKING:
-                    var ranking = Rankings.Where(r => r.Group == fromName && r.Rank == fromValue).ToList().First();
+                    var ranking = Rankings[fromName].Where(r => r.Rank == fromValue).ToList().First();
                     return new PlayoffTeam(ranking.Team.Name, ranking.Team.Skill, this, ranking.Team.Parent, ranking.Team.Owner, Year);                    
                 case PlayoffSeriesRule.FROM_SERIES:
                     var series = Series.Where(s => s.Name.Equals(fromName)).FirstOrDefault();

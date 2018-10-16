@@ -11,6 +11,7 @@ namespace TeamApp.Services
 {
     public class SeasonService
     {
+        /*
         public Season CreateNewSeason(SeasonCompetitionConfig seasonConfig, string seasonName, int year)
         {
             var season = new Season(seasonConfig, seasonName, year);            
@@ -98,7 +99,7 @@ namespace TeamApp.Services
             });
             
         }
-        
+        */
         public List<SeasonTeam> GetTeams(Season season, int teamType, string teamValue)
         {
             

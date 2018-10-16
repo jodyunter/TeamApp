@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TeamApp.Domain.Competition;
 using TeamApp.Domain.Competition.Seasons;
 
 namespace TeamApp.Console.Views.Season
@@ -10,9 +11,9 @@ namespace TeamApp.Console.Views.Season
 
         public static string formatter = "{0,3}. {1,-15}{2,5}{3,5}{4,5}{5,5}{6,5}{7,5}{8,5}{9,5}{10,15}";
 
-        public SeasonDivisionRank Ranking;
+        public TeamRanking Ranking;
 
-        public SeasonTeamStatsView(SeasonDivisionRank ranking)
+        public SeasonTeamStatsView(TeamRanking ranking)
         {
             Ranking = ranking;
         }

@@ -7,6 +7,7 @@ namespace TeamApp.Domain.Competition.Seasons.Config
     public class SeasonDivisionRule:ITimePeriod
     { 
         public SeasonCompetitionConfig Competition { get; set; }
+        //todo eventually add a "from competition config"
         public string DivisionName { get; set; }
         public string ParentName { get; set; }
         public int Level { get; set; }

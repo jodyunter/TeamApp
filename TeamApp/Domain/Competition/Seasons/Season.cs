@@ -14,14 +14,14 @@ namespace TeamApp.Domain.Competition.Seasons
         public List<SeasonDivision> Divisions { get; set; }
         public List<SeasonTeam> Teams { get; set; }
         public Schedule Schedule { get; set; }        
-        public Dictionary<string, List<SeasonDivisionRank>> Rankings { get; set; }
+        public Dictionary<string, List<TeamRanking>> Rankings { get; set; }
 
-        public Season(SeasonCompetitionConfig competitionRule, string name, int year)
+        public Season(SeasonCompetitionConfig competitionRule,int year)
         {
             CompetitionConfig = competitionRule;
-            Name = name;
+            Name = competitionRule.Name;
             Year = year;
-            Rankings = new Dictionary<string, List<SeasonDivisionRank>>();
+            Rankings = new Dictionary<string, List<TeamRanking>>();
         }
 
         public void ProcessGame(ScheduleGame game)
@@ -85,11 +85,11 @@ namespace TeamApp.Domain.Competition.Seasons
 
             int rank = 1;
 
-            Rankings[divisionName] = new List<SeasonDivisionRank>();
+            Rankings[divisionName] = new List<TeamRanking>();
 
             listOfTeams.ForEach(team =>
             {
-                Rankings[divisionName].Add(new SeasonDivisionRank(rank, division.Name, team));
+                Rankings[divisionName].Add(new TeamRanking(rank, division.Name, team));
                 rank++;
             });
         }
