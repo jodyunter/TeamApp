@@ -21,7 +21,7 @@ namespace TeamApp.Domain.Schedules
 
         public ScheduleValidator(Schedule schedule)
         {
-            this.Schedule = schedule;
+            Schedule = schedule;
             ErrorMessages = new List<string>();
         }
 
