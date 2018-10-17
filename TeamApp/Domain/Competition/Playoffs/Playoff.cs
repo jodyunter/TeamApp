@@ -32,7 +32,7 @@ namespace TeamApp.Domain.Competition.Playoffs
             CurrentRound = currentRound;
         }
 
-        public void SetupRound(int roundNumber)
+        public void BeginRound(int roundNumber)
         {
             if (!IsRoundSetup(roundNumber))
             {

@@ -35,25 +35,36 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
             var playoff = new Playoff(this, Name, year, -1, 1, null, null, null, null);
 
             ProcessRankingRulesAndAddTeams(playoff, parents);
-            
+            ProcessSeries(playoff);
             throw new NotImplementedException();
+        }
+
+        public void ProcessSeries(Playoff playoff)
+        {
+            playoff.Series = new List<PlayoffSeries>();
+
+            SeriesRules.ForEach(rule =>
+            {
+                SetupSeriesFromRule(playoff, rule);
+            });
         }
 
         public void ProcessRankingRulesAndAddTeams(Playoff playoff, List<ICompetition> parents)
         {
-            if (playoff.Teams == null) playoff.Teams = new List<ISingleYearTeam>();
-            if (playoff.Rankings == null) playoff.Rankings = new Dictionary<string, List<TeamRanking>>();
+            playoff.Teams = new List<ISingleYearTeam>();
+            playoff.Rankings = new Dictionary<string, List<TeamRanking>>();
 
             Rankings.ForEach(rule =>
             {
                 //get the competition
-                var source = parents.Where(p => p.Name.Equals(rule.SourceCompetition.Name)).FirstOrDefault(); //this is the source competition
+                var sourceCompetition = parents.Where(p => p.Name.Equals(rule.SourceCompetition.Name)).FirstOrDefault(); //this is the source competition
 
-                if (source == null) throw new ApplicationException("Playoff Ranking Rule has bad source competition: " + rule.SourceCompetition.Name);
+                if (sourceCompetition == null) throw new ApplicationException("Playoff Ranking Rule has bad source competition: " + rule.SourceCompetition.Name);
 
-                var group = source.Rankings[rule.SourceGroupName];
+                //get the group with the rankings
+                var sourceGroup = sourceCompetition.Rankings[rule.SourceGroupName];
 
-                if (group == null) throw new ApplicationException("Playoff Ranking Rule has bad source group name: " + rule.SourceGroupName);
+                if (sourceGroup == null) throw new ApplicationException("Playoff Ranking Rule has bad source group name: " + rule.SourceGroupName);
 
                 int firstRank = rule.StartingRank;
 
@@ -61,7 +72,7 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
 
                 for (int i = rule.SourceFirstRank; i <= rule.SourceLastRank; i++)
                 {
-                    var sourceRanking = group.Where(r => r.Rank == i).FirstOrDefault();
+                    var sourceRanking = sourceGroup.Where(r => r.Rank == i).FirstOrDefault();
 
                     if (sourceRanking == null) throw new ApplicationException("Playoff Source Rank did not exist: " + rule.SourceCompetition.Name + " " + rule.SourceGroupName + " rank: " + i);
 

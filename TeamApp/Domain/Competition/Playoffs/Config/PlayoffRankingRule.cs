@@ -13,6 +13,7 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
         public string SourceGroupName { get; set; }
         public int SourceFirstRank { get; set; }
         public int SourceLastRank { get; set; }
+        //todo how to pool candidates?
 
         public PlayoffRankingRule(string groupName, int startingRank, ICompetitionConfig sourceCompetition, string sourceGroupName, int sourceFirstRank, int sourceLastRank)
         {

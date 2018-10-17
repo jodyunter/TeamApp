@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using TeamApp.Domain;
 using TeamApp.Domain.Competition;
+using TeamApp.Domain.Competition.Playoffs.Config;
 using TeamApp.Domain.Competition.Seasons.Config;
-
+using static TeamApp.Domain.Competition.Playoffs.Config.PlayoffSeriesRule;
 namespace TeamApp.Test.Helpers
 {
     public class Data1
@@ -100,6 +100,37 @@ namespace TeamApp.Test.Helpers
             objects.Add(BASIC_SEASON_GAME_RULES, competition.GameRules);
 
             return objects;
+
+        }
+
+        public static void CreateBasicPlayoffConfiguration(SeasonCompetitionConfig seasonConfig)
+        {
+            var gameRules = new GameRules("Playoff Rules", false, 3, 1, 7, 6);
+
+            var rankingRules = new List<PlayoffRankingRule>()
+            {
+                new PlayoffRankingRule("NHL", 1,seasonConfig, "NHL", 1, 16)
+            };
+
+            var seriesRules = new List<PlayoffSeriesRule>()
+            {
+                new PlayoffSeriesRule("Series A", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "NHL", 1, FROM_RANKING, "NHL", 16, 1, null, new int[] {0,0,1,1,0,1,0 }),
+                new PlayoffSeriesRule("Series B", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "NHL", 2, FROM_RANKING, "NHL", 15, 1, null, new int[] {0,0,1,1,0,1,0 }),
+                new PlayoffSeriesRule("Series C", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "NHL", 3, FROM_RANKING, "NHL", 14, 1, null, new int[] {0,0,1,1,0,1,0 }),
+                new PlayoffSeriesRule("Series D", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "NHL", 4, FROM_RANKING, "NHL", 13, 1, null, new int[] {0,0,1,1,0,1,0 }),
+                new PlayoffSeriesRule("Series E", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "NHL", 5, FROM_RANKING, "NHL", 12, 1, null, new int[] {0,0,1,1,0,1,0 }),
+                new PlayoffSeriesRule("Series F", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "NHL", 6, FROM_RANKING, "NHL", 11, 1, null, new int[] {0,0,1,1,0,1,0 }),
+                new PlayoffSeriesRule("Series G", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "NHL", 7, FROM_RANKING, "NHL", 10, 1, null, new int[] {0,0,1,1,0,1,0 }),
+                new PlayoffSeriesRule("Series H", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "NHL", 8, FROM_RANKING, "NHL", 9, 1, null, new int[] {0,0,1,1,0,1,0 }),
+                new PlayoffSeriesRule("Series I", 2, BEST_OF_SERIES, 4, gameRules, FROM_SERIES, "Series A", GET_WINNER, FROM_SERIES, "Series H", GET_WINNER, 1, null, new int[] {0,0,1,1,0,1,0 }),
+                new PlayoffSeriesRule("Series J", 2, BEST_OF_SERIES, 4, gameRules, FROM_SERIES, "Series B", GET_WINNER, FROM_SERIES, "Series G", GET_WINNER, 1, null, new int[] {0,0,1,1,0,1,0 }),
+                new PlayoffSeriesRule("Series K", 2, BEST_OF_SERIES, 4, gameRules, FROM_SERIES, "Series C", GET_WINNER, FROM_SERIES, "Series F", GET_WINNER, 1, null, new int[] {0,0,1,1,0,1,0 }),
+                new PlayoffSeriesRule("Series L", 2, BEST_OF_SERIES, 4, gameRules, FROM_SERIES, "Series D", GET_WINNER, FROM_SERIES, "Series E", GET_WINNER, 1, null, new int[] {0,0,1,1,0,1,0 }),
+                new PlayoffSeriesRule("Series M", 3, BEST_OF_SERIES, 4, gameRules, FROM_SERIES, "Series I", GET_WINNER, FROM_SERIES, "Series L", GET_WINNER, 1, null, new int[] {0,0,1,1,0,1,0 }),
+                new PlayoffSeriesRule("Series N", 3, BEST_OF_SERIES, 4, gameRules, FROM_SERIES, "Series J", GET_WINNER, FROM_SERIES, "Series K", GET_WINNER, 1, null, new int[] {0,0,1,1,0,1,0 }),
+                new PlayoffSeriesRule("Final", 4, BEST_OF_SERIES, 4, gameRules, FROM_SERIES, "Series M", GET_WINNER, FROM_SERIES, "Series N", GET_WINNER, 1, null, new int[] {0,0,1,1,0,1,0 })
+            };
+
 
         }
 

@@ -16,6 +16,7 @@ namespace TeamApp.Domain.Competition.Seasons
         public Schedule Schedule { get; set; }        
         public Dictionary<string, List<TeamRanking>> Rankings { get; set; }
 
+ 
         public Season(SeasonCompetitionConfig competitionRule,int year)
         {
             CompetitionConfig = competitionRule;
@@ -94,5 +95,9 @@ namespace TeamApp.Domain.Competition.Seasons
             });
         }
 
+        public bool IsComplete()
+        {
+            return Schedule.IsComplete();
+        }
     }
 }
