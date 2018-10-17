@@ -76,7 +76,7 @@ namespace TeamApp.Domain.Competition.Seasons.Config
 
             //setup divisions
             var divisions = new Dictionary<string, SeasonDivision>();
-            var teams = new Dictionary<string, SeasonTeam>();
+            var teams = new Dictionary<string, ISingleYearTeam>();
 
             ProcessDivisionRules(season, divisions);
             ProcessTeamRules(season, divisions, teams);
@@ -108,7 +108,7 @@ namespace TeamApp.Domain.Competition.Seasons.Config
 
         }
 
-        public void ProcessTeamRules(Season season, Dictionary<string, SeasonDivision> seasonDivisions, Dictionary<string, SeasonTeam> teams)
+        public void ProcessTeamRules(Season season, Dictionary<string, SeasonDivision> seasonDivisions, Dictionary<string, ISingleYearTeam> teams)
         {
             TeamRules.ForEach(rule =>
             {
@@ -116,7 +116,7 @@ namespace TeamApp.Domain.Competition.Seasons.Config
             });
         }
 
-        public void AddTeamToDivision(Team team, SeasonDivision seasonDivision, Dictionary<string, SeasonTeam> teams)
+        public void AddTeamToDivision(Team team, SeasonDivision seasonDivision, Dictionary<string, ISingleYearTeam> teams)
         {
             var newTeam = new SeasonTeam(team.Name, team.Skill, team, seasonDivision.Season, seasonDivision, null, team.Owner, seasonDivision.Season.Year);
             newTeam.Stats = new SeasonTeamStats(newTeam);
@@ -157,10 +157,10 @@ namespace TeamApp.Domain.Competition.Seasons.Config
 
         }
 
-        public List<SeasonTeam> GetTeams(Season season, int teamType, string teamValue)
+        public List<ISingleYearTeam> GetTeams(Season season, int teamType, string teamValue)
         {
 
-            var teams = new List<SeasonTeam>();
+            var teams = new List<ISingleYearTeam>();
 
             switch (teamType)
             {

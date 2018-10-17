@@ -20,8 +20,7 @@ namespace TeamApp.Console
         static void Main(string[] args)
         {
             var data = Data1.CreateBasicSeasonConfiguration();
-
-            var seasonService = new SeasonService();
+            
             var seasonCompetition = ((List<SeasonCompetitionConfig>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
 
             var season = (Season)seasonCompetition.CreateCompetition(1, null);        

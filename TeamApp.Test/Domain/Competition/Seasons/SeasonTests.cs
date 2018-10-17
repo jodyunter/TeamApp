@@ -35,7 +35,7 @@ namespace TeamApp.Test.Domain.Competition.Seasons
             var team3 = new SeasonTeam("Team 3", 5, teams[2], null, null, null, null, 1);
             var team4 = new SeasonTeam("Team 4", 5, teams[3], null, null, null, null, 1);
 
-            season.Teams = new List<SeasonTeam>() { team1, team2, team3, team4 };
+            season.Teams = new List<ISingleYearTeam>() { team1, team2, team3, team4 };
 
             games.ForEach(g => { season.ProcessGame(g); });            
 
@@ -77,8 +77,7 @@ namespace TeamApp.Test.Domain.Competition.Seasons
         public void ShouldPlaySome()
         {
             var data = Data1.CreateBasicSeasonConfiguration();
-
-            var seasonService = new SeasonService();
+            
             var seasonCompetition = ((List<SeasonCompetitionConfig>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
 
             var season = (Season)seasonCompetition.CreateCompetition(1, null);
@@ -96,15 +95,14 @@ namespace TeamApp.Test.Domain.Competition.Seasons
             while (!season.Schedule.IsComplete())
                 ((ICompetition)season).PlayNextDay(new Random());            
 
-            StrictEqual(38, season.Teams.Where(t => t.Name.Equals("Boston")).First().Stats.Games);
+            StrictEqual(38, ((SeasonTeam)season.Teams.Where(t => t.Name.Equals("Boston")).First()).Stats.Games);
         }
 
         [Fact]
         public void ShouldGetAllTeamsInDivision()
         {
             var data = Data1.CreateBasicSeasonConfiguration();
-
-            var seasonService = new SeasonService();
+            
             var seasonCompetition = ((List<SeasonCompetitionConfig>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
 
             var season = (Season)seasonCompetition.CreateCompetition(1, null);

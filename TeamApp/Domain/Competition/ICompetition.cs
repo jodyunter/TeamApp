@@ -12,6 +12,7 @@ namespace TeamApp.Domain.Competition
         int Year { get; set; }
         Schedule Schedule { get; set; }
         Dictionary<string, List<TeamRanking>> Rankings { get; set; }
+        List<ISingleYearTeam> Teams { get; set; }
         void ProcessGame(ScheduleGame game);        
     }
 }

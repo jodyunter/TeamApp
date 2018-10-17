@@ -17,6 +17,7 @@ namespace TeamApp.Domain.Competition.Playoffs
         public List<PlayoffSeries> Series { get; set; }
         public Schedule Schedule { get; set; }
         public Dictionary<string, List<TeamRanking>> Rankings { get; set; }
+        public List<ISingleYearTeam> Teams { get; set; }
 
         public Playoff(ICompetitionConfig competitionConfig, string name, int year, int startingDay, int currentRound, List<PlayoffSeries> series, Schedule schedule, Dictionary<string, List<TeamRanking>> rankings)
         {
@@ -36,7 +37,7 @@ namespace TeamApp.Domain.Competition.Playoffs
             {
                 var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
 
-                playoffConfig.SeriesRules.Where(sr => sr.Round == CurrentRound).ToList().ForEach(sr => { Series.Add(CreateSeriesFromRule(sr)); });
+                playoffConfig.SeriesRules.Where(sr => sr.Round == CurrentRound).ToList().ForEach(sr => { Series.Add(SetupSeriesFromRule(sr)); });
 
                 Series.Where(s => s.Round == roundNumber).ToList().ForEach(s =>
                 {
@@ -49,7 +50,7 @@ namespace TeamApp.Domain.Competition.Playoffs
 
         public bool IsRoundSetup(int roundNumber)
         {
-            return Series.Where(s => s.Round == roundNumber).Count() > 0;
+            return Series.Where(s => s.Round == roundNumber && s.HomeTeam != null && s.AwayTeam != null).Count() > 0;
         }
         public void SetupSeriesGames(PlayoffSeries series)
         {
@@ -118,28 +119,44 @@ namespace TeamApp.Domain.Competition.Playoffs
             return complete;
         }
 
-        public PlayoffSeries CreateSeriesFromRule(PlayoffSeriesRule rule)
+        public PlayoffSeries SetupSeriesFromRule(PlayoffSeriesRule rule)
         {
             var homeTeam = GetTeamByRule(rule.HomeFromType, rule.HomeFromName, rule.HomeFromValue);
             var awayTeam = GetTeamByRule(rule.AwayFromType, rule.AwayFromName, rule.AwayFromValue);
 
-            var series = CreateSeries(rule.SeriesType, rule.Name, rule.Round, -1, homeTeam, awayTeam, rule.SeriesNumber, rule.HomeGameProgression);
+            var series = SetupSeries(rule.SeriesType, rule.Name, rule.Round, -1, homeTeam, awayTeam, rule.SeriesNumber, rule.HomeGameProgression);
 
             return series;
         }        
         
-        public PlayoffSeries CreateSeries(int seriesType, string name, int round, int startingDay, PlayoffTeam homeTeam, PlayoffTeam awayTeam,
+        public PlayoffSeries SetupSeries(int seriesType, string name, int round, int startingDay, PlayoffTeam homeTeam, PlayoffTeam awayTeam,
             int seriesNumber, int[] homeGameProgression)
         {
-            switch(seriesType)
+            //if the series already exists add the teams
+            var series = Series.Where(s => s.Name.Equals(name)).FirstOrDefault();
+
+            if (series != null)
             {
-                case PlayoffSeriesRule.BEST_OF_SERIES:
-                    return new BestOfSeries(this, name, round, startingDay, homeTeam, awayTeam, 0, 0, seriesNumber, new List<PlayoffGame>(), homeGameProgression);
-                case PlayoffSeriesRule.TOTAL_GOALS:
-                    return new TotalGoalsSeries(this, name, round, startingDay, homeTeam, awayTeam, 0, 0, seriesNumber, 0, new List<PlayoffGame>(), homeGameProgression);                    
-                default:
-                    throw new ApplicationException("Bad series type from Playoff Series rule: " + seriesType);
+                series.HomeTeam = homeTeam;
+                series.AwayTeam = awayTeam;                
             }
+            else
+            {
+                //if it is not setup, create it
+                switch (seriesType)
+                {
+                    case PlayoffSeriesRule.BEST_OF_SERIES:
+                        series = new BestOfSeries(this, name, round, startingDay, homeTeam, awayTeam, 0, 0, seriesNumber, new List<PlayoffGame>(), homeGameProgression);
+                        break;
+                    case PlayoffSeriesRule.TOTAL_GOALS:
+                        series = new TotalGoalsSeries(this, name, round, startingDay, homeTeam, awayTeam, 0, 0, seriesNumber, 0, new List<PlayoffGame>(), homeGameProgression);
+                        break;
+                    default:
+                        throw new ApplicationException("Bad series type from Playoff Series rule: " + seriesType);
+                }
+            }
+
+            return series;
         }
         public PlayoffTeam GetTeamByRule(int fromType, string fromName, int fromValue)
         {

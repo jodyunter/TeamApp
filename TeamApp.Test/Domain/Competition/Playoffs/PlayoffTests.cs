@@ -15,11 +15,13 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
     {
         public static IEnumerable<object[]> PlayoffDataForGetTeamByRuleTests()
         {
-            var playoff = new Playoff(null, null, 1, 1, 1, new List<PlayoffSeries>(), null, new List<TeamRanking>());
+            var playoff = new Playoff(null, null, 1, 1, 1, new List<PlayoffSeries>(), null, new Dictionary<string, List<TeamRanking>>());
+
+            playoff.Rankings.Add("R1", new List<TeamRanking>());
 
             for (int i = 0; i < 10; i++)
             {
-                playoff.Rankings.Add(new TeamRanking(i + 1, "R1", CreateTeam("Team " + i)));
+                playoff.Rankings["R1"].Add(new TeamRanking(i + 1, "R1", CreateTeam("Team " + i)));
             }
 
             var gameRules = new GameRules("Rule 1", false, 3, 1, 7, 6);

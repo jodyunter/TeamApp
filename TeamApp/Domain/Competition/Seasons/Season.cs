@@ -12,7 +12,7 @@ namespace TeamApp.Domain.Competition.Seasons
         public string Name { get; set; }
         public int Year { get; set; }
         public List<SeasonDivision> Divisions { get; set; }
-        public List<SeasonTeam> Teams { get; set; }
+        public List<ISingleYearTeam> Teams { get; set; }
         public Schedule Schedule { get; set; }        
         public Dictionary<string, List<TeamRanking>> Rankings { get; set; }
 
@@ -28,8 +28,8 @@ namespace TeamApp.Domain.Competition.Seasons
         {
             if (game.Complete)
             {
-                var home = Teams.Where(t => t.Name.Equals(game.HomeTeam.Name)).First();
-                var away = Teams.Where(t => t.Name.Equals(game.AwayTeam.Name)).First();
+                var home = (SeasonTeam)Teams.Where(t => t.Name.Equals(game.HomeTeam.Name)).First();
+                var away = (SeasonTeam)Teams.Where(t => t.Name.Equals(game.AwayTeam.Name)).First();
 
                 if (game.HomeScore == game.AwayScore)
                 {
@@ -38,8 +38,8 @@ namespace TeamApp.Domain.Competition.Seasons
                 }
                 else
                 {
-                    Teams.Where(t => t.Name.Equals(game.GetWinner().Name)).First().Stats.Wins++;
-                    Teams.Where(t => t.Name.Equals(game.GetLoser().Name)).First().Stats.Loses++;
+                    ((SeasonTeam)Teams.Where(t => t.Name.Equals(game.GetWinner().Name)).First()).Stats.Wins++;
+                    ((SeasonTeam)Teams.Where(t => t.Name.Equals(game.GetLoser().Name)).First()).Stats.Loses++;
                 }
 
                 home.Stats.GoalsFor += game.HomeScore;
