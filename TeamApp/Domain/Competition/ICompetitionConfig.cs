@@ -11,7 +11,7 @@ namespace TeamApp.Domain.Competition
         int Order { get; set; }
         GameRules GameRules { get; set; }
         //how do we setup generic rules?
-        Dictionary<string, ICompetitionConfig> Parents { get; set; } //this would be the list of competitions where they could get thier teams from
-        ICompetition CreateCompetition(int year, List<ICompetition> Parents);
+        List<ICompetitionConfig> Parents { get; set; } //this would be the list of competitions where they could get thier teams from
+        ICompetition CreateCompetition(int year, List<ICompetition> parents);
     }
 }

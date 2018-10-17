@@ -46,9 +46,7 @@ namespace TeamApp.Console
 
             season.Divisions.OrderBy(d => d.Level).ThenBy(d => d.Order).ToList().ForEach(div =>
             {
-                WriteLine(div.Name);
-                WriteLine(SeasonTeamStatsView.GetHeader());
-
+                WriteLine(div.Name);                
                 season.Rankings[div.Name].OrderBy(d => d.Rank).ToList().ForEach(ranking =>
                 {
                     WriteLine(new SeasonTeamStatsView(ranking).GetView());
@@ -65,44 +63,6 @@ namespace TeamApp.Console
             foreach (KeyValuePair<string, int> d in homGames)
             {
                 WriteLine(d.Key + ": " + d.Value + " - " + awayGames[d.Key]);                
-            }
-
-            var nhlRankings = season.Rankings.Where(m => m.Key == "NHL").First().Value;
-
-            var team1Parent = nhlRankings.Where(rank => rank.Rank == 1).First().Team;
-            var team2Parent = nhlRankings.Where(rank => rank.Rank == 2).First().Team;
-
-            var team3Parent = nhlRankings.Where(rank => rank.Rank == 3).First().Team;
-            var team4Parent = nhlRankings.Where(rank => rank.Rank == 4).First().Team;
-
-            var playoffConfig = new PlayoffCompetitionConfig("My Playoff", null, 2, new Domain.GameRules("My Rules", false, 3, 1, 7, 6), 1, null, null, null, null);
-            var playoff = new Playoff(playoffConfig, "My Playoff", 1, 82, 1, null, season.Schedule, null);
-            playoff.CompetitionConfig = playoffConfig;
-
-            var team1 = new PlayoffTeam(team1Parent.Name, team1Parent.Skill, null, team1Parent.Parent, null, 1);
-            var team2 = new PlayoffTeam(team2Parent.Name, team2Parent.Skill, null, team2Parent.Parent, null, 1);
-
-            var team3 = new PlayoffTeam(team3Parent.Name, team3Parent.Skill, null, team3Parent.Parent, null, 1);
-            var team4 = new PlayoffTeam(team4Parent.Name, team4Parent.Skill, null, team4Parent.Parent, null, 1);
-
-
-            var series1 = new BestOfSeries(playoff, "Series 1", 1, -1, team1, team2, 0, 0, 4, new List<PlayoffGame>(), new int[] { 0, 0, 1, 1, 0, 1, 0 });
-            var series2 = new BestOfSeries(playoff, "Series 2", 1, -1, team3, team4, 0, 0, 4, new List<PlayoffGame>(), new int[] { 0, 0, 1, 1, 0, 1, 0 });            
-
-            playoff.AddSeries(series1);
-            playoff.AddSeries(series2);            
-
-            //playoff.Setup();
-
-            while (!playoff.IsComplete())
-            {
-                playoff.PlayNextDay(new Random()).ForEach(g =>
-                {                    
-                    WriteLine(g.Day + ": " + g + " " + ((PlayoffGame)g).Series.Name);
-                });
-
-                
-                
             }
 
             WriteLine("Press Enter to continue");

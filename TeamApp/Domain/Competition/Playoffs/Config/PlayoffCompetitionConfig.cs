@@ -15,9 +15,9 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
         public int? LastYear { get; set; }
         public List<PlayoffSeriesRule> SeriesRules { get; set; }
         public List<PlayoffRankingRule> Rankings { get; set; }
-        public Dictionary<string, ICompetitionConfig> Parents { get; set; }      
+        public List<ICompetitionConfig> Parents { get; set; }      
 
-        public PlayoffCompetitionConfig(string name, League league, int order, GameRules gameRules, int? firstYear, int? lastYear, List<PlayoffRankingRule> rankings, List<PlayoffSeriesRule> seriesRules, Dictionary<string, ICompetitionConfig> parents)
+        public PlayoffCompetitionConfig(string name, League league, int order, GameRules gameRules, int? firstYear, int? lastYear, List<PlayoffRankingRule> rankings, List<PlayoffSeriesRule> seriesRules, List<ICompetitionConfig> parents)
         {
             Name = name;
             League = league;
@@ -32,7 +32,7 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
 
         public ICompetition CreateCompetition(int year, List<ICompetition> parents)
         {
-            var playoff = new Playoff(this, Name, year, -1, 1, null, null, null);
+            var playoff = new Playoff(this, Name, year, -1, 1, null, null, null, null);
 
             ProcessRankingRulesAndAddTeams(playoff, parents);
             
@@ -41,6 +41,9 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
 
         public void ProcessRankingRulesAndAddTeams(Playoff playoff, List<ICompetition> parents)
         {
+            if (playoff.Teams == null) playoff.Teams = new List<ISingleYearTeam>();
+            if (playoff.Rankings == null) playoff.Rankings = new Dictionary<string, List<TeamRanking>>();
+
             Rankings.ForEach(rule =>
             {
                 //get the competition
@@ -67,6 +70,9 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
                     var newTeam = new PlayoffTeam(sourceTeam.Name, sourceTeam.Skill, playoff, sourceTeam.Parent, sourceTeam.Owner, playoff.Year);
 
                     var playoffRanking = new TeamRanking(nextRank, rule.GroupName, newTeam);
+
+                    if (!playoff.Rankings.ContainsKey(rule.GroupName)) playoff.Rankings.Add(rule.GroupName, new List<TeamRanking>());
+                    playoff.Rankings[rule.GroupName].Add(playoffRanking);
 
                     playoff.Teams.Add(newTeam);
 

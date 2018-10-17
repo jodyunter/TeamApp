@@ -7,7 +7,7 @@ using TeamApp.Domain.Competition.Seasons.Config;
 
 namespace TeamApp.Test.Helpers
 {
-    public class Data1
+    public class PlayoffData1
     {
         public static string BASIC_TEAM_MAP = "BASIC_TEAM_MAP";        
         public static string BASIC_SEASON_TEAM_RULE_LIST = "BASIC_SEASON_TEAM_RULE_LIST";
@@ -59,9 +59,9 @@ namespace TeamApp.Test.Helpers
            
             var teamMap = new Dictionary<string, Team>();
 
-            var gameRules = new GameRules("Season Rules", true, 3, 1, 7, 6);
+            var gameRules = new GameRules("Season Game Rules", true, 3, 1, 7, 6);
 
-            SeasonCompetitionConfig competition = new SeasonCompetitionConfig("My Season", league, 1, null, 1, 1, new List<SeasonTeamRule>(), new List<SeasonDivisionRule>(), gameRules, new List<SeasonScheduleRule>(), new List<ICompetitionConfig>());
+            SeasonCompetitionConfig competition = new SeasonCompetitionConfig("My Season", league, 1, null, 1, 1, new List<SeasonTeamRule>(), new List<SeasonDivisionRule>(), gameRules, new List<SeasonScheduleRule>(),new List<ICompetitionConfig>());
 
             
 
@@ -102,6 +102,7 @@ namespace TeamApp.Test.Helpers
             return objects;
 
         }
+
 
         public static void CreateTeamsForDivision(SeasonCompetitionConfig competition, Dictionary<string, Team> teamMap, List<string> teamNames, string divisionName)
         {            

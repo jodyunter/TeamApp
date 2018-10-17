@@ -19,7 +19,7 @@ namespace TeamApp.Domain.Competition.Playoffs
         public Dictionary<string, List<TeamRanking>> Rankings { get; set; }
         public List<ISingleYearTeam> Teams { get; set; }
 
-        public Playoff(ICompetitionConfig competitionConfig, string name, int year, int startingDay, int currentRound, List<PlayoffSeries> series, Schedule schedule, Dictionary<string, List<TeamRanking>> rankings)
+        public Playoff(ICompetitionConfig competitionConfig, string name, int year, int startingDay, int currentRound, List<PlayoffSeries> series, List<ISingleYearTeam> teams, Schedule schedule, Dictionary<string, List<TeamRanking>> rankings)
         {
             CompetitionConfig = competitionConfig;
             StartingDay = startingDay;
@@ -28,6 +28,7 @@ namespace TeamApp.Domain.Competition.Playoffs
             Series = series;
             Schedule = schedule;
             Rankings = rankings;
+            Teams = teams;
             CurrentRound = currentRound;
         }
 

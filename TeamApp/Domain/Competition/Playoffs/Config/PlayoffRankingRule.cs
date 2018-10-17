@@ -14,5 +14,14 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
         public int SourceFirstRank { get; set; }
         public int SourceLastRank { get; set; }
 
+        public PlayoffRankingRule(string groupName, int startingRank, ICompetitionConfig sourceCompetition, string sourceGroupName, int sourceFirstRank, int sourceLastRank)
+        {
+            GroupName = groupName;
+            StartingRank = startingRank;
+            SourceCompetition = sourceCompetition;
+            SourceGroupName = sourceGroupName;
+            SourceFirstRank = sourceFirstRank;
+            SourceLastRank = sourceLastRank;
+        }
     }
 }

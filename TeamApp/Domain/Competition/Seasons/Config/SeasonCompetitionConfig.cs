@@ -19,12 +19,10 @@ namespace TeamApp.Domain.Competition.Seasons.Config
         public List<SeasonDivisionRule> DivisionRules { get; set; } //at some point in the future our division rules may need to reference parent competitions
         
         public List<SeasonScheduleRule> ScheduleRules { get; set; }
-        public Dictionary<string, ICompetitionConfig> Parents { get; set; }
-        public GameRules GameRules { get { return SeasonGamesRules; } set { if (value is SeasonGamesRules) SeasonGamesRules = (SeasonGamesRules)value; else throw new ApplicationException("Can't assign non-season games rules to season games rules");  } }
+        public List<ICompetitionConfig> Parents { get; set; }
+        public GameRules GameRules { get; set; }
 
-        private SeasonGamesRules SeasonGamesRules { get; set; }
-
-        public SeasonCompetitionConfig(string name, League league, int? firstYear, int? lastYear, int order, int startDay, List<SeasonTeamRule> teamRules, List<SeasonDivisionRule> divisionRules, SeasonGamesRules gameRules, List<SeasonScheduleRule> scheduleRules, Dictionary<string, ICompetitionConfig> parents)
+        public SeasonCompetitionConfig(string name, League league, int? firstYear, int? lastYear, int order, int startDay, List<SeasonTeamRule> teamRules, List<SeasonDivisionRule> divisionRules, GameRules gameRules, List<SeasonScheduleRule> scheduleRules, List<ICompetitionConfig> parents)
         {
             Name = name;
             League = league;
@@ -34,7 +32,7 @@ namespace TeamApp.Domain.Competition.Seasons.Config
             StartDay = startDay;
             TeamRules = teamRules;
             DivisionRules = divisionRules;
-            SeasonGamesRules = gameRules;
+            GameRules = gameRules;
             ScheduleRules = scheduleRules;
             Parents = parents;
         }
