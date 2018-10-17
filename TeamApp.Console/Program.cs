@@ -33,6 +33,13 @@ namespace TeamApp.Console
 
             var scheduleValidator = new ScheduleValidator(season.Schedule);
 
+            if (!scheduleValidator.IsValid)
+            {
+                scheduleValidator.ErrorMessages.ForEach(s =>
+                {
+                    WriteLine(s);
+                });
+            }
             //Random r = new Random(12345);
             Random r = new Random();
 

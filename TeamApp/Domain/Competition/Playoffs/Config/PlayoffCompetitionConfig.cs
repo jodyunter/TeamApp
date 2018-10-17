@@ -121,10 +121,14 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
         public PlayoffTeam GetTeamByRule(Playoff playoff, int fromType, string fromName, int fromValue)
         {
             switch (fromType)
-            {
+            {                
                 case PlayoffSeriesRule.FROM_RANKING:
-                    var ranking = playoff.Rankings[fromName].Where(r => r.Rank == fromValue).ToList().First();
-                    return new PlayoffTeam(ranking.Team.Name, ranking.Team.Skill, playoff, ranking.Team.Parent, ranking.Team.Owner, playoff.Year);
+                    if (playoff.Rankings.ContainsKey(fromName))
+                    {
+                        var ranking = playoff.Rankings[fromName].Where(r => r.Rank == fromValue).ToList().First();
+                        return new PlayoffTeam(ranking.Team.Name, ranking.Team.Skill, playoff, ranking.Team.Parent, ranking.Team.Owner, playoff.Year);
+                    }
+                    return null;
                 case PlayoffSeriesRule.FROM_SERIES:
                     var series = playoff.Series.Where(s => s.Name.Equals(fromName)).FirstOrDefault();
                     switch (fromValue)

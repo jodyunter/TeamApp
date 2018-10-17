@@ -22,6 +22,7 @@ namespace TeamApp.Domain.Schedules
         public ScheduleValidator(Schedule schedule)
         {
             this.Schedule = schedule;
+            ErrorMessages = new List<string>();
         }
 
         private void AddStringKeyToDictionary(string key, params Dictionary<string, int>[] dictionaries)

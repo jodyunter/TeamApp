@@ -33,9 +33,9 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
             playoff.Series.Add(seriesA);
 
             //need to add series to get teams from
-            yield return new object[] { 1, playoff, new PlayoffSeriesRule("Series 1", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "R1", 1, FROM_RANKING, "R1", 10, 1, null, new int[] { 0, 0, 0, 1, 1, 1 }), "Team 0", "Team 9" };
-            yield return new object[] { 1, playoff, new PlayoffSeriesRule("Series 1", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "R1", 4, FROM_RANKING, "R1", 2, 1, null, new int[] { 0, 0, 0, 1, 1, 1 }), "Team 3", "Team 1" };
-            yield return new object[] { 1, playoff, new PlayoffSeriesRule("Series 1", 1, BEST_OF_SERIES, 4, gameRules, FROM_SERIES, "Series A", GET_WINNER, FROM_SERIES, "Series A", GET_LOSER, 1, null, new int[] { 0, 0, 0, 1, 1, 1 }), "Team A1", "Team B1" };
+            yield return new object[] { 1, playoff, new PlayoffSeriesRule("Series 1", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "R1", 1, FROM_RANKING, "R1", 10, 1, null, new int[] { 0, 0, 0, 1, 1, 1 }, null, null, null, null), "Team 0", "Team 9" };
+            yield return new object[] { 1, playoff, new PlayoffSeriesRule("Series 1", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "R1", 4, FROM_RANKING, "R1", 2, 1, null, new int[] { 0, 0, 0, 1, 1, 1 }, null, null, null, null), "Team 3", "Team 1" };
+            yield return new object[] { 1, playoff, new PlayoffSeriesRule("Series 1", 1, BEST_OF_SERIES, 4, gameRules, FROM_SERIES, "Series A", GET_WINNER, FROM_SERIES, "Series A", GET_LOSER, 1, null, new int[] { 0, 0, 0, 1, 1, 1 }, null, null, null, null), "Team A1", "Team B1" };
             //todo add get from ranking rule
         }
     

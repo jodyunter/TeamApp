@@ -39,6 +39,21 @@ namespace TeamApp.Domain.Competition.Playoffs
             var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
 
             int roundStartDay = Schedule.Days.Max(m => m.Value.DayNumber) + 1;
+            
+            //sort all rankings starting at one.  At the end of each round, each group is assigned a ranking based on other criteria.
+            //we need to sort based on that and assign the values accordingly.
+            Rankings.Keys.ToList().ForEach(key =>
+            {
+                Rankings[key].Sort((a, b) => a.Rank.CompareTo(b.Rank));
+                int m = 0;
+
+                Rankings[key].ForEach(value =>
+                {
+                    m++;
+                    value.Rank = m;
+                });
+            });
+
             //add any missing teams, and setup the games for each series
             Series.Where(s => s.Round == CurrentRound).ToList().ForEach(s =>
             {                
@@ -85,10 +100,39 @@ namespace TeamApp.Domain.Competition.Playoffs
             var playoffGame = (PlayoffGame)game;
 
             playoffGame.Series.ProcessSeriesGame(playoffGame);
+            if (playoffGame.Series.IsComplete())
+            {
+                //process end of series
+                ProcessEndOfSeries(playoffGame.Series);
+            }
+
             SetupSeriesGames(playoffGame.Series);
             
         }
 
+        public void ProcessEndOfSeries(PlayoffSeries series)
+        {
+            var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
+
+            var seriesRule = playoffConfig.SeriesRules.Where(s => s.Name.Equals(series.Name)).First();
+            
+            ProcessEndOfSeriesTeam(seriesRule.WinnerGroupName, seriesRule.WinnerRankFrom, series.GetWinner());
+            ProcessEndOfSeriesTeam(seriesRule.LoserGroupName, seriesRule.LoserRankFrom, series.GetLoser());
+        }
+
+        public void ProcessEndOfSeriesTeam(string newGroupName, string rankSourceGroupName, PlayoffTeam team)
+        {
+            if (newGroupName != null)
+            {
+                if (!Rankings.ContainsKey(newGroupName)) Rankings.Add(newGroupName, new List<TeamRanking>());
+
+                if (rankSourceGroupName == null) throw new ApplicationException("Can't have a null winner rank from.");
+
+                var rank = Rankings[rankSourceGroupName].Where(r => r.Team.Name.Equals(team.Name)).First().Rank;
+
+                Rankings[newGroupName].Add(new TeamRanking(rank, newGroupName, team));
+            }
+        }
         public bool IsRoundComplete(int round)
         {
             var complete = true;
