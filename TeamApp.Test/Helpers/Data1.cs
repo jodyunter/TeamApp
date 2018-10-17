@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TeamApp.Domain;
 using TeamApp.Domain.Competition;
+using TeamApp.Domain.Competition.Playoffs;
 using TeamApp.Domain.Competition.Playoffs.Config;
 using TeamApp.Domain.Competition.Seasons.Config;
 using static TeamApp.Domain.Competition.Playoffs.Config.PlayoffSeriesRule;
@@ -103,7 +104,7 @@ namespace TeamApp.Test.Helpers
 
         }
 
-        public static void CreateBasicPlayoffConfiguration(SeasonCompetitionConfig seasonConfig)
+        public static PlayoffCompetitionConfig CreateBasicPlayoffConfiguration(SeasonCompetitionConfig seasonConfig)
         {
             var gameRules = new GameRules("Playoff Rules", false, 3, 1, 7, 6);
 
@@ -130,6 +131,10 @@ namespace TeamApp.Test.Helpers
                 new PlayoffSeriesRule("Series N", 3, BEST_OF_SERIES, 4, gameRules, FROM_SERIES, "Series J", GET_WINNER, FROM_SERIES, "Series K", GET_WINNER, 1, null, new int[] {0,0,1,1,0,1,0 }),
                 new PlayoffSeriesRule("Final", 4, BEST_OF_SERIES, 4, gameRules, FROM_SERIES, "Series M", GET_WINNER, FROM_SERIES, "Series N", GET_WINNER, 1, null, new int[] {0,0,1,1,0,1,0 })
             };
+
+            var playoffConfig = new PlayoffCompetitionConfig("My Playoff", null, 1, gameRules, 1, null, rankingRules, seriesRules, new List<ICompetitionConfig> { seasonConfig });
+
+            return playoffConfig;
 
 
         }

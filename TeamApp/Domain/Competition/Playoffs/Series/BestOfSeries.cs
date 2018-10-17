@@ -20,7 +20,7 @@ namespace TeamApp.Domain.Competition.Playoffs.Series
         }
 
         public override bool IsComplete()
-        {
+        {            
             return ((HomeWins == RequiredWins) || (AwayWins == RequiredWins));
         }
 

@@ -32,37 +32,33 @@ namespace TeamApp.Domain.Competition.Playoffs
             CurrentRound = currentRound;
         }
 
-        public void BeginRound(int roundNumber)
+        public void BeginRound()
         {
-            if (!IsRoundSetup(roundNumber))
-            {
-                var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
-                
-                Series.Where(s => s.Round == roundNumber).ToList().ForEach(s =>
+            if (IsRoundComplete(CurrentRound)) CurrentRound++;
+
+            var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
+
+            int roundStartDay = Schedule.Days.Max(m => m.Value.DayNumber) + 1;
+            //add any missing teams, and setup the games for each series
+            Series.Where(s => s.Round == CurrentRound).ToList().ForEach(s =>
+            {                
+                //teams that relied on the previous round may still need their team
+                if (s.HomeTeam == null)
                 {
-                    //teams that relied on the previous round may still need their team
-                    if (s.HomeTeam == null)
-                    {
-                        var rule = playoffConfig.SeriesRules.Where(sr => sr.Name.Equals(s.Name)).FirstOrDefault();
-                        s.HomeTeam = playoffConfig.GetTeamByRule(this, rule.HomeFromType, rule.HomeFromName, rule.HomeFromValue);
-                    }
+                    var rule = playoffConfig.SeriesRules.Where(sr => sr.Name.Equals(s.Name)).FirstOrDefault();
+                    s.HomeTeam = playoffConfig.GetTeamByRule(this, rule.HomeFromType, rule.HomeFromName, rule.HomeFromValue);
+                }
 
-                    if (s.AwayTeam == null)
-                    {
-                        var rule = playoffConfig.SeriesRules.Where(sr => sr.Name.Equals(s.Name)).FirstOrDefault();
-                        s.HomeTeam = playoffConfig.GetTeamByRule(this, rule.AwayFromType, rule.AwayFromName, rule.AwayFromValue);
-                    }
-                    SetupSeriesGames(s);
-                });
-            }
-            else
-                throw new ApplicationException("Round " + roundNumber + " is already setup");
+                if (s.AwayTeam == null)
+                {
+                    var rule = playoffConfig.SeriesRules.Where(sr => sr.Name.Equals(s.Name)).FirstOrDefault();
+                    s.AwayTeam = playoffConfig.GetTeamByRule(this, rule.AwayFromType, rule.AwayFromName, rule.AwayFromValue);
+                }
+                SetupSeriesGames(s);
+            });
+
         }
 
-        public bool IsRoundSetup(int roundNumber)
-        {
-            return Series.Where(s => s.Round == roundNumber && s.HomeTeam != null && s.AwayTeam != null).Count() > 0;
-        }
         public void SetupSeriesGames(PlayoffSeries series)
         {
             var newGames = series.CreateNeededGamesForSeries();
@@ -109,10 +105,8 @@ namespace TeamApp.Domain.Competition.Playoffs
             seriesRulesList.ForEach(sr =>
             {
                 var series = Series.Where(s => s.Name == sr.Name).FirstOrDefault();
-
-                if (series == null) complete = false;
-                else
-                    complete = complete && series.IsComplete();
+                
+                complete = complete && series.IsComplete();
             });
 
             return complete;
@@ -123,10 +117,10 @@ namespace TeamApp.Domain.Competition.Playoffs
             var complete = true;
             var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
 
-            playoffConfig.SeriesRules.Select(s => s.Round).Distinct().ToList().ForEach(r =>
+            for (int i = 0; i < playoffConfig.SeriesRules.Count; i++)
             {
-                complete = complete && IsRoundComplete(r);
-            });
+                complete = complete && IsRoundComplete(playoffConfig.SeriesRules[i].Round);
+            }
 
             return complete;
         }

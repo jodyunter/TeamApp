@@ -64,6 +64,27 @@ namespace TeamApp.Console
                 WriteLine(d.Key + ": " + d.Value + " - " + awayGames[d.Key]);                
             }
 
+
+            var playoffConfig = Data1.CreateBasicPlayoffConfiguration(seasonCompetition);
+
+            var playoff = (Playoff)playoffConfig.CreateCompetition(1, new List<ICompetition> { season });
+            playoff.Schedule = season.Schedule;
+
+            while (!playoff.IsComplete())
+            {
+                playoff.BeginRound();
+                while (!playoff.IsRoundComplete(playoff.CurrentRound))
+                {
+                    var games = playoff.PlayNextDay(r);                    
+                }
+
+                playoff.Series.Where(s => s.Round == playoff.CurrentRound).ToList().ForEach(st =>
+                {
+                    var series = (BestOfSeries)st;
+                    WriteLine(series.HomeTeam.Name + " " + series.HomeWins + " - " + series.AwayWins + " " + series.AwayTeam.Name);
+                });
+            }
+            
             WriteLine("Press Enter to continue");
             ReadLine();
 

@@ -17,7 +17,7 @@ namespace TeamApp.Domain.Competition
 
         public static List<ScheduleGame> PlayGames(this ICompetition competition, List<ScheduleGame> games, Random random)
         {
-            games.ForEach(g => { g.Play(random); competition.ProcessGame(g); });
+            games.ForEach(g => { PlayGame(competition, g, random); });
 
             return games;
         }

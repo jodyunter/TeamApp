@@ -36,7 +36,8 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
 
             ProcessRankingRulesAndAddTeams(playoff, parents);
             ProcessSeries(playoff);
-            throw new NotImplementedException();
+
+            return playoff;
         }
 
         public void ProcessSeries(Playoff playoff)
@@ -45,7 +46,7 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
 
             SeriesRules.ForEach(rule =>
             {
-                SetupSeriesFromRule(playoff, rule);
+                playoff.Series.Add(SetupSeriesFromRule(playoff, rule));
             });
         }
 
@@ -129,9 +130,9 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
                     switch (fromValue)
                     {
                         case PlayoffSeriesRule.GET_WINNER:
-                            return series.GetWinner();
+                            return series == null ? null : series.GetWinner();
                         case PlayoffSeriesRule.GET_LOSER:
-                            return series.GetLoser();
+                            return series == null ? null : series.GetLoser();
                         default:
                             throw new ApplicationException("Bad From value in Playoff series rule: " + fromValue);
 
