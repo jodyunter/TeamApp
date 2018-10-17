@@ -36,14 +36,21 @@ namespace TeamApp.Domain.Competition.Playoffs
             if (!IsRoundSetup(roundNumber))
             {
                 var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
-
-                playoffConfig.SeriesRules.Where(sr => sr.Round == CurrentRound).ToList().ForEach(sr =>
-                {
-                    Series.Add(((PlayoffCompetitionConfig)CompetitionConfig).SetupSeriesFromRule(this, sr));
-                });
-
+                
                 Series.Where(s => s.Round == roundNumber).ToList().ForEach(s =>
                 {
+                    //teams that relied on the previous round may still need their team
+                    if (s.HomeTeam == null)
+                    {
+                        var rule = playoffConfig.SeriesRules.Where(sr => sr.Name.Equals(s.Name)).FirstOrDefault();
+                        s.HomeTeam = playoffConfig.GetTeamByRule(this, rule.HomeFromType, rule.HomeFromName, rule.HomeFromValue);
+                    }
+
+                    if (s.AwayTeam == null)
+                    {
+                        var rule = playoffConfig.SeriesRules.Where(sr => sr.Name.Equals(s.Name)).FirstOrDefault();
+                        s.HomeTeam = playoffConfig.GetTeamByRule(this, rule.AwayFromType, rule.AwayFromName, rule.AwayFromValue);
+                    }
                     SetupSeriesGames(s);
                 });
             }
@@ -113,8 +120,9 @@ namespace TeamApp.Domain.Competition.Playoffs
         public bool IsComplete()
         {
             var complete = true;
+            var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
 
-            Series.Select(s => s.Round).Distinct().ToList().ForEach(r =>
+            playoffConfig.SeriesRules.Select(s => s.Round).Distinct().ToList().ForEach(r =>
             {
                 complete = complete && IsRoundComplete(r);
             });

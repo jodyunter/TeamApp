@@ -26,17 +26,24 @@ namespace TeamApp.Domain.Competition
         {
             return competition.PlayGames(day.Games, random);
         }
-
+        
         public static List<ScheduleGame> PlayNextDay(this ICompetition competition, Random random)
         {
-            var day = competition.Schedule.GetNextInCompleteDay();
+            var day = GetNextDayToPlay(competition);
 
             if (day != null)
             {
                 competition.PlayGames(day.Games, random);
             }            
 
-            return day.Games;
+            return day == null ? null : day.Games;
+        }
+
+        public static ScheduleDay GetNextDayToPlay(this ICompetition competition)
+        {
+            var day = competition.Schedule.GetNextInCompleteDay();
+
+            return day == null ? null : day;
         }
     }
 }

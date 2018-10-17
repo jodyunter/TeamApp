@@ -88,33 +88,18 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
 
         public PlayoffSeries SetupSeries(Playoff playoff, int seriesType, string name, int round, int startingDay, PlayoffTeam homeTeam, PlayoffTeam awayTeam,
             int seriesNumber, int[] homeGameProgression)
-        {
-            //if the series already exists add the teams
-            var series = playoff.Series.Where(s => s.Name.Equals(name)).FirstOrDefault();
-
-            if (series != null)
+        {       //if it is not setup, create it
+            switch (seriesType)
             {
-                series.HomeTeam = homeTeam;
-                series.AwayTeam = awayTeam;
+                case PlayoffSeriesRule.BEST_OF_SERIES:
+                    return new BestOfSeries(playoff, name, round, startingDay, homeTeam, awayTeam, 0, 0, seriesNumber, new List<PlayoffGame>(), homeGameProgression);
+                case PlayoffSeriesRule.TOTAL_GOALS:
+                    return new TotalGoalsSeries(playoff, name, round, startingDay, homeTeam, awayTeam, 0, 0, seriesNumber, 0, new List<PlayoffGame>(), homeGameProgression);                    
+                default:
+                    throw new ApplicationException("Bad series type from Playoff Series rule: " + seriesType);
             }
-            else
-            {
-                //if it is not setup, create it
-                switch (seriesType)
-                {
-                    case PlayoffSeriesRule.BEST_OF_SERIES:
-                        series = new BestOfSeries(playoff, name, round, startingDay, homeTeam, awayTeam, 0, 0, seriesNumber, new List<PlayoffGame>(), homeGameProgression);
-                        break;
-                    case PlayoffSeriesRule.TOTAL_GOALS:
-                        series = new TotalGoalsSeries(playoff, name, round, startingDay, homeTeam, awayTeam, 0, 0, seriesNumber, 0, new List<PlayoffGame>(), homeGameProgression);
-                        break;
-                    default:
-                        throw new ApplicationException("Bad series type from Playoff Series rule: " + seriesType);
-                }
-            }
-
-            return series;
         }
+
         public PlayoffTeam GetTeamByRule(Playoff playoff, int fromType, string fromName, int fromValue)
         {
             switch (fromType)
