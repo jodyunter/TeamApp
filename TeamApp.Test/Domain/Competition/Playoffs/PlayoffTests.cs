@@ -15,8 +15,10 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
     {
         public static IEnumerable<object[]> PlayoffDataForGetTeamByRuleTests()
         {
+            var config = new PlayoffCompetitionConfig("My Playoff", null, 1, null, 1, null, null, null, null);
             var playoff = new Playoff(null, null, 1, 1, 1, new List<PlayoffSeries>(), null, new Dictionary<string, List<TeamRanking>>());
 
+            playoff.CompetitionConfig = config;
             playoff.Rankings.Add("R1", new List<TeamRanking>());
 
             for (int i = 0; i < 10; i++)
@@ -34,14 +36,18 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
             yield return new object[] { 1, playoff, new PlayoffSeriesRule("Series 1", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "R1", 1, FROM_RANKING, "R1", 10, 1, null, new int[] { 0, 0, 0, 1, 1, 1 }), "Team 0", "Team 9" };
             yield return new object[] { 1, playoff, new PlayoffSeriesRule("Series 1", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "R1", 4, FROM_RANKING, "R1", 2, 1, null, new int[] { 0, 0, 0, 1, 1, 1 }), "Team 3", "Team 1" };
             yield return new object[] { 1, playoff, new PlayoffSeriesRule("Series 1", 1, BEST_OF_SERIES, 4, gameRules, FROM_SERIES, "Series A", GET_WINNER, FROM_SERIES, "Series A", GET_LOSER, 1, null, new int[] { 0, 0, 0, 1, 1, 1 }), "Team A1", "Team B1" };
+            //todo add get from ranking rule
         }
     
+        //todo this is now a playoff config test
         [Theory]
         [MemberData(nameof(PlayoffDataForGetTeamByRuleTests))]
         public void ShouldGetTeamFromRule(int testNo, Playoff p, PlayoffSeriesRule rule, string expectedHomeName, string expectedAwayName)
         {
-            var homeTeam = p.GetTeamByRule(rule.HomeFromType, rule.HomeFromName, rule.HomeFromValue);
-            var awayTeam = p.GetTeamByRule(rule.AwayFromType, rule.AwayFromName, rule.AwayFromValue);
+            var playoffConfig = (PlayoffCompetitionConfig)p.CompetitionConfig;
+
+            var homeTeam = playoffConfig.GetTeamByRule(p, rule.HomeFromType, rule.HomeFromName, rule.HomeFromValue);
+            var awayTeam = playoffConfig.GetTeamByRule(p, rule.AwayFromType, rule.AwayFromName, rule.AwayFromValue);
 
             Equal(expectedHomeName, homeTeam.Name);
             Equal(expectedAwayName, awayTeam.Name);

@@ -111,19 +111,16 @@ namespace TeamApp.Domain.Competition.Seasons.Config
         public void ProcessTeamRules(Season season, Dictionary<string, SeasonDivision> seasonDivisions, Dictionary<string, ISingleYearTeam> teams)
         {
             TeamRules.ForEach(rule =>
-            {
-                AddTeamToDivision(rule.Team, seasonDivisions[rule.Division], teams);
+            {                
+                var team = rule.Team;
+                var seasonDivision = seasonDivisions[rule.Division];
+                var newTeam = new SeasonTeam(team.Name, team.Skill, team, seasonDivision.Season, seasonDivision, null, team.Owner, seasonDivision.Season.Year);
+                newTeam.Stats = new SeasonTeamStats(newTeam);
+
+                seasonDivision.AddTeam(newTeam);
+                teams.Add(newTeam.Name, newTeam);
+
             });
-        }
-
-        public void AddTeamToDivision(Team team, SeasonDivision seasonDivision, Dictionary<string, ISingleYearTeam> teams)
-        {
-            var newTeam = new SeasonTeam(team.Name, team.Skill, team, seasonDivision.Season, seasonDivision, null, team.Owner, seasonDivision.Season.Year);
-            newTeam.Stats = new SeasonTeamStats(newTeam);
-
-            seasonDivision.AddTeam(newTeam);
-            teams.Add(newTeam.Name, newTeam);
-
         }
 
         public void CreateSeasonSchedule(Season season)
@@ -159,7 +156,6 @@ namespace TeamApp.Domain.Competition.Seasons.Config
 
         public List<ISingleYearTeam> GetTeams(Season season, int teamType, string teamValue)
         {
-
             var teams = new List<ISingleYearTeam>();
 
             switch (teamType)
