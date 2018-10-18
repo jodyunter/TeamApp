@@ -23,13 +23,25 @@ namespace TeamApp.Console
             
             var seasonCompetition = ((List<SeasonCompetitionConfig>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
 
-            var season = (Season)seasonCompetition.CreateCompetition(1, null);        
+            var season = (Season)seasonCompetition.CreateCompetition(1, null);
 
             /*var schedule = Scheduler.CreateGames(season.Parent.League, season.Year, 1, 1,
                season.GetAllTeamsInDivision(season.GetDivisionByName("NHL")).Select(t => t.Parent).ToList(),
                 1, true, season.Parent.GameRules);
 
             season.Schedule = schedule; */
+
+            WriteLine("Validating Schedule based on config.");
+            var seasonScheduleConfigValidator = new SeasonConfigScheduleValidator(seasonCompetition);
+            WriteLine("Printing Values for Schedule based on config.");
+ 
+
+            seasonScheduleConfigValidator.GameCounts.Keys.Where(k => !k.Contains(":")).ToList().ForEach(key =>
+            {
+                WriteLine(key + " : " + seasonScheduleConfigValidator.GameCounts[key]);
+            });
+            ReadLine();
+            return;
 
             var scheduleValidator = new ScheduleValidator(season.Schedule);
 

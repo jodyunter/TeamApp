@@ -6,12 +6,13 @@ using static TeamApp.Domain.Competition.Seasons.Config.SeasonScheduleRule;
 namespace TeamApp.Domain.Competition.Seasons.Config
 {
     public class SeasonConfigScheduleValidator
-    {
+    {   
+        public Dictionary<string, int> GameCounts { get; set; }
 
         public SeasonConfigScheduleValidator(SeasonCompetitionConfig config)
         {
-            var divisionsWithTeams = new Dictionary<string, SortedSet<string>>();
-            var teamsWithDivisions = new Dictionary<string, SortedSet<string>>();
+            var divisionCounts = new Dictionary<string, SortedSet<string>>();
+            var teamCounts = new Dictionary<string, SortedSet<string>>();
 
             //"TeamA:TeamB", 0
             //"TeamA:Home", 0
@@ -19,8 +20,8 @@ namespace TeamApp.Domain.Competition.Seasons.Config
             //"TeamA:Home:DIVISION", 0
             var gameCounts = new Dictionary<string, int>();
 
-            var teamNames = teamsWithDivisions.Keys.ToList();
-            var divisionNames = divisionsWithTeams.Keys.ToList();
+            var teamNames = config.TeamRules.Select(tr => tr.Team.Name).ToList();
+            var divisionNames = config.DivisionRules.Select(dr => dr.DivisionName).ToList();
 
             for (int i = 0; i < teamNames.Count; i++)
             {
@@ -32,30 +33,34 @@ namespace TeamApp.Domain.Competition.Seasons.Config
                     }
                 }
 
-                for (int j = 0; i < divisionNames.Count; j++)
+                for (int j = 0; j < divisionNames.Count; j++)
                 {
                     gameCounts.Add(teamNames[i] + ":Away:" + divisionNames[j], 0);
                     gameCounts.Add(teamNames[i] + ":Home:" + divisionNames[j], 0);
                 }
+
+                gameCounts.Add(teamNames[i] + ":Away", 0);
+                gameCounts.Add(teamNames[i] + ":Home", 0);
+                gameCounts.Add(teamNames[i], 0);
             }
 
             config.DivisionRules.ForEach(divisionRule =>
             {
-                if (!divisionsWithTeams.ContainsKey(divisionRule.DivisionName)) divisionsWithTeams.Add(divisionRule.DivisionName, new SortedSet<string>());
+                if (!divisionCounts.ContainsKey(divisionRule.DivisionName)) divisionCounts.Add(divisionRule.DivisionName, new SortedSet<string>());
             });
 
             config.TeamRules.ForEach(teamRule =>
             {
-                if (!teamsWithDivisions.ContainsKey(teamRule.Team.Name)) teamsWithDivisions.Add(teamRule.Team.Name, new SortedSet<string>());
+                if (!teamCounts.ContainsKey(teamRule.Team.Name)) teamCounts.Add(teamRule.Team.Name, new SortedSet<string>());
 
-                divisionsWithTeams[teamRule.Division].Add(teamRule.Team.Name);
+                divisionCounts[teamRule.Division].Add(teamRule.Team.Name);
 
                 var divRule = config.DivisionRules.Where(dr => dr.DivisionName == teamRule.Division).First();
 
                 while (divRule.ParentName != null)
-                {
-                    divRule = config.DivisionRules.Where(dr => dr.DivisionName == teamRule.Division).First();
-                    divisionsWithTeams[divRule.DivisionName].Add(teamRule.Team.Name);
+                {                    
+                    divisionCounts[divRule.DivisionName].Add(teamRule.Team.Name);
+                    divRule = config.DivisionRules.Where(dr => dr.DivisionName == divRule.ParentName).First();
                 }
             });
 
@@ -72,7 +77,7 @@ namespace TeamApp.Domain.Competition.Seasons.Config
                 switch (sr.HomeTeamType)
                 {
                     case DIVISION_TYPE:
-                        homeTeams.AddRange(divisionsWithTeams[sr.HomeTeamValue]);
+                        homeTeams.AddRange(divisionCounts[sr.HomeTeamValue]);
                         homeDivisionName = sr.HomeTeamValue;
                         break;
                     case TEAM_TYPE:
@@ -83,7 +88,7 @@ namespace TeamApp.Domain.Competition.Seasons.Config
                 switch (sr.AwayTeamType)
                 {
                     case DIVISION_TYPE:
-                        awayTeams.AddRange(divisionsWithTeams[sr.AwayTeamValue]);
+                        awayTeams.AddRange(divisionCounts[sr.AwayTeamValue]);
                         awayDivisionName = sr.AwayTeamValue;
                         break;
                     case TEAM_TYPE:
@@ -99,6 +104,8 @@ namespace TeamApp.Domain.Competition.Seasons.Config
                         {
                             gameCounts[homeTeams[i] + ":Home"]++;
                             gameCounts[awayTeams[j] + ":Away"]++;
+                            gameCounts[homeTeams[i]]++;
+                            gameCounts[awayTeams[i]]++;
 
                             gameCounts[homeTeams[i] + ":" + awayTeams[j]]++;
 
@@ -108,13 +115,15 @@ namespace TeamApp.Domain.Competition.Seasons.Config
                                 gameCounts[homeTeams[j] + ":Away"]++;
 
                                 gameCounts[awayTeams[i] + ":" + homeTeams[j]]++;
+                                gameCounts[homeTeams[i]]++;
+                                gameCounts[awayTeams[i]]++;
                             }
                         }
                     }
 
                 }
 
-                if (homeDivisionName != null)
+                if (awayDivisionName != null)
                 {
                     for (int i = 0; i < homeTeams.Count; i++)
                     {
@@ -124,7 +133,7 @@ namespace TeamApp.Domain.Competition.Seasons.Config
                     }
                         
                 }
-                if (awayDivisionName != null)
+                if (homeDivisionName != null)
                 {
                     for (int i = 0; i < awayTeams.Count; i++)
                     {
@@ -132,11 +141,11 @@ namespace TeamApp.Domain.Competition.Seasons.Config
                         if (sr.HomeAndAway)
                             gameCounts[awayTeams[i] + ":Home" + ":" + homeDivisionName] += homeTeams.Count;
                     }
-
                 }
                 
             });
 
+            GameCounts = gameCounts;
         }
     }
 }
