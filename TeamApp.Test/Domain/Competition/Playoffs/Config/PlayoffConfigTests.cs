@@ -19,7 +19,7 @@ namespace TeamApp.Test.Domain.Competition.Playoffs.Config
         public void shouldTestRankingRules()
         {
             var data = Data1.CreateBasicSeasonConfiguration();
-            var seasonCompetition = ((List<SeasonCompetitionConfig>)data[PlayoffData1.BASIC_SEASON_COMPETITION_LSIT])[0];
+            var seasonCompetition = ((List<SeasonCompetitionConfig>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
             var season = (Season)seasonCompetition.CreateCompetition(1, null);            
             Random r = new Random(12345);            
             while (!season.Schedule.IsComplete())

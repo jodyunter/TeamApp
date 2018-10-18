@@ -6,6 +6,7 @@ namespace TeamApp.Domain.Competition.Seasons.Config
 {
     public class SeasonScheduleRule:ITimePeriod
     {
+        //todo a random setup, such as "This Division, Random, 2 home, 2 away"
         public const int TEAM_TYPE = 0;
         public const int DIVISION_TYPE = 1;
         public const int NONE = 2;

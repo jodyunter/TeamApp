@@ -22,8 +22,12 @@ namespace TeamApp.Test.Helpers
             var TOP = "TOP";
             var NHL = "NHL";
             var WEST = "West";
+            var WEST_A = "West_A";
+            var WEST_B = "West_B";
             var EAST = "East";
             var CENTRAL = "Central";
+            var CEN_A = "Central_A";
+            var CEN_B = "Central_B";
             var NORTHEAST = "NorthEast";
             var ATLANTIC = "Atlantic";                           
 
@@ -31,7 +35,9 @@ namespace TeamApp.Test.Helpers
             {
                 { TOP, new List<string>() { NHL } },
                 { NHL, new List<string>() {EAST, WEST, CENTRAL } },
-                { EAST, new List<string>() {NORTHEAST, ATLANTIC} }
+                { EAST, new List<string>() {NORTHEAST, ATLANTIC} },
+                { WEST, new List<string>() {WEST_A, WEST_B } },
+                { CENTRAL, new List<string>() {CEN_A, CEN_B } }
 
             };
 
@@ -42,15 +48,24 @@ namespace TeamApp.Test.Helpers
                 {WEST, new int[] {3, 1 } },
                 {CENTRAL, new int[] {3, 2 } },
                 {NORTHEAST, new int[] {3, 3 } },
-                {ATLANTIC, new int[] {3, 4 } }
+                {ATLANTIC, new int[] {3, 4 } },
+                {WEST_A, new int[] {4, 5 } },
+                {WEST_B, new int[] {4, 6 } },
+                {CEN_A, new int[] {4, 7 } },
+                {CEN_B, new int[] {4, 8 } }
+
             };
 
             var teamNameMap = new Dictionary<string, List<string>>()
             {
                 {NORTHEAST, new List<string>() { "Toronto", "Montreal", "Ottawa", "Pittsburgh","Nashville" } },
-                {ATLANTIC, new List<string>() {"Boston", "New York", "Philadelphia", "Buffalo"} },
-                {WEST, new List<string>(){ "Calgary", "Vancouver", "Edmonton", "Los Angelas", "San Jose", "Seattle" } },
-                {CENTRAL, new List<string>(){ "Chicago", "Dallas", "Winnipeg", "Minnesota", "Colorado", "Detroit" } }
+                {ATLANTIC, new List<string>() {"Boston", "New York", "Philadelphia", "Buffalo", "New Jersey"} },
+                //{WEST, new List<string>(){ "Calgary", "Vancouver", "Edmonton", "Los Angelas", "San Jose", "Seattle" } },
+                {WEST_A, new List<string>(){ "Calgary", "Vancouver", "Edmonton" } },
+                {WEST_B, new List<string>(){"Los Angelas", "San Jose", "Anaheim" } },
+                //{CENTRAL, new List<string>(){ "Chicago", "Dallas", "Winnipeg", "Minnesota", "Colorado", "Detroit" } },
+                {CEN_A, new List<string>(){ "Chicago", "Minnesota", "Colorado"} },
+                {CEN_B, new List<string>(){ "Dallas", "Winnipeg", "Detroit" } }
 
             };
 
@@ -63,31 +78,38 @@ namespace TeamApp.Test.Helpers
             var gameRules = new GameRules("Season Rules", true, 3, 1, 7, 6);
 
             SeasonCompetitionConfig competition = new SeasonCompetitionConfig("My Season", league, 1, null, 1, 1, new List<SeasonTeamRule>(), new List<SeasonDivisionRule>(), gameRules, new List<SeasonScheduleRule>(), new List<ICompetitionConfig>());
+           
+            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, NHL, SeasonScheduleRule.NONE, null, 1, true, 1, null)); //42
+            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, WEST, SeasonScheduleRule.DIVISION_TYPE, CENTRAL, 2, true, 1, null));            
+            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, WEST_A, SeasonScheduleRule.NONE, null, 1, true, 1, null));
+            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, WEST_B, SeasonScheduleRule.NONE, null, 1, true, 1, null));
+            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, WEST, SeasonScheduleRule.NONE, null, 1, true, 1, null));
+            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, CENTRAL, SeasonScheduleRule.NONE, null, 1, true, 1, null));
+            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, CEN_A, SeasonScheduleRule.NONE, null, 1, true, 1, null));
+            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, CEN_B, SeasonScheduleRule.NONE, null, 1, true, 1, null));
+            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, EAST, SeasonScheduleRule.NONE, null, 1, true, 1, null)); //36
+            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, NORTHEAST, SeasonScheduleRule.NONE, null, 2, true, 1, null)); 
+            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, ATLANTIC, SeasonScheduleRule.NONE, null, 2, true, 1, null));
 
-            
+            for (int i = 0; i < teamNameMap[ATLANTIC].Count; i++)
+            {
+                for (int j = i + 1; j < i + 3; j++)
+                {
+                    var homeTeam = teamNameMap[ATLANTIC][i];
+                    var awayTeam = teamNameMap[ATLANTIC][j % 5];
+                    competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.TEAM_TYPE, homeTeam, SeasonScheduleRule.TEAM_TYPE, awayTeam, 1, false, 1, null)); //32            
+                }
+            }
 
-            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, NHL, SeasonScheduleRule.NONE, null, 1, true, 1, null)); //40
-            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, WEST, SeasonScheduleRule.DIVISION_TYPE, CENTRAL, 1, true, 1, null));            
-            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, WEST, SeasonScheduleRule.NONE, null, 3, true, 1, null));
-            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, CENTRAL, SeasonScheduleRule.NONE, null, 3, true, 1, null));
-            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, EAST, SeasonScheduleRule.NONE, null, 2, true, 1, null)); //32
-            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, NORTHEAST, SeasonScheduleRule.NONE, null, 1, true, 1, null)); 
-            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, ATLANTIC, SeasonScheduleRule.NONE, null, 1, true, 1, null));
-            
-            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.TEAM_TYPE, "Toronto", SeasonScheduleRule.TEAM_TYPE, "Montreal", 1, false, 1, null)); //32
-            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.TEAM_TYPE, "Montreal", SeasonScheduleRule.TEAM_TYPE, "Ottawa", 1, false, 1, null)); //32
-            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.TEAM_TYPE, "Ottawa", SeasonScheduleRule.TEAM_TYPE, "Pittsburgh", 1, false, 1, null)); //32
-            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.TEAM_TYPE, "Pittsburgh", SeasonScheduleRule.TEAM_TYPE, "Nashville", 1, false, 1, null)); //32
-            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.TEAM_TYPE, "Nashville", SeasonScheduleRule.TEAM_TYPE, "Toronto", 1, false, 1, null)); //32
-            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.TEAM_TYPE, "Boston", SeasonScheduleRule.TEAM_TYPE, "New York", 1, false, 1, null)); //32
-            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.TEAM_TYPE, "Boston", SeasonScheduleRule.TEAM_TYPE, "Philadelphia", 1, false, 1, null)); //32
-            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.TEAM_TYPE, "New York", SeasonScheduleRule.TEAM_TYPE, "Philadelphia", 1, false, 1, null)); //32
-            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.TEAM_TYPE, "New York", SeasonScheduleRule.TEAM_TYPE, "Buffalo", 1, false, 1, null)); //32
-            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.TEAM_TYPE, "Philadelphia", SeasonScheduleRule.TEAM_TYPE, "Buffalo", 1, false, 1, null)); //32
-            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.TEAM_TYPE, "Philadelphia", SeasonScheduleRule.TEAM_TYPE, "Boston", 1, false, 1, null)); //32
-            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.TEAM_TYPE, "Buffalo", SeasonScheduleRule.TEAM_TYPE, "Boston", 1, false, 1, null)); //32
-            //competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.TEAM_TYPE, "Buffalo", SeasonScheduleRule.TEAM_TYPE, "New York", 1, false, 1, null)); //32            
-
+            for (int i = 0; i < teamNameMap[NORTHEAST].Count; i++)
+            {
+                for (int j = i + 1; j < i + 3; j++)
+                {
+                    var homeTeam = teamNameMap[NORTHEAST][i];
+                    var awayTeam = teamNameMap[NORTHEAST][j % 5];
+                    competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.TEAM_TYPE, homeTeam, SeasonScheduleRule.TEAM_TYPE, awayTeam, 1, false, 1, null)); //32            
+                }
+            }
 
             var seasonCompetitionList = new List<SeasonCompetitionConfig>()
             {

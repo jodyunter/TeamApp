@@ -55,12 +55,12 @@ namespace TeamApp.Domain.Competition.Seasons.Config
 
                 divisionCounts[teamRule.Division].Add(teamRule.Team.Name);
 
-                var divRule = config.DivisionRules.Where(dr => dr.DivisionName == teamRule.Division).First();
+                var parentName = config.DivisionRules.Where(dr => dr.DivisionName == teamRule.Division).First().ParentName;
 
-                while (divRule.ParentName != null)
-                {                    
-                    divisionCounts[divRule.DivisionName].Add(teamRule.Team.Name);
-                    divRule = config.DivisionRules.Where(dr => dr.DivisionName == divRule.ParentName).First();
+                while (parentName != null)
+                {
+                    divisionCounts[parentName].Add(teamRule.Team.Name);
+                    parentName = config.DivisionRules.Where(dr => dr.DivisionName == parentName).First().ParentName;
                 }
             });
 
@@ -94,52 +94,77 @@ namespace TeamApp.Domain.Competition.Seasons.Config
                     case TEAM_TYPE:
                         awayTeams.Add(sr.AwayTeamValue);
                         break;
-                }
+                    case NONE:
+                        awayTeams.AddRange(homeTeams);
+                        break;                        
+                }                
+                
+           
 
-                for (int i = 0; i < homeTeams.Count; i++)
-                {
-                    for (int j = 0; j < awayTeams.Count; j++)
+                //same teams
+                if (sr.AwayTeamType == NONE) {
+                    for (int i = 0; i < homeTeams.Count - 1; i++)
                     {
-                        if (homeTeams[i] != awayTeams[i])
+                        var homeTeamName = homeTeams[i];
+                        var jStart = sr.HomeAndAway ? i + 1 : 0;
+
+                        for (int j = jStart; j < awayTeams.Count; j++)
                         {
-                            gameCounts[homeTeams[i] + ":Home"]++;
-                            gameCounts[awayTeams[j] + ":Away"]++;
-                            gameCounts[homeTeams[i]]++;
-                            gameCounts[awayTeams[i]]++;
-
-                            gameCounts[homeTeams[i] + ":" + awayTeams[j]]++;
-
-                            if (sr.HomeAndAway)
+                            var awayTeamName = awayTeams[j];
+                            if (!homeTeamName.Equals(awayTeamName))
                             {
-                                gameCounts[awayTeams[i] + ":Home"]++;
-                                gameCounts[homeTeams[j] + ":Away"]++;
+                                gameCounts[homeTeamName + ":Home"] += sr.Iterations;
+                                gameCounts[awayTeamName + ":Away"] += sr.Iterations;
+                                gameCounts[homeTeamName] += sr.Iterations;
+                                gameCounts[awayTeamName] += sr.Iterations;
 
-                                gameCounts[awayTeams[i] + ":" + homeTeams[j]]++;
-                                gameCounts[homeTeams[i]]++;
-                                gameCounts[awayTeams[i]]++;
+                                gameCounts[homeTeamName + ":" + awayTeamName] += sr.Iterations;
+
+                                if (sr.HomeAndAway)
+                                {
+                                    gameCounts[homeTeamName + ":Away"] += sr.Iterations;
+                                    gameCounts[awayTeamName + ":Home"] += sr.Iterations;
+                                    gameCounts[homeTeamName] += sr.Iterations;
+                                    gameCounts[awayTeamName] += sr.Iterations;
+
+                                    gameCounts[awayTeamName + ":" + homeTeamName] += sr.Iterations;
+                                }
                             }
+
                         }
                     }
-
                 }
-
-                if (awayDivisionName != null)
+                else
                 {
                     for (int i = 0; i < homeTeams.Count; i++)
                     {
-                        gameCounts[homeTeams[i] + ":Home" + ":" + awayDivisionName] += awayTeams.Count;
-                        if (sr.HomeAndAway)
-                            gameCounts[homeTeams[i] + ":Away" + ":" + awayDivisionName] += awayTeams.Count;
-                    }
-                        
-                }
-                if (homeDivisionName != null)
-                {
-                    for (int i = 0; i < awayTeams.Count; i++)
-                    {
-                        gameCounts[awayTeams[i] + ":Home" + ":" + homeDivisionName] += homeTeams.Count;
-                        if (sr.HomeAndAway)
-                            gameCounts[awayTeams[i] + ":Home" + ":" + homeDivisionName] += homeTeams.Count;
+                        var homeTeamName = homeTeams[i];
+                        var jStart = sr.HomeAndAway ? i + 1 : 0;
+
+                        for (int j = 0; j < awayTeams.Count; j++)
+                        {
+                            var awayTeamName = awayTeams[j];
+                            if (!homeTeamName.Equals(awayTeamName))
+                            {
+                                gameCounts[homeTeamName + ":Home"] += sr.Iterations;
+                                gameCounts[awayTeamName + ":Away"] += sr.Iterations;
+                                gameCounts[homeTeamName] += sr.Iterations;
+                                gameCounts[awayTeamName] += sr.Iterations;
+
+                                gameCounts[homeTeamName + ":" + awayTeamName] += sr.Iterations;
+
+                                if (sr.HomeAndAway)
+                                {
+                                    gameCounts[homeTeamName + ":Away"] += sr.Iterations;
+                                    gameCounts[awayTeamName + ":Home"] += sr.Iterations;
+                                    gameCounts[homeTeamName] += sr.Iterations;
+                                    gameCounts[awayTeamName] += sr.Iterations;
+
+                                    gameCounts[awayTeamName + ":" + homeTeamName] += sr.Iterations;
+                                }
+                            }
+
+                        }
                     }
                 }
                 

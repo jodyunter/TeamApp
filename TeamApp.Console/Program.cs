@@ -19,17 +19,11 @@ namespace TeamApp.Console
     {
         static void Main(string[] args)
         {
-            var data = Data1.CreateBasicSeasonConfiguration();
-            
-            var seasonCompetition = ((List<SeasonCompetitionConfig>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
+
+            var seasonCompetition = Data2.CreateBasicSeasonConfiguration();
+            var playoffConfig = Data2.CreateBasicPlayoffConfiguration(seasonCompetition);
 
             var season = (Season)seasonCompetition.CreateCompetition(1, null);
-
-            /*var schedule = Scheduler.CreateGames(season.Parent.League, season.Year, 1, 1,
-               season.GetAllTeamsInDivision(season.GetDivisionByName("NHL")).Select(t => t.Parent).ToList(),
-                1, true, season.Parent.GameRules);
-
-            season.Schedule = schedule; */
 
             WriteLine("Validating Schedule based on config.");
             var seasonScheduleConfigValidator = new SeasonConfigScheduleValidator(seasonCompetition);
@@ -40,8 +34,7 @@ namespace TeamApp.Console
             {
                 WriteLine(key + " : " + seasonScheduleConfigValidator.GameCounts[key]);
             });
-            ReadLine();
-            return;
+            ReadLine();            
 
             var scheduleValidator = new ScheduleValidator(season.Schedule);
 
@@ -62,7 +55,7 @@ namespace TeamApp.Console
 
             season.SortAllTeams();
 
-            season.Divisions.OrderBy(d => d.Level).ThenBy(d => d.Order).ToList().ForEach(div =>
+            season.Divisions.Where(d => d.Level < 4).OrderBy(d => d.Level).ThenBy(d => d.Order).ToList().ForEach(div =>
             {
                 WriteLine(div.Name);                
                 season.Rankings[div.Name].OrderBy(d => d.Rank).ToList().ForEach(ranking =>
@@ -72,19 +65,6 @@ namespace TeamApp.Console
 
                 WriteLine("\n");
             });
-
-            var divName = "NHL";
-            var teamName = "Calgary";
-
-            var homGames = season.Schedule.GetHomeGamesVsTeams(teamName, season.GetAllTeamsInDivision(season.GetDivisionByName(divName)).Select(t => t.Name).ToList());
-            var awayGames = season.Schedule.GetHomeGamesVsTeams(teamName, season.GetAllTeamsInDivision(season.GetDivisionByName(divName)).Select(t => t.Name).ToList());
-            foreach (KeyValuePair<string, int> d in homGames)
-            {
-                WriteLine(d.Key + ": " + d.Value + " - " + awayGames[d.Key]);                
-            }
-
-
-            var playoffConfig = Data1.CreateBasicPlayoffConfiguration(seasonCompetition);
 
             var playoff = (Playoff)playoffConfig.CreateCompetition(1, new List<ICompetition> { season });
             playoff.Schedule = season.Schedule;
@@ -99,8 +79,23 @@ namespace TeamApp.Console
 
                 playoff.Series.Where(s => s.Round == playoff.CurrentRound).ToList().ForEach(st =>
                 {
-                    var series = (BestOfSeries)st;
-                    WriteLine(series.HomeTeam.Name + " " + series.HomeWins + " - " + series.AwayWins + " " + series.AwayTeam.Name);
+                    var homeValue = 0;
+                    var awayValue = 0;
+
+                    if (st is BestOfSeries)
+                    {
+                        homeValue = ((BestOfSeries)st).HomeWins;
+                        awayValue = ((BestOfSeries)st).AwayWins;
+                    }
+                    else if (st is TotalGoalsSeries)
+                    {
+                        homeValue = ((TotalGoalsSeries)st).HomeScore;
+                        awayValue = ((TotalGoalsSeries)st).AwayScore;
+                    }
+
+                    var formatter = "{0,3}. {1,10}{2,15}{3,5} - {4,5}{5,15}";
+                    var result = string.Format(formatter, st.Round, st.Name, st.HomeTeam.Name, homeValue, awayValue, st.AwayTeam.Name);
+                    WriteLine(result);
                 });
             }
             
