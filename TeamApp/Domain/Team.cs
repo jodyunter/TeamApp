@@ -7,12 +7,12 @@ namespace TeamApp.Domain
    
     public class Team:DataObject, ITeam, ITimePeriod
     {
-        public string Name { get; set; }
-        public int Skill { get; set; }
-        public string Owner { get; set; }
-        public int? FirstYear { get; set; }
-        public int? LastYear { get; set; }
-        public bool Active { get; set; }
+        public virtual string Name { get; set; }
+        public virtual int Skill { get; set; }
+        public virtual string Owner { get; set; }
+        public virtual int? FirstYear { get; set; }
+        public virtual int? LastYear { get; set; }
+        public virtual bool Active { get; set; }
 
         public Team() { }
         public Team(string name, int skill, string owner, int? firstYear, int? lastYear, bool active)
