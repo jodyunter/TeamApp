@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="TeamApp"
+                   namespace="TeamApp.Domain">
+
+  <class name="Team">
+    <id name="Id">
+      <generator class="guid" />
+      <property name="Name" />
+      <property name="Skill" />
+      <property name="Owner" />
+      <property name="FirstYear" />
+      <property name="LastYear" />
+      <property name="Active" />
+      <property name="CreatedBy" />
+      <property name="CreatedOn" />
+      <property name="LastModifiedBy" />
+      <property name="LastModifiedOn" />
+    </id>
+  </class>  
+  
+</hibernate-mapping>

@@ -8,7 +8,6 @@ using static Xunit.Assert;
 using static TeamApp.Test.Domain.SchedulerTests.SchedulerTests;
 using TeamApp.Domain;
 using TeamApp.Test.Helpers;
-using TeamApp.Services;
 using TeamApp.Domain.Competition.Seasons.Config;
 using TeamApp.Domain.Competition;
 

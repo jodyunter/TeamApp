@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using TeamApp.Domain.Competition.Seasons.Config;
 using TeamApp.Domain.Schedules;
-using TeamApp.Services;
 using TeamApp.Test.Helpers;
 using static System.Console;
 using System.Linq;
