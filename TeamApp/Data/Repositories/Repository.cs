@@ -31,9 +31,9 @@ namespace TeamApp.Data.Repositories
             return session.Query<T>().GetEnumerator();
         }
 
-        public long Add(T entity)
+        public object Add(T entity)
         {
-            return (long)session.Save(entity);
+            return session.Save(entity);
         }
 
         public void Update(T entity)

@@ -44,12 +44,12 @@ namespace TeamApp.Domain.Competition.Seasons.Config
                 gameCounts.Add(teamNames[i], 0);
             }
 
-            config.DivisionRules.ForEach(divisionRule =>
+            config.DivisionRules.ToList().ForEach(divisionRule =>
             {
                 if (!divisionCounts.ContainsKey(divisionRule.DivisionName)) divisionCounts.Add(divisionRule.DivisionName, new SortedSet<string>());
             });
 
-            config.TeamRules.ForEach(teamRule =>
+            config.TeamRules.ToList().ForEach(teamRule =>
             {
                 if (!teamCounts.ContainsKey(teamRule.Team.Name)) teamCounts.Add(teamRule.Team.Name, new SortedSet<string>());
 
@@ -66,7 +66,7 @@ namespace TeamApp.Domain.Competition.Seasons.Config
 
             //now we've got all of the teams together in their divisions
 
-            config.ScheduleRules.ForEach(sr =>
+            config.ScheduleRules.ToList().ForEach(sr =>
             {
                 var homeTeams = new List<string>();
                 var awayTeams = new List<string>();

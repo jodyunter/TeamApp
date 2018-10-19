@@ -8,7 +8,7 @@ using TeamApp.Domain.Competition.Seasons.Config;
 using static TeamApp.Domain.Competition.Playoffs.Config.PlayoffSeriesRule;
 namespace TeamApp.Test.Helpers
 {
-    public class Data2
+    public class DataWithDatabase
     {
         public static string BASIC_TEAM_MAP = "BASIC_TEAM_MAP";        
         public static string BASIC_SEASON_TEAM_RULE_LIST = "BASIC_SEASON_TEAM_RULE_LIST";
@@ -84,7 +84,6 @@ namespace TeamApp.Test.Helpers
  
             }
 
-            league.Competitions.Add(competition);
             return competition;
 
         }
@@ -105,9 +104,8 @@ namespace TeamApp.Test.Helpers
                 new PlayoffSeriesRule("Final", 2, BEST_OF_SERIES, 2, gameRules, FROM_RANKING, "NHL", 1, FROM_SERIES, "Semi Final", GET_WINNER, 1, null, new int[] {1,0,0 }, null, null, null, null)
             };
 
-            var playoffConfig = new PlayoffCompetitionConfig("My Playoff", seasonConfig.League, 2, gameRules, 1, null, rankingRules, seriesRules, new List<CompetitionConfig> { seasonConfig });
+            var playoffConfig = new PlayoffCompetitionConfig("My Playoff", null, 1, gameRules, 1, null, rankingRules, seriesRules, new List<CompetitionConfig> { seasonConfig });
 
-            seasonConfig.League.Competitions.Add(playoffConfig);
             return playoffConfig;
 
 

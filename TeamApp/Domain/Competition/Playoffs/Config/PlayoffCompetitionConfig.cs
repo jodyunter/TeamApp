@@ -5,32 +5,21 @@ using TeamApp.Domain.Competition.Playoffs.Series;
 
 namespace TeamApp.Domain.Competition.Playoffs.Config
 {
-    public class PlayoffCompetitionConfig:ICompetitionConfig
+    public class PlayoffCompetitionConfig:CompetitionConfig
     {
-        public string Name { get; set; }
-        public League League { get; set; }
-        public int Order { get; set; }
-        public GameRules GameRules { get; set; }
-        public int? FirstYear { get; set; }
-        public int? LastYear { get; set; }
-        public List<PlayoffSeriesRule> SeriesRules { get; set; }
-        public List<PlayoffRankingRule> Rankings { get; set; }
-        public List<ICompetitionConfig> Parents { get; set; }      
+        public virtual IList<PlayoffSeriesRule> SeriesRules { get; set; }
+        public virtual IList<PlayoffRankingRule> Rankings { get; set; }
 
-        public PlayoffCompetitionConfig(string name, League league, int order, GameRules gameRules, int? firstYear, int? lastYear, List<PlayoffRankingRule> rankings, List<PlayoffSeriesRule> seriesRules, List<ICompetitionConfig> parents)
+        public PlayoffCompetitionConfig():base() { }
+
+        public PlayoffCompetitionConfig(string name, League league, int order, GameRules gameRules, int? firstYear, int? lastYear, List<PlayoffRankingRule> rankings, List<PlayoffSeriesRule> seriesRules, List<CompetitionConfig> parents)
+            :base(name, league, order, gameRules, parents, firstYear, lastYear)
         {
-            Name = name;
-            League = league;
-            Order = order;
-            GameRules = gameRules;
-            FirstYear = firstYear;
-            LastYear = lastYear;
             Rankings = rankings;
-            SeriesRules = seriesRules;
-            Parents = parents;
+            SeriesRules = seriesRules;            
         }
 
-        public ICompetition CreateCompetition(int year, List<ICompetition> parents)
+        public override ICompetition CreateCompetition(int year, List<ICompetition> parents)
         {
             var playoff = new Playoff(this, Name, year, -1, 1, null, null, null, null);
 
@@ -40,22 +29,22 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
             return playoff;
         }
 
-        public void ProcessSeries(Playoff playoff)
+        public virtual void ProcessSeries(Playoff playoff)
         {
             playoff.Series = new List<PlayoffSeries>();
 
-            SeriesRules.ForEach(rule =>
+            SeriesRules.ToList().ForEach(rule =>
             {
                 playoff.Series.Add(SetupSeriesFromRule(playoff, rule));
             });
         }
 
-        public void ProcessRankingRulesAndAddTeams(Playoff playoff, List<ICompetition> parents)
+        public virtual void ProcessRankingRulesAndAddTeams(Playoff playoff, List<ICompetition> parents)
         {
             playoff.Teams = new List<ISingleYearTeam>();
             playoff.Rankings = new Dictionary<string, List<TeamRanking>>();
 
-            Rankings.ForEach(rule =>
+            Rankings.ToList().ForEach(rule =>
             {
                 //get the competition
                 var sourceCompetition = parents.Where(p => p.Name.Equals(rule.SourceCompetition.Name)).FirstOrDefault(); //this is the source competition
@@ -94,7 +83,7 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
             });
         }
 
-        public PlayoffSeries SetupSeriesFromRule(Playoff playoff, PlayoffSeriesRule rule)
+        public virtual PlayoffSeries SetupSeriesFromRule(Playoff playoff, PlayoffSeriesRule rule)
         {
             var homeTeam = GetTeamByRule(playoff, rule.HomeFromType, rule.HomeFromName, rule.HomeFromValue);
             var awayTeam = GetTeamByRule(playoff, rule.AwayFromType, rule.AwayFromName, rule.AwayFromValue);
@@ -104,7 +93,7 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
             return series;
         }
 
-        public PlayoffSeries SetupSeries(Playoff playoff, int seriesType, string name, int round, int startingDay, PlayoffTeam homeTeam, PlayoffTeam awayTeam,
+        public virtual PlayoffSeries SetupSeries(Playoff playoff, int seriesType, string name, int round, int startingDay, PlayoffTeam homeTeam, PlayoffTeam awayTeam,
             int seriesNumber, int[] homeGameProgression)
         {       //if it is not setup, create it
             switch (seriesType)
@@ -118,7 +107,7 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
             }
         }
 
-        public PlayoffTeam GetTeamByRule(Playoff playoff, int fromType, string fromName, int fromValue)
+        public virtual PlayoffTeam GetTeamByRule(Playoff playoff, int fromType, string fromName, int fromValue)
         {
             switch (fromType)
             {                

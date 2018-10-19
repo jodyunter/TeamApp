@@ -1,6 +1,7 @@
 ﻿using FluentNHibernate.Automapping;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
+using FluentNHibernate.Conventions.Helpers;
 using Microsoft.Extensions.Configuration;
 using NHibernate;
 using System;
@@ -11,6 +12,9 @@ using System.Reflection;
 using System.Text;
 using System.Xml;
 using TeamApp.Domain;
+using TeamApp.Domain.Competition;
+using TeamApp.Domain.Competition.Playoffs.Config;
+using TeamApp.Domain.Competition.Seasons.Config;
 
 namespace TeamApp.Data.Repositories
 {
@@ -53,7 +57,9 @@ namespace TeamApp.Data.Repositories
                    .Mappings(m =>
                    m.AutoMappings.Add(
                        AutoMap.AssemblyOf<Team>(storeConfig)
-                       .IgnoreBase<BaseDataObject>()
+                       .IgnoreBase<BaseDataObject>()           
+                       .IncludeBase<CompetitionConfig>()
+                       .Conventions.Add(DefaultCascade.All())
                        ));
                     
         }

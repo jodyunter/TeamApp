@@ -4,6 +4,8 @@ using System.Text;
 using System.Linq;
 using TeamApp.Domain;
 using FluentNHibernate.Automapping;
+using TeamApp.Domain.Competition;
+using TeamApp.Domain.Competition.Seasons.Config;
 
 namespace TeamApp.Data.Repositories
 {
@@ -13,5 +15,6 @@ namespace TeamApp.Data.Repositories
         {
             return type.GetInterfaces().ToList().Contains(typeof(IDataObject));
         }
+
     }
 }

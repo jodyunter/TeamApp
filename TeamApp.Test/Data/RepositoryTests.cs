@@ -98,7 +98,7 @@ namespace TeamApp.Test.Data
         public void ShouldUpdateItem()
         {
             var newItem = GetAddItem();
-            newItem.Id = repository.Add(newItem);
+            newItem.Id = (long)repository.Add(newItem);
 
             newItem = UpdateItem(newItem);
 

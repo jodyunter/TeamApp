@@ -4,16 +4,17 @@ using System.Text;
 
 namespace TeamApp.Domain.Competition.Seasons.Config
 {    
-    public class SeasonTeamRule:ITimePeriod
+    public class SeasonTeamRule:BaseDataObject,ITimePeriod
     {
-        public const int TEAM = 0;        
+        public const int TEAM = 0;
 
-        public SeasonCompetitionConfig Competition { get; set; }
-        public Team Team { get; set; }
-        public string Division { get; set; }
-        public int? FirstYear { get; set; }
-        public int? LastYear { get; set; }        
+        public virtual SeasonCompetitionConfig Competition { get; set; }
+        public virtual Team Team { get; set; }
+        public virtual string Division { get; set; }
+        public virtual int? FirstYear { get; set; }
+        public virtual int? LastYear { get; set; }
 
+        public SeasonTeamRule() { }
         public SeasonTeamRule(SeasonCompetitionConfig competition, Team team, string division, int? firstYear, int? lastYear)
         {
             Competition = competition;

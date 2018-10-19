@@ -4,23 +4,24 @@ using System.Text;
 
 namespace TeamApp.Domain.Competition.Seasons.Config
 {
-    public class SeasonScheduleRule:ITimePeriod
+    public class SeasonScheduleRule:BaseDataObject,ITimePeriod
     {
         //todo a random setup, such as "This Division, Random, 2 home, 2 away"
         public const int TEAM_TYPE = 0;
         public const int DIVISION_TYPE = 1;
         public const int NONE = 2;
 
-        public SeasonCompetitionConfig Competition { get; set; }
-        public int HomeTeamType { get; set; } //division or team
-        public string HomeTeamValue { get; set; } //team or division name
-        public int AwayTeamType { get; set; } //division or team
-        public string AwayTeamValue { get; set; } //team or division name
-        public int Iterations { get; set; }
-        public bool HomeAndAway { get; set; }
-        public int? FirstYear { get; set; }
-        public int? LastYear { get; set; }
+        public virtual SeasonCompetitionConfig Competition { get; set; }
+        public virtual int HomeTeamType { get; set; } //division or team
+        public virtual string HomeTeamValue { get; set; } //team or division name
+        public virtual int AwayTeamType { get; set; } //division or team
+        public virtual string AwayTeamValue { get; set; } //team or division name
+        public virtual int Iterations { get; set; }
+        public virtual bool HomeAndAway { get; set; }
+        public virtual int? FirstYear { get; set; }
+        public virtual int? LastYear { get; set; }
 
+        public SeasonScheduleRule() { }
         public SeasonScheduleRule(SeasonCompetitionConfig competition, int homeTeamType, string homeTeamValue, int awayTeamType, string awayTeamValue, int iterations, bool homeAndAway, int? firstYear, int? lastYear)
         {
             Competition = competition;

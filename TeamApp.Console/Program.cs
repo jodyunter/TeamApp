@@ -11,6 +11,9 @@ using TeamApp.Domain.Competition.Seasons;
 using TeamApp.Domain.Competition.Playoffs;
 using TeamApp.Domain.Competition.Playoffs.Series;
 using TeamApp.Domain.Competition.Playoffs.Config;
+using TeamApp.Data.Repositories;
+using TeamApp.Domain.Repositories;
+using TeamApp.Domain;
 
 namespace TeamApp.Console
 {
@@ -23,6 +26,10 @@ namespace TeamApp.Console
             var playoffConfig = Data2.CreateBasicPlayoffConfiguration(seasonCompetition);
 
             var season = (Season)seasonCompetition.CreateCompetition(1, null);
+
+            IRepository<League> seasonConfigRepo = new Repository<League>();
+
+            seasonConfigRepo.Add(seasonCompetition.League);
 
             WriteLine("Validating Schedule based on config.");
             var seasonScheduleConfigValidator = new SeasonConfigScheduleValidator(seasonCompetition);
@@ -54,7 +61,7 @@ namespace TeamApp.Console
 
             season.SortAllTeams();
 
-            season.Divisions.Where(d => d.Level < 4).OrderBy(d => d.Level).ThenBy(d => d.Order).ToList().ForEach(div =>
+            season.Divisions.Where(d => d.Level < 4).OrderBy(d => d.Level).ThenBy(d => d.Ordering).ToList().ForEach(div =>
             {
                 WriteLine(div.Name);                
                 season.Rankings[div.Name].OrderBy(d => d.Rank).ToList().ForEach(ranking =>

@@ -77,7 +77,7 @@ namespace TeamApp.Test.Helpers
 
             var gameRules = new GameRules("Season Rules", true, 3, 1, 7, 6);
 
-            SeasonCompetitionConfig competition = new SeasonCompetitionConfig("My Season", league, 1, null, 1, 1, new List<SeasonTeamRule>(), new List<SeasonDivisionRule>(), gameRules, new List<SeasonScheduleRule>(), new List<ICompetitionConfig>());
+            SeasonCompetitionConfig competition = new SeasonCompetitionConfig("My Season", league, 1, null, 1, 1, new List<SeasonTeamRule>(), new List<SeasonDivisionRule>(), gameRules, new List<SeasonScheduleRule>(), new List<CompetitionConfig>());
            
             competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, NHL, SeasonScheduleRule.NONE, null, 1, true, 1, null)); //42
             competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, WEST, SeasonScheduleRule.DIVISION_TYPE, CENTRAL, 2, true, 1, null));            
@@ -178,7 +178,7 @@ namespace TeamApp.Test.Helpers
                 new PlayoffSeriesRule("Final", 4, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "FINAL_GROUP", 1, FROM_RANKING, "FINAL_GROUP", 2, 1, null, new int[] {0,0,1,1,0,1,0 }, null, null, null, null)
             };
 
-            var playoffConfig = new PlayoffCompetitionConfig("My Playoff", null, 1, gameRules, 1, null, rankingRules, seriesRules, new List<ICompetitionConfig> { seasonConfig });
+            var playoffConfig = new PlayoffCompetitionConfig("My Playoff", null, 1, gameRules, 1, null, rankingRules, seriesRules, new List<CompetitionConfig> { seasonConfig });
 
             return playoffConfig;
 

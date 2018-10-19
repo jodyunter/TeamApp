@@ -8,7 +8,7 @@ namespace TeamApp.Domain.Competition.Seasons
 {
     public class Season:ICompetition
     {
-        public ICompetitionConfig CompetitionConfig { get; set; }
+        public CompetitionConfig CompetitionConfig { get; set; }
         public string Name { get; set; }
         public int Year { get; set; }
         public List<SeasonDivision> Divisions { get; set; }

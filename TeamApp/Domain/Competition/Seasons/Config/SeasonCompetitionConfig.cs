@@ -7,38 +7,24 @@ using TeamApp.Domain.Schedules;
 namespace TeamApp.Domain.Competition.Seasons.Config
 {
     //this is the configuration setup for seasons
-    public class SeasonCompetitionConfig:ICompetitionConfig
-    {
-        public string Name { get; set; }
-        public League League { get; set; }
-        public int? FirstYear { get; set; }
-        public int? LastYear { get; set; }
-        public int Order { get; set; }
-        public int StartDay { get; set; }
-        public List<SeasonTeamRule> TeamRules { get; set; }
-        public List<SeasonDivisionRule> DivisionRules { get; set; } //at some point in the future our division rules may need to reference parent competitions
-        
-        public List<SeasonScheduleRule> ScheduleRules { get; set; }
-        public List<ICompetitionConfig> Parents { get; set; }
-        public GameRules GameRules { get; set; }
+    public class SeasonCompetitionConfig:CompetitionConfig
+    {        
+        public virtual IList<SeasonTeamRule> TeamRules { get; set; }
+        public virtual IList<SeasonDivisionRule> DivisionRules { get; set; } //at some point in the future our division rules may need to reference parent competitions
 
-        public SeasonCompetitionConfig(string name, League league, int? firstYear, int? lastYear, int order, int startDay, List<SeasonTeamRule> teamRules, List<SeasonDivisionRule> divisionRules, GameRules gameRules, List<SeasonScheduleRule> scheduleRules, List<ICompetitionConfig> parents)
-        {
-            Name = name;
-            League = league;
-            FirstYear = firstYear;
-            LastYear = lastYear;
-            Order = order;
-            StartDay = startDay;
+        public virtual IList<SeasonScheduleRule> ScheduleRules { get; set; }
+
+        public SeasonCompetitionConfig() { }
+        public SeasonCompetitionConfig(string name, League league, int? firstYear, int? lastYear, int order, int startDay, List<SeasonTeamRule> teamRules, List<SeasonDivisionRule> divisionRules, GameRules gameRules, List<SeasonScheduleRule> scheduleRules, List<CompetitionConfig> parents)
+            : base(name, league, order, gameRules, parents, firstYear, lastYear)
+        {            
             TeamRules = teamRules;
             DivisionRules = divisionRules;
-            GameRules = gameRules;
             ScheduleRules = scheduleRules;
-            Parents = parents;
         }
 
 
-        public List<string> GetTeamsInDivision(string divisionName)
+        public virtual List<string> GetTeamsInDivision(string divisionName)
         {
             var list = new List<string>();
 
@@ -47,7 +33,7 @@ namespace TeamApp.Domain.Competition.Seasons.Config
 
         private List<string> GetTeamsInDivision(string divisionName, List<string> teams)
         {
-            TeamRules.ForEach(rule =>
+            TeamRules.ToList().ForEach(rule =>
             {
                 if (rule.Division.Equals(divisionName))
                 {
@@ -61,14 +47,14 @@ namespace TeamApp.Domain.Competition.Seasons.Config
             });
 
             return teams;
-        }        
+        }
 
-        public bool IsTeamInDivision(string teamName, string divisionName)
+        public virtual bool IsTeamInDivision(string teamName, string divisionName)
         {
             return GetTeamsInDivision(divisionName).Where(s => s.Equals(teamName)).FirstOrDefault() != null;
         }
 
-        public ICompetition CreateCompetition(int year, List<ICompetition> Parents)
+        public override ICompetition CreateCompetition(int year, List<ICompetition> Parents)
         {
             var season = new Season(this, year);
 
@@ -87,16 +73,16 @@ namespace TeamApp.Domain.Competition.Seasons.Config
             return season;
         }
 
-        public void ProcessDivisionRules(Season season, Dictionary<string, SeasonDivision> seasonDivisions)
+        public virtual void ProcessDivisionRules(Season season, Dictionary<string, SeasonDivision> seasonDivisions)
         {
             //first create all the divisions
-            DivisionRules.ForEach(rule =>
+            DivisionRules.ToList().ForEach(rule =>
             {
-                seasonDivisions.Add(rule.DivisionName, new SeasonDivision(season, null, season.Year, rule.DivisionName, rule.Level, rule.Order, null));
+                seasonDivisions.Add(rule.DivisionName, new SeasonDivision(season, null, season.Year, rule.DivisionName, rule.Level, rule.Ordering, null));
             });
 
             //now setup parent divisions relationships
-            DivisionRules.ForEach(rule =>
+            DivisionRules.ToList().ForEach(rule =>
             {
                 if (rule.ParentName != null)
                 {
@@ -106,9 +92,9 @@ namespace TeamApp.Domain.Competition.Seasons.Config
 
         }
 
-        public void ProcessTeamRules(Season season, Dictionary<string, SeasonDivision> seasonDivisions, Dictionary<string, ISingleYearTeam> teams)
+        public virtual void ProcessTeamRules(Season season, Dictionary<string, SeasonDivision> seasonDivisions, Dictionary<string, ISingleYearTeam> teams)
         {
-            TeamRules.ForEach(rule =>
+            TeamRules.ToList().ForEach(rule =>
             {                
                 var team = rule.Team;
                 var seasonDivision = seasonDivisions[rule.Division];
@@ -121,13 +107,13 @@ namespace TeamApp.Domain.Competition.Seasons.Config
             });
         }
 
-        public void CreateSeasonSchedule(Season season)
+        public virtual void CreateSeasonSchedule(Season season)
         {
             int day = 1;
 
             season.Schedule = new Schedule();
 
-            ScheduleRules.ForEach(rule =>
+            ScheduleRules.ToList().ForEach(rule =>
             {
                 if (rule.HomeTeamType == rule.AwayTeamType && rule.HomeTeamValue == rule.AwayTeamValue)
                 {
@@ -152,7 +138,7 @@ namespace TeamApp.Domain.Competition.Seasons.Config
 
         }
 
-        public List<ISingleYearTeam> GetTeams(Season season, int teamType, string teamValue)
+        public virtual List<ISingleYearTeam> GetTeams(Season season, int teamType, string teamValue)
         {
             var teams = new List<ISingleYearTeam>();
 

@@ -4,18 +4,19 @@ using System.Text;
 
 namespace TeamApp.Domain.Competition.Playoffs.Config
 {
-    public class PlayoffRankingRule
+    public class PlayoffRankingRule:BaseDataObject
     {
         //you will get the same competition for the current year
-        public string GroupName { get; set; }
-        public int StartingRank { get; set; }        
-        public ICompetitionConfig SourceCompetition { get; set; }        
-        public string SourceGroupName { get; set; }
-        public int SourceFirstRank { get; set; }
-        public int SourceLastRank { get; set; }
+        public virtual string GroupName { get; set; }
+        public virtual int StartingRank { get; set; }
+        public virtual CompetitionConfig SourceCompetition { get; set; }
+        public virtual string SourceGroupName { get; set; }
+        public virtual int SourceFirstRank { get; set; }
+        public virtual int SourceLastRank { get; set; }
         //todo how to pool candidates, then sort them
 
-        public PlayoffRankingRule(string groupName, int startingRank, ICompetitionConfig sourceCompetition, string sourceGroupName, int sourceFirstRank, int sourceLastRank)
+        public PlayoffRankingRule() { }
+        public PlayoffRankingRule(string groupName, int startingRank, CompetitionConfig sourceCompetition, string sourceGroupName, int sourceFirstRank, int sourceLastRank)
         {
             GroupName = groupName;
             StartingRank = startingRank;

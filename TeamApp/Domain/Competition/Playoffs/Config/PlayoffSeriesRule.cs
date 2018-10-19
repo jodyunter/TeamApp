@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TeamApp.Domain.Competition.Playoffs.Config
 {
-    public class PlayoffSeriesRule:ITimePeriod
+    public class PlayoffSeriesRule:BaseDataObject,ITimePeriod
     {
         public const int FROM_SERIES = 0;
         public const int FROM_RANKING = 1;
@@ -15,26 +15,27 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
         public const int GET_WINNER = 0;
         public const int GET_LOSER = 1;
 
-        public string Name { get; set; }
-        public int Round { get; set; }
-        public int SeriesType { get; set; }
-        public int SeriesNumber { get; set; } //total games for total goals, or required wins        
-        public GameRules GameRules { get; set; } //can be different!
+        public virtual string Name { get; set; }
+        public virtual int Round { get; set; }
+        public virtual int SeriesType { get; set; }
+        public virtual int SeriesNumber { get; set; } //total games for total goals, or required wins        
+        public virtual GameRules GameRules { get; set; } //can be different!
 
-        public int HomeFromType { get; set; }
-        public string HomeFromName { get; set; } //ranking group name
-        public int HomeFromValue { get; set; } //ranking number, or winner or loser
-        public int AwayFromType { get; set; }
-        public string AwayFromName { get; set; }
-        public int AwayFromValue { get; set; }
-        public int? FirstYear { get; set; }
-        public int? LastYear { get; set; }
-        public int[] HomeGameProgression { get; set; }
-        public string WinnerGroupName { get; set; } //this is where the winner goes to after the series is done
-        public string WinnerRankFrom { get; set; }  //this is the group from where the ranking number will be taken
-        public string LoserGroupName { get; set; }
-        public string LoserRankFrom { get; set; }
+        public virtual int HomeFromType { get; set; }
+        public virtual string HomeFromName { get; set; } //ranking group name
+        public virtual int HomeFromValue { get; set; } //ranking number, or winner or loser
+        public virtual int AwayFromType { get; set; }
+        public virtual string AwayFromName { get; set; }
+        public virtual int AwayFromValue { get; set; }
+        public virtual int? FirstYear { get; set; }
+        public virtual int? LastYear { get; set; }
+        public virtual int[] HomeGameProgression { get; set; }
+        public virtual string WinnerGroupName { get; set; } //this is where the winner goes to after the series is done
+        public virtual string WinnerRankFrom { get; set; }  //this is the group from where the ranking number will be taken
+        public virtual string LoserGroupName { get; set; }
+        public virtual string LoserRankFrom { get; set; }
 
+        public PlayoffSeriesRule() { }
         public PlayoffSeriesRule(string name, int round, int seriesType, int seriesNumber, GameRules gameRules, int homeFromType, string homeFromName, int homeFromValue, int awayFromType, string awayFromName, int awayFromValue, int? firstYear, int? lastYear, int[] homeGameProgression, string winnerGroupName, string winnerRankFrom, string loserGroupName, string loserRankFrom)
         {
             Name = name;
