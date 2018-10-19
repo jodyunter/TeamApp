@@ -29,7 +29,7 @@ namespace TeamApp.Test.Data
         [Fact]
         public void ShouldAddTeam()
         {            
-            var team = new Team("Team Add Test", 1, "T1 Owner", 1, null, true);
+            var team = new Team("Team Add Test", "Yay", "Shrt", 1, "T1 Owner", 1, null, true);
 
             ITeamRepository repository = new TeamRepository();
             repository.Add(team);

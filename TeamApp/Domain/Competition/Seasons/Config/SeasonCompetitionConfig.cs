@@ -112,7 +112,7 @@ namespace TeamApp.Domain.Competition.Seasons.Config
             {                
                 var team = rule.Team;
                 var seasonDivision = seasonDivisions[rule.Division];
-                var newTeam = new SeasonTeam(team.Name, team.Skill, team, seasonDivision.Season, seasonDivision, null, team.Owner, seasonDivision.Season.Year);
+                var newTeam = new SeasonTeam(team.Name, team.NickName, team.ShortName, team.Skill, team, seasonDivision.Season, seasonDivision, null, team.Owner, seasonDivision.Season.Year);
                 newTeam.Stats = new SeasonTeamStats(newTeam);
 
                 seasonDivision.AddTeam(newTeam);

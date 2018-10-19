@@ -38,6 +38,8 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
         [MemberData(nameof(SeriesForIsCompleteTests))]
         public void ShouldTestIsCompleteSeries(int testNo, PlayoffSeries series, bool expectedIsComplete)
         {
+            var number = testNo;
+
             StrictEqual(expectedIsComplete, series.IsComplete());            
         }
 
@@ -70,6 +72,8 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
         [MemberData(nameof(SeriesForGamesNeededTests))]
         public void ShouldGetExpectedNeededGames(int testNo, PlayoffSeries series, int expectedNeededGames)
         {
+            var number = testNo;
+
             StrictEqual(expectedNeededGames, series.NumberOfGamesNeeded());
         }
 
@@ -104,12 +108,14 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
         }
         public static PlayoffTeam CreateTeam(string name)
         {
-            return new PlayoffTeam(name, 5, null, new Team(name, 5, null, 1, null, true), null, 1);
+            return new PlayoffTeam(name, null, null, 5, null, new Team(name, null, null, 5, null, 1, null, true), null, 1);
         }
         [Theory]
         [MemberData(nameof(SeriesForInCompleteGames))]
         public void ShouldGetInCompleteGames(int testNo, PlayoffSeries series, int expectedInCompleteGames)
         {
+            var number = testNo;
+
             StrictEqual(expectedInCompleteGames, series.GetInCompleteGames());
         }
 
@@ -180,6 +186,8 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
         [InlineData(14, 10, new int[] { 1, 1, 0, 0, 1 }, 1)]
         public void ShouldGetProperTeamForGameNumber(int testNo, int gameToTest, int[] homeTeamProgression, int expectedResult)
         {
+            var number = testNo;
+
             var series = new BestOfSeries(null, null, 1, 1, null, null, 0, 0, 0, null, homeTeamProgression);
 
             StrictEqual(expectedResult, series.GetHomeValueForGame(gameToTest));
@@ -205,6 +213,8 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
         [InlineData(14, 10, new int[] { 1, 1, 0, 0, 1 }, 1)]
         public void ShouldCreateGameProperly(int testNo, int gameToTest, int[] homeTeamProgression, int expectedResult)
         {
+            var number = testNo;
+
             var gameRules = new GameRules("Test", false, 3, 1, 7, 6);
             var playoffConfig = new PlayoffCompetitionConfig("My Playoff", null, 1, gameRules, 1, null, null, null, null); //todo eventually can't use this constructor
             var playoff = new Playoff(playoffConfig, "My Playoff", 1, 1, 1, null, null, null, null);

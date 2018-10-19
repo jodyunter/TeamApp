@@ -11,6 +11,8 @@ namespace TeamApp.Domain
         string Owner { get; set; }
         int? FirstYear { get; set; }
         int? LastYear { get; set; }        
+        string NickName { get; set; }
+        string ShortName { get; set; }
 
     }
 }

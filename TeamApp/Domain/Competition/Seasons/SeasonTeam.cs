@@ -7,6 +7,8 @@ namespace TeamApp.Domain.Competition.Seasons
     public class SeasonTeam:ISingleYearTeam,IComparable<SeasonTeam>
     {
         public string Name { get; set; }
+        public string NickName { get; set; }
+        public string ShortName { get; set; }
         public int Skill { get; set; }        
         public Team Parent { get; set; }
         public ICompetition Competition { get; set; }
@@ -17,9 +19,11 @@ namespace TeamApp.Domain.Competition.Seasons
         public int? FirstYear { get; set; }
         public int? LastYear { get; set; }
 
-        public SeasonTeam(string name, int skill, Team parent, Season competition, SeasonDivision division, SeasonTeamStats stats, string owner, int year)
+        public SeasonTeam(string name, string nickName, string shortName, int skill, Team parent, Season competition, SeasonDivision division, SeasonTeamStats stats, string owner, int year)
         {
             Name = name;
+            NickName = nickName;
+            ShortName = shortName;
             Skill = skill;
             Parent = parent;
             Competition = competition;

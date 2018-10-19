@@ -79,7 +79,7 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
 
                     var sourceTeam = sourceRanking.Team;
 
-                    var newTeam = new PlayoffTeam(sourceTeam.Name, sourceTeam.Skill, playoff, sourceTeam.Parent, sourceTeam.Owner, playoff.Year);
+                    var newTeam = new PlayoffTeam(sourceTeam.Name, sourceTeam.NickName, sourceTeam.ShortName, sourceTeam.Skill, playoff, sourceTeam.Parent, sourceTeam.Owner, playoff.Year);
 
                     var playoffRanking = new TeamRanking(nextRank, rule.GroupName, newTeam);
 
@@ -126,7 +126,7 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
                     if (playoff.Rankings.ContainsKey(fromName))
                     {
                         var ranking = playoff.Rankings[fromName].Where(r => r.Rank == fromValue).ToList().First();
-                        return new PlayoffTeam(ranking.Team.Name, ranking.Team.Skill, playoff, ranking.Team.Parent, ranking.Team.Owner, playoff.Year);
+                        return new PlayoffTeam(ranking.Team.Name, ranking.Team.NickName, ranking.Team.ShortName, ranking.Team.Skill, playoff, ranking.Team.Parent, ranking.Team.Owner, playoff.Year);
                     }
                     return null;
                 case PlayoffSeriesRule.FROM_SERIES:

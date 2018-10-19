@@ -44,6 +44,8 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
         [MemberData(nameof(PlayoffDataForGetTeamByRuleTests))]
         public void ShouldGetTeamFromRule(int testNo, Playoff p, PlayoffSeriesRule rule, string expectedHomeName, string expectedAwayName)
         {
+            var number = testNo;
+
             var playoffConfig = (PlayoffCompetitionConfig)p.CompetitionConfig;
 
             var homeTeam = playoffConfig.GetTeamByRule(p, rule.HomeFromType, rule.HomeFromName, rule.HomeFromValue);

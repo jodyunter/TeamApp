@@ -35,8 +35,10 @@ namespace TeamApp.Test.Domain.SchedulerTests
 
         [Theory]
         [MemberData(nameof(GetBalancedSchedule))]        
-        public void IsScheduleValid(int testNumber, Schedule schedule, bool isUnevenHomeAndAwayOkay, bool isUnevenScheduleOkay, bool expected)
+        public void IsScheduleValid(int testNo, Schedule schedule, bool isUnevenHomeAndAwayOkay, bool isUnevenScheduleOkay, bool expected)
         {
+            var number = testNo;
+
             var counts = new ScheduleValidator(schedule);
             counts.IsUnevenHomeAwayOkay = isUnevenHomeAndAwayOkay;
             counts.IsUnevenScheduleOkay = isUnevenScheduleOkay;

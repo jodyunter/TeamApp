@@ -36,9 +36,7 @@ namespace TeamApp.Test.Helpers
 
             var teamNameMap = new Dictionary<string, List<string>>()
             {
-                {NHL, new List<string>() { "Toronto", "Montreal", "Ottawa", "Quebec City" } }
-
-
+                {NHL, new List<string>() { "Toronto", "Montreal", "Ottawa", "Quebec City", "New York", "Boston" } }
             };
 
             var league = new League(NHL);
@@ -51,8 +49,18 @@ namespace TeamApp.Test.Helpers
 
             SeasonCompetitionConfig competition = new SeasonCompetitionConfig("My Season", league, 1, null, 1, 1, new List<SeasonTeamRule>(), new List<SeasonDivisionRule>(), gameRules, new List<SeasonScheduleRule>(), new List<ICompetitionConfig>());
            
-            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, NHL, SeasonScheduleRule.NONE, null, 10, true, 1, null)); //42
-
+            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, NHL, SeasonScheduleRule.NONE, null, 6, true, 1, null)); //42
+            /*
+            for (int i = 0; i < teamNameMap[NHL].Count; i++)
+            {
+                for (int j = i + 1; j <= i + 2; j++)
+                {
+                    var homeTeam = teamNameMap[NHL][i];
+                    var awayTeam = teamNameMap[NHL][j % 5];
+                    competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.TEAM_TYPE, homeTeam, SeasonScheduleRule.TEAM_TYPE, awayTeam, 1, false, 1, null)); //32            
+                }
+            }
+            */
 
             var seasonCompetitionList = new List<SeasonCompetitionConfig>()
             {
@@ -86,13 +94,14 @@ namespace TeamApp.Test.Helpers
 
             var rankingRules = new List<PlayoffRankingRule>()
             {
-                new PlayoffRankingRule("NHL", 1,seasonConfig, "NHL", 1, 4)
+                new PlayoffRankingRule("NHL", 1,seasonConfig, "NHL", 1, 6)
             };
 
             var seriesRules = new List<PlayoffSeriesRule>()
             {
                 //new PlayoffSeriesRule("Final", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "NHL", 1, FROM_RANKING, "NHL", 2, 1, null, new int[] {0,0,1,1,0,1,0 }, null, null, null, null)
-                new PlayoffSeriesRule("Final", 1, TOTAL_GOALS, 2, gameRules, FROM_RANKING, "NHL", 1, FROM_RANKING, "NHL", 2, 1, null, new int[] {1,0,0,0,0 }, null, null, null, null)
+                new PlayoffSeriesRule("Semi Final", 1, BEST_OF_SERIES, 2, gameRules, FROM_RANKING, "NHL", 2, FROM_RANKING, "NHL", 3, 1, null, new int[] {1,0,0 }, null, null, null, null),
+                new PlayoffSeriesRule("Final", 2, BEST_OF_SERIES, 2, gameRules, FROM_RANKING, "NHL", 1, FROM_SERIES, "Semi Final", GET_WINNER, 1, null, new int[] {1,0,0 }, null, null, null, null)
             };
 
             var playoffConfig = new PlayoffCompetitionConfig("My Playoff", null, 1, gameRules, 1, null, rankingRules, seriesRules, new List<ICompetitionConfig> { seasonConfig });
@@ -106,7 +115,7 @@ namespace TeamApp.Test.Helpers
         {            
             teamNames.ForEach(s =>
             {
-                var team = new Team(s, 5, null, 1, null, true);
+                var team = new Team(s, null, null, 5, null, 1, null, true);
                 var rule = new SeasonTeamRule(competition, team, divisionName, 1, null);
 
                 competition.TeamRules.Add(rule);

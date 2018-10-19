@@ -189,7 +189,7 @@ namespace TeamApp.Test.Helpers
         {            
             teamNames.ForEach(s =>
             {
-                var team = new Team(s, 5, null, 1, null, true);
+                var team = new Team(s, null, null, 5, null, 1, null, true);
                 var rule = new SeasonTeamRule(competition, team, divisionName, 1, null);
 
                 competition.TeamRules.Add(rule);
