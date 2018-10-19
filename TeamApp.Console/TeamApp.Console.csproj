@@ -10,4 +10,10 @@
     <ProjectReference Include="..\TeamApp\TeamApp.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -6,12 +6,12 @@ namespace TeamApp.Domain
 {
     public class Game
     {
-        public Team HomeTeam { get; set; }
-        public Team AwayTeam { get; set; }
-        public int HomeScore { get; set; }
-        public int AwayScore { get; set; }
-        public bool Complete { get; set; }
-        public int CurrentPeriod { get; set; }
+        public virtual Team HomeTeam { get; set; }
+        public virtual Team AwayTeam { get; set; }
+        public virtual int HomeScore { get; set; }
+        public virtual int AwayScore { get; set; }
+        public virtual bool Complete { get; set; }
+        public virtual int CurrentPeriod { get; set; }
 
         public GameRules Rules { get; set; }
         public Game() { }
@@ -124,26 +124,5 @@ namespace TeamApp.Domain
             if (num.ToString().EndsWith("3")) return num.ToString() + "rd";
             return num.ToString() + "th";
         }
-    }
-
-    public class GameRules
-    {
-        public string Name { get; set; }
-        public bool CanTie { get; set; }
-        public int MaxOverTimePeriods { get; set; }        
-        public int MinimumPeriods { get; set; }
-        public int HomeRange { get; set; }
-        public int AwayRange { get; set; }
-
-        public GameRules(string name, bool canTie, int minimumPeriods, int maxOverTimePeriods, int homeRange, int awayRange)
-        {
-            Name = name;
-            CanTie = canTie;
-            MaxOverTimePeriods = maxOverTimePeriods;
-            MinimumPeriods = minimumPeriods;
-            HomeRange = homeRange;
-            AwayRange = awayRange;
-        }
-
     }
 }

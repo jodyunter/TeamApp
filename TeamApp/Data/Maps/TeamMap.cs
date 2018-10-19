@@ -20,6 +20,7 @@ namespace TeamApp.Data.Maps
             Map(x => x.LastYear);
             Map(x => x.Active);
             Map(x => x.CreatedBy);
+            Map(x => x.CreatedOn);
             Map(x => x.LastModifiedBy);
             Map(x => x.LastModifiedOn);           
         }

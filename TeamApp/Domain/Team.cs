@@ -5,7 +5,7 @@ using System.Text;
 namespace TeamApp.Domain
 {
    
-    public class Team:DataObject, ITeam, ITimePeriod
+    public class Team:BaseDataObject, ITeam, ITimePeriod
     {
         public virtual string Name { get; set; }
         public virtual string NickName { get; set; }
@@ -15,10 +15,9 @@ namespace TeamApp.Domain
         public virtual int? FirstYear { get; set; }
         public virtual int? LastYear { get; set; }
         public virtual bool Active { get; set; }
-        
 
-        public Team() { }
-        public Team(string name, string nickName, string shortName, int skill, string owner, int? firstYear, int? lastYear, bool active)
+        public Team():base() { }
+        public Team(string name, string nickName, string shortName, int skill, string owner, int? firstYear, int? lastYear, bool active):base()
         {
             Name = name;
             NickName = nickName;
@@ -34,5 +33,25 @@ namespace TeamApp.Domain
         {
             return Name;
         }
+
+        public override bool Equals(object obj)
+        {
+            var team = obj as Team;
+            return team != null &&
+                   Name == team.Name &&
+                   NickName == team.NickName &&
+                   ShortName == team.ShortName &&
+                   Skill == team.Skill &&
+                   Owner == team.Owner &&
+                   EqualityComparer<int?>.Default.Equals(FirstYear, team.FirstYear) &&
+                   EqualityComparer<int?>.Default.Equals(LastYear, team.LastYear) &&
+                   Active == team.Active;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name, NickName, ShortName, Skill, Owner, FirstYear, LastYear, Active);
+        }
+
     }
 }

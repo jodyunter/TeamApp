@@ -94,7 +94,7 @@ namespace TeamApp.Test.Domain.Competition.Seasons
             while (!season.Schedule.IsComplete())
                 ((ICompetition)season).PlayNextDay(new Random());            
 
-            StrictEqual(38, ((SeasonTeam)season.Teams.Where(t => t.Name.Equals("Boston")).First()).Stats.Games);
+            StrictEqual(42, ((SeasonTeam)season.Teams.Where(t => t.Name.Equals("Boston")).First()).Stats.Games);
         }
 
         [Fact]
@@ -106,12 +106,12 @@ namespace TeamApp.Test.Domain.Competition.Seasons
 
             var season = (Season)seasonCompetition.CreateCompetition(1, null);
 
-            StrictEqual(20, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("NHL")).First()).Count);
-            StrictEqual(8, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("East")).First()).Count);
+            StrictEqual(22, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("NHL")).First()).Count);
+            StrictEqual(10, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("East")).First()).Count);
             StrictEqual(6, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("West")).First()).Count);
             StrictEqual(6, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("Central")).First()).Count);
-            StrictEqual(4, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("NorthEast")).First()).Count);
-            StrictEqual(4, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("Atlantic")).First()).Count);
+            StrictEqual(5, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("NorthEast")).First()).Count);
+            StrictEqual(5, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("Atlantic")).First()).Count);
         }
     }
 }

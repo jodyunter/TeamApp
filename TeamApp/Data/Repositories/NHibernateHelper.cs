@@ -1,9 +1,12 @@
-﻿using FluentNHibernate.Cfg;
+﻿using FluentNHibernate.Automapping;
+using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
+using Microsoft.Extensions.Configuration;
 using NHibernate;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Xml;
@@ -14,12 +17,6 @@ namespace TeamApp.Data.Repositories
     public class NHibernateHelper
     {
 
-        private static ISessionFactory SessionFactory(string connectionString)
-        {                             
-            return FluentConfig(connectionString).BuildSessionFactory();
-
-        }
-
         private static ISessionFactory SessionFactory()
         {
             return FluentConfig().BuildSessionFactory();
@@ -28,31 +25,39 @@ namespace TeamApp.Data.Repositories
 
         private static FluentConfiguration FluentConfig()
         {
-                             
 
-            return Fluently.Configure()
+            var settings = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("settings.json")
+                .AddEnvironmentVariables().Build();
+
+
+            /*
+           return Fluently.Configure()
                   .Database(MsSqlConfiguration.MsSql2012
-                    .ConnectionString(ConfigurationManager.ConnectionStrings["Jody"].ConnectionString)
+                    .ConnectionString(settings["ConnectionStrings:JodyTest:ConnectionString"])
                     .Provider("NHibernate.Connection.DriverConnectionProvider")
                     .Driver("NHibernate.Driver.SqlClientDriver")
                     .ShowSql())
                   .Mappings(m => m
                     .FluentMappings.AddFromAssemblyOf<Team>());
+                    */
+            var storeConfig = new StoreConfiguration();
 
-        }
-
-        private static FluentConfiguration FluentConfig(string connectionString)
-        {
             return Fluently.Configure()
-              .Database(MsSqlConfiguration.MsSql2012
-                .ConnectionString(connectionString)
-                .Provider("NHibernate.Connection.DriverConnectionProvider")
-                .Driver("NHibernate.Driver.SqlClientDriver")
-                .ShowSql())
-              .Mappings(m => m
-                .FluentMappings.AddFromAssemblyOf<Team>());
-
+                   .Database(MsSqlConfiguration.MsSql2012
+                     .ConnectionString(settings["ConnectionStrings:JodyTest:ConnectionString"])
+                     .Provider("NHibernate.Connection.DriverConnectionProvider")
+                     .Driver("NHibernate.Driver.SqlClientDriver")
+                     .ShowSql())
+                   .Mappings(m =>
+                   m.AutoMappings.Add(
+                       AutoMap.AssemblyOf<Team>(storeConfig)
+                       .IgnoreBase<BaseDataObject>()
+                       ));
+                    
         }
+
         public static ISession OpenSession()
         {
             return SessionFactory().OpenSession();
@@ -61,16 +66,6 @@ namespace TeamApp.Data.Repositories
         public static FluentConfiguration GetConfiguration()
         {
             return FluentConfig();
-        }
-
-        public static ISession OpenSession(string connectionString)
-        {
-            return SessionFactory(connectionString).OpenSession();
-        }
-
-        public static FluentConfiguration GetConfiguration(string connectionStrong)
-        {
-            return FluentConfig(connectionStrong);
         }
 
 

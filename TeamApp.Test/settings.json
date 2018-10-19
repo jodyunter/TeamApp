@@ -1,0 +1,8 @@
+{
+  "ConnectionStrings": {
+    "JodyTest": {
+      "ConnectionString": "Data Source=localhost;Initial Catalog=JodyTest;Integrated Security=True"
+    }
+  }
+
+}
