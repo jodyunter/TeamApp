@@ -149,33 +149,33 @@ namespace TeamApp.Test.Helpers
 
             var rankingRules = new List<PlayoffRankingRule>()
             {
-                new PlayoffRankingRule("NHL", 1,seasonConfig, "NHL", 1, 20),
-                new PlayoffRankingRule("West",1,seasonConfig, "West",1, 6),
-                new PlayoffRankingRule("East",1,seasonConfig, "East",1, 8),
-                new PlayoffRankingRule("East",9,seasonConfig, "Central",5,5), //how do we rank two teams from two divisions into one?
-                new PlayoffRankingRule("East",10,seasonConfig, "West",5,5),
-                new PlayoffRankingRule("Central",1,seasonConfig,"Central",1,6),
-                new PlayoffRankingRule("NorthEast",1,seasonConfig,"NorthEast",1,4),
-                new PlayoffRankingRule("Atlantic",1,seasonConfig,"Atlantic",1,4)
+                new PlayoffRankingRule(null, "NHL", 1,seasonConfig, "NHL", 1, 20),
+                new PlayoffRankingRule(null, "West",1,seasonConfig, "West",1, 6),
+                new PlayoffRankingRule(null, "East",1,seasonConfig, "East",1, 8),
+                new PlayoffRankingRule(null, "East",9,seasonConfig, "Central",5,5), //how do we rank two teams from two divisions into one?
+                new PlayoffRankingRule(null, "East",10,seasonConfig, "West",5,5),
+                new PlayoffRankingRule(null, "Central",1,seasonConfig,"Central",1,6),
+                new PlayoffRankingRule(null, "NorthEast",1,seasonConfig,"NorthEast",1,4),
+                new PlayoffRankingRule(null, "Atlantic",1,seasonConfig,"Atlantic",1,4)
             };
 
             var seriesRules = new List<PlayoffSeriesRule>()
             {
-                new PlayoffSeriesRule("Series A", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "West", 1, FROM_RANKING, "West", 4, 1, null, new int[] {0,0,1,1,0,1,0 }, "SF_WEST", "West", null, null),
-                new PlayoffSeriesRule("Series B", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "West", 2, FROM_RANKING, "West", 3, 1, null, new int[] {0,0,1,1,0,1,0 }, "SF_WEST", "West", null, null),
-                new PlayoffSeriesRule("Series C", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "Central", 1, FROM_RANKING, "Central", 2, 1, null, new int[] {0,0,1,1,0,1,0 }, "SF_CENTRAL", "Central", null, null),
-                new PlayoffSeriesRule("Series D", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "Central", 2, FROM_RANKING, "Central", 3, 1, null, new int[] {0,0,1,1,0,1,0 }, "SF_CENTRAL", "Central", null, null),
-                new PlayoffSeriesRule("Series E", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "NorthEast", 1, FROM_RANKING, "West", 5, 1, null, new int[] {0,0,1,1,0,1,0 }, "SF_EAST", "East", null, null),
-                new PlayoffSeriesRule("Series F", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "NorthEast", 2, FROM_RANKING, "NorthEast", 3, 1, null, new int[] {0,0,1,1,0,1,0 }, "SF_EAST", "East", null, null),
-                new PlayoffSeriesRule("Series G", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "Atlantic", 1, FROM_RANKING, "Central", 5, 1, null, new int[] {0,0,1,1,0,1,0 }, "SF_EAST", "East", null, null),
-                new PlayoffSeriesRule("Series H", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "Atlantic", 2, FROM_RANKING, "Atlantic", 3, 1, null, new int[] {0,0,1,1,0,1,0 }, "SF_EAST", "East", null, null),
-                new PlayoffSeriesRule("Series I", 2, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "SF_WEST", 1, FROM_RANKING, "SF_CENTRAL", 2, 1, null, new int[] {0,0,1,1,0,1,0 }, "F_WEST_CENTRAL", "NHL", null, null),
-                new PlayoffSeriesRule("Series J", 2, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "SF_CENTRAL", 1, FROM_RANKING, "SF_WEST", 2, 1, null, new int[] {0,0,1,1,0,1,0 }, "F_WEST_CENTRAL", "NHL", null, null),
-                new PlayoffSeriesRule("Series K", 2, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "SF_EAST", 1, FROM_RANKING, "SF_EAST", 4, 1, null, new int[] {0,0,1,1,0,1,0 }, "F_EAST", "East", null, null),
-                new PlayoffSeriesRule("Series L", 2, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "SF_EAST", 2, FROM_RANKING, "SF_EAST", 3, 1, null, new int[] {0,0,1,1,0,1,0 }, "F_EAST", "East", null, null),
-                new PlayoffSeriesRule("Series M", 3, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "F_WEST_CENTRAL", 1, FROM_RANKING, "F_WEST_CENTRAL", 2, 1, null, new int[] {0,0,1,1,0,1,0 }, "FINAL_GROUP", "NHL", null, null),
-                new PlayoffSeriesRule("Series N", 3, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "F_EAST", 1, FROM_RANKING, "F_EAST", 2, 1, null, new int[] {0,0,1,1,0,1,0 }, "FINAL_GROUP", "NHL", null, null),
-                new PlayoffSeriesRule("Final", 4, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "FINAL_GROUP", 1, FROM_RANKING, "FINAL_GROUP", 2, 1, null, new int[] {0,0,1,1,0,1,0 }, null, null, null, null)
+                new PlayoffSeriesRule(null, "Series A", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "West", 1, FROM_RANKING, "West", 4, 1, null, new int[] {0,0,1,1,0,1,0 }, "SF_WEST", "West", null, null),
+                new PlayoffSeriesRule(null, "Series B", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "West", 2, FROM_RANKING, "West", 3, 1, null, new int[] {0,0,1,1,0,1,0 }, "SF_WEST", "West", null, null),
+                new PlayoffSeriesRule(null, "Series C", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "Central", 1, FROM_RANKING, "Central", 2, 1, null, new int[] {0,0,1,1,0,1,0 }, "SF_CENTRAL", "Central", null, null),
+                new PlayoffSeriesRule(null, "Series D", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "Central", 2, FROM_RANKING, "Central", 3, 1, null, new int[] {0,0,1,1,0,1,0 }, "SF_CENTRAL", "Central", null, null),
+                new PlayoffSeriesRule(null, "Series E", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "NorthEast", 1, FROM_RANKING, "West", 5, 1, null, new int[] {0,0,1,1,0,1,0 }, "SF_EAST", "East", null, null),
+                new PlayoffSeriesRule(null, "Series F", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "NorthEast", 2, FROM_RANKING, "NorthEast", 3, 1, null, new int[] {0,0,1,1,0,1,0 }, "SF_EAST", "East", null, null),
+                new PlayoffSeriesRule(null, "Series G", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "Atlantic", 1, FROM_RANKING, "Central", 5, 1, null, new int[] {0,0,1,1,0,1,0 }, "SF_EAST", "East", null, null),
+                new PlayoffSeriesRule(null, "Series H", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "Atlantic", 2, FROM_RANKING, "Atlantic", 3, 1, null, new int[] {0,0,1,1,0,1,0 }, "SF_EAST", "East", null, null),
+                new PlayoffSeriesRule(null, "Series I", 2, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "SF_WEST", 1, FROM_RANKING, "SF_CENTRAL", 2, 1, null, new int[] {0,0,1,1,0,1,0 }, "F_WEST_CENTRAL", "NHL", null, null),
+                new PlayoffSeriesRule(null, "Series J", 2, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "SF_CENTRAL", 1, FROM_RANKING, "SF_WEST", 2, 1, null, new int[] {0,0,1,1,0,1,0 }, "F_WEST_CENTRAL", "NHL", null, null),
+                new PlayoffSeriesRule(null, "Series K", 2, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "SF_EAST", 1, FROM_RANKING, "SF_EAST", 4, 1, null, new int[] {0,0,1,1,0,1,0 }, "F_EAST", "East", null, null),
+                new PlayoffSeriesRule(null, "Series L", 2, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "SF_EAST", 2, FROM_RANKING, "SF_EAST", 3, 1, null, new int[] {0,0,1,1,0,1,0 }, "F_EAST", "East", null, null),
+                new PlayoffSeriesRule(null, "Series M", 3, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "F_WEST_CENTRAL", 1, FROM_RANKING, "F_WEST_CENTRAL", 2, 1, null, new int[] {0,0,1,1,0,1,0 }, "FINAL_GROUP", "NHL", null, null),
+                new PlayoffSeriesRule(null, "Series N", 3, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "F_EAST", 1, FROM_RANKING, "F_EAST", 2, 1, null, new int[] {0,0,1,1,0,1,0 }, "FINAL_GROUP", "NHL", null, null),
+                new PlayoffSeriesRule(null, "Final", 4, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "FINAL_GROUP", 1, FROM_RANKING, "FINAL_GROUP", 2, 1, null, new int[] {0,0,1,1,0,1,0 }, null, null, null, null)
             };
 
             var playoffConfig = new PlayoffCompetitionConfig("My Playoff", null, 1, gameRules, 1, null, rankingRules, seriesRules, new List<CompetitionConfig> { seasonConfig });

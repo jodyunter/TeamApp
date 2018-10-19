@@ -16,7 +16,11 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
             :base(name, league, order, gameRules, parents, firstYear, lastYear)
         {
             Rankings = rankings;
-            SeriesRules = seriesRules;            
+            if (Rankings != null)
+                Rankings.ToList().ForEach(r => r.PlayoffConfig = this);
+            SeriesRules = seriesRules;
+            if (SeriesRules != null)
+                SeriesRules.ToList().ForEach(sr => sr.PlayoffConfig = this);
         }
 
         public override ICompetition CreateCompetition(int year, List<ICompetition> parents)

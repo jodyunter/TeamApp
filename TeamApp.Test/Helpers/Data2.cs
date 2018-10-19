@@ -95,14 +95,14 @@ namespace TeamApp.Test.Helpers
 
             var rankingRules = new List<PlayoffRankingRule>()
             {
-                new PlayoffRankingRule("NHL", 1,seasonConfig, "NHL", 1, 6)
+                new PlayoffRankingRule(null, "NHL", 1,seasonConfig, "NHL", 1, 6)
             };
 
             var seriesRules = new List<PlayoffSeriesRule>()
             {
                 //new PlayoffSeriesRule("Final", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "NHL", 1, FROM_RANKING, "NHL", 2, 1, null, new int[] {0,0,1,1,0,1,0 }, null, null, null, null)
-                new PlayoffSeriesRule("Semi Final", 1, BEST_OF_SERIES, 2, gameRules, FROM_RANKING, "NHL", 2, FROM_RANKING, "NHL", 3, 1, null, new int[] {1,0,0 }, null, null, null, null),
-                new PlayoffSeriesRule("Final", 2, BEST_OF_SERIES, 2, gameRules, FROM_RANKING, "NHL", 1, FROM_SERIES, "Semi Final", GET_WINNER, 1, null, new int[] {1,0,0 }, null, null, null, null)
+                new PlayoffSeriesRule(null, "Semi Final", 1, BEST_OF_SERIES, 2, gameRules, FROM_RANKING, "NHL", 2, FROM_RANKING, "NHL", 3, 1, null, new int[] {1,0,0 }, null, null, null, null),
+                new PlayoffSeriesRule(null, "Final", 2, BEST_OF_SERIES, 2, gameRules, FROM_RANKING, "NHL", 1, FROM_SERIES, "Semi Final", GET_WINNER, 1, null, new int[] {1,0,0 }, null, null, null, null)
             };
 
             var playoffConfig = new PlayoffCompetitionConfig("My Playoff", seasonConfig.League, 2, gameRules, 1, null, rankingRules, seriesRules, new List<CompetitionConfig> { seasonConfig });

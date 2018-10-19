@@ -31,8 +31,8 @@ namespace TeamApp.Test.Domain.Competition.Playoffs.Config
             var playoffConfig = new PlayoffCompetitionConfig("My Playoff", null, 2, gameRules, 1, null, null, null, new List<CompetitionConfig>() { seasonCompetition  });
 
             var rankingRules = new List<PlayoffRankingRule>();           
-            rankingRules.Add(new PlayoffRankingRule("East", 3, seasonCompetition, "East", 5, 8));
-            rankingRules.Add(new PlayoffRankingRule("West", 15, seasonCompetition, "West", 3, 3));
+            rankingRules.Add(new PlayoffRankingRule(playoffConfig, "East", 3, seasonCompetition, "East", 5, 8));
+            rankingRules.Add(new PlayoffRankingRule(playoffConfig, "West", 15, seasonCompetition, "West", 3, 3));
         
             playoffConfig.Rankings = rankingRules;
 

@@ -6,6 +6,7 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
 {
     public class PlayoffRankingRule:BaseDataObject
     {
+        public virtual PlayoffCompetitionConfig PlayoffConfig { get; set; }
         //you will get the same competition for the current year
         public virtual string GroupName { get; set; }
         public virtual int StartingRank { get; set; }
@@ -16,8 +17,9 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
         //todo how to pool candidates, then sort them
 
         public PlayoffRankingRule() { }
-        public PlayoffRankingRule(string groupName, int startingRank, CompetitionConfig sourceCompetition, string sourceGroupName, int sourceFirstRank, int sourceLastRank)
+        public PlayoffRankingRule(PlayoffCompetitionConfig config, string groupName, int startingRank, CompetitionConfig sourceCompetition, string sourceGroupName, int sourceFirstRank, int sourceLastRank)
         {
+            PlayoffConfig = config;
             GroupName = groupName;
             StartingRank = startingRank;
             SourceCompetition = sourceCompetition;

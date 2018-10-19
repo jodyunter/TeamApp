@@ -15,6 +15,7 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
         public const int GET_WINNER = 0;
         public const int GET_LOSER = 1;
 
+        public virtual PlayoffCompetitionConfig PlayoffConfig { get; set; }
         public virtual string Name { get; set; }
         public virtual int Round { get; set; }
         public virtual int SeriesType { get; set; }
@@ -36,8 +37,9 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
         public virtual string LoserRankFrom { get; set; }
 
         public PlayoffSeriesRule() { }
-        public PlayoffSeriesRule(string name, int round, int seriesType, int seriesNumber, GameRules gameRules, int homeFromType, string homeFromName, int homeFromValue, int awayFromType, string awayFromName, int awayFromValue, int? firstYear, int? lastYear, int[] homeGameProgression, string winnerGroupName, string winnerRankFrom, string loserGroupName, string loserRankFrom)
+        public PlayoffSeriesRule(PlayoffCompetitionConfig config, string name, int round, int seriesType, int seriesNumber, GameRules gameRules, int homeFromType, string homeFromName, int homeFromValue, int awayFromType, string awayFromName, int awayFromValue, int? firstYear, int? lastYear, int[] homeGameProgression, string winnerGroupName, string winnerRankFrom, string loserGroupName, string loserRankFrom)
         {
+            PlayoffConfig = config;
             Name = name;
             Round = round;
             SeriesType = seriesType;
