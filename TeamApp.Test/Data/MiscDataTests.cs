@@ -12,20 +12,34 @@ using Xunit;
 
 namespace TeamApp.Test.Data
 {
-    public class MiscDataTests
+    public class MiscDataTests:IDisposable
     {
-        private ISessionFactory sessionFactory;
+        string connString = "Data Source = localhost; Initial Catalog = JodyTest; Integrated Security = True";
+
+        private ISession session;
         private Configuration configuration;
         
         public MiscDataTests()
-        {         
+        {
+            session = NHibernateHelper.OpenSession();
+            configuration = NHibernateHelper.GetConfiguration().BuildConfiguration();
         }
 
         public void Dispose()
-        {
-            sessionFactory.Close();
+        {            
+            var schemaExport = new SchemaExport(configuration);
+            schemaExport.Drop(false, true);            
+            session.Close();
         }
 
+        [Fact]
+        public void ShouldExportSchema()
+        {            
+            var schemaExport = new SchemaExport(configuration);
+            schemaExport.SetOutputFile("../../../sqloutput/ddl.sql");
+            schemaExport.Execute(false, true, false);
+            
+        }
         [Fact]
         public void ShouldAddTeam()
         {            

@@ -19,4 +19,14 @@
     <ProjectReference Include="..\TeamApp\TeamApp.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="App.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="sqloutput\" />
+  </ItemGroup>
+
 </Project>

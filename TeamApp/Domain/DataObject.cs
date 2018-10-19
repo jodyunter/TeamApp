@@ -7,11 +7,11 @@ namespace TeamApp.Domain
 {
     public class DataObject
     {        
-        long Id { get; set; }
-        string CreatedBy { get; set; }
-        DateTime CreatedOn { get; set; }
-        string LastModifiedBy { get; set; }
-        DateTime LastModifiedOn { get; set; }
+        public virtual long Id { get; set; }
+        public virtual string CreatedBy { get; set; }
+        public virtual DateTime CreatedOn { get; set; }
+        public virtual string LastModifiedBy { get; set; }
+        public virtual DateTime LastModifiedOn { get; set; }
 
     }
 }
