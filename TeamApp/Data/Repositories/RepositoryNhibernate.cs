@@ -9,11 +9,11 @@ using TeamApp.Domain.Repositories;
 
 namespace TeamApp.Data.Repositories
 {
-    public class Repository<T> : IRepository<T>, IQueryable<T>
+    public class RepositoryNhibernate<T> : IRepository<T>, IQueryable<T>
     {
         private readonly ISession session;
 
-        public Repository() { session = NHibernateHelper.OpenSession(); }
+        public RepositoryNhibernate() { session = NHibernateHelper.OpenSession(); }
 
         public Type ElementType { get { return session.Query<T>().ElementType; } }
 

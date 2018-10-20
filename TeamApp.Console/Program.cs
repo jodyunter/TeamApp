@@ -27,7 +27,7 @@ namespace TeamApp.Console
 
             var season = (Season)seasonCompetition.CreateCompetition(1, null);
 
-            IRepository<League> seasonConfigRepo = new Repository<League>();
+            IRepository<League> seasonConfigRepo = new RepositoryNhibernate<League>();
 
             seasonConfigRepo.Add(seasonCompetition.League);
 

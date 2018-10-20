@@ -5,9 +5,11 @@ using TeamApp.Domain.Competition;
 
 namespace TeamApp.Domain
 {
-    public class League:BaseDataObject
+    public class League:BaseDataObject,ITimePeriod
     {
         private string v;
+        public virtual int? FirstYear { get; set; }
+        public virtual int? LastYear { get; set; }
         public League() { }
         public League(string v)
         {
