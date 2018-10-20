@@ -3,6 +3,9 @@
     "JodyTest": {
       "ConnectionString": "Data Source=localhost;Initial Catalog=JodyTest;Integrated Security=True"
     }
+    "JodyHomeTest": {
+      "ConnetionString": "Source=(localdb)\\\\MSSQLLocalDB;Initial Catalog=jodytest;Integrated Security=True"
+    }
   }
-
+  
 }
