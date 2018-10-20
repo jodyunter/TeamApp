@@ -1,10 +1,13 @@
 {
   "ConnectionStrings": {
-    "JodyTest": {
+    "JodyWorkTest": {
       "ConnectionString": "Data Source=localhost;Initial Catalog=JodyTest;Integrated Security=True"
-    }
+    },
     "JodyHomeTest": {
-      "ConnetionString": "Source=(localdb)\\\\MSSQLLocalDB;Initial Catalog=jodytest;Integrated Security=True"
+      "ConnetionString": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=jodytest;Integrated Security=True"
+    },
+    "JodyTest": {
+      "ConnectionString": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=jodytest;Integrated Security=True"
     }
   }
   
