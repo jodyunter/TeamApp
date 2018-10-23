@@ -46,7 +46,7 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
         public virtual void ProcessRankingRulesAndAddTeams(Playoff playoff, List<Competition> parents)
         {
             playoff.Teams = new List<SingleYearTeam>();
-            playoff.Rankings = new Dictionary<string, List<TeamRanking>>();
+            playoff.Rankings = new List<TeamRanking>();
 
             Rankings.ToList().ForEach(rule =>
             {
@@ -56,7 +56,7 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
                 if (sourceCompetition == null) throw new ApplicationException("Playoff Ranking Rule has bad source competition: " + rule.SourceCompetition.Name);
 
                 //get the group with the rankings
-                var sourceGroup = sourceCompetition.Rankings[rule.SourceGroupName];
+                var sourceGroup = sourceCompetition.Rankings.Where(r => r.GroupName == rule.SourceGroupName).ToList();                
 
                 if (sourceGroup == null) throw new ApplicationException("Playoff Ranking Rule has bad source group name: " + rule.SourceGroupName);
 
@@ -76,8 +76,7 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
 
                     var playoffRanking = new TeamRanking(nextRank, rule.GroupName, newTeam);
 
-                    if (!playoff.Rankings.ContainsKey(rule.GroupName)) playoff.Rankings.Add(rule.GroupName, new List<TeamRanking>());
-                    playoff.Rankings[rule.GroupName].Add(playoffRanking);
+                    playoff.Rankings.Add(playoffRanking);
 
                     playoff.Teams.Add(newTeam);
 
@@ -116,9 +115,10 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
             switch (fromType)
             {                
                 case PlayoffSeriesRule.FROM_RANKING:
-                    if (playoff.Rankings.ContainsKey(fromName))
+                    var rankingsForGroup = playoff.Rankings.Where(r => r.GroupName == fromName).ToList();
+                    if (rankingsForGroup.Count > 0)
                     {
-                        var ranking = playoff.Rankings[fromName].Where(r => r.Rank == fromValue).ToList().First();
+                        var ranking = rankingsForGroup.Where(r => r.Rank == fromValue).ToList().First();
                         return new PlayoffTeam(playoff, ranking.Team.Parent, ranking.Team.Name, ranking.Team.NickName, ranking.Team.ShortName, ranking.Team.Skill, ranking.Team.Owner, playoff.Year);
                     }
                     return null;

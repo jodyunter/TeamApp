@@ -41,15 +41,17 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
             playoffConfig.ProcessRankingRulesAndAddTeams(playoff, new List<Competition> { season });
 
             StrictEqual(5, playoff.Teams.Count);
-            StrictEqual(2, playoff.Rankings.Count);
+            StrictEqual(5, playoff.Rankings.Count);
 
-            StrictEqual(4, playoff.Rankings["East"].Count);
-            False(playoff.Rankings["East"].Select(ra => ra.Rank).ToList().Except(new int[] { 3, 4, 5, 6 }).Any());
+            StrictEqual(4, playoff.Rankings.Where(ra => ra.GroupName.Equals("East")).ToList().Count);
+            False(playoff.Rankings.Where(ra => ra.GroupName.Equals("East")).ToList().Select(ra => ra.Rank).ToList().Except(new int[] { 3, 4, 5, 6 }).Any());
                         
-            StrictEqual(1, playoff.Rankings["West"].Count);
-            True(playoff.Rankings["West"][0].Rank == 15);
-            
-            True(season.Rankings["West"].Where(team => team.Team.Name.Equals(playoff.Rankings["West"][0].Team.Name)).First().Rank == 3);
+            StrictEqual(1, playoff.Rankings.Where(ra => ra.GroupName.Equals("West")).ToList().Count);
+            True(playoff.Rankings.Where(ra => ra.GroupName.Equals("West")).ToList()[0].Rank == 15);
+
+            var teamName = playoff.Rankings.Where(ra => ra.GroupName.Equals("West")).ToList()[0].Team.Name;
+
+            True(season.Rankings.Where(ra => ra.GroupName.Equals("West") && ra.Team.Name.Equals(teamName)).First().Rank == 3);
         }
 
     }

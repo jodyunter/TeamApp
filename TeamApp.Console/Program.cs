@@ -64,7 +64,7 @@ namespace TeamApp.Console
             season.Divisions.Where(d => d.Level < 4).OrderBy(d => d.Level).ThenBy(d => d.Ordering).ToList().ForEach(div =>
             {
                 WriteLine(div.Name);                
-                season.Rankings[div.Name].OrderBy(d => d.Rank).ToList().ForEach(ranking =>
+                season.Rankings.Where(t => t.GroupName.Equals(div.Name)).OrderBy(d => d.Rank).ToList().ForEach(ranking =>
                 {
                     WriteLine(new SeasonTeamStatsView(ranking).GetView());
                 });

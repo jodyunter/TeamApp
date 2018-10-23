@@ -15,7 +15,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
 
         public Playoff() : base() { }
 
-        public Playoff(CompetitionConfig competitionConfig, string name, int year, int startingDay, int currentRound, List<PlayoffSeries> series, List<SingleYearTeam> teams, Schedule schedule, Dictionary<string, List<TeamRanking>> rankings)
+        public Playoff(CompetitionConfig competitionConfig, string name, int year, int startingDay, int currentRound, List<PlayoffSeries> series, List<SingleYearTeam> teams, Schedule schedule, IList<TeamRanking> rankings)
             :base(competitionConfig, name, year, schedule, rankings, teams)
         {            
             StartingDay = startingDay;                     
@@ -31,15 +31,26 @@ namespace TeamApp.Domain.Competitions.Playoffs
             var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
 
             int roundStartDay = Schedule.Days.Max(m => m.Value.DayNumber) + 1;
-            
+
             //sort all rankings starting at one.  At the end of each round, each group is assigned a ranking based on other criteria.
             //we need to sort based on that and assign the values accordingly.
-            Rankings.Keys.ToList().ForEach(key =>
+
+
+            var rankingsDictionary = new Dictionary<string, List<TeamRanking>>();
+
+            Rankings.ToList().ForEach(ranking =>
             {
-                Rankings[key].Sort((a, b) => a.Rank.CompareTo(b.Rank));
+                if (!rankingsDictionary.ContainsKey(ranking.GroupName)) rankingsDictionary.Add(ranking.GroupName, new List<TeamRanking>());
+
+                rankingsDictionary[ranking.GroupName].Add(ranking);
+            });
+
+            rankingsDictionary.Keys.ToList().ForEach(key =>
+            {
+                rankingsDictionary[key].Sort((a, b) => a.Rank.CompareTo(b.Rank));
                 int m = 0;
 
-                Rankings[key].ForEach(value =>
+                rankingsDictionary[key].ForEach(value =>
                 {
                     m++;
                     value.Rank = m;
@@ -115,14 +126,12 @@ namespace TeamApp.Domain.Competitions.Playoffs
         public virtual void ProcessEndOfSeriesTeam(string newGroupName, string rankSourceGroupName, PlayoffTeam team)
         {
             if (newGroupName != null)
-            {
-                if (!Rankings.ContainsKey(newGroupName)) Rankings.Add(newGroupName, new List<TeamRanking>());
-
+            {                
                 if (rankSourceGroupName == null) throw new ApplicationException("Can't have a null winner rank from.");
 
-                var rank = Rankings[rankSourceGroupName].Where(r => r.Team.Name.Equals(team.Name)).First().Rank;
+                var rank = Rankings.Where(r => r.GroupName == rankSourceGroupName && r.Team.Name.Equals(team.Name)).First().Rank;                
 
-                Rankings[newGroupName].Add(new TeamRanking(rank, newGroupName, team));
+                Rankings.Add(new TeamRanking(rank, newGroupName, team));
             }
         }
         public virtual bool IsRoundComplete(int round)

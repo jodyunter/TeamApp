@@ -9,7 +9,7 @@ namespace TeamApp.Domain.Competitions.Seasons
         public virtual IList<SeasonDivision> Divisions { get; set; }
 
         public Season() : base() { }
-        public Season(CompetitionConfig competitionConfig, string name, int year, List<SeasonDivision> divisions, List<SingleYearTeam> teams, Schedule schedule, Dictionary<string, List<TeamRanking>> rankings)
+        public Season(CompetitionConfig competitionConfig, string name, int year, List<SeasonDivision> divisions, List<SingleYearTeam> teams, Schedule schedule, List<TeamRanking> rankings)
             :base(competitionConfig, name, year, schedule, rankings, teams)
         {
             Divisions = divisions;
@@ -74,13 +74,11 @@ namespace TeamApp.Domain.Competitions.Seasons
 
             listOfTeams.Sort((a, b) => -1 * a.CompareTo(b)); // descending sort
 
-            int rank = 1;
-
-            Rankings[divisionName] = new List<TeamRanking>();
+            int rank = 1;            
 
             listOfTeams.ForEach(team =>
             {
-                Rankings[divisionName].Add(new TeamRanking(rank, division.Name, team));
+                Rankings.Add(new TeamRanking(rank, division.Name, team));
                 rank++;
             });
         }

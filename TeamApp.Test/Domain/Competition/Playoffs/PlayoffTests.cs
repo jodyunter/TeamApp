@@ -16,14 +16,13 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs
         public static IEnumerable<object[]> PlayoffDataForGetTeamByRuleTests()
         {
             var config = new PlayoffCompetitionConfig("My Playoff", null, 1, null, 1, null, null, null, null);
-            var playoff = new Playoff(null, null, 1, 1, 1, new List<PlayoffSeries>(), new List<SingleYearTeam>(), null, new Dictionary<string, List<TeamRanking>>());
+            var playoff = new Playoff(null, null, 1, 1, 1, new List<PlayoffSeries>(), new List<SingleYearTeam>(), null, new List<TeamRanking>());
 
-            playoff.CompetitionConfig = config;
-            playoff.Rankings.Add("R1", new List<TeamRanking>());
+            playoff.CompetitionConfig = config;            
 
             for (int i = 0; i < 10; i++)
             {
-                playoff.Rankings["R1"].Add(new TeamRanking(i + 1, "R1", CreateTeam("Team " + i)));
+                playoff.Rankings.Add(new TeamRanking(i + 1, "R1", CreateTeam("Team " + i)));
             }
 
             var gameRules = new GameRules("Rule 1", false, 3, 1, 7, 6);
