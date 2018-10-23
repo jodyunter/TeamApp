@@ -11,7 +11,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
     {
         public virtual int StartingDay { get; set; }
         public virtual int CurrentRound { get; set; }
-        public virtual List<PlayoffSeries> Series { get; set; }
+        public virtual IList<PlayoffSeries> Series { get; set; }
 
         public Playoff() : base() { }
 
