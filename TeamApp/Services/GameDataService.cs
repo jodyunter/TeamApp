@@ -10,6 +10,7 @@ namespace TeamApp.Services
     public class GameDataService
     {
         private IGameDataRepository GameDataRepository;
+        private ICompetitionRepository CompetitionRepository;
         private ILeagueRepository LeagueRepository;
 
         public GameDataService(IGameDataRepository gameDataRepository, ILeagueRepository leagueRepository)
@@ -33,6 +34,13 @@ namespace TeamApp.Services
         public List<League> GetAllLeagues()
         {
             return LeagueRepository.ToList();
+        }
+
+        public void StartNextCompetition()
+        {
+            var data = GameDataRepository.First();
+
+            var competitions = null;
         }
 
  
