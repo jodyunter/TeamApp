@@ -7,10 +7,12 @@ namespace TeamApp.Domain.Competitions.Playoffs.Series
 {
     public class TotalGoalsSeries : PlayoffSeries
     {
-        public int GamesPlayed { get; set; }
-        public int HomeScore { get; set; }
-        public int AwayScore { get; set; }
-        public int MinimumGames { get; set; }
+        public virtual int GamesPlayed { get; set; }
+        public virtual int HomeScore { get; set; }
+        public virtual int AwayScore { get; set; }
+        public virtual int MinimumGames { get; set; }
+
+        public TotalGoalsSeries() : base() { }
 
         public TotalGoalsSeries(Playoff playoff, string name, int round, int startingDay, PlayoffTeam homeTeam, PlayoffTeam awayTeam,
                 int homeScore, int awayScore, int minimumGames, int gamesPlayed,

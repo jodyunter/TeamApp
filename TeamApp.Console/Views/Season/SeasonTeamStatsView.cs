@@ -24,7 +24,7 @@ namespace TeamApp.Console.Views.Season
         public string GetView()
         {
             var team = Ranking.Team;
-            var division = Ranking.Group;
+            var division = Ranking.GroupName;
             var stats = ((SeasonTeam)team).Stats;
 
             return string.Format(formatter, Ranking.Rank, team.Name, stats.Wins, stats.Loses, stats.Ties, stats.Points, stats.Games, stats.GoalsFor,

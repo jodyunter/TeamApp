@@ -2,17 +2,17 @@
 
 namespace TeamApp.Domain
 {
-    public class SingleYearTeam : ITeam
+    public class SingleYearTeam : BaseDataObject, ITeam
     {
         public virtual Competition Competition { get; set; }
         public virtual Team Parent { get; set; }
-        public string Name { get; set; }
-        public string NickName { get; set; }
-        public string ShortName { get; set; }
-        public int Skill { get; set; }
-        public string Owner { get; set; }
-        public int? FirstYear { get; set; }
-        public int? LastYear { get { return FirstYear; } set { } }
+        public virtual string Name { get; set; }
+        public virtual string NickName { get; set; }
+        public virtual string ShortName { get; set; }
+        public virtual int Skill { get; set; }
+        public virtual string Owner { get; set; }
+        public virtual int? FirstYear { get; set; }
+        public virtual int? LastYear { get { return FirstYear; } set { } }
 
         public SingleYearTeam() { }
         public SingleYearTeam(Competition competition, Team parent, string name, string nickName, string shortName, int skill, string owner, int? year)

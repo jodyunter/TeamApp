@@ -58,7 +58,7 @@ namespace TeamApp.Data.Repositories
                    .Mappings(m =>
                    m.AutoMappings.Add(
                        AutoMap.AssemblyOf<Team>(storeConfig)
-                       .IgnoreBase<BaseDataObject>()           
+                       .IgnoreBase<BaseDataObject>()                                  
                        .IncludeBase<CompetitionConfig>()
                        .IncludeBase<PlayoffSeries>()
                        .IncludeBase<Competition>()

@@ -2,9 +2,10 @@
 
 namespace TeamApp.Domain.Competitions.Seasons
 {
-    public class SeasonTeamStats:IComparable<SeasonTeamStats>
+    public class SeasonTeamStats:BaseDataObject, IComparable<SeasonTeamStats>
     {
 
+        public SeasonTeamStats() { }
         public SeasonTeamStats(SeasonTeam team)
         {
             Team = team;
@@ -28,21 +29,21 @@ namespace TeamApp.Domain.Competitions.Seasons
             PointsPerTie = pointsPerTie;
         }
 
-        public SeasonTeam Team { get; set; }
-        public int Wins { get; set; }
-        public int Loses { get; set; }
-        public int Ties { get; set; }
-        public int GoalsFor { get; set; }
-        public int GoalsAgainst { get; set; }
-        
-        public int GoalDifference { get { return GoalsFor - GoalsAgainst; } }
-        public int Points { get { return Wins * PointsPerWin + Ties * PointsPerTie; } }
-        public int Games { get { return Wins + Loses + Ties; } }
+        public virtual SeasonTeam Team { get; set; }
+        public virtual int Wins { get; set; }
+        public virtual int Loses { get; set; }
+        public virtual int Ties { get; set; }
+        public virtual int GoalsFor { get; set; }
+        public virtual int GoalsAgainst { get; set; }
 
-        public int PointsPerWin { get; set; }
-        public int PointsPerTie { get; set; }
+        public virtual int GoalDifference { get { return GoalsFor - GoalsAgainst; } }
+        public virtual int Points { get { return Wins * PointsPerWin + Ties * PointsPerTie; } }
+        public virtual int Games { get { return Wins + Loses + Ties; } }
 
-        public int CompareTo(SeasonTeamStats other)
+        public virtual int PointsPerWin { get; set; }
+        public virtual int PointsPerTie { get; set; }
+
+        public virtual int CompareTo(SeasonTeamStats other)
         {
             if (this.Points == other.Points)
             {

@@ -7,15 +7,16 @@ namespace TeamApp.Domain.Competitions.Playoffs
 {
     public abstract class PlayoffSeries:BaseDataObject
     {
-        public Playoff Playoff { get; set; }
-        public string Name { get; set; }
-        public int Round { get; set; }
-        public int StartingDay { get; set; }
-        public PlayoffTeam HomeTeam { get; set; }
-        public PlayoffTeam AwayTeam { get; set; }        
-        public List<PlayoffGame> Games { get; set; }
-        public int[] HomeGameProgression { get; set; }
+        public virtual Playoff Playoff { get; set; }
+        public virtual string Name { get; set; }
+        public virtual int Round { get; set; }
+        public virtual int StartingDay { get; set; }
+        public virtual PlayoffTeam HomeTeam { get; set; }
+        public virtual PlayoffTeam AwayTeam { get; set; }
+        public virtual List<PlayoffGame> Games { get; set; }
+        public virtual int[] HomeGameProgression { get; set; }
 
+        public PlayoffSeries() { }
         public PlayoffSeries(Playoff playoff, string name, int round, int startingDay, PlayoffTeam homeTeam, PlayoffTeam awayTeam,            
             List<PlayoffGame> games, int[] homeGameProgression)
         {
@@ -36,22 +37,22 @@ namespace TeamApp.Domain.Competitions.Playoffs
         public abstract PlayoffTeam GetWinner();
         public abstract PlayoffTeam GetLoser();
 
-        public void ProcessGame(PlayoffGame game)
+        public virtual void ProcessGame(PlayoffGame game)
         {
             if (IsComplete()) throw new ApplicationException("Series is complete, why are we trying to play another game?");
 
             ProcessSeriesGame(game);    
             
-        }        
+        }
 
-        public int GetInCompleteGames()
+        public virtual int GetInCompleteGames()
         {
             if (Games == null) return 0;
 
             return Games.Where(g => !g.Complete).ToList().Count();
         }
 
-        public List<PlayoffGame> CreateNeededGamesForSeries()
+        public virtual List<PlayoffGame> CreateNeededGamesForSeries()
         {
             var newGamesList = new List<PlayoffGame>();
 
@@ -69,7 +70,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
             return newGamesList;
         }
 
-        public PlayoffGame CreateGameForSeries(int gameNumber)
+        public virtual PlayoffGame CreateGameForSeries(int gameNumber)
         {
             var homeValue = GetHomeValueForGame(gameNumber);
 
@@ -78,7 +79,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
                 0, 0, false, 1, Playoff.CompetitionConfig.GameRules, false);
         }
 
-        public int GetHomeValueForGame(int gameNumber)
+        public virtual int GetHomeValueForGame(int gameNumber)
         {            
             if (HomeGameProgression == null || (gameNumber > HomeGameProgression.Length))
             {

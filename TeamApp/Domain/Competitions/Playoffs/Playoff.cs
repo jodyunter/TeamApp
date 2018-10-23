@@ -9,9 +9,9 @@ namespace TeamApp.Domain.Competitions.Playoffs
 {
     public class Playoff : Competition
     {
-        public int StartingDay { get; set; }
-        public int CurrentRound { get; set; }
-        public List<PlayoffSeries> Series { get; set; }
+        public virtual int StartingDay { get; set; }
+        public virtual int CurrentRound { get; set; }
+        public virtual List<PlayoffSeries> Series { get; set; }
 
         public Playoff() : base() { }
 
@@ -24,7 +24,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
             CurrentRound = currentRound;
         }
 
-        public void BeginRound()
+        public virtual void BeginRound()
         {
             if (IsRoundComplete(CurrentRound)) CurrentRound++;
 
@@ -66,14 +66,14 @@ namespace TeamApp.Domain.Competitions.Playoffs
 
         }
 
-        public void SetupSeriesGames(PlayoffSeries series)
+        public virtual void SetupSeriesGames(PlayoffSeries series)
         {
             var newGames = series.CreateNeededGamesForSeries();
 
             Scheduler.AddGamesToSchedule(Schedule, newGames.ToList<ScheduleGame>(), series.StartingDay > 0 ? series.StartingDay: StartingDay);
         }
 
-        public void AddSeries(PlayoffSeries series)
+        public virtual void AddSeries(PlayoffSeries series)
         {
             if (Series == null) Series = new List<PlayoffSeries>();
 
@@ -102,7 +102,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
             
         }
 
-        public void ProcessEndOfSeries(PlayoffSeries series)
+        public virtual void ProcessEndOfSeries(PlayoffSeries series)
         {
             var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
 
@@ -112,7 +112,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
             ProcessEndOfSeriesTeam(seriesRule.LoserGroupName, seriesRule.LoserRankFrom, series.GetLoser());
         }
 
-        public void ProcessEndOfSeriesTeam(string newGroupName, string rankSourceGroupName, PlayoffTeam team)
+        public virtual void ProcessEndOfSeriesTeam(string newGroupName, string rankSourceGroupName, PlayoffTeam team)
         {
             if (newGroupName != null)
             {
@@ -125,7 +125,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
                 Rankings[newGroupName].Add(new TeamRanking(rank, newGroupName, team));
             }
         }
-        public bool IsRoundComplete(int round)
+        public virtual bool IsRoundComplete(int round)
         {
             var complete = true;
 

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TeamApp.Domain
 {
-    public class Game
+    public class Game:BaseDataObject
     {
         public virtual Team HomeTeam { get; set; }
         public virtual Team AwayTeam { get; set; }
@@ -13,7 +13,7 @@ namespace TeamApp.Domain
         public virtual bool Complete { get; set; }
         public virtual int CurrentPeriod { get; set; }
 
-        public GameRules Rules { get; set; }
+        public virtual GameRules Rules { get; set; }
         public Game() { }
         public Game(Team homeTeam, Team awayTeam, int homeScore, int awayScore, bool complete,  int currentPeriod, GameRules rules)
         {
@@ -26,21 +26,21 @@ namespace TeamApp.Domain
             CurrentPeriod = currentPeriod;
         }
 
-        public Team GetWinner()
+        public virtual Team GetWinner()
         {
             if (HomeScore > AwayScore) return HomeTeam;
             else if (AwayScore > HomeScore) return AwayTeam;
             else return null;
         }
 
-        public Team GetLoser()
+        public virtual Team GetLoser()
         {
             if (HomeScore > AwayScore) return AwayTeam;
             else if (AwayScore > HomeScore) return HomeTeam;
             else return null;
         }
 
-        public bool Play(Random r)
+        public virtual bool Play(Random r)
         {
             if (!Complete)
             {
@@ -62,13 +62,13 @@ namespace TeamApp.Domain
             return false;
         }
 
-        public void PlayRegulationPeriod(Random r)
+        public virtual void PlayRegulationPeriod(Random r)
         {
             HomeScore += r.Next(Rules.HomeRange);
             AwayScore += r.Next(Rules.AwayRange);
         }
 
-        public void PlayOverTimePeriod(Random r)
+        public virtual void PlayOverTimePeriod(Random r)
         {
             int next = r.Next(11) - 5;
 
@@ -77,11 +77,11 @@ namespace TeamApp.Domain
 
         }
 
-        public bool IsCurrentPeriodRegulationPeriod()
+        public virtual bool IsCurrentPeriodRegulationPeriod()
         {
             return CurrentPeriod <= Rules.MinimumPeriods;
         }
-        public bool IsComplete()
+        public virtual bool IsComplete()
         {
             bool regulationDone = CurrentPeriod > Rules.MinimumPeriods;  //are we in overtime?
             bool overTimeDone = true;

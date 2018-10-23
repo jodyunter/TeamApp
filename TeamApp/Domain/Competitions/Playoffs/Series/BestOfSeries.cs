@@ -6,9 +6,11 @@ namespace TeamApp.Domain.Competitions.Playoffs.Series
 {
     public class BestOfSeries : PlayoffSeries
     {
-        public int HomeWins { get; set; }
-        public int AwayWins { get; set; }
-        public int RequiredWins { get; set; }
+        public virtual int HomeWins { get; set; }
+        public virtual int AwayWins { get; set; }
+        public virtual int RequiredWins { get; set; }
+
+        public BestOfSeries() : base() { }
 
         public BestOfSeries(Playoff playoff, string name, int round, int startingDay, PlayoffTeam homeTeam, PlayoffTeam awayTeam,
         int homeWins, int awayWins, int requiredWins, List<PlayoffGame> games, int[] homeGameProgression)

@@ -10,7 +10,7 @@ namespace TeamApp.Domain.Competitions
         public virtual int Year { get; set; }
         public virtual Schedule Schedule { get; set; }
         public virtual Dictionary<string, List<TeamRanking>> Rankings { get; set; }
-        public virtual List<SingleYearTeam> Teams { get; set; }
+        public virtual IList<SingleYearTeam> Teams { get; set; }
         public abstract void ProcessGame(ScheduleGame game);
         public abstract bool IsComplete();
 

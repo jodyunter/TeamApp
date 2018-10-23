@@ -2,17 +2,18 @@
 
 namespace TeamApp.Domain.Competitions.Seasons
 {
-    public class SeasonDivision
+    public class SeasonDivision:BaseDataObject
     {
-        public Season Season { get; set; }
-        public SeasonDivision ParentDivision { get; set; }
-        public int Year;
-        public string Name { get; set; }
-        public List<SeasonTeam> Teams { get; set; }
-        public int Level { get; set; }
-        public int Ordering { get; set; }
+        public virtual Season Season { get; set; }
+        public virtual SeasonDivision ParentDivision { get; set; }
+        public virtual int Year { get; set; }
+        public virtual string Name { get; set; }
+        public virtual List<SeasonTeam> Teams { get; set; }
+        public virtual int Level { get; set; }
+        public virtual int Ordering { get; set; }
         //need to add the ranking rules
 
+        public SeasonDivision() { }
         public SeasonDivision(Season season, SeasonDivision parentDivision, int year, string name, int level, int order, List<SeasonTeam> teams)
         {
             Season = season;
@@ -24,7 +25,7 @@ namespace TeamApp.Domain.Competitions.Seasons
             Level = level;
         }
 
-        internal void AddTeam(SeasonTeam newTeam)
+        protected internal virtual void AddTeam(SeasonTeam newTeam)
         {
             if (Teams == null) Teams = new List<SeasonTeam>();
             if (!Teams.Contains(newTeam)) Teams.Add(newTeam);

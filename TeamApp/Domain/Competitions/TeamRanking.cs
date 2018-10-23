@@ -1,15 +1,16 @@
 ﻿namespace TeamApp.Domain.Competitions
 {
-    public class TeamRanking
+    public class TeamRanking:BaseDataObject
     {
-        public int Rank { get; set; }
-        public string Group { get; set; }
-        public SingleYearTeam Team { get; set; }
+        public virtual int Rank { get; set; }
+        public virtual string GroupName { get; set; }
+        public virtual SingleYearTeam Team { get; set; }
 
+        public TeamRanking() : base() { }
         public TeamRanking(int rank, string group, SingleYearTeam team)
         {
             Rank = rank;
-            Group = group;
+            GroupName = group;
             Team = team;
         }
     }

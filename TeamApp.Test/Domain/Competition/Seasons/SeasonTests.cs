@@ -33,7 +33,7 @@ namespace TeamApp.Test.Domain.Competitions.Seasons
             var team2 = new SeasonTeam(null, teams[1], "Team 2", null, null, 5, null, 1, null, null);
             var team3 = new SeasonTeam(null, teams[2], "Team 3", null, null, 5, null, 1, null, null);
             var team4 = new SeasonTeam(null, teams[3], "Team 4", null, null, 5, null, 1, null, null);
-
+            
             season.Teams = new List<SingleYearTeam>() { team1, team2, team3, team4 };
 
             games.ForEach(g => { season.ProcessGame(g); });            

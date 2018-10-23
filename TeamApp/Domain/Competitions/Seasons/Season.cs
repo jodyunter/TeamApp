@@ -6,8 +6,9 @@ namespace TeamApp.Domain.Competitions.Seasons
 {
     public class Season:Competition
     {
-        public List<SeasonDivision> Divisions { get; set; }
+        public virtual IList<SeasonDivision> Divisions { get; set; }
 
+        public Season() : base() { }
         public Season(CompetitionConfig competitionConfig, string name, int year, List<SeasonDivision> divisions, List<SingleYearTeam> teams, Schedule schedule, Dictionary<string, List<TeamRanking>> rankings)
             :base(competitionConfig, name, year, schedule, rankings, teams)
         {
@@ -39,12 +40,12 @@ namespace TeamApp.Domain.Competitions.Seasons
             }
         }
 
-        public SeasonDivision GetDivisionByName(string divisionName)
+        public virtual SeasonDivision GetDivisionByName(string divisionName)
         {
             return Divisions.Where(d => d.Name.Equals(divisionName)).First();
         }
 
-        public List<SeasonTeam> GetAllTeamsInDivision(SeasonDivision division)
+        public virtual List<SeasonTeam> GetAllTeamsInDivision(SeasonDivision division)
         {
             var result = new List<SeasonTeam>();
 
@@ -58,14 +59,14 @@ namespace TeamApp.Domain.Competitions.Seasons
             return result;
         }
 
-        public void SortAllTeams()
+        public virtual void SortAllTeams()
         {
-            Divisions.ForEach(division =>
+            Divisions.ToList().ForEach(division =>
             {
                 SortTeamByDivision(division.Name);
             });
         }
-        public void SortTeamByDivision(string divisionName)
+        public virtual void SortTeamByDivision(string divisionName)
         {
             var division = GetDivisionByName(divisionName);
 
