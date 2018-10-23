@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TeamApp.Domain.Competition.Seasons.Config;
+﻿using System.Collections.Generic;
+using TeamApp.Domain.Competitions.Seasons.Config;
 using TeamApp.Test.Helpers;
 using Xunit;
 using static Xunit.Assert;
 
-namespace TeamApp.Test.Domain.Competition.Seasons.Config
+namespace TeamApp.Test.Domain.Competitions.Seasons.Config
 {
     public class SeasonCompetitionTests
     {

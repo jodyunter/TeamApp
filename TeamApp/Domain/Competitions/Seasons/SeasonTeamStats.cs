@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace TeamApp.Domain.Competition.Seasons
+namespace TeamApp.Domain.Competitions.Seasons
 {
     public class SeasonTeamStats:IComparable<SeasonTeamStats>
     {

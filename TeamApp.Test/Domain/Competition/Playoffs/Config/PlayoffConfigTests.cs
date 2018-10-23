@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TeamApp.Domain.Competition;
-using TeamApp.Domain.Competition.Playoffs.Config;
-using TeamApp.Domain.Competition.Seasons;
-using TeamApp.Domain.Competition.Seasons.Config;
+using TeamApp.Domain.Competitions;
+using TeamApp.Domain.Competitions.Playoffs.Config;
+using TeamApp.Domain.Competitions.Seasons;
+using TeamApp.Domain.Competitions.Seasons.Config;
 using TeamApp.Test.Helpers;
 using TeamApp.Domain;
 using Xunit;
 using static Xunit.Assert;
-using TeamApp.Domain.Competition.Playoffs;
+using TeamApp.Domain.Competitions.Playoffs;
 
-namespace TeamApp.Test.Domain.Competition.Playoffs.Config
+namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
 {
     public class PlayoffConfigTests
     {
@@ -36,9 +36,9 @@ namespace TeamApp.Test.Domain.Competition.Playoffs.Config
         
             playoffConfig.Rankings = rankingRules;
 
-            var playoff = new Playoff(playoffConfig, "My Playoff", 1, 15, 1, null, new List<ISingleYearTeam>(), null, null);
+            var playoff = new Playoff(playoffConfig, "My Playoff", 1, 15, 1, null, new List<SingleYearTeam>(), null, null);
 
-            playoffConfig.ProcessRankingRulesAndAddTeams(playoff, new List<ICompetition> { season });
+            playoffConfig.ProcessRankingRulesAndAddTeams(playoff, new List<Competition> { season });
 
             StrictEqual(5, playoff.Teams.Count);
             StrictEqual(2, playoff.Rankings.Count);

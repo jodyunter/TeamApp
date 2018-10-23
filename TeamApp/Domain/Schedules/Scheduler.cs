@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using TeamApp.Domain.Competition.Seasons;
+using TeamApp.Domain.Competitions.Seasons;
 using System.Linq;
-using TeamApp.Domain.Competition.Playoffs;
-using TeamApp.Domain.Competition;
+using TeamApp.Domain.Competitions.Playoffs;
+using TeamApp.Domain.Competitions;
 
 namespace TeamApp.Domain.Schedules
 {
@@ -13,11 +12,11 @@ namespace TeamApp.Domain.Schedules
     {
 
         /* these are the two entry methods if multiple iterations of a series of games are needed */
-        public static Schedule CreateGames(ICompetition competition, int year, int lastGameNumber, int startDay, List<Team> teams, int iterations, bool homeAndAway, GameRules rules)
+        public static Schedule CreateGames(Competition competition, int year, int lastGameNumber, int startDay, List<Team> teams, int iterations, bool homeAndAway, GameRules rules)
         {
             return CreateGames(competition, year, lastGameNumber, startDay, teams, null, iterations, homeAndAway, rules);
         }
-        public static Schedule CreateGames(ICompetition competition, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, int iterations, bool homeAndAway, GameRules rules)
+        public static Schedule CreateGames(Competition competition, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, int iterations, bool homeAndAway, GameRules rules)
         {
             var result = new Schedule();
 
@@ -44,7 +43,7 @@ namespace TeamApp.Domain.Schedules
         
         //Assumption is that they can add days afterwards.  Different methods need to handle adding games to already established days
         //todo need to rework this
-        public static Schedule CreateGamesTwoDifferentGroups(ICompetition competition, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, bool homeAndAway, GameRules rules)
+        public static Schedule CreateGamesTwoDifferentGroups(Competition competition, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, bool homeAndAway, GameRules rules)
         {
             
             int initialDays = 0;
@@ -264,7 +263,7 @@ namespace TeamApp.Domain.Schedules
             return currentDay;
         }
 
-        public static Schedule CreateGamesSingleGroup(ICompetition competition, int year, int lastGameNumber, int startDay, List<Team> teams, bool homeAndAway, GameRules rules)
+        public static Schedule CreateGamesSingleGroup(Competition competition, int year, int lastGameNumber, int startDay, List<Team> teams, bool homeAndAway, GameRules rules)
         {        
 
             int[,] array = CreateArrayForScheduling(teams.Count);            

@@ -1,22 +1,22 @@
 ﻿using System.Collections.Generic;
-using TeamApp.Domain.Competition;
-using TeamApp.Domain.Competition.Playoffs;
-using TeamApp.Domain.Competition.Playoffs.Config;
+using TeamApp.Domain.Competitions;
+using TeamApp.Domain.Competitions.Playoffs;
+using TeamApp.Domain.Competitions.Playoffs.Config;
 using Xunit;
 using static Xunit.Assert;
-using static TeamApp.Test.Domain.Competition.Playoffs.PlayoffSeriesTests;
-using static TeamApp.Domain.Competition.Playoffs.Config.PlayoffSeriesRule;
+using static TeamApp.Test.Domain.Competitions.Playoffs.PlayoffSeriesTests;
+using static TeamApp.Domain.Competitions.Playoffs.Config.PlayoffSeriesRule;
 using TeamApp.Domain;
-using TeamApp.Domain.Competition.Playoffs.Series;
+using TeamApp.Domain.Competitions.Playoffs.Series;
 
-namespace TeamApp.Test.Domain.Competition.Playoffs
+namespace TeamApp.Test.Domain.Competitions.Playoffs
 {
     public class PlayoffTests
     {
         public static IEnumerable<object[]> PlayoffDataForGetTeamByRuleTests()
         {
             var config = new PlayoffCompetitionConfig("My Playoff", null, 1, null, 1, null, null, null, null);
-            var playoff = new Playoff(null, null, 1, 1, 1, new List<PlayoffSeries>(), new List<ISingleYearTeam>(), null, new Dictionary<string, List<TeamRanking>>());
+            var playoff = new Playoff(null, null, 1, 1, 1, new List<PlayoffSeries>(), new List<SingleYearTeam>(), null, new Dictionary<string, List<TeamRanking>>());
 
             playoff.CompetitionConfig = config;
             playoff.Rankings.Add("R1", new List<TeamRanking>());

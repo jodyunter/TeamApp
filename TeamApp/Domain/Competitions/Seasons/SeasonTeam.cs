@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace TeamApp.Domain.Competition.Seasons
+namespace TeamApp.Domain.Competitions.Seasons
 {
-    public class SeasonTeam:ISingleYearTeam,IComparable<SeasonTeam>
+    public class SeasonTeam:SingleYearTeam,IComparable<SeasonTeam>
     {
         public string Name { get; set; }
         public string NickName { get; set; }
         public string ShortName { get; set; }
         public int Skill { get; set; }        
         public Team Parent { get; set; }
-        public ICompetition Competition { get; set; }
+        public Competition Competition { get; set; }
 
         public SeasonDivision Division { get; set; }
         public SeasonTeamStats Stats { get; set; }
@@ -19,21 +17,12 @@ namespace TeamApp.Domain.Competition.Seasons
         public int? FirstYear { get; set; }
         public int? LastYear { get; set; }
 
-        public SeasonTeam(string name, string nickName, string shortName, int skill, Team parent, Season competition, SeasonDivision division, SeasonTeamStats stats, string owner, int year)
+        public SeasonTeam() { }
+        public SeasonTeam(Competition competition, Team parent, string name, string nickName, string shortName, int skill, string owner, int? year, SeasonTeamStats stats, SeasonDivision division)
+            :base(competition, parent, name, nickName, shortName, skill, owner, year)
         {
-            Name = name;
-            NickName = nickName;
-            ShortName = shortName;
-            Skill = skill;
-            Parent = parent;
-            Competition = competition;
-            Division = division;            
-            Stats = stats;            
-            Owner = owner;
-            FirstYear = year;
-            LastYear = year;
-            if (Stats == null) Stats = new SeasonTeamStats(this);
         }
+
 
         public int CompareTo(SeasonTeam other)
         {

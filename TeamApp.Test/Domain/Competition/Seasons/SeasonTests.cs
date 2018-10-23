@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TeamApp.Domain.Competition.Seasons;
+using TeamApp.Domain.Competitions.Seasons;
 using TeamApp.Domain.Schedules;
 using Xunit;
 using static Xunit.Assert;
 using static TeamApp.Test.Domain.SchedulerTests.SchedulerTests;
 using TeamApp.Domain;
 using TeamApp.Test.Helpers;
-using TeamApp.Domain.Competition.Seasons.Config;
-using TeamApp.Domain.Competition;
+using TeamApp.Domain.Competitions.Seasons.Config;
+using TeamApp.Domain.Competitions;
 
-namespace TeamApp.Test.Domain.Competition.Seasons
+namespace TeamApp.Test.Domain.Competitions.Seasons
 {
     public class SeasonTests
     {
@@ -19,7 +19,7 @@ namespace TeamApp.Test.Domain.Competition.Seasons
         public void ShouldProcessGame()
         {
             var seasonConfig = new SeasonCompetitionConfig("Test", null, null, null, 1, 1, null, null, null, null, null);
-            var season = new Season(seasonConfig, 1);
+            var season = new Season(seasonConfig, seasonConfig.Name, 1, null, null, null, null);
             var teams = new List<Team>() { CreateTeam("Team 1"), CreateTeam("Team 2"), CreateTeam("Team 3"), CreateTeam("Team 4") };
             var rules = new GameRules(null, true, 1, 0, 7, 6);
             var games = new List<ScheduleGame>()
@@ -29,12 +29,12 @@ namespace TeamApp.Test.Domain.Competition.Seasons
                 new ScheduleGame(null, 1, 1, 1, teams[0], teams[3], 1, 4, true, 1, rules, false)  
             };
 
-            var team1 = new SeasonTeam("Team 1", null, null, 5, teams[0], null, null, null, null, 1);
-            var team2 = new SeasonTeam("Team 2", null, null, 5, teams[1], null, null, null, null, 1);
-            var team3 = new SeasonTeam("Team 3", null, null, 5, teams[2], null, null, null, null, 1);
-            var team4 = new SeasonTeam("Team 4", null, null, 5, teams[3], null, null, null, null, 1);
+            var team1 = new SeasonTeam(null, teams[0], "Team 1", null, null, 5, null, 1, null, null);
+            var team2 = new SeasonTeam(null, teams[1], "Team 2", null, null, 5, null, 1, null, null);
+            var team3 = new SeasonTeam(null, teams[2], "Team 3", null, null, 5, null, 1, null, null);
+            var team4 = new SeasonTeam(null, teams[3], "Team 4", null, null, 5, null, 1, null, null);
 
-            season.Teams = new List<ISingleYearTeam>() { team1, team2, team3, team4 };
+            season.Teams = new List<SingleYearTeam>() { team1, team2, team3, team4 };
 
             games.ForEach(g => { season.ProcessGame(g); });            
 
@@ -92,7 +92,7 @@ namespace TeamApp.Test.Domain.Competition.Seasons
             True(scheduleValidator.IsValid);
 
             while (!season.Schedule.IsComplete())
-                ((ICompetition)season).PlayNextDay(new Random());            
+                ((Competition)season).PlayNextDay(new Random());            
 
             StrictEqual(42, ((SeasonTeam)season.Teams.Where(t => t.Name.Equals("Boston")).First()).Stats.Games);
         }

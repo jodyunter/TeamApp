@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using TeamApp.Domain.Competition.Seasons.Config;
+using TeamApp.Domain.Competitions.Seasons.Config;
 using TeamApp.Domain.Schedules;
 using TeamApp.Test.Helpers;
 using static System.Console;
 using System.Linq;
 using TeamApp.Console.Views.Season;
-using TeamApp.Domain.Competition;
-using TeamApp.Domain.Competition.Seasons;
-using TeamApp.Domain.Competition.Playoffs;
-using TeamApp.Domain.Competition.Playoffs.Series;
-using TeamApp.Domain.Competition.Playoffs.Config;
+using TeamApp.Domain.Competitions;
+using TeamApp.Domain.Competitions.Seasons;
+using TeamApp.Domain.Competitions.Playoffs;
+using TeamApp.Domain.Competitions.Playoffs.Series;
+using TeamApp.Domain.Competitions.Playoffs.Config;
 using TeamApp.Data.Repositories;
 using TeamApp.Domain.Repositories;
 using TeamApp.Domain;
@@ -72,7 +72,7 @@ namespace TeamApp.Console
                 WriteLine("\n");
             });
 
-            var playoff = (Playoff)playoffConfig.CreateCompetition(1, new List<ICompetition> { season });
+            var playoff = (Playoff)playoffConfig.CreateCompetition(1, new List<Competition> { season });
             playoff.Schedule = season.Schedule;
 
             while (!playoff.IsComplete())

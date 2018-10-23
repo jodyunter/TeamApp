@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using TeamApp.Domain;
-using TeamApp.Domain.Competition;
-using TeamApp.Domain.Competition.Playoffs;
-using TeamApp.Domain.Competition.Playoffs.Config;
-using TeamApp.Domain.Competition.Seasons.Config;
-using static TeamApp.Domain.Competition.Playoffs.Config.PlayoffSeriesRule;
+using TeamApp.Domain.Competitions;
+using TeamApp.Domain.Competitions.Playoffs;
+using TeamApp.Domain.Competitions.Playoffs.Config;
+using TeamApp.Domain.Competitions.Seasons.Config;
+using static TeamApp.Domain.Competitions.Playoffs.Config.PlayoffSeriesRule;
 namespace TeamApp.Test.Helpers
 {
     public class Data2

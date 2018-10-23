@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TeamApp.Domain.Competition.Playoffs;
+﻿using System.Collections.Generic;
+using TeamApp.Domain.Competitions.Playoffs;
 using TeamApp.Domain;
-using TeamApp.Domain.Competition.Playoffs.Series;
+using TeamApp.Domain.Competitions.Playoffs.Series;
 using Xunit;
 using static Xunit.Assert;
-using TeamApp.Domain.Competition.Playoffs.Config;
+using TeamApp.Domain.Competitions.Playoffs.Config;
 
-namespace TeamApp.Test.Domain.Competition.Playoffs
+namespace TeamApp.Test.Domain.Competitions.Playoffs
 {
     public class PlayoffSeriesTests
     {
@@ -108,7 +106,7 @@ namespace TeamApp.Test.Domain.Competition.Playoffs
         }
         public static PlayoffTeam CreateTeam(string name)
         {
-            return new PlayoffTeam(name, null, null, 5, null, new Team(name, null, null, 5, null, 1, null, true), null, 1);
+            return new PlayoffTeam(null, new Team(name, null, null, 5, null, 1, null, true), name, null, null, 5, null, 1);
         }
         [Theory]
         [MemberData(nameof(SeriesForInCompleteGames))]

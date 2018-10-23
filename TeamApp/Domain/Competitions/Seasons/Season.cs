@@ -1,31 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using TeamApp.Domain.Competition.Seasons.Config;
 using TeamApp.Domain.Schedules;
 
-namespace TeamApp.Domain.Competition.Seasons
+namespace TeamApp.Domain.Competitions.Seasons
 {
-    public class Season:ICompetition
+    public class Season:Competition
     {
-        public CompetitionConfig CompetitionConfig { get; set; }
-        public string Name { get; set; }
-        public int Year { get; set; }
         public List<SeasonDivision> Divisions { get; set; }
-        public List<ISingleYearTeam> Teams { get; set; }
-        public Schedule Schedule { get; set; }        
-        public Dictionary<string, List<TeamRanking>> Rankings { get; set; }
 
- 
-        public Season(SeasonCompetitionConfig competitionRule,int year)
+        public Season(CompetitionConfig competitionConfig, string name, int year, List<SeasonDivision> divisions, List<SingleYearTeam> teams, Schedule schedule, Dictionary<string, List<TeamRanking>> rankings)
+            :base(competitionConfig, name, year, schedule, rankings, teams)
         {
-            CompetitionConfig = competitionRule;
-            Name = competitionRule.Name;
-            Year = year;
-            Rankings = new Dictionary<string, List<TeamRanking>>();
+            Divisions = divisions;
         }
 
-        public void ProcessGame(ScheduleGame game)
+        public override void ProcessGame(ScheduleGame game)
         {
             if (game.Complete)
             {
@@ -95,7 +84,7 @@ namespace TeamApp.Domain.Competition.Seasons
             });
         }
 
-        public bool IsComplete()
+        public override bool IsComplete()
         {
             return Schedule.IsComplete();
         }

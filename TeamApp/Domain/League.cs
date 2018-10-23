@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TeamApp.Domain.Competition;
+using TeamApp.Domain.Competitions;
 
 namespace TeamApp.Domain
 {

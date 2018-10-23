@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TeamApp.Domain.Competition.Playoffs.Config
+namespace TeamApp.Domain.Competitions.Playoffs.Config
 {
     public class PlayoffRankingRule:BaseDataObject
     {

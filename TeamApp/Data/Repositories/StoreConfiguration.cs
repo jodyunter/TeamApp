@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using TeamApp.Domain;
 using FluentNHibernate.Automapping;
-using TeamApp.Domain.Competition;
-using TeamApp.Domain.Competition.Seasons.Config;
+using TeamApp.Domain.Competitions;
+using TeamApp.Domain.Competitions.Seasons.Config;
 
 namespace TeamApp.Data.Repositories
 {

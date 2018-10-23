@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using static TeamApp.Domain.Competition.Seasons.Config.SeasonScheduleRule;
+using static TeamApp.Domain.Competitions.Seasons.Config.SeasonScheduleRule;
 
-namespace TeamApp.Domain.Competition.Seasons.Config
+namespace TeamApp.Domain.Competitions.Seasons.Config
 {
     public class SeasonConfigScheduleValidator
     {   

@@ -2,32 +2,24 @@
 using System.Collections.Generic;
 using TeamApp.Domain.Schedules;
 using System.Linq;
-using TeamApp.Domain.Competition.Playoffs.Config;
-using TeamApp.Domain.Competition.Playoffs.Series;
+using TeamApp.Domain.Competitions.Playoffs.Config;
+using TeamApp.Domain.Competitions.Playoffs.Series;
 
-namespace TeamApp.Domain.Competition.Playoffs
+namespace TeamApp.Domain.Competitions.Playoffs
 {
-    public class Playoff : ICompetition
+    public class Playoff : Competition
     {
-        public CompetitionConfig CompetitionConfig { get; set; }
-        public string Name { get; set; }
-        public int Year { get; set; }
         public int StartingDay { get; set; }
         public int CurrentRound { get; set; }
         public List<PlayoffSeries> Series { get; set; }
-        public Schedule Schedule { get; set; }
-        public Dictionary<string, List<TeamRanking>> Rankings { get; set; }
-        public List<ISingleYearTeam> Teams { get; set; }
 
-        public Playoff(CompetitionConfig competitionConfig, string name, int year, int startingDay, int currentRound, List<PlayoffSeries> series, List<ISingleYearTeam> teams, Schedule schedule, Dictionary<string, List<TeamRanking>> rankings)
-        {
-            CompetitionConfig = competitionConfig;
-            StartingDay = startingDay;
-            Name = name;
-            Year = year;
+        public Playoff() : base() { }
+
+        public Playoff(CompetitionConfig competitionConfig, string name, int year, int startingDay, int currentRound, List<PlayoffSeries> series, List<SingleYearTeam> teams, Schedule schedule, Dictionary<string, List<TeamRanking>> rankings)
+            :base(competitionConfig, name, year, schedule, rankings, teams)
+        {            
+            StartingDay = startingDay;                     
             Series = series;
-            Schedule = schedule;
-            Rankings = rankings;
             Teams = teams;
             CurrentRound = currentRound;
         }
@@ -88,7 +80,7 @@ namespace TeamApp.Domain.Competition.Playoffs
             Series.Add(series);
         }
 
-        public void ProcessGame(ScheduleGame game)
+        public override void ProcessGame(ScheduleGame game)
         {
             var gameCompetition = game.Competition;
 
@@ -156,7 +148,7 @@ namespace TeamApp.Domain.Competition.Playoffs
             return complete;
         }
 
-        public bool IsComplete()
+        public override bool IsComplete()
         {
             var complete = true;
             var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;

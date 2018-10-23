@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using TeamApp.Domain;
-using TeamApp.Domain.Competition;
+using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Repositories;
 
 namespace TeamApp.Services
 {
     public class GameDataService
     {
-        private IGameDataRepository GameDataRepository;
-        private ICompetitionRepository CompetitionRepository;
+        private IGameDataRepository GameDataRepository;        
         private ILeagueRepository LeagueRepository;
 
         public GameDataService(IGameDataRepository gameDataRepository, ILeagueRepository leagueRepository)
@@ -40,7 +39,7 @@ namespace TeamApp.Services
         {
             var data = GameDataRepository.First();
 
-            var competitions = null;
+            //var competitions = null;
         }
 
  

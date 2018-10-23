@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TeamApp.Domain.Competition.Playoffs.Series;
+using TeamApp.Domain.Competitions.Playoffs.Series;
 
-namespace TeamApp.Domain.Competition.Playoffs.Config
+namespace TeamApp.Domain.Competitions.Playoffs.Config
 {
     public class PlayoffCompetitionConfig:CompetitionConfig
     {
@@ -23,7 +23,7 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
                 SeriesRules.ToList().ForEach(sr => sr.PlayoffConfig = this);
         }
 
-        public override ICompetition CreateCompetition(int year, List<ICompetition> parents)
+        public override Competition CreateCompetition(int year, List<Competition> parents)
         {
             var playoff = new Playoff(this, Name, year, -1, 1, null, null, null, null);
 
@@ -43,9 +43,9 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
             });
         }
 
-        public virtual void ProcessRankingRulesAndAddTeams(Playoff playoff, List<ICompetition> parents)
+        public virtual void ProcessRankingRulesAndAddTeams(Playoff playoff, List<Competition> parents)
         {
-            playoff.Teams = new List<ISingleYearTeam>();
+            playoff.Teams = new List<SingleYearTeam>();
             playoff.Rankings = new Dictionary<string, List<TeamRanking>>();
 
             Rankings.ToList().ForEach(rule =>
@@ -72,7 +72,7 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
 
                     var sourceTeam = sourceRanking.Team;
 
-                    var newTeam = new PlayoffTeam(sourceTeam.Name, sourceTeam.NickName, sourceTeam.ShortName, sourceTeam.Skill, playoff, sourceTeam.Parent, sourceTeam.Owner, playoff.Year);
+                    var newTeam = new PlayoffTeam(playoff, sourceTeam.Parent, sourceTeam.Name, sourceTeam.NickName, sourceTeam.ShortName, sourceTeam.Skill, sourceTeam.Owner, playoff.Year);                    
 
                     var playoffRanking = new TeamRanking(nextRank, rule.GroupName, newTeam);
 
@@ -119,7 +119,7 @@ namespace TeamApp.Domain.Competition.Playoffs.Config
                     if (playoff.Rankings.ContainsKey(fromName))
                     {
                         var ranking = playoff.Rankings[fromName].Where(r => r.Rank == fromValue).ToList().First();
-                        return new PlayoffTeam(ranking.Team.Name, ranking.Team.NickName, ranking.Team.ShortName, ranking.Team.Skill, playoff, ranking.Team.Parent, ranking.Team.Owner, playoff.Year);
+                        return new PlayoffTeam(playoff, ranking.Team.Parent, ranking.Team.Name, ranking.Team.NickName, ranking.Team.ShortName, ranking.Team.Skill, ranking.Team.Owner, playoff.Year);
                     }
                     return null;
                 case PlayoffSeriesRule.FROM_SERIES:

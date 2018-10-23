@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TeamApp.Domain.Competition.Seasons.Config
+﻿
+namespace TeamApp.Domain.Competitions.Seasons.Config
 {
     public class SeasonDivisionRankingRule :ITimePeriod
     {

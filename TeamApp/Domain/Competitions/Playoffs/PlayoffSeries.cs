@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TeamApp.Domain.Competition.Playoffs.Config;
+using TeamApp.Domain.Competitions.Playoffs.Config;
 
-namespace TeamApp.Domain.Competition.Playoffs
+namespace TeamApp.Domain.Competitions.Playoffs
 {
-    public abstract class PlayoffSeries
+    public abstract class PlayoffSeries:BaseDataObject
     {
         public Playoff Playoff { get; set; }
         public string Name { get; set; }

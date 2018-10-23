@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TeamApp.Domain.Competition;
-using TeamApp.Domain.Competition.Seasons;
+using TeamApp.Domain.Competitions;
+using TeamApp.Domain.Competitions.Seasons;
 
 namespace TeamApp.Console.Views.Season
 {

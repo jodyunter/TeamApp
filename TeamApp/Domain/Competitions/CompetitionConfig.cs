@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace TeamApp.Domain.Competition
+namespace TeamApp.Domain.Competitions
 {
     public abstract class CompetitionConfig:BaseDataObject, ITimePeriod
     {
@@ -27,6 +25,6 @@ namespace TeamApp.Domain.Competition
             LastYear = lastYear;
         }
 
-        public abstract ICompetition CreateCompetition(int year, List<ICompetition> parents);
+        public abstract Competition CreateCompetition(int year, List<Competition> parents);
     }
 }

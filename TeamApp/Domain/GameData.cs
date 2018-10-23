@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TeamApp.Domain.Competition;
-
-namespace TeamApp.Domain
+﻿namespace TeamApp.Domain
 {
     //this should hold a seperate table for current game state and data
     public class GameData:BaseDataObject

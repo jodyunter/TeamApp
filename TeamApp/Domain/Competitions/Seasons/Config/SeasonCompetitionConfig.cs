@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using TeamApp.Domain.Schedules;
 
-namespace TeamApp.Domain.Competition.Seasons.Config
+namespace TeamApp.Domain.Competitions.Seasons.Config
 {
     //this is the configuration setup for seasons
     public class SeasonCompetitionConfig:CompetitionConfig
@@ -54,13 +53,13 @@ namespace TeamApp.Domain.Competition.Seasons.Config
             return GetTeamsInDivision(divisionName).Where(s => s.Equals(teamName)).FirstOrDefault() != null;
         }
 
-        public override ICompetition CreateCompetition(int year, List<ICompetition> Parents)
+        public override Competition CreateCompetition(int year, List<Competition> Parents)
         {
-            var season = new Season(this, year);
+            var season = new Season(this, Name, year, null, null, null, null);
 
             //setup divisions
             var divisions = new Dictionary<string, SeasonDivision>();
-            var teams = new Dictionary<string, ISingleYearTeam>();
+            var teams = new Dictionary<string, SingleYearTeam>();
 
             ProcessDivisionRules(season, divisions);
             ProcessTeamRules(season, divisions, teams);
@@ -92,13 +91,13 @@ namespace TeamApp.Domain.Competition.Seasons.Config
 
         }
 
-        public virtual void ProcessTeamRules(Season season, Dictionary<string, SeasonDivision> seasonDivisions, Dictionary<string, ISingleYearTeam> teams)
+        public virtual void ProcessTeamRules(Season season, Dictionary<string, SeasonDivision> seasonDivisions, Dictionary<string, SingleYearTeam> teams)
         {
             TeamRules.ToList().ForEach(rule =>
             {                
                 var team = rule.Team;
                 var seasonDivision = seasonDivisions[rule.Division];
-                var newTeam = new SeasonTeam(team.Name, team.NickName, team.ShortName, team.Skill, team, seasonDivision.Season, seasonDivision, null, team.Owner, seasonDivision.Season.Year);
+                var newTeam = new SeasonTeam(season, team, team.Name, team.NickName, team.ShortName, team.Skill, team.Owner, season.Year, null, seasonDivision);
                 newTeam.Stats = new SeasonTeamStats(newTeam);
 
                 seasonDivision.AddTeam(newTeam);
@@ -138,9 +137,9 @@ namespace TeamApp.Domain.Competition.Seasons.Config
 
         }
 
-        public virtual List<ISingleYearTeam> GetTeams(Season season, int teamType, string teamValue)
+        public virtual List<SingleYearTeam> GetTeams(Season season, int teamType, string teamValue)
         {
-            var teams = new List<ISingleYearTeam>();
+            var teams = new List<SingleYearTeam>();
 
             switch (teamType)
             {

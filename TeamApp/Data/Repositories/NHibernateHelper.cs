@@ -12,9 +12,10 @@ using System.Reflection;
 using System.Text;
 using System.Xml;
 using TeamApp.Domain;
-using TeamApp.Domain.Competition;
-using TeamApp.Domain.Competition.Playoffs.Config;
-using TeamApp.Domain.Competition.Seasons.Config;
+using TeamApp.Domain.Competitions;
+using TeamApp.Domain.Competitions.Playoffs;
+using TeamApp.Domain.Competitions.Playoffs.Config;
+using TeamApp.Domain.Competitions.Seasons.Config;
 
 namespace TeamApp.Data.Repositories
 {
@@ -59,6 +60,8 @@ namespace TeamApp.Data.Repositories
                        AutoMap.AssemblyOf<Team>(storeConfig)
                        .IgnoreBase<BaseDataObject>()           
                        .IncludeBase<CompetitionConfig>()
+                       .IncludeBase<PlayoffSeries>()
+                       .IncludeBase<Competition>()
                        .Conventions.Add(DefaultCascade.All())
                        ));
                     

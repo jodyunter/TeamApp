@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TeamApp.Domain.Competition.Playoffs;
+using TeamApp.Domain.Competitions.Playoffs;
 
-namespace TeamApp.Domain.Competition.Playoffs.Series
+namespace TeamApp.Domain.Competitions.Playoffs.Series
 {
     public class TotalGoalsSeries : PlayoffSeries
     {

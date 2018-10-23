@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TeamApp.Domain.Competition.Playoffs.Series
+namespace TeamApp.Domain.Competitions.Playoffs.Series
 {
     public class BestOfSeries : PlayoffSeries
     {

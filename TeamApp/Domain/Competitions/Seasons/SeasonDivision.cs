@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace TeamApp.Domain.Competition.Seasons
+namespace TeamApp.Domain.Competitions.Seasons
 {
     public class SeasonDivision
     {
