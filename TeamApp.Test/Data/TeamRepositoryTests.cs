@@ -29,7 +29,7 @@ namespace TeamApp.Test.Data
 
         public override void SetupRepository()
         {
-            repository = new RepositoryNhibernate<Team>();
+            repository = new TeamRepository();
         }
 
         public override Team GetAddItem()
