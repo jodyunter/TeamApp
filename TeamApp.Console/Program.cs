@@ -26,11 +26,7 @@ namespace TeamApp.Console
             var playoffConfig = Data2.CreateBasicPlayoffConfiguration(seasonCompetition);
 
             var season = (Season)seasonCompetition.CreateCompetition(1, null);
-
-            IRepository<League> seasonConfigRepo = new RepositoryNhibernate<League>();
-
-            seasonConfigRepo.Add(seasonCompetition.League);
-
+            
             WriteLine("Validating Schedule based on config.");
             var seasonScheduleConfigValidator = new SeasonConfigScheduleValidator(seasonCompetition);
             WriteLine("Printing Values for Schedule based on config.");
