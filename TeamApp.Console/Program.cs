@@ -21,8 +21,8 @@ namespace TeamApp.Console
     {
         static void Main(string[] args)
         {
-
-            var seasonCompetition = Data2.CreateBasicSeasonConfiguration();
+            var league = Data2.CreateBasicLeague("NHL");
+            var seasonCompetition = Data2.CreateBasicSeasonConfiguration(league);
             var playoffConfig = Data2.CreateBasicPlayoffConfiguration(seasonCompetition);
 
             var season = (Season)seasonCompetition.CreateCompetition(1, null);
@@ -52,14 +52,13 @@ namespace TeamApp.Console
 
             while (!season.Schedule.IsComplete())
                 season.PlayNextDay(r);
-
-            WriteLine(SeasonTeamStatsView.GetHeader());
-
+            
             season.SortAllTeams();
 
             season.Divisions.Where(d => d.Level < 4).OrderBy(d => d.Level).ThenBy(d => d.Ordering).ToList().ForEach(div =>
             {
-                WriteLine(div.Name);                
+                WriteLine(div.Name);
+                WriteLine(SeasonTeamStatsView.GetHeader());
                 season.Rankings.Where(t => t.GroupName.Equals(div.Name)).OrderBy(d => d.Rank).ToList().ForEach(ranking =>
                 {
                     WriteLine(new SeasonTeamStatsView(ranking).GetView());

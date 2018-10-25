@@ -27,6 +27,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
         public virtual void BeginRound()
         {
             if (IsRoundComplete(CurrentRound)) CurrentRound++;
+            //else return;
 
             var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
 
