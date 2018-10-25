@@ -7,7 +7,7 @@ using TeamApp.Domain.Competitions.Seasons.Config;
 using System.Collections.Generic;
 using FluentNHibernate;
 
-namespace TeamApp.Data.Repositories
+namespace TeamApp.Data.NHibernate.Repositories
 {
     public class StoreConfiguration : DefaultAutomappingConfiguration
     {

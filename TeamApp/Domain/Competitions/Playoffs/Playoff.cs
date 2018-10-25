@@ -109,6 +109,9 @@ namespace TeamApp.Domain.Competitions.Playoffs
                 ProcessEndOfSeries(playoffGame.Series);
             }
 
+            if (IsRoundComplete(CurrentRound))
+                BeginRound();
+
             SetupSeriesGames(playoffGame.Series);
             
         }

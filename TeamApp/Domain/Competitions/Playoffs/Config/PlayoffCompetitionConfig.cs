@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TeamApp.Domain.Competitions.Playoffs.Series;
+using TeamApp.Domain.Schedules;
 
 namespace TeamApp.Domain.Competitions.Playoffs.Config
 {
@@ -29,6 +30,11 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
 
             ProcessRankingRulesAndAddTeams(playoff, parents);
             ProcessSeries(playoff);
+
+            if (parents != null) //assume shared schedule
+                playoff.Schedule = parents[0].Schedule;
+
+            playoff.BeginRound();
 
             return playoff;
         }

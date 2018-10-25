@@ -7,13 +7,13 @@ using System.Linq.Expressions;
 using System.Text;
 using TeamApp.Domain.Repositories;
 
-namespace TeamApp.Data.Repositories
+namespace TeamApp.Data.NHibernate.Repositories
 {
-    public class RepositoryNhibernate<T> : IRepository<T>, IQueryable<T>
+    public class Repository<T> : IRepository<T>, IQueryable<T>
     {
         private readonly ISession session;
 
-        public RepositoryNhibernate() { session = NHibernateHelper.OpenSession(); }
+        public Repository() { session = NHibernateHelper.OpenSession(); }
 
         public Type ElementType { get { return session.Query<T>().ElementType; } }
 

@@ -17,7 +17,11 @@ namespace TeamApp.Test.Helpers
         public static string BASIC_SEASON_GAME_RULES = "BASIC_SEASON_GAME_RULES";
         public static string BASIC_SEASON_SCHEDULE_RULES = "BASIC_SEASON_SCHEDULE_RULES";
         
-        public static SeasonCompetitionConfig CreateBasicSeasonConfiguration()
+        public static League CreateBasicLeague(string name)
+        {
+            return new League(name);
+        }
+        public static SeasonCompetitionConfig CreateBasicSeasonConfiguration(League league)
         {
             var TOP = "TOP";
             var NHL = "NHL";                         
@@ -38,8 +42,6 @@ namespace TeamApp.Test.Helpers
             {
                 {NHL, new List<string>() { "Toronto", "Montreal", "Ottawa", "Quebec City", "New York", "Boston" } }
             };
-
-            var league = new League(NHL);
 
             var objects = new Dictionary<string, object>();
            

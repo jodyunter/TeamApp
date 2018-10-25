@@ -234,7 +234,7 @@ namespace TeamApp.Domain.Schedules
             bool foundDayToAddTeamTo = false;
             int currentDay = dayToStartOn;
             int dayToAddTeamTo = currentDay;
-            int maxDay = schedule.Days.Keys.Max();
+            int maxDay = schedule.Days.Count == 0 ? dayToStartOn :schedule.Days.Keys.Max();
 
             while (!foundDayToAddTeamTo && currentDay <= maxDay )
             {

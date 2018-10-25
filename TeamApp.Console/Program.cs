@@ -11,7 +11,7 @@ using TeamApp.Domain.Competitions.Seasons;
 using TeamApp.Domain.Competitions.Playoffs;
 using TeamApp.Domain.Competitions.Playoffs.Series;
 using TeamApp.Domain.Competitions.Playoffs.Config;
-using TeamApp.Data.Repositories;
+using TeamApp.Data.NHibernate.Repositories;
 using TeamApp.Domain.Repositories;
 using TeamApp.Domain;
 

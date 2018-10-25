@@ -4,7 +4,7 @@ using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
 using System;
 using static Xunit.Assert;
-using TeamApp.Data.Repositories;
+using TeamApp.Data.NHibernate.Repositories;
 using TeamApp.Domain;
 using TeamApp.Domain.Repositories;
 using Xunit;

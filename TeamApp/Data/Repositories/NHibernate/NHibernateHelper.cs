@@ -4,20 +4,12 @@ using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Conventions.Helpers;
 using Microsoft.Extensions.Configuration;
 using NHibernate;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
-using System.Reflection;
-using System.Text;
-using System.Xml;
 using TeamApp.Domain;
 using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Competitions.Playoffs;
-using TeamApp.Domain.Competitions.Playoffs.Config;
-using TeamApp.Domain.Competitions.Seasons.Config;
 
-namespace TeamApp.Data.Repositories
+namespace TeamApp.Data.NHibernate.Repositories
 {
     public class NHibernateHelper
     {
