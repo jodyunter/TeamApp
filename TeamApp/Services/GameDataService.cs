@@ -4,6 +4,7 @@ using System.Linq;
 using TeamApp.Domain;
 using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Repositories;
+using TeamApp.Domain.Schedules;
 
 namespace TeamApp.Services
 {
@@ -11,8 +12,9 @@ namespace TeamApp.Services
     {
         private IGameDataRepository GameDataRepository;        
         private ILeagueRepository LeagueRepository;
+        private IScheduleRepository ScheduleRepository;
 
-        public GameDataService(IGameDataRepository gameDataRepository, ILeagueRepository leagueRepository)
+        public GameDataService(IGameDataRepository gameDataRepository, ILeagueRepository leagueRepository, IScheduleRepository scheduleRepository)
         {
             GameDataRepository = gameDataRepository;
             LeagueRepository = leagueRepository;
@@ -42,6 +44,37 @@ namespace TeamApp.Services
             //var competitions = null;
         }
 
+        public int GetCurrentYear()
+        {
+            return GameDataRepository.First().CurrentYear;
+        }
+
+        public int GetCurrentDay()
+        {
+            return GameDataRepository.First().CurrentDay;
+        }
+
+        public List<ScheduleGame> GetTodaysGames()
+        {
+            return GetGamesOnDay(GetCurrentYear(), GetCurrentDay());
+        }
+
+        public List<ScheduleGame> GetGamesOnDay(int year, int dayNumber)
+        {
+            return ScheduleRepository.Where(s => s.Year == year && s.Day == dayNumber).ToList();
+        }
+
+        public Dictionary<int, List<ScheduleGame>> GetGamesForDayRange(int year, int firstDay, int lastDay)
+        {
+            var results = new Dictionary<int, List<ScheduleGame>>();
+
+            for (int i = firstDay; i <= lastDay; i++)
+            {
+                results.Add(i, GetGamesOnDay(year, i));
+            }
+
+            return results;
+        }
  
     }
 }
