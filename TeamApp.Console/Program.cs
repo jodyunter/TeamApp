@@ -70,15 +70,16 @@ namespace TeamApp.Console
             var playoff = (Playoff)playoffConfig.CreateCompetition(1, new List<Competition> { season });
             playoff.Schedule = season.Schedule;
 
+            int currentRound = playoff.CurrentRound;
+
             while (!playoff.IsComplete())
-            {
-                playoff.BeginRound();
-                while (!playoff.IsRoundComplete(playoff.CurrentRound))
+            {                
+                while (!playoff.IsRoundComplete(currentRound))
                 {
                     var games = playoff.PlayNextDay(r);                    
                 }
 
-                playoff.Series.Where(s => s.Round == playoff.CurrentRound).ToList().ForEach(st =>
+                playoff.Series.Where(s => s.Round == currentRound).ToList().ForEach(st =>
                 {
                     var homeValue = 0;
                     var awayValue = 0;
@@ -98,6 +99,8 @@ namespace TeamApp.Console
                     var result = string.Format(formatter, st.Round, st.Name, st.HomeTeam.Name, homeValue, awayValue, st.AwayTeam.Name);
                     WriteLine(result);
                 });
+
+                currentRound = playoff.CurrentRound;
             }
             
             WriteLine("Press Enter to continue");

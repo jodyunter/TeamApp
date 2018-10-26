@@ -40,7 +40,7 @@ namespace TeamApp.Test.Helpers
 
             var teamNameMap = new Dictionary<string, List<string>>()
             {
-                {NHL, new List<string>() { "Toronto", "Montreal", "Ottawa", "Quebec City", "New York", "Boston" } }
+                {NHL, new List<string>() { "Toronto", "Montreal", "Ottawa", "Quebec City", "New York", "Boston", "Detroit" } }
             };
 
             var objects = new Dictionary<string, object>();
@@ -51,7 +51,7 @@ namespace TeamApp.Test.Helpers
 
             SeasonCompetitionConfig competition = new SeasonCompetitionConfig("My Season", league, 1, null, 1, 1, new List<SeasonTeamRule>(), new List<SeasonDivisionRule>(), gameRules, new List<SeasonScheduleRule>(), new List<CompetitionConfig>());
            
-            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, NHL, SeasonScheduleRule.NONE, null, 6, true, 1, null)); //42
+            competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, NHL, SeasonScheduleRule.NONE, null, 5, true, 1, null)); //42
             /*
             for (int i = 0; i < teamNameMap[NHL].Count; i++)
             {
@@ -103,8 +103,9 @@ namespace TeamApp.Test.Helpers
             var seriesRules = new List<PlayoffSeriesRule>()
             {
                 //new PlayoffSeriesRule("Final", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "NHL", 1, FROM_RANKING, "NHL", 2, 1, null, new int[] {0,0,1,1,0,1,0 }, null, null, null, null)
-                new PlayoffSeriesRule(null, "Semi Final", 1, BEST_OF_SERIES, 2, gameRules, FROM_RANKING, "NHL", 2, FROM_RANKING, "NHL", 3, 1, null, new int[] {1,0,0 }, null, null, null, null),
-                new PlayoffSeriesRule(null, "Final", 2, BEST_OF_SERIES, 2, gameRules, FROM_RANKING, "NHL", 1, FROM_SERIES, "Semi Final", GET_WINNER, 1, null, new int[] {1,0,0 }, null, null, null, null)
+                new PlayoffSeriesRule(null, "Semi Final A", 1, BEST_OF_SERIES, 2, gameRules, FROM_RANKING, "NHL", 1, FROM_RANKING, "NHL", 4, 1, null, new int[] {1,0,0 }, "FINALISTS", "NHL", null, null),
+                new PlayoffSeriesRule(null, "Semi Final B", 1, BEST_OF_SERIES, 2, gameRules, FROM_RANKING, "NHL", 2, FROM_RANKING, "NHL", 3, 1, null, new int[] {1,0,0 }, "FINALISTS", "NHL", null, null),
+                new PlayoffSeriesRule(null, "Final", 2, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "FINALISTS", 1, FROM_RANKING, "FINALISTS", 2, 1, null, new int[] {1,0,0 }, null, null, null, null)
             };
 
             var playoffConfig = new PlayoffCompetitionConfig("My Playoff", seasonConfig.League, 2, gameRules, 1, null, rankingRules, seriesRules, new List<CompetitionConfig> { seasonConfig });
