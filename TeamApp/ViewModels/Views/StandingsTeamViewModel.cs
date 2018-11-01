@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TeamApp.ViewModels.Views
 {
-    public class StandingsTeamView
+    public class StandingsTeamViewModel
     {
         public string TeamName { get; set; }
         public int Rank { get; set; }

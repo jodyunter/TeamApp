@@ -4,12 +4,12 @@ using System.Text;
 
 namespace TeamApp.ViewModels.Views
 {
-    public class LeagueStatusView
+    public class LeagueStatusViewModel
     {
         public string Name { get; set; }
         public string CurrentYear { get; set; }
-        public List<CompetitionView> Competitions { get; set; }
-        public CompetitionView CurrentCompetition { get; set; }        
+        public List<CompetitionViewModel> Competitions { get; set; }
+        public CompetitionViewModel CurrentCompetition { get; set; }        
         
     }
 }

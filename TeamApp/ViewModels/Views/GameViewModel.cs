@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TeamApp.ViewModels.Views
 {
-    public class GameView
+    public class GameViewModel
     {
         public string League { get; set; }
         public string Competition { get; set; }
