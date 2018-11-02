@@ -16,7 +16,7 @@ export class FetchDataComponent {
       this.cacheForecasts = result;
     }, error => console.error(error));
 
-    http.get<any[]>(baseUrl + 'api/SampleData/GetSummaries').subscribe(result => {
+    http.get<Summary[]>(baseUrl + 'api/SampleData/GetSummaries').subscribe(result => {
       this.summaries = result;
     }, error => console.error(error));
   }

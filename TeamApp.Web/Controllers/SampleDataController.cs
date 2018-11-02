@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using TeamApp.Services;
+using TeamApp.ViewModels.Views;
 
 namespace TeamApp.Web.Controllers
 {
@@ -24,6 +26,14 @@ namespace TeamApp.Web.Controllers
                 TemperatureC = rng.Next(-20, 55),
                 Summary = Summaries[rng.Next(Summaries.Length)]
             });
+        }
+
+        [HttpGet("[action]")]
+        public StandingsViewModel Standings()
+        {
+            var service = new StandingsService();
+
+            return service.GetStandings(1, 1, 1);
         }
 
         [HttpGet("[action]")]

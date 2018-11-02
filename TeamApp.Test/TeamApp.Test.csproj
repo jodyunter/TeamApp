@@ -17,6 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TeamApp.Data\TeamApp.Data.csproj" />
+    <ProjectReference Include="..\TeamApp.Services\TeamApp.Services.csproj" />
     <ProjectReference Include="..\TeamApp\TeamApp.csproj" />
   </ItemGroup>
 

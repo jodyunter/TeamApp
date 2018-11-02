@@ -16,5 +16,6 @@ namespace TeamApp.ViewModels.Views
         public int GoalsFor { get; set; }
         public int GoalsAgainst { get; set; }
         public int GoalDifference { get; set; }
+        public int Points { get; set; }
     }
 }

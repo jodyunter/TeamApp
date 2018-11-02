@@ -1,0 +1,36 @@
+<h1>Standings Page</h1>
+
+<p *ngIf="!standingsData"><em>Loading...</em></p>
+
+<h3>{{standingsData.standingsName}}</h3>
+<table class='table' *ngIf="standingsData">
+  <thead>
+    <tr>
+      <th colspan="1">Rank</th>
+      <th colspan="6">Name</th>
+      <th colspan="1">W</th>
+      <th colspan="1">L</th>
+      <th colspan="1">T</th>
+      <th colspan="2">Pts</th>
+      <th colspan="1">GP</th>
+      <th colspan="1">GF</th>
+      <th colspan="1">GA</th>
+      <th colspan="1">GD</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let team of standingsData.teams">
+      <td colspan="1">{{team.rank}}</td>
+      <td colspan="6">{{ team.teamName }}</td>
+      <td colspan="1">{{team.wins}}</td>
+      <td colspan="1">{{team.loses}}</td>
+      <td colspan="1">{{team.ties}}</td>
+      <td colspan="2">{{team.points}}</td>
+      <td colspan="1">{{team.gamesPlayed}}</td>
+      <td colspan="1">{{team.goalsFor}}</td>
+      <td colspan="1">{{team.goalsAgainst}}</td>
+      <td colspan="1">{{team.goalDifference}}</td>
+    </tr>
+  </tbody>
+</table>
+This is a test

@@ -25,7 +25,8 @@ namespace TeamApp.Services
                     GoalDifference = 0,
                     GoalsFor = 0,
                     GoalsAgainst = 0,
-                    GamesPlayed = 0
+                    GamesPlayed = 0,
+                    Points = 0
                 });
             }
             var standingsView = new StandingsViewModel()
