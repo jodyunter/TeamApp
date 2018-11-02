@@ -22,8 +22,8 @@ namespace TeamApp.Services
             {
                 CurrentDay = 125,
                 CurrentYear = 5
-            
-            }
+
+            };
 
         }
 
