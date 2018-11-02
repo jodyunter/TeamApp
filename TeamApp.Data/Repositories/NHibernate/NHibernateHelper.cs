@@ -21,14 +21,21 @@ namespace TeamApp.Data.NHibernate.Repositories
         }
 
         private static FluentConfiguration FluentConfig()
-        {
-
+        {            
             var settings = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("settings.json")
                 .AddEnvironmentVariables().Build();
 
+            var settingsToUse = settings["DatabaseToUse"];
 
+            var connectionStringFormatter = "ConnectionStrings:{0}:ConnectionString";
+            var providerFormatter = "ConnectionStrings:{0}:Provider";
+            var driverFormatter = "ConnectionStrings:{0}:Driver";
+
+            var connectionString = settings[string.Format(connectionStringFormatter, settingsToUse)];
+            var providerString = settings[string.Format(providerFormatter, settingsToUse)];
+            var driverString = settings[string.Format(driverFormatter, settingsToUse)];
             /*
            return Fluently.Configure()
                   .Database(MsSqlConfiguration.MsSql2012
@@ -43,9 +50,9 @@ namespace TeamApp.Data.NHibernate.Repositories
 
             return Fluently.Configure()
                    .Database(MsSqlConfiguration.MsSql2012
-                     .ConnectionString(settings["ConnectionStrings:JodyTest:ConnectionString"])
-                     .Provider("NHibernate.Connection.DriverConnectionProvider")
-                     .Driver("NHibernate.Driver.SqlClientDriver")
+                     .ConnectionString(connectionString)
+                     .Provider(providerString)
+                     .Driver(driverString)
                      .ShowSql())
                    .Mappings(m =>
                    m.AutoMappings.Add(

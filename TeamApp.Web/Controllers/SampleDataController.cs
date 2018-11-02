@@ -34,7 +34,7 @@ namespace TeamApp.Web.Controllers
             var service = new StandingsService();
 
             return service.GetStandings(1, 1, 1);
-        }
+        }        
 
         [HttpGet("[action]")]
         public string[] GetSummaries()
