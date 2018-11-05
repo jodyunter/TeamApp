@@ -9,7 +9,7 @@ using TeamApp.Domain;
 using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Competitions.Playoffs;
 
-namespace TeamApp.Data.NHibernate.Repositories
+namespace TeamApp.Data.Repositories.NHibernate
 {
     public class NHibernateHelper
     {

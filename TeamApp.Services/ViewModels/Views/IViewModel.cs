@@ -6,7 +6,8 @@ namespace TeamApp.Services.ViewModels.Views
 {
     public interface IViewModel
     {
-        IViewModel GetViewModel(object obj);
+        List<string> ErrorMessages { get; set; }
+        void AddErrorMessage(string message);
 
     }
 }

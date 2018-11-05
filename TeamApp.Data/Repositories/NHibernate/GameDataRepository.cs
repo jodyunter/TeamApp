@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TeamApp.Domain;
 
-namespace TeamApp.Data.NHibernate.Repositories
+namespace TeamApp.Data.Repositories.NHibernate
 {
     public class GameDataRepository:Repository<GameData>
     {

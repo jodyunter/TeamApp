@@ -8,7 +8,6 @@
         //Current Year
         //List of Leagues
         //List of Current Year Competitions
-        //List of Teams as of This Year and their status
-                
+        //List of Teams as of This Year and their status                       
     }
 }

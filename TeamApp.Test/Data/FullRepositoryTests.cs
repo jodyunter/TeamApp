@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TeamApp.Data.NHibernate.Repositories;
+using TeamApp.Data.Repositories.NHibernate;
 using TeamApp.Domain;
 using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Competitions.Seasons;

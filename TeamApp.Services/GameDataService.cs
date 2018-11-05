@@ -11,6 +11,7 @@ namespace TeamApp.Services
 {
     public class GameDataService
     {
+        public IScheduleGameRepository gameRepository;
 
         public GameDataService()
         {
@@ -25,6 +26,26 @@ namespace TeamApp.Services
 
             };
 
+        }
+
+        public void ChangeDay(int newDay)
+        {
+            var model = new GameSummary();
+
+            model = GetGameSummary();
+
+            if (newDay < model.CurrentDay)
+            {
+                model.AddErrorMessage("Cannot set the current day to a day in the past");
+            }
+            else
+            {
+                var incompleteGames = gameRepository.Where(g => g.Day >= model.CurrentDay && g.Day < newDay && g.Complete == false).ToList().Count;
+                if (incompleteGames > 0)
+                {
+                    model.AddErrorMessage("There are in complete games bewteen the current day and the new day.  Please complete before continuing.");
+                }
+            }
         }
 
  

@@ -1,14 +1,7 @@
 ﻿
-using NHibernate;
-using NHibernate.Cfg;
-using NHibernate.Tool.hbm2ddl;
 using System;
-using static Xunit.Assert;
-using TeamApp.Data.NHibernate.Repositories;
+using TeamApp.Data.Repositories.NHibernate;
 using TeamApp.Domain;
-using TeamApp.Domain.Repositories;
-using Xunit;
-using System.Linq;
 
 namespace TeamApp.Test.Data
 {

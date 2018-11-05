@@ -5,7 +5,7 @@ using TeamApp.Domain;
 
 namespace TeamApp.Data.Repositories.NHibernate
 {
-    public class LeagueRepository:Repository<League>
+    public class ScheduleGameRepository:Repository<ScheduleGame>
     {
     }
 }

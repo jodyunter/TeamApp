@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using System.Text;
 using TeamApp.Domain.Repositories;
 
-namespace TeamApp.Data.NHibernate.Repositories
+namespace TeamApp.Data.Repositories.NHibernate
 {
     public class Repository<T> : IRepository<T>, IQueryable<T>
     {
