@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TeamApp.Domain.Schedules;
 
 namespace TeamApp.Domain.Competitions
@@ -25,6 +26,43 @@ namespace TeamApp.Domain.Competitions
             if (Rankings == null) Rankings = new List<TeamRanking>();
             Teams = teams;
             if (Teams == null) Teams = new List<SingleYearTeam>();
+        }
+
+        public virtual void PlayGame(ScheduleGame game, Random random)
+        {
+            if (!game.IsComplete()) game.Play(random);
+            if (!game.Processed) { ProcessGame(game); game.Processed = true; }
+        }
+
+        public virtual List<ScheduleGame> PlayGames(List<ScheduleGame> games, Random random)
+        {
+            games.ForEach(g => { PlayGame(g, random); });
+
+            return games;
+        }
+
+        public virtual List<ScheduleGame> PlayDay(ScheduleDay day, Random random)
+        {
+            return PlayGames(day.Games, random);
+        }
+
+        public virtual List<ScheduleGame> PlayNextDay(Random random)
+        {
+            var day = GetNextDayToPlay();
+
+            if (day != null)
+            {
+                PlayGames(day.Games, random);
+            }
+
+            return day == null ? null : day.Games;
+        }
+
+        public virtual ScheduleDay GetNextDayToPlay()
+        {
+            var day = Schedule.GetNextInCompleteDay();
+
+            return day == null ? null : day;
         }
     }
 }
