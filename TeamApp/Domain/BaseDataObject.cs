@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TeamApp.Domain
 {
-    public class BaseDataObject:IDataObject
+    public class BaseDataObject:IDataObject, DomainObject
     {
         public virtual long Id { get; set; }
         public virtual string CreatedBy { get; set; }

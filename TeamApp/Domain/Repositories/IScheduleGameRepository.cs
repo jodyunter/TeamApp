@@ -7,5 +7,7 @@ namespace TeamApp.Domain.Repositories
 {
     public interface IScheduleGameRepository:IRepository<ScheduleGame>
     {
+        IEnumerable<ScheduleGame> GetInCompleteGames(int currentDay, int newDay);
+
     }
 }

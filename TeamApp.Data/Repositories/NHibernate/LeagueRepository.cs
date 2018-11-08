@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using TeamApp.Domain;
+using TeamApp.Domain.Repositories;
 
 namespace TeamApp.Data.Repositories.NHibernate
 {
-    public class LeagueRepository:Repository<League>
+    public class LeagueRepository:Repository<League>, ILeagueRepository
     {
     }
 }

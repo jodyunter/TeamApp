@@ -4,8 +4,9 @@ using System.Text;
 
 namespace TeamApp.Services.ViewModels.Views
 {
-    public class TeamViewModel
+    public class TeamViewModel:BaseViewModel
     {
+        public long Id { get; set; }
         public string Name { get; set; }
         public string NickName { get; set; }
         public string ShortName { get; set; }

@@ -5,12 +5,13 @@ using System.Text;
 
 namespace TeamApp.Domain.Repositories
 {
-    public interface IRepository<T>:IQueryable<T>
+    public interface IRepository<T> where T : IDataObject
     {
         object Add(T team);
         void Update(T team);
         void Remove(T team);
-        T Get(long id);  
+        T Get(long id);
+        IEnumerable<T> GetAll();
        
     }
 }

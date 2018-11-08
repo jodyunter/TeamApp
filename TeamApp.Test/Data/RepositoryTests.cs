@@ -21,7 +21,6 @@ namespace TeamApp.Test.Data
         private bool doNotDrop = false;
 
         protected IRepository<T> repository;
-
         public RepositoryTests()
         {
             session = NHibernateHelper.OpenSession();
@@ -30,6 +29,7 @@ namespace TeamApp.Test.Data
             SetupRepository();
         }
 
+        
         public abstract void SetupRepository();
         public abstract void AddData();
         public abstract T GetAddItem();
@@ -75,7 +75,7 @@ namespace TeamApp.Test.Data
         {
             AddData();
 
-            var dataList = repository.ToList();
+            var dataList = repository.GetAll().ToList();
 
             StrictEqual(10, dataList.Count);            
         }
@@ -85,7 +85,7 @@ namespace TeamApp.Test.Data
         {
             AddData();
 
-            var dataList = repository.ToList();
+            var dataList = repository.GetAll().ToList();
 
             var itemToCheck = dataList[5];
 

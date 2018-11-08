@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using TeamApp.Domain;
 using TeamApp.Domain.Repositories;
 
 namespace TeamApp.Data.Repositories.NHibernate
 {
-    public class Repository<T> : IRepository<T>, IQueryable<T>
+    public class Repository<T> :IRepository<T>, IQueryable<T> where T : IDataObject
     {
         private readonly ISession session;
 
@@ -49,6 +50,11 @@ namespace TeamApp.Data.Repositories.NHibernate
         public T Get(long id)
         {
             return session.Get<T>(id);
+        }
+
+        public IEnumerable<T> GetAll()
+        {
+            return this.ToList();
         }
     }
 }

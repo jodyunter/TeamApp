@@ -1,5 +1,5 @@
 {
-  "DatabaseToUse": "JodyTest",
+  "DatabaseToUse": "JodyWorkTest",
   "ConnectionStrings": {
     "JodyWorkTest": {
       "ConnectionString": "Data Source=localhost;Initial Catalog=JodyTest;Integrated Security=True",

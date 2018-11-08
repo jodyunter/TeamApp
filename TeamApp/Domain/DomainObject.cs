@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TeamApp.Domain.Repositories
+namespace TeamApp.Domain
 {
-    public interface ILeagueRepository
+    public interface DomainObject
     {
     }
 }
