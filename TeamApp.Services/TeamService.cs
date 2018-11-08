@@ -11,25 +11,25 @@ namespace TeamApp.Services
 {
     public class TeamService
     {
-        ITeamRepository teamRepository;
+        private ITeamRepository repository;
 
-        public TeamService()
+        public TeamService(ITeamRepository teamRepository)
         {
-
+            repository = teamRepository;
         }
 
         public TeamViewModel GetTeamByName(string name)
         {
             var teamModel = new TeamViewModel();
 
-            var team = teamRepository.GetByName(name);
+            var team = repository.GetByName(name);
 
             return (TeamViewModel)MapDomainToModel(team);
         }
 
         public TeamViewModel GetTeamById(int id)
         {
-            var team = teamRepository.Get(id);
+            var team = repository.Get(id);
 
             return (TeamViewModel)MapDomainToModel(team);
         }

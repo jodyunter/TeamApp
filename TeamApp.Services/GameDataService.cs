@@ -40,7 +40,7 @@ namespace TeamApp.Services
             }
             else
             {
-                var incompleteGames = gameRepository.GetInCompleteGames(model.CurrentDay, newDay).Count();
+                var incompleteGames = gameRepository.GetInCompleteGamesBetweenDays(model.CurrentDay, newDay).Count();
                 if (incompleteGames > 0)
                 {
                     model.AddErrorMessage("There are in complete games bewteen the current day and the new day.  Please complete before continuing.");
