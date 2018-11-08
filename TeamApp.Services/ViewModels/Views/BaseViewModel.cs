@@ -6,7 +6,7 @@ namespace TeamApp.Services.ViewModels.Views
 {
     public abstract class BaseViewModel : IViewModel
     {
-        public List<string> ErrorMessages { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<string> ErrorMessages { get; set; }
 
         public void AddErrorMessage(string message)
         {
