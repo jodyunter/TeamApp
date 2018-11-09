@@ -11,6 +11,7 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { StandingsComponent } from './standings/standings.component';
 import { GameDataComponent } from './game-data/game-data.component';
+import { TeamListComponent } from './team/list/teamlist.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { GameDataComponent } from './game-data/game-data.component';
     CounterComponent,
     FetchDataComponent,
     StandingsComponent,
-    GameDataComponent
+    GameDataComponent,
+    TeamListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -30,7 +32,8 @@ import { GameDataComponent } from './game-data/game-data.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },      
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'standings', component: StandingsComponent },      
+      { path: 'standings', component: StandingsComponent },
+      { path: 'team/list', component: TeamListComponent },
     ])
   ],
   providers: [],

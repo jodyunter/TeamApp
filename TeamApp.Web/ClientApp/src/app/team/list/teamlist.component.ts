@@ -6,11 +6,11 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './teamlist.component.html'
 })
 export class TeamListComponent {
-  public standingsData: Standings;
+  public teamListData: TeamListItem[];
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<Standings>(baseUrl + 'api/SampleData/Standings').subscribe(result => {
-      this.standingsData = result;
+    http.get<TeamListItem[]>(baseUrl + 'api/Team/GetTeams').subscribe(result => {
+      this.teamListData = result;
     }, error => console.error(error));
   }
   
@@ -18,7 +18,15 @@ export class TeamListComponent {
 }
 
 interface TeamListItem {
-  teamName: string   
+  id: number,
+  name: string,
+  nickName: string,
+  shortName: string,
+  skill: number,
+  owner: string,
+  firstYear: number,
+  lastYear: number,
+  active: boolean
 }
 
 
