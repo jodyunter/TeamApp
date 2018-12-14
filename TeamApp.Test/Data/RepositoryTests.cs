@@ -15,27 +15,36 @@ namespace TeamApp.Test.Data
     public abstract class RepositoryTests<T>:IDisposable where T :IDataObject
     {   
 
-        private ISession session;
+        protected ISession session;
         private Configuration configuration;
 
-        private bool doNotDrop = false;
-
+        protected bool dropDatabase = true;
+        
         protected IRepository<T> repository;
         public RepositoryTests()
         {
             session = NHibernateHelper.OpenSession();
             configuration = NHibernateHelper.GetConfiguration().BuildConfiguration();
-            SetupDatabase();
-            SetupRepository();
+            SetupDatabase();            
+            SetupRepository();            
         }
 
+        public RepositoryTests(bool Drop, bool Setup, bool Data)
+        {
+            session = NHibernateHelper.OpenSession();
+            configuration = NHibernateHelper.GetConfiguration().BuildConfiguration();
+            if (Setup) SetupDatabase();
+            if (Data) AddData();
+            SetupRepository();
+            dropDatabase = Drop;
+        }
 
         public abstract void AddData();
         public abstract void SetupRepository();
 
         public void Dispose()
         {
-            if (!doNotDrop)
+            if (dropDatabase)
             {
                 DropDatabase();
             }
@@ -48,6 +57,7 @@ namespace TeamApp.Test.Data
             var schemaExport = new SchemaExport(configuration);
             schemaExport.SetOutputFile("../../../sqloutput/ddl.sql");
             schemaExport.Execute(false, true, false);
+  
         }
 
         private void DropDatabase()

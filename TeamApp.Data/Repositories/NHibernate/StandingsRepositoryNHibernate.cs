@@ -15,7 +15,9 @@ namespace TeamApp.Data.Repositories.NHibernate
         }
         public IList<SeasonTeam> GetByCompetition(int competitionId)
         {
-            return this.Where(st => st.Competition.Id == competitionId).ToList();
+            var competition = compRepo.Where(c => c.Id == competitionId).First();
+            
+            return this.Where(st => st.Competition == competition).ToList();
         }
     }
 }

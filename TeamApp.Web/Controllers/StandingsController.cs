@@ -20,9 +20,7 @@ namespace TeamApp.Web.Controllers
         [HttpGet("[action]")]
         public StandingsViewModel Standings()
         {
-
-
-            var model = standingsService.GetStandings(2);
+            var model = standingsService.GetStandings(1);
             model.StandingsName = "NHL";
             model.Teams.ToList().ForEach(t =>
             {
