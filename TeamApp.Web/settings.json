@@ -1,6 +1,6 @@
 {
   "DatabaseToUse": "JodyWorkTest",
-  "SessionContext": "thread_static",
+  "SessionContext": "web",
   "ConnectionStrings": {
     "JodyWorkTest": {
       "ConnectionString": "Data Source=localhost;Initial Catalog=JodyTest;Integrated Security=True",
@@ -18,5 +18,4 @@
       "Provider": "NHibernate.Connection.DriverConnectionProvider"
     }
   }
-
 }

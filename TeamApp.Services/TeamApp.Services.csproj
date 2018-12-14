@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TeamApp.Data\TeamApp.Data.csproj" />
     <ProjectReference Include="..\TeamApp\TeamApp.csproj" />
   </ItemGroup>
 

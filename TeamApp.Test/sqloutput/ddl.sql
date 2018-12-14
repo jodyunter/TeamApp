@@ -1,158 +1,154 @@
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKE470F68BF62A47F8]') and parent_object_id = OBJECT_ID(N'[Competition]'))
-alter table [Competition]  drop constraint FKE470F68BF62A47F8
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKCAE220877B9FB10E]') and parent_object_id = OBJECT_ID(N'[Competition]'))
+alter table [Competition]  drop constraint FKCAE220877B9FB10E
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK95D78FC1B64CD1C8]') and parent_object_id = OBJECT_ID(N'Playoff'))
-alter table Playoff  drop constraint FK95D78FC1B64CD1C8
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK70FD8E70AEEB0F74]') and parent_object_id = OBJECT_ID(N'Playoff'))
+alter table Playoff  drop constraint FK70FD8E70AEEB0F74
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKCB77F54BB64CD1C8]') and parent_object_id = OBJECT_ID(N'Season'))
-alter table Season  drop constraint FKCB77F54BB64CD1C8
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK87D6FE8EAEEB0F74]') and parent_object_id = OBJECT_ID(N'Season'))
+alter table Season  drop constraint FK87D6FE8EAEEB0F74
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK7642FF9FBE764488]') and parent_object_id = OBJECT_ID(N'[CompetitionConfig]'))
-alter table [CompetitionConfig]  drop constraint FK7642FF9FBE764488
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK8AE6379F347D923]') and parent_object_id = OBJECT_ID(N'[CompetitionConfig]'))
+alter table [CompetitionConfig]  drop constraint FK8AE6379F347D923
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK7642FF9FE6BE9A6A]') and parent_object_id = OBJECT_ID(N'[CompetitionConfig]'))
-alter table [CompetitionConfig]  drop constraint FK7642FF9FE6BE9A6A
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK8AE6379D63442F6]') and parent_object_id = OBJECT_ID(N'[CompetitionConfig]'))
+alter table [CompetitionConfig]  drop constraint FK8AE6379D63442F6
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK7642FF9FF62A47F8]') and parent_object_id = OBJECT_ID(N'[CompetitionConfig]'))
-alter table [CompetitionConfig]  drop constraint FK7642FF9FF62A47F8
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK8AE63797B9FB10E]') and parent_object_id = OBJECT_ID(N'[CompetitionConfig]'))
+alter table [CompetitionConfig]  drop constraint FK8AE63797B9FB10E
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK9B1826CCF62A47F8]') and parent_object_id = OBJECT_ID(N'PlayoffCompetitionConfig'))
-alter table PlayoffCompetitionConfig  drop constraint FK9B1826CCF62A47F8
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKD86215377B9FB10E]') and parent_object_id = OBJECT_ID(N'PlayoffCompetitionConfig'))
+alter table PlayoffCompetitionConfig  drop constraint FKD86215377B9FB10E
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK53686FD7F62A47F8]') and parent_object_id = OBJECT_ID(N'SeasonCompetitionConfig'))
-alter table SeasonCompetitionConfig  drop constraint FK53686FD7F62A47F8
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK702B00017B9FB10E]') and parent_object_id = OBJECT_ID(N'SeasonCompetitionConfig'))
+alter table SeasonCompetitionConfig  drop constraint FK702B00017B9FB10E
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK19F3B875D61F8E]') and parent_object_id = OBJECT_ID(N'[PlayoffRankingRule]'))
-alter table [PlayoffRankingRule]  drop constraint FK19F3B875D61F8E
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKE935B59E258B9CD]') and parent_object_id = OBJECT_ID(N'[PlayoffRankingRule]'))
+alter table [PlayoffRankingRule]  drop constraint FKE935B59E258B9CD
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK19F3B888C75FE5]') and parent_object_id = OBJECT_ID(N'[PlayoffRankingRule]'))
-alter table [PlayoffRankingRule]  drop constraint FK19F3B888C75FE5
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKE935B59EEFAE44F0]') and parent_object_id = OBJECT_ID(N'[PlayoffRankingRule]'))
+alter table [PlayoffRankingRule]  drop constraint FKE935B59EEFAE44F0
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKA154D37A75D61F8E]') and parent_object_id = OBJECT_ID(N'[PlayoffSeriesRule]'))
-alter table [PlayoffSeriesRule]  drop constraint FKA154D37A75D61F8E
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKADF48EA5258B9CD]') and parent_object_id = OBJECT_ID(N'[PlayoffSeriesRule]'))
+alter table [PlayoffSeriesRule]  drop constraint FKADF48EA5258B9CD
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKA154D37AE6BE9A6A]') and parent_object_id = OBJECT_ID(N'[PlayoffSeriesRule]'))
-alter table [PlayoffSeriesRule]  drop constraint FKA154D37AE6BE9A6A
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKADF48EA5D63442F6]') and parent_object_id = OBJECT_ID(N'[PlayoffSeriesRule]'))
+alter table [PlayoffSeriesRule]  drop constraint FKADF48EA5D63442F6
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK55533E76F9B51CE4]') and parent_object_id = OBJECT_ID(N'[PlayoffSeries]'))
-alter table [PlayoffSeries]  drop constraint FK55533E76F9B51CE4
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK8C50325A1E61C4]') and parent_object_id = OBJECT_ID(N'[PlayoffSeries]'))
+alter table [PlayoffSeries]  drop constraint FK8C50325A1E61C4
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK55533E76883FB359]') and parent_object_id = OBJECT_ID(N'[PlayoffSeries]'))
-alter table [PlayoffSeries]  drop constraint FK55533E76883FB359
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK8C50325AAA3EA50E]') and parent_object_id = OBJECT_ID(N'[PlayoffSeries]'))
+alter table [PlayoffSeries]  drop constraint FK8C50325AAA3EA50E
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK55533E7638FCEBEC]') and parent_object_id = OBJECT_ID(N'[PlayoffSeries]'))
-alter table [PlayoffSeries]  drop constraint FK55533E7638FCEBEC
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK8C50325AF3B56F84]') and parent_object_id = OBJECT_ID(N'[PlayoffSeries]'))
+alter table [PlayoffSeries]  drop constraint FK8C50325AF3B56F84
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK2F492C511A90AF14]') and parent_object_id = OBJECT_ID(N'BestOfSeries'))
-alter table BestOfSeries  drop constraint FK2F492C511A90AF14
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK3F2DAE359C52C6F6]') and parent_object_id = OBJECT_ID(N'BestOfSeries'))
+alter table BestOfSeries  drop constraint FK3F2DAE359C52C6F6
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKE7DAE6E21A90AF14]') and parent_object_id = OBJECT_ID(N'TotalGoalsSeries'))
-alter table TotalGoalsSeries  drop constraint FKE7DAE6E21A90AF14
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK807A54E9C52C6F6]') and parent_object_id = OBJECT_ID(N'TotalGoalsSeries'))
+alter table TotalGoalsSeries  drop constraint FK807A54E9C52C6F6
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK24066B36D0E8B532]') and parent_object_id = OBJECT_ID(N'[SeasonDivisionRule]'))
-alter table [SeasonDivisionRule]  drop constraint FK24066B36D0E8B532
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK5D79E78CA3D47D2A]') and parent_object_id = OBJECT_ID(N'[SeasonDivisionRule]'))
+alter table [SeasonDivisionRule]  drop constraint FK5D79E78CA3D47D2A
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK3B439E6FD0E8B532]') and parent_object_id = OBJECT_ID(N'[SeasonScheduleRule]'))
-alter table [SeasonScheduleRule]  drop constraint FK3B439E6FD0E8B532
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKE1A3C1A6A3D47D2A]') and parent_object_id = OBJECT_ID(N'[SeasonScheduleRule]'))
+alter table [SeasonScheduleRule]  drop constraint FKE1A3C1A6A3D47D2A
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKB2235DFFD0E8B532]') and parent_object_id = OBJECT_ID(N'[SeasonTeamRule]'))
-alter table [SeasonTeamRule]  drop constraint FKB2235DFFD0E8B532
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK95A69050A3D47D2A]') and parent_object_id = OBJECT_ID(N'[SeasonTeamRule]'))
+alter table [SeasonTeamRule]  drop constraint FK95A69050A3D47D2A
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKB2235DFF2F16F8DA]') and parent_object_id = OBJECT_ID(N'[SeasonTeamRule]'))
-alter table [SeasonTeamRule]  drop constraint FKB2235DFF2F16F8DA
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK95A69050973AA0AB]') and parent_object_id = OBJECT_ID(N'[SeasonTeamRule]'))
+alter table [SeasonTeamRule]  drop constraint FK95A69050973AA0AB
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKBB843CC9D88B0D10]') and parent_object_id = OBJECT_ID(N'[SeasonDivision]'))
-alter table [SeasonDivision]  drop constraint FKBB843CC9D88B0D10
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK6D0C7DA8248CF50]') and parent_object_id = OBJECT_ID(N'[SeasonDivision]'))
+alter table [SeasonDivision]  drop constraint FK6D0C7DA8248CF50
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKBB843CC920E4AF18]') and parent_object_id = OBJECT_ID(N'[SeasonDivision]'))
-alter table [SeasonDivision]  drop constraint FKBB843CC920E4AF18
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK6D0C7DA866AF732D]') and parent_object_id = OBJECT_ID(N'[SeasonDivision]'))
+alter table [SeasonDivision]  drop constraint FK6D0C7DA866AF732D
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK12A518BE55E13117]') and parent_object_id = OBJECT_ID(N'[SeasonTeamStats]'))
-alter table [SeasonTeamStats]  drop constraint FK12A518BE55E13117
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKFC7E20F6CF5A11FA]') and parent_object_id = OBJECT_ID(N'[TeamRanking]'))
+alter table [TeamRanking]  drop constraint FKFC7E20F6CF5A11FA
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKDFC8F322A62E9661]') and parent_object_id = OBJECT_ID(N'[TeamRanking]'))
-alter table [TeamRanking]  drop constraint FKDFC8F322A62E9661
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKFC7E20F6AEEB0F74]') and parent_object_id = OBJECT_ID(N'[TeamRanking]'))
+alter table [TeamRanking]  drop constraint FKFC7E20F6AEEB0F74
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKDFC8F322B64CD1C8]') and parent_object_id = OBJECT_ID(N'[TeamRanking]'))
-alter table [TeamRanking]  drop constraint FKDFC8F322B64CD1C8
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKB46CD18A8589315C]') and parent_object_id = OBJECT_ID(N'[Game]'))
+alter table [Game]  drop constraint FKB46CD18A8589315C
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKDECFF1CFAE601A3E]') and parent_object_id = OBJECT_ID(N'[Game]'))
-alter table [Game]  drop constraint FKDECFF1CFAE601A3E
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKB46CD18ADC02FBD6]') and parent_object_id = OBJECT_ID(N'[Game]'))
+alter table [Game]  drop constraint FKB46CD18ADC02FBD6
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKDECFF1CF1EA3428B]') and parent_object_id = OBJECT_ID(N'[Game]'))
-alter table [Game]  drop constraint FKDECFF1CF1EA3428B
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKB46CD18AA8C53C82]') and parent_object_id = OBJECT_ID(N'[Game]'))
+alter table [Game]  drop constraint FKB46CD18AA8C53C82
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKDECFF1CFC4D29182]') and parent_object_id = OBJECT_ID(N'[Game]'))
-alter table [Game]  drop constraint FKDECFF1CFC4D29182
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKA742947837122A5F]') and parent_object_id = OBJECT_ID(N'ScheduleGame'))
+alter table ScheduleGame  drop constraint FKA742947837122A5F
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK4DEB9A094EC8C383]') and parent_object_id = OBJECT_ID(N'ScheduleGame'))
-alter table ScheduleGame  drop constraint FK4DEB9A094EC8C383
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKA7429478AEEB0F74]') and parent_object_id = OBJECT_ID(N'ScheduleGame'))
+alter table ScheduleGame  drop constraint FKA7429478AEEB0F74
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK4DEB9A09B64CD1C8]') and parent_object_id = OBJECT_ID(N'ScheduleGame'))
-alter table ScheduleGame  drop constraint FK4DEB9A09B64CD1C8
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK1B310BA9B017421F]') and parent_object_id = OBJECT_ID(N'PlayoffGame'))
+alter table PlayoffGame  drop constraint FK1B310BA9B017421F
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK182AD4E9FD27812D]') and parent_object_id = OBJECT_ID(N'PlayoffGame'))
-alter table PlayoffGame  drop constraint FK182AD4E9FD27812D
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK1B310BA9A972680D]') and parent_object_id = OBJECT_ID(N'PlayoffGame'))
+alter table PlayoffGame  drop constraint FK1B310BA9A972680D
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK182AD4E9247CA277]') and parent_object_id = OBJECT_ID(N'PlayoffGame'))
-alter table PlayoffGame  drop constraint FK182AD4E9247CA277
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK9E509A31AEEB0F74]') and parent_object_id = OBJECT_ID(N'[SingleYearTeam]'))
+alter table [SingleYearTeam]  drop constraint FK9E509A31AEEB0F74
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKE7EAF470B64CD1C8]') and parent_object_id = OBJECT_ID(N'[SingleYearTeam]'))
-alter table [SingleYearTeam]  drop constraint FKE7EAF470B64CD1C8
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK9E509A31B0F19ABC]') and parent_object_id = OBJECT_ID(N'[SingleYearTeam]'))
+alter table [SingleYearTeam]  drop constraint FK9E509A31B0F19ABC
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKE7EAF470BA3F0660]') and parent_object_id = OBJECT_ID(N'[SingleYearTeam]'))
-alter table [SingleYearTeam]  drop constraint FKE7EAF470BA3F0660
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK39052534FBA224B0]') and parent_object_id = OBJECT_ID(N'PlayoffTeam'))
+alter table PlayoffTeam  drop constraint FK39052534FBA224B0
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK3D3B4CC88E857E96]') and parent_object_id = OBJECT_ID(N'PlayoffTeam'))
-alter table PlayoffTeam  drop constraint FK3D3B4CC88E857E96
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKBB47D4EFFBA224B0]') and parent_object_id = OBJECT_ID(N'SeasonTeam'))
+alter table SeasonTeam  drop constraint FKBB47D4EFFBA224B0
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK61AF70248E857E96]') and parent_object_id = OBJECT_ID(N'SeasonTeam'))
-alter table SeasonTeam  drop constraint FK61AF70248E857E96
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKBB47D4EF598DE0A6]') and parent_object_id = OBJECT_ID(N'SeasonTeam'))
+alter table SeasonTeam  drop constraint FKBB47D4EF598DE0A6
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK61AF70249494DD6D]') and parent_object_id = OBJECT_ID(N'SeasonTeam'))
-alter table SeasonTeam  drop constraint FK61AF70249494DD6D
-
-
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK61AF702451435084]') and parent_object_id = OBJECT_ID(N'SeasonTeam'))
-alter table SeasonTeam  drop constraint FK61AF702451435084
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKBB47D4EF9468A261]') and parent_object_id = OBJECT_ID(N'SeasonTeam'))
+alter table SeasonTeam  drop constraint FKBB47D4EF9468A261
 
 
     if exists (select * from dbo.sysobjects where id = object_id(N'[Competition]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [Competition]
@@ -410,7 +406,6 @@ alter table SeasonTeam  drop constraint FK61AF702451435084
        CreatedOn DATETIME2 null,
        LastModifiedBy NVARCHAR(255) null,
        LastModifiedOn DATETIME2 null,
-       Team_id BIGINT null,
        primary key (Id)
     )
 
@@ -545,196 +540,191 @@ alter table SeasonTeam  drop constraint FK61AF702451435084
     )
 
     alter table [Competition] 
-        add constraint FKE470F68BF62A47F8 
+        add constraint FKCAE220877B9FB10E 
         foreign key (CompetitionConfig_id) 
         references [CompetitionConfig]
 
     alter table Playoff 
-        add constraint FK95D78FC1B64CD1C8 
+        add constraint FK70FD8E70AEEB0F74 
         foreign key (Competition_id) 
         references [Competition]
 
     alter table Season 
-        add constraint FKCB77F54BB64CD1C8 
+        add constraint FK87D6FE8EAEEB0F74 
         foreign key (Competition_id) 
         references [Competition]
 
     alter table [CompetitionConfig] 
-        add constraint FK7642FF9FBE764488 
+        add constraint FK8AE6379F347D923 
         foreign key (League_id) 
         references [League]
 
     alter table [CompetitionConfig] 
-        add constraint FK7642FF9FE6BE9A6A 
+        add constraint FK8AE6379D63442F6 
         foreign key (GameRules_id) 
         references [GameRules]
 
     alter table [CompetitionConfig] 
-        add constraint FK7642FF9FF62A47F8 
+        add constraint FK8AE63797B9FB10E 
         foreign key (CompetitionConfig_id) 
         references [CompetitionConfig]
 
     alter table PlayoffCompetitionConfig 
-        add constraint FK9B1826CCF62A47F8 
+        add constraint FKD86215377B9FB10E 
         foreign key (CompetitionConfig_id) 
         references [CompetitionConfig]
 
     alter table SeasonCompetitionConfig 
-        add constraint FK53686FD7F62A47F8 
+        add constraint FK702B00017B9FB10E 
         foreign key (CompetitionConfig_id) 
         references [CompetitionConfig]
 
     alter table [PlayoffRankingRule] 
-        add constraint FK19F3B875D61F8E 
+        add constraint FKE935B59E258B9CD 
         foreign key (PlayoffConfig_id) 
         references PlayoffCompetitionConfig
 
     alter table [PlayoffRankingRule] 
-        add constraint FK19F3B888C75FE5 
+        add constraint FKE935B59EEFAE44F0 
         foreign key (SourceCompetition_id) 
         references [CompetitionConfig]
 
     alter table [PlayoffSeriesRule] 
-        add constraint FKA154D37A75D61F8E 
+        add constraint FKADF48EA5258B9CD 
         foreign key (PlayoffConfig_id) 
         references PlayoffCompetitionConfig
 
     alter table [PlayoffSeriesRule] 
-        add constraint FKA154D37AE6BE9A6A 
+        add constraint FKADF48EA5D63442F6 
         foreign key (GameRules_id) 
         references [GameRules]
 
     alter table [PlayoffSeries] 
-        add constraint FK55533E76F9B51CE4 
+        add constraint FK8C50325A1E61C4 
         foreign key (Playoff_id) 
         references Playoff
 
     alter table [PlayoffSeries] 
-        add constraint FK55533E76883FB359 
+        add constraint FK8C50325AAA3EA50E 
         foreign key (HomeTeam_id) 
         references PlayoffTeam
 
     alter table [PlayoffSeries] 
-        add constraint FK55533E7638FCEBEC 
+        add constraint FK8C50325AF3B56F84 
         foreign key (AwayTeam_id) 
         references PlayoffTeam
 
     alter table BestOfSeries 
-        add constraint FK2F492C511A90AF14 
+        add constraint FK3F2DAE359C52C6F6 
         foreign key (PlayoffSeries_id) 
         references [PlayoffSeries]
 
     alter table TotalGoalsSeries 
-        add constraint FKE7DAE6E21A90AF14 
+        add constraint FK807A54E9C52C6F6 
         foreign key (PlayoffSeries_id) 
         references [PlayoffSeries]
 
     alter table [SeasonDivisionRule] 
-        add constraint FK24066B36D0E8B532 
+        add constraint FK5D79E78CA3D47D2A 
         foreign key (Competition_id) 
         references SeasonCompetitionConfig
 
     alter table [SeasonScheduleRule] 
-        add constraint FK3B439E6FD0E8B532 
+        add constraint FKE1A3C1A6A3D47D2A 
         foreign key (Competition_id) 
         references SeasonCompetitionConfig
 
     alter table [SeasonTeamRule] 
-        add constraint FKB2235DFFD0E8B532 
+        add constraint FK95A69050A3D47D2A 
         foreign key (Competition_id) 
         references SeasonCompetitionConfig
 
     alter table [SeasonTeamRule] 
-        add constraint FKB2235DFF2F16F8DA 
+        add constraint FK95A69050973AA0AB 
         foreign key (Team_id) 
         references [Team]
 
     alter table [SeasonDivision] 
-        add constraint FKBB843CC9D88B0D10 
+        add constraint FK6D0C7DA8248CF50 
         foreign key (Season_id) 
         references Season
 
     alter table [SeasonDivision] 
-        add constraint FKBB843CC920E4AF18 
+        add constraint FK6D0C7DA866AF732D 
         foreign key (ParentDivision_id) 
         references [SeasonDivision]
 
-    alter table [SeasonTeamStats] 
-        add constraint FK12A518BE55E13117 
-        foreign key (Team_id) 
-        references SeasonTeam
-
     alter table [TeamRanking] 
-        add constraint FKDFC8F322A62E9661 
+        add constraint FKFC7E20F6CF5A11FA 
         foreign key (Team_id) 
         references [SingleYearTeam]
 
     alter table [TeamRanking] 
-        add constraint FKDFC8F322B64CD1C8 
+        add constraint FKFC7E20F6AEEB0F74 
         foreign key (Competition_id) 
         references [Competition]
 
     alter table [Game] 
-        add constraint FKDECFF1CFAE601A3E 
+        add constraint FKB46CD18A8589315C 
         foreign key (HomeTeam_id) 
         references [Team]
 
     alter table [Game] 
-        add constraint FKDECFF1CF1EA3428B 
+        add constraint FKB46CD18ADC02FBD6 
         foreign key (AwayTeam_id) 
         references [Team]
 
     alter table [Game] 
-        add constraint FKDECFF1CFC4D29182 
+        add constraint FKB46CD18AA8C53C82 
         foreign key (Rules_id) 
         references [GameRules]
 
     alter table ScheduleGame 
-        add constraint FK4DEB9A094EC8C383 
+        add constraint FKA742947837122A5F 
         foreign key (Game_id) 
         references [Game]
 
     alter table ScheduleGame 
-        add constraint FK4DEB9A09B64CD1C8 
+        add constraint FKA7429478AEEB0F74 
         foreign key (Competition_id) 
         references [Competition]
 
     alter table PlayoffGame 
-        add constraint FK182AD4E9FD27812D 
+        add constraint FK1B310BA9B017421F 
         foreign key (ScheduleGame_id) 
         references ScheduleGame
 
     alter table PlayoffGame 
-        add constraint FK182AD4E9247CA277 
+        add constraint FK1B310BA9A972680D 
         foreign key (Series_id) 
         references [PlayoffSeries]
 
     alter table [SingleYearTeam] 
-        add constraint FKE7EAF470B64CD1C8 
+        add constraint FK9E509A31AEEB0F74 
         foreign key (Competition_id) 
         references [Competition]
 
     alter table [SingleYearTeam] 
-        add constraint FKE7EAF470BA3F0660 
+        add constraint FK9E509A31B0F19ABC 
         foreign key (Parent_id) 
         references [Team]
 
     alter table PlayoffTeam 
-        add constraint FK3D3B4CC88E857E96 
+        add constraint FK39052534FBA224B0 
         foreign key (SingleYearTeam_id) 
         references [SingleYearTeam]
 
     alter table SeasonTeam 
-        add constraint FK61AF70248E857E96 
+        add constraint FKBB47D4EFFBA224B0 
         foreign key (SingleYearTeam_id) 
         references [SingleYearTeam]
 
     alter table SeasonTeam 
-        add constraint FK61AF70249494DD6D 
+        add constraint FKBB47D4EF598DE0A6 
         foreign key (Division_id) 
         references [SeasonDivision]
 
     alter table SeasonTeam 
-        add constraint FK61AF702451435084 
+        add constraint FKBB47D4EF9468A261 
         foreign key (Stats_id) 
         references [SeasonTeamStats]

@@ -7,6 +7,10 @@ namespace TeamApp.Services
 {
     public class StandingsService
     {
+        public StandingsViewModel GetStandings(int year, string name)
+        {
+
+        }
         public StandingsViewModel GetStandings(int league, int year, int competitionId)
         {
             //command to get the standings from the database/repository

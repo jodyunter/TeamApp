@@ -4,6 +4,7 @@ using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Conventions.Helpers;
 using Microsoft.Extensions.Configuration;
 using NHibernate;
+using NHibernate.Context;
 using System.IO;
 using TeamApp.Domain;
 using TeamApp.Domain.Competitions;
@@ -13,7 +14,12 @@ namespace TeamApp.Data.Repositories.NHibernate
 {
     public class NHibernateHelper
     {
+        private static readonly ISessionFactory sessionFactory;
 
+        static NHibernateHelper()
+        {
+            sessionFactory = SessionFactory();
+        }
         private static ISessionFactory SessionFactory()
         {
             return FluentConfig().BuildSessionFactory();
@@ -28,14 +34,13 @@ namespace TeamApp.Data.Repositories.NHibernate
                 .AddEnvironmentVariables().Build();
 
             var settingsToUse = settings["DatabaseToUse"];
-
+            var context = settings["SessionContext"];
             var connectionStringFormatter = "ConnectionStrings:{0}:ConnectionString";
             var providerFormatter = "ConnectionStrings:{0}:Provider";
-            var driverFormatter = "ConnectionStrings:{0}:Driver";
-
+            var driverFormatter = "ConnectionStrings:{0}:Driver";            
             var connectionString = settings[string.Format(connectionStringFormatter, settingsToUse)];
             var providerString = settings[string.Format(providerFormatter, settingsToUse)];
-            var driverString = settings[string.Format(driverFormatter, settingsToUse)];
+            var driverString = settings[string.Format(driverFormatter, settingsToUse)];            
             /*
            return Fluently.Configure()
                   .Database(MsSqlConfiguration.MsSql2012
@@ -53,13 +58,14 @@ namespace TeamApp.Data.Repositories.NHibernate
                      .ConnectionString(connectionString)
                      .Provider(providerString)
                      .Driver(driverString)
-                     .ShowSql())
-                   .Mappings(m =>
+                     .ShowSql()) 
+                   .CurrentSessionContext("thread_static")
+                   .Mappings(m =>                   
                    m.AutoMappings.Add(
                        AutoMap.AssemblyOf<Team>(storeConfig)
                        .IgnoreBase<BaseDataObject>()                                  
                        .IncludeBase<CompetitionConfig>()
-                       .IncludeBase<PlayoffSeries>()
+                       .IncludeBase<PlayoffSeries>()                       
                        .IncludeBase<Competition>()
                        .Conventions.Add(DefaultCascade.All())
                        ));
@@ -68,7 +74,21 @@ namespace TeamApp.Data.Repositories.NHibernate
 
         public static ISession OpenSession()
         {
-            return SessionFactory().OpenSession();
+            if (!CurrentSessionContext.HasBind(sessionFactory))
+                CurrentSessionContext.Bind(sessionFactory.OpenSession());
+
+            return sessionFactory.GetCurrentSession();
+            
+            
+        }
+
+        public static void CloseSession()
+        {
+            if (sessionFactory != null && CurrentSessionContext.HasBind(sessionFactory))
+            {
+                var session = CurrentSessionContext.Unbind(sessionFactory);
+                session.Close();
+            }
         }
 
         public static FluentConfiguration GetConfiguration()

@@ -13,7 +13,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
         public virtual int StartingDay { get; set; }
         public virtual PlayoffTeam HomeTeam { get; set; }
         public virtual PlayoffTeam AwayTeam { get; set; }
-        public virtual List<PlayoffGame> Games { get; set; }
+        public virtual IList<PlayoffGame> Games { get; set; }
         public virtual int[] HomeGameProgression { get; set; }
 
         public PlayoffSeries() { }

@@ -6,7 +6,7 @@ using TeamApp.Domain.Schedules;
 
 namespace TeamApp.Data.Repositories.NHibernate
 {
-    public class ScheduleGameRepository:Repository<ScheduleGame>, IScheduleGameRepository
+    public class ScheduleGameRepository:RepositoryNHibernate<ScheduleGame>, IScheduleGameRepository
     {
         public IEnumerable<ScheduleGame> GetGamesForDays(int firstDay, int lastDay)
         {            

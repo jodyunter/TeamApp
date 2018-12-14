@@ -13,7 +13,7 @@ namespace TeamApp.Test.Domain
         [InlineData(5, 3, 1, 9)]
         public void CanAddGames(int wins, int loses, int ties, int expected)
         {
-            SeasonTeamStats stats = new SeasonTeamStats(null, wins, loses, ties, 0, 0, 2, 1);
+            SeasonTeamStats stats = new SeasonTeamStats(wins, loses, ties, 0, 0, 2, 1);
 
             Equal(stats.Games, expected);
         }
@@ -28,7 +28,7 @@ namespace TeamApp.Test.Domain
         [InlineData(3, 0, 3, 5, 2, 21)]
         public void CanCalculatePoints(int wins, int loses, int ties, int ppw, int ppt, int expected)
         {
-            SeasonTeamStats stats = new SeasonTeamStats(null, wins, loses, ties, 0, 0, ppw, ppt);
+            SeasonTeamStats stats = new SeasonTeamStats(wins, loses, ties, 0, 0, ppw, ppt);
 
             Equal(stats.Points, expected);
         }
@@ -39,7 +39,7 @@ namespace TeamApp.Test.Domain
         [InlineData(45, 7, 38)]
         public void CanCalculatedGoalDifference(int goalsFor, int goalsAgainst, int expected)
         {
-            SeasonTeamStats stats = new SeasonTeamStats(null, 0, 0, 0, goalsFor, goalsAgainst, 2, 1);
+            SeasonTeamStats stats = new SeasonTeamStats(0, 0, 0, goalsFor, goalsAgainst, 2, 1);
 
             Equal(stats.GoalDifference, expected);
         }

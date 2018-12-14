@@ -8,7 +8,7 @@ namespace TeamApp.Domain.Competitions.Seasons
         public virtual SeasonDivision ParentDivision { get; set; }
         public virtual int Year { get; set; }
         public virtual string Name { get; set; }
-        public virtual List<SeasonTeam> Teams { get; set; }
+        public virtual IList<SeasonTeam> Teams { get; set; }
         public virtual int Level { get; set; }
         public virtual int Ordering { get; set; }
         //need to add the ranking rules

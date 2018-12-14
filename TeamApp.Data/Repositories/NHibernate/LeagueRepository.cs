@@ -6,7 +6,8 @@ using TeamApp.Domain.Repositories;
 
 namespace TeamApp.Data.Repositories.NHibernate
 {
-    public class LeagueRepository:Repository<League>, ILeagueRepository
+    public class LeagueRepository:RepositoryNHibernate<League>, ILeagueRepository
     {
+
     }
 }

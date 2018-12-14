@@ -6,6 +6,7 @@ using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Competitions.Seasons.Config;
 using System.Collections.Generic;
 using FluentNHibernate;
+using TeamApp.Domain.Competitions.Playoffs.Series;
 
 namespace TeamApp.Data.Repositories.NHibernate
 {
@@ -19,6 +20,9 @@ namespace TeamApp.Data.Repositories.NHibernate
         private static readonly IList<string> IgnoredMembers = new List<string> { "Schedule" };
         private static readonly IList<string> IgnoreMembersWithDeclaryingType
             = new List<string> { "SeasonTeamStats.Points", "SeasonTeamStats.Games", "SeasonTeamStats.GoalDifference"  };
+        private static readonly IList<string> DiscriminatedSubClasses
+            = new List<string> { "BestOfSeries", "TotalGoalsSeries" };
+            
         public override bool ShouldMap(Member member)
         {
             var shouldMap = true;
@@ -29,6 +33,11 @@ namespace TeamApp.Data.Repositories.NHibernate
             });
 
             return base.ShouldMap(member) && !IgnoredMembers.Contains(member.Name) && shouldMap;       
+        }
+
+        public override bool IsDiscriminated(Type type)
+        {
+            return DiscriminatedSubClasses.Contains(type.Name);            
         }
 
     }

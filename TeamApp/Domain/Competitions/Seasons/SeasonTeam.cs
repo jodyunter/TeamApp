@@ -12,7 +12,7 @@ namespace TeamApp.Domain.Competitions.Seasons
             :base(competition, parent, name, nickName, shortName, skill, owner, year)
         {
             Stats = stats;
-            if (Stats == null) Stats = new SeasonTeamStats(this);
+            if (Stats == null) Stats = new SeasonTeamStats();
             Division = division;
         }
 

@@ -10,11 +10,11 @@ using TeamApp.Domain.Repositories;
 
 namespace TeamApp.Data.Repositories.NHibernate
 {
-    public class Repository<T> :IRepository<T>, IQueryable<T> where T : IDataObject
+    public class RepositoryNHibernate<T> :IRepository<T>, IQueryable<T> where T : IDataObject
     {
-        private readonly ISession session;
+        protected readonly ISession session;
 
-        public Repository() { session = NHibernateHelper.OpenSession(); }
+        public RepositoryNHibernate() { session = NHibernateHelper.OpenSession(); }
 
         public Type ElementType { get { return session.Query<T>().ElementType; } }
 
@@ -39,7 +39,7 @@ namespace TeamApp.Data.Repositories.NHibernate
 
         public void Update(T entity)
         {
-            session.Save(entity);
+            session.SaveOrUpdate(entity);
         }
 
         public void Remove(T entity)

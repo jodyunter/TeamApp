@@ -4,11 +4,9 @@ namespace TeamApp.Domain.Competitions.Seasons
 {
     public class SeasonTeamStats:BaseDataObject, IComparable<SeasonTeamStats>
     {
-
-        public SeasonTeamStats() { }
-        public SeasonTeamStats(SeasonTeam team)
-        {
-            Team = team;
+        
+        public SeasonTeamStats()
+        {            
             Wins = 0;
             Ties = 0;
             Loses = 0;
@@ -17,9 +15,8 @@ namespace TeamApp.Domain.Competitions.Seasons
             PointsPerWin = 2;
             PointsPerTie = 1;
         }
-        public SeasonTeamStats(SeasonTeam p, int wins, int loses, int ties, int goalsFor, int goalsAgainst, int pointsPerWin, int pointsPerTie)
-        {
-            Team = p;
+        public SeasonTeamStats(int wins, int loses, int ties, int goalsFor, int goalsAgainst, int pointsPerWin, int pointsPerTie)
+        {            
             Wins = wins;
             Loses = loses;
             Ties = ties;
@@ -29,7 +26,6 @@ namespace TeamApp.Domain.Competitions.Seasons
             PointsPerTie = pointsPerTie;
         }
 
-        public virtual SeasonTeam Team { get; set; }
         public virtual int Wins { get; set; }
         public virtual int Loses { get; set; }
         public virtual int Ties { get; set; }

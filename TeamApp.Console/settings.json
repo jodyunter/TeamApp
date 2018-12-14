@@ -1,12 +1,13 @@
 {
   "DatabaseToUse": "JodyTest",
+  "SessionContext": "thread_static",
   "ConnectionStrings": {
     "JodyTest": {
       "ConnectionString": "Data Source=localhost;Initial Catalog=JodyTest;Integrated Security=True",
       "Driver": "NHibernate.Driver.SqlClientDriver",
       "Provider": "NHibernate.Connection.DriverConnectionProvider"
     }
-  }  
+  }
 
 
 }

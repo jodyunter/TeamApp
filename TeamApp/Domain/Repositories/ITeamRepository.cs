@@ -7,5 +7,6 @@ namespace TeamApp.Domain.Repositories
     public interface ITeamRepository:IRepository<Team>
     {
         Team GetByName(string name);
+        List<Team> GetByStatus(bool active);
     }
 }

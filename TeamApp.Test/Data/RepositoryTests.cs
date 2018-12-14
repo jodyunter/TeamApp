@@ -40,8 +40,9 @@ namespace TeamApp.Test.Data
             if (!doNotDrop)
             {
                 DropDatabase();
-            }            
-            session.Close();
+            }
+
+            NHibernateHelper.CloseSession();
         }
 
         private void SetupDatabase()
