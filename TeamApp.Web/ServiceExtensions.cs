@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TeamApp.Data.Repositories.NHibernate;
 using TeamApp.Domain.Repositories;
 using TeamApp.Services;
-using TeamApp.Services.NHibernate;
+using TeamApp.Services.Implementation;
 
 namespace TeamApp.Web
 {
@@ -15,7 +15,8 @@ namespace TeamApp.Web
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
             services.AddSingleton<ITeamService, TeamService>();
-            services.InjectServices();
+            services.AddSingleton<IStandingsService, StandingsService>();            
+            Services.ServiceExtensions.RegisterServices(services);
             return services;
         }
     }

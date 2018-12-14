@@ -17,5 +17,6 @@ namespace TeamApp.ViewModels.Views
         public int GoalsAgainst { get; set; }
         public int GoalDifference { get; set; }
         public int Points { get; set; }
+        public Dictionary<string, int> Rankings { get; set; }
     }
 }

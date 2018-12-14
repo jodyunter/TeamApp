@@ -4,7 +4,7 @@ using TeamApp.Domain.Repositories;
 using TeamApp.Services.ViewModels.Views;
 using TeamApp.Domain;
 
-namespace TeamApp.Services.NHibernate
+namespace TeamApp.Services.Implementation
 {
     public class TeamService:BaseService<Team, TeamViewModel>, ITeamService
     {

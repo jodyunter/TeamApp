@@ -11,16 +11,17 @@ namespace TeamApp.Web.Controllers
     [Route("api/[controller]")]
     public class TeamController : Controller
     {
-        private readonly ITeamService _teamService;
+        private readonly ITeamService teamService;
+        
 
-        public TeamController(ITeamService teamService)
+        public TeamController(ITeamService TeamService)
         {
-            _teamService = teamService;
+            teamService = TeamService;
         }
         [HttpGet("[action]")]
         public IEnumerable<TeamViewModel> GetTeams()
         {
-            return _teamService.GetTeamByStatus(true);
+            return teamService.GetTeamByStatus(true);
 
         }
     }

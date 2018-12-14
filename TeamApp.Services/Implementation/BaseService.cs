@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TeamApp.Services.NHibernate
+namespace TeamApp.Services.Implementation
 {
     public class BaseService<Domain, Model> 
     {
-        public List<Model> MapDomainToModel(List<Domain> objs)
+        virtual public List<Model> MapDomainToModel(List<Domain> objs)
         {
             var result = new List<Model>();
 
@@ -18,7 +18,7 @@ namespace TeamApp.Services.NHibernate
 
             return result;
         }
-        public Model MapDomainToModel(Domain obj)
+        virtual public Model MapDomainToModel(Domain obj)
         {
 
             var config = new MapperConfiguration(cfg =>

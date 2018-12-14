@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TeamApp.Domain.Competitions.Seasons;
 
 namespace TeamApp.Domain.Repositories
 {
-    public interface IStandingsRepository<SeasonTeam>
+    public interface IStandingsRepository:IRepository<SeasonTeam>
     {
-        IList<SeasonTeam> GetByYearAndName(int year, string name);
+        IList<SeasonTeam> GetByCompetition(int competitionId);
+    }
 }

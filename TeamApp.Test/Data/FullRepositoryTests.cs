@@ -40,11 +40,6 @@ namespace TeamApp.Test.Data
         public void ShouldDoSomething()
         {
             var test = new RepositoryNHibernate<League>();
-            var seasonRepo = new RepositoryNHibernate<Season>();
-            var playoffRepo = new RepositoryNHibernate<Playoff>();
-            var gameRepo = new RepositoryNHibernate<ScheduleGame>();
-            var seriesRepo = new RepositoryNHibernate<PlayoffSeries>();
-            var bestOfRepo = new RepositoryNHibernate<BestOfSeries>();
 
             var league = Data2.CreateBasicLeague("NHL");
             var seasonConfig = Data2.CreateBasicSeasonConfiguration(league);
@@ -52,40 +47,30 @@ namespace TeamApp.Test.Data
 
             var season = seasonConfig.CreateCompetition(1, null);
 
-            seasonRepo.Update((Season)season);            
-
             var random = new Random(55123);
 
             while (!season.IsComplete())
             {
-                season.PlayNextDay(random).ForEach(g =>
-                {
-                    //gameRepo.Update(g);
-                });
+                season.PlayNextDay(random);
                 
             }
 
             ((Season)season).SortAllTeams();
-
-            seasonRepo.Update((Season)season);
-            
+            test.Update(league);
+            session.Flush();
 
             var playoff = playoffConfig.CreateCompetition(1, new List<Competition> { season });
-            playoffRepo.Update((Playoff)playoff);
 
             while (!playoff.IsComplete())
             {
-                playoff.PlayNextDay(random).ForEach(g =>
-                {                    
-                                       
-                 //   gameRepo.Update(g);
-                });                
+                playoff.PlayNextDay(random);  
             }
-
-            playoffRepo.Update((Playoff)playoff);
-
-            session.Flush();
             test.Update(league);
+            session.Flush();
+
+
+            test.Update(league);
+            session.Flush();
         }
         private void SetupDatabase()
         {

@@ -5,7 +5,7 @@ using TeamApp.Domain;
 
 namespace TeamApp.Test.Data
 {
-    public class TeamRepositoryTests:RepositoryTests<Team>, IDisposable
+    public class TeamRepositoryTests:CrudRepositoryTests<Team>, IDisposable
     {          
 
         public TeamRepositoryTests():base()

@@ -26,15 +26,7 @@ namespace TeamApp.Web.Controllers
                 TemperatureC = rng.Next(-20, 55),
                 Summary = Summaries[rng.Next(Summaries.Length)]
             });
-        }
-
-        [HttpGet("[action]")]
-        public StandingsViewModel Standings()
-        {
-            var service = new StandingsService();
-
-            return service.GetStandings(1, 1, 1);
-        }        
+        }    
 
         [HttpGet("[action]")]
         public string[] GetSummaries()
