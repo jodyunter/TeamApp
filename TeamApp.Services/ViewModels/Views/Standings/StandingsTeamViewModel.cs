@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TeamApp.ViewModels.Views
+namespace TeamApp.ViewModels.Views.Standings
 {
     public class StandingsTeamViewModel
     {
@@ -17,6 +17,6 @@ namespace TeamApp.ViewModels.Views
         public int GoalsAgainst { get; set; }
         public int GoalDifference { get; set; }
         public int Points { get; set; }
-        public Dictionary<string, int> Rankings { get; set; }
+        public IList<StandingsRankingViewModel> Rankings { get; set; }
     }
 }

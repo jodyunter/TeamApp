@@ -135,7 +135,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
 
                 var rank = Rankings.Where(r => r.GroupName == rankSourceGroupName && r.Team.Name.Equals(team.Name)).First().Rank;                
 
-                Rankings.Add(new TeamRanking(rank, newGroupName, team));
+                Rankings.Add(new TeamRanking(rank, newGroupName, team, 1));
             }
         }
         public virtual bool IsRoundComplete(int round)

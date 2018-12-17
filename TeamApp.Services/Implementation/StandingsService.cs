@@ -2,7 +2,7 @@
 using System.Linq;
 using TeamApp.Domain.Competitions.Seasons;
 using TeamApp.Domain.Repositories;
-using TeamApp.ViewModels.Views;
+using TeamApp.ViewModels.Views.Standings;
 
 namespace TeamApp.Services.Implementation
 {
@@ -30,7 +30,7 @@ namespace TeamApp.Services.Implementation
             {
                 ranks.Where(r => r.Team.Name.Equals(model.TeamName)).ToList().ForEach(rank =>
                 {
-                    AddRankToModel(rank.GroupName, rank.Rank, model);
+                    AddRankToModel(rank.GroupName, rank.Rank, rank.GroupLevel, model);
                 });
             });
 
@@ -42,15 +42,16 @@ namespace TeamApp.Services.Implementation
 
             
         }
+        
 
-        private void AddRankToModel(string divname, int rank, StandingsTeamViewModel model)
+        private void AddRankToModel(string divname, int rank, int level, StandingsTeamViewModel model)
         {
             if (model.Rankings == null)
             {
-                model.Rankings = new Dictionary<string, int>();
+                model.Rankings = new List<StandingsRankingViewModel>();
             }
 
-            if (!model.Rankings.ContainsKey(divname)) model.Rankings.Add(divname, rank);            
+            model.Rankings.Add(new StandingsRankingViewModel() { GroupName = divname, Rank = rank, GroupLevel = level });
         }
         public override StandingsTeamViewModel MapDomainToModel(SeasonTeam obj)
         {
@@ -69,38 +70,6 @@ namespace TeamApp.Services.Implementation
             };            
 
             return model;
-        }
-
-        public StandingsViewModel GetStandings(int league, int year, int competitionId)
-        {
-            //command to get the standings from the database/repository
-            var teams = new List<StandingsTeamViewModel>();
-
-            for (int i = 0; i < 20; i++)
-            {
-                teams.Add(new StandingsTeamViewModel()
-                {
-                    TeamName = "Team " + i,
-                    Division = "League",
-                    Rank = i + 1,
-                    Wins = 0,
-                    Loses = 0,
-                    Ties = 0,
-                    GoalDifference = 0,
-                    GoalsFor = 0,
-                    GoalsAgainst = 0,
-                    GamesPlayed = 0,
-                    Points = 0
-                });
-            }
-            var standingsView = new StandingsViewModel()
-            {
-                StandingsName = "League",
-                Teams = teams
-            };
-
-            return standingsView;
-            
         }
     }
 }

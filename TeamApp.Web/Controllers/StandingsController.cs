@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using TeamApp.Services;
-using TeamApp.ViewModels.Views;
+using TeamApp.ViewModels.Views.Standings;
 
 namespace TeamApp.Web.Controllers
 {
@@ -24,7 +21,7 @@ namespace TeamApp.Web.Controllers
             model.StandingsName = "NHL";
             model.Teams.ToList().ForEach(t =>
             {
-                t.Rank = t.Rankings.Where(r => r.Key.Equals(model.StandingsName)).FirstOrDefault().Value;
+                t.Rank = t.Rankings.Where(r => r.GroupName.Equals(model.StandingsName)).FirstOrDefault().Rank;
             });
 
             model.Teams = model.Teams.OrderBy(t => t.Rank).ToList();

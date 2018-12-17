@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TeamApp.ViewModels.Views
+namespace TeamApp.ViewModels.Views.Standings
 {
     public class StandingsViewModel
     {

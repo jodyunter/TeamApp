@@ -1,10 +1,9 @@
-﻿using TeamApp.ViewModels.Views;
+﻿using TeamApp.ViewModels.Views.Standings;
 
 namespace TeamApp.Services
 {
     public interface IStandingsService
     {
-        StandingsViewModel GetStandings(int competitionId);
-        StandingsViewModel GetStandings(int league, int year, int competitionId);
+        StandingsViewModel GetStandings(int competitionId);        
     }
 }

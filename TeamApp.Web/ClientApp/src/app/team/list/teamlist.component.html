@@ -2,10 +2,17 @@
 
 <p *ngIf="!teamListData"><em>Loading...</em></p>
 
+<label>Seasons:</label>
+<select (change)="filterForYear($event.target.value)">
+  <option value="0">--None--</option>
+  <option *ngFor="let year of years" value="{{year}}">
+    {{year}}
+  </option>
+</select>
 <table class='table' *ngIf="teamListData">
   <thead>
     <tr>
-      <th colspan="6">Name</th>      
+      <th colspan="6">Name</th>
     </tr>
   </thead>
   <tbody>

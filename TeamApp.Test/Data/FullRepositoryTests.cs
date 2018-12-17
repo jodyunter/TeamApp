@@ -17,14 +17,14 @@ using static Xunit.Assert;
 
 namespace TeamApp.Test.Data
 {
-    public class FullRepositoryTests
+    public class FullRepositoryTests:IDisposable
     {
         //this can be used to populate the database for testing
 
         private ISession session;
         private Configuration configuration;
 
-        private bool dropDatabase = false;
+        private bool dropDatabase = true;
         private bool setupDatabase = true;
 
         public FullRepositoryTests()
@@ -33,7 +33,16 @@ namespace TeamApp.Test.Data
             configuration = NHibernateHelper.GetConfiguration().BuildConfiguration();
             
             SetupDatabase();
-            DropDatabase();
+        }
+
+        public void Dispose()
+        {
+            if (dropDatabase)
+            {
+                DropDatabase();
+            }
+
+            NHibernateHelper.CloseSession();
         }
 
         [Fact]

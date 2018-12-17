@@ -78,7 +78,7 @@ namespace TeamApp.Domain.Competitions.Seasons
 
             listOfTeams.ForEach(team =>
             {
-                Rankings.Add(new TeamRanking(rank, division.Name, team));
+                Rankings.Add(new TeamRanking(rank, division.Name, team, division.Level));
                 rank++;
             });
         }

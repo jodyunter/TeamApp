@@ -22,7 +22,7 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs
 
             for (int i = 0; i < 10; i++)
             {
-                playoff.Rankings.Add(new TeamRanking(i + 1, "R1", CreateTeam("Team " + i)));
+                playoff.Rankings.Add(new TeamRanking(i + 1, "R1", CreateTeam("Team " + i), 1));
             }
 
             var gameRules = new GameRules("Rule 1", false, 3, 1, 7, 6);

@@ -80,7 +80,7 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
 
                     var newTeam = new PlayoffTeam(playoff, sourceTeam.Parent, sourceTeam.Name, sourceTeam.NickName, sourceTeam.ShortName, sourceTeam.Skill, sourceTeam.Owner, playoff.Year);                    
 
-                    var playoffRanking = new TeamRanking(nextRank, rule.GroupName, newTeam);
+                    var playoffRanking = new TeamRanking(nextRank, rule.GroupName, newTeam, 1);
 
                     playoff.Rankings.Add(playoffRanking);
 
