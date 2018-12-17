@@ -17,6 +17,10 @@ namespace TeamApp.Services.Implementation
             teamRankingRepository = TeamRankingRepository;
         }
 
+        public SeasonListViewModel GetSeasonList()
+        {
+            
+        }
 
         public StandingsViewModel GetStandings(int competitionId)
         {
