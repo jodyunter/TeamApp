@@ -12,4 +12,8 @@
     <ProjectReference Include="..\TeamApp\TeamApp.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\Dynamodb\" />
+  </ItemGroup>
+
 </Project>

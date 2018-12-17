@@ -27,6 +27,8 @@ namespace TeamApp.Web.Controllers
                 t.Rank = t.Rankings.Where(r => r.Key.Equals(model.StandingsName)).FirstOrDefault().Value;
             });
 
+            model.Teams = model.Teams.OrderBy(t => t.Rank).ToList();
+
             return model;
         }
     }
