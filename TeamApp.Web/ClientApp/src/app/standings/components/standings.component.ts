@@ -14,30 +14,10 @@ export class StandingsComponent {
       this.standingsData = result;
     }, error => console.error(error));
 
-    http.get<number[]>(baseUrl + 'api/SampleData/GetSummaries').subscribe(result => {
-      this.summaries = result;
-    }, error => console.error(error));
   }
   
 
 }
 
-interface StandingsTeam {
-  teamName: string,
-  rank: number,
-  division: string,
-  wins: number,
-  loses: number,
-  ties: number,
-  gamesPlayed: number,
-  goalsFor: number,
-  goalsAgainst: number,
-  goalDifference: number,
-  points: number
-}
 
-interface Standings {
-  standingsName: string,
-  teams: StandingsTeam[]
-}
 

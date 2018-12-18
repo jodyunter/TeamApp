@@ -19,7 +19,7 @@ namespace TeamApp.Services.Implementation
 
         public SeasonListViewModel GetSeasonList()
         {
-            
+            return null;   
         }
 
         public StandingsViewModel GetStandings(int competitionId)
