@@ -9,9 +9,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { StandingsComponent } from './standings/standings.component';
-import { GameDataComponent } from './game-data/game-data.component';
-import { TeamListComponent } from './team/list/teamlist.component';
+import { TeamComponent } from './team/components/team.component';
 
 @NgModule({
   declarations: [
@@ -20,20 +18,17 @@ import { TeamListComponent } from './team/list/teamlist.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    StandingsComponent,
-    GameDataComponent,
-    TeamListComponent
+    TeamComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },      
+      { path: 'home', component: HomeComponent, pathMatch: 'full' },      
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'standings', component: StandingsComponent },
-      { path: 'team/list', component: TeamListComponent },
+      { path: 'team', component: TeamComponent }
     ])
   ],
   providers: [],

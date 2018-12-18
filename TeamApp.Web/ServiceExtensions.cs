@@ -14,8 +14,7 @@ namespace TeamApp.Web
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
-            services.AddSingleton<ITeamService, TeamService>();
-            services.AddSingleton<IStandingsService, StandingsService>();            
+            services.AddSingleton<ITeamService, TeamService>();              
             Services.ServiceExtensions.RegisterServices(services);
             return services;
         }

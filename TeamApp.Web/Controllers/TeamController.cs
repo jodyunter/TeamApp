@@ -21,7 +21,8 @@ namespace TeamApp.Web.Controllers
         [HttpGet("[action]")]
         public IEnumerable<TeamViewModel> GetTeams()
         {
-            return teamService.GetTeamByStatus(true);
+            var teams = teamService.GetAllTeams();
+            return teams;
 
         }
     }

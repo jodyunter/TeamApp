@@ -34,7 +34,7 @@ namespace TeamApp.Web.Controllers
             return Summaries;
         }
 
-        public class WeatherForecast
+    public class WeatherForecast
         {
             public string DateFormatted { get; set; }
             public int TemperatureC { get; set; }

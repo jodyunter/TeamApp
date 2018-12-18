@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TeamApp.Domain.Repositories;
 using TeamApp.Services.ViewModels.Views;
 using TeamApp.Domain;
+using System.Linq;
 
 namespace TeamApp.Services.Implementation
 {
@@ -36,6 +37,13 @@ namespace TeamApp.Services.Implementation
 
             return MapDomainToModel(teams);
             
+        }
+
+        public List<TeamViewModel> GetAllTeams()
+        {
+            var teams = repository.GetAll().ToList();
+
+            return MapDomainToModel(teams);
         }
         
         

@@ -11,6 +11,7 @@ namespace TeamApp.Services
         TeamViewModel GetTeamByName(string name);
         TeamViewModel GetTeamById(int id);
         List<TeamViewModel> GetTeamByStatus(bool active);
-        
+        List<TeamViewModel> GetAllTeams();
+
     }
 }

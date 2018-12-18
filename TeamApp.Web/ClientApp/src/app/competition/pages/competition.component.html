@@ -1,7 +1,0 @@
-<h1>Competition Pages</h1>
-<select (change)="selectCompetitionForDropDown($event.target.value)">
-  <option value="0">--All--</option>
-  <option *ngFor="let competition of competitions" value="{{competition.id}}">
-    {{competition.name}} {{competition.year}}
-  </option>
-</select>
