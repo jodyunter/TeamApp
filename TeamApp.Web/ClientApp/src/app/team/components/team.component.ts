@@ -1,21 +1,29 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { TeamService } from '../../services/team.service';
 
 @Component({
   selector: 'app-team',
   templateUrl: '../pages/team.component.html',
   //styleUrls: ['../css/team.component.css']
 })
+
 export class TeamComponent implements OnInit {
   teams: Team[];
+  selectedTeam: Team;
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<Team[]>(baseUrl + 'api/Team/GetTeams').subscribe(result => {
-      this.teams = result;
-    }, error => console.error(error));
+  constructor(private teamService: TeamService) {
+      
+  }
+
+  getTeams(): void {
+    this.teamService.getTeams().subscribe(teams => this.teams = teams);
+  }
+  onSelect(team: Team): void {
+    this.selectedTeam = team;
   }
 
   ngOnInit() {
+    this.getTeams();
   }
 
 }

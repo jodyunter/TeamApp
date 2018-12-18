@@ -6,6 +6,6 @@ interface Team {
   skill: number,
   owner: string,
   firstyear: number,
-  secondyear: number,
+  lastyear: number,
   active: boolean
 }

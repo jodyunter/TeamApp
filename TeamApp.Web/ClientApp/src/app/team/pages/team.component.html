@@ -1,23 +1,10 @@
-<h2>{{team.name || uppercase}} Details</h2>
-<div><span>id:</span>{{team.id}}</div>
-<div><label>name: <input [(ngModel)]="team.name" placeholder="name" /></label></div>
-<div><span>skill:</span>{{team.skill}}</div>
+<h2>My Teams</h2>
+<ul>
+  <li *ngFor="let team of teams"
+      [class.selected]="team == selectedHero"
+      (click)="onSelect(team)">
+    <span>{{team.id}}</span> {{team.name}} {{team.nickname}}
+  </li>
+</ul>
 
-<table class='table' *ngIf="teams">
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>Skill</th>
-      <th>Active</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let team of teams">
-      <td>{{ team.id }}</td>
-      <td>{{ team.name }}</td>
-      <td>{{ team.skill }}</td>
-      <td>{{ team.active }}</td>
-    </tr>
-  </tbody>
-</table>
+<app-team-detail [team]="selectedTeam"></app-team-detail>
