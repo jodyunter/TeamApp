@@ -56,5 +56,10 @@ namespace TeamApp.Data.Repositories.NHibernate
         {
             return this.ToList();
         }
+
+        public void Flush()
+        {
+            session.Flush();
+        }
     }
 }

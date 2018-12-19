@@ -1,10 +1,17 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': 'my-auth-token'
+  })
+};
 
 export class TeamService {
   http: HttpClient;
@@ -17,6 +24,10 @@ export class TeamService {
 
   getTeams(): Observable<Team[]> {    
     return this.http.get<Team[]>(this.baseUrl + 'api/Team/GetTeams');    
+  }
+
+  saveTeams(teams: Team[]): Observable<Team[]> {
+    return this.http.put<Team[]>(this.baseUrl + 'api/Team/SaveTeams', teams, httpOptions);
   }
 }
 

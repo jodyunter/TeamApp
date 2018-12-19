@@ -40,6 +40,10 @@ namespace TeamApp.Domain.Competitions.Seasons
             }
         }
 
+        public override void ProcessEndOfSeason()
+        {
+            SortAllTeams();
+        }
         public virtual SeasonDivision GetDivisionByName(string divisionName)
         {
             return Divisions.Where(d => d.Name.Equals(divisionName)).First();
@@ -66,6 +70,7 @@ namespace TeamApp.Domain.Competitions.Seasons
                 SortTeamByDivision(division.Name);
             });
         }
+        //todo must make sure this doesn't create duplicate records
         public virtual void SortTeamByDivision(string divisionName)
         {
             var division = GetDivisionByName(divisionName);
@@ -78,7 +83,14 @@ namespace TeamApp.Domain.Competitions.Seasons
 
             listOfTeams.ForEach(team =>
             {
-                Rankings.Add(new TeamRanking(rank, division.Name, team, division.Level));
+                var ranking = Rankings.Where(r => r.GroupName == division.Name && r.Team.Name.Equals(team.Name) && division.Level == r.GroupLevel).FirstOrDefault();
+                if (ranking == null)
+                {
+                    Rankings.Add(new TeamRanking(rank, division.Name, team, division.Level));
+                }
+                else
+                    ranking.Rank = rank;
+
                 rank++;
             });
         }

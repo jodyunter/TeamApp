@@ -19,7 +19,7 @@ namespace TeamApp.Test.Helpers
         
         public static League CreateBasicLeague(string name)
         {
-            return new League(name);
+            return new League(name, 1, null);
         }
         public static SeasonCompetitionConfig CreateBasicSeasonConfiguration(League league)
         {
@@ -86,7 +86,7 @@ namespace TeamApp.Test.Helpers
  
             }
 
-            league.Competitions.Add(competition);
+            league.CompetitionConfigs.Add(competition);
             return competition;
 
         }
@@ -110,7 +110,7 @@ namespace TeamApp.Test.Helpers
 
             var playoffConfig = new PlayoffCompetitionConfig("My Playoff", seasonConfig.League, 2, gameRules, 1, null, rankingRules, seriesRules, new List<CompetitionConfig> { seasonConfig });
 
-            seasonConfig.League.Competitions.Add(playoffConfig);
+            seasonConfig.League.CompetitionConfigs.Add(playoffConfig);
             return playoffConfig;
 
 

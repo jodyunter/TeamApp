@@ -12,6 +12,7 @@ namespace TeamApp.Domain.Repositories
         void Remove(T team);
         T Get(long id);
         IEnumerable<T> GetAll();
+        void Flush();
        
     }
 }

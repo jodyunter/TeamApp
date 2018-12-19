@@ -46,6 +46,17 @@ namespace TeamApp.Services.Implementation
             return MapDomainToModel(teams);
         }
         
+
+        public List<TeamViewModel> SaveTeams(IEnumerable<TeamViewModel> models)
+        {
+
+            MapModelToDomain(models.ToList()).ForEach(t =>
+            {
+                repository.Update(t);                
+            });
+
+            return models.ToList();
+        }
         
 
     }

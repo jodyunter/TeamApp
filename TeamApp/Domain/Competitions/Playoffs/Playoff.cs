@@ -24,6 +24,11 @@ namespace TeamApp.Domain.Competitions.Playoffs
             CurrentRound = currentRound;
         }
 
+        public override void ProcessEndOfSeason()
+        {
+            //nothing to do for end of series at this point in time
+        }
+
         public virtual void BeginRound()
         {
             if (IsRoundComplete(CurrentRound)) CurrentRound++;

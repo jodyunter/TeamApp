@@ -4,7 +4,7 @@ import { TeamService } from '../../services/team.service';
 @Component({
   selector: 'app-team',
   templateUrl: '../pages/team.component.html',
-  //styleUrls: ['../css/team.component.css']
+  styleUrls: ['../css/team.component.css']
 })
 
 export class TeamComponent implements OnInit {
@@ -13,6 +13,10 @@ export class TeamComponent implements OnInit {
 
   constructor(private teamService: TeamService) {
       
+  }
+
+  saveTeams(): void {
+    this.teamService.saveTeams(teams).subscribe();
   }
 
   getTeams(): void {

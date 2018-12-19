@@ -68,7 +68,7 @@ namespace TeamApp.Test.Helpers
 
             };
 
-            var league = new League(NHL);
+            var league = new League(NHL, 1, null);
 
             var objects = new Dictionary<string, object>();
            

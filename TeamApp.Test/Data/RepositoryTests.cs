@@ -15,6 +15,7 @@ using TeamApp.Domain.Competitions.Playoffs;
 using TeamApp.Domain.Competitions.Seasons;
 using System.Collections.Generic;
 using TeamApp.Test.Helpers;
+using TeamApp.Domain.Competitions.Seasons.Config;
 
 namespace TeamApp.Test.Data
 {
@@ -99,22 +100,31 @@ namespace TeamApp.Test.Data
         [Fact]
         public void ShouldExerciseCompetitionRepositoryNHibernate()
         {
-            AddDataForTests();
+            dropDatabase = true;
+
+            SetupConfigForTests();
+            PlayAnotherYear(1, "NHL", new Random());
+            PlayAnotherYear(2, "NHL", new Random());
+            PlayAnotherYear(3, "NHL", new Random());
+            PlayAnotherYear(4, "NHL", new Random());
+            PlayAnotherYear(5, "NHL", new Random());
 
             var repo = new CompetitionRepositoryNHibernate();
             Equals(2, repo.GetAll().Count());
 
-            Equals(7, repo.GetByNameAndYear("My Season", 1).Teams.Count());
+            Equals(7, repo.GetByNameAndYear("My Season", 5).Teams.Count());
 
             var comps = repo.GetByYear(1);
             Equals(2, comps.Count());
+            
         }
         #endregion
         #region Team Ranking Repo Tests
         [Fact]
         public void ShouldExerciseTeamRankingRepositoryNHibernate()
         {
-            AddDataForTests();
+            SetupConfigForTests();
+            PlayAnotherYear(1, "NHL", new Random(55123));
 
             var repo = new TeamRankingRepositoryNHibernate();
             var compRepo = new CompetitionRepositoryNHibernate();
@@ -129,7 +139,8 @@ namespace TeamApp.Test.Data
         [Fact]
         public void ShouldExerciseStandingsRepository()
         {
-            AddDataForTests();
+            SetupConfigForTests();
+            PlayAnotherYear(1, "NHL", new Random(55123));
             var repo = new StandingsRepositoryNHibernate();
             var compRepo = new CompetitionRepositoryNHibernate();
             var teams = repo.GetByCompetition(compRepo.GetByNameAndYear("My Season", 1).Id);
@@ -144,103 +155,78 @@ namespace TeamApp.Test.Data
             schemaExport.Execute(false, false, false);
         }
 
-        [Fact]
-        public void ShouldDoSomething()
+        private void SetupConfigForTests()
         {
             var test = new RepositoryNHibernate<League>();
-
-            var league = Data2.CreateBasicLeague("NHL");
-            var seasonConfig = Data2.CreateBasicSeasonConfiguration(league);
-            var playoffConfig = Data2.CreateBasicPlayoffConfiguration(seasonConfig);
-
-            var season = seasonConfig.CreateCompetition(1, null);
-
-            var random = new Random(55123);
-
-            while (!season.IsComplete())
-            {
-                season.PlayNextDay(random);
-
-            }
-
-            ((Season)season).SortAllTeams();
-            test.Update(league);
-            session.Flush();
-
-            var playoff = playoffConfig.CreateCompetition(1, new List<Competition> { season });
-
-            while (!playoff.IsComplete())
-            {
-                playoff.PlayNextDay(random);
-            }
-            test.Update(league);
-            session.Flush();
-
-
-            test.Update(league);
-            session.Flush();
-        }
-
-
-        private void PlayAYear()
-        {
-            //assumes data is added
-        }
-        private void AddDataForTests()
-        {
-            var test = new RepositoryNHibernate<League>();
-            var seasonRepo = new RepositoryNHibernate<Season>();
-            var playoffRepo = new RepositoryNHibernate<Playoff>();
-            var gameRepo = new RepositoryNHibernate<ScheduleGame>();
 
             var league = RepositoryTestData.CreateBasicLeague("NHL");
             var seasonConfig = RepositoryTestData.CreateBasicSeasonConfiguration(league);
             var playoffConfig = RepositoryTestData.CreateBasicPlayoffConfiguration(seasonConfig);
 
-            var season = seasonConfig.CreateCompetition(1, null);
-
-            var random = new Random(55123);
-
-            while (!season.IsComplete())
-            {
-                season.PlayNextDay(random).ForEach(g =>
-                {
-                    gameRepo.Update(g);
-                });
-
-            }
-
-            ((Season)season).SortAllTeams();
-            seasonRepo.Update((Season)season);
-
-            var playoff = playoffConfig.CreateCompetition(1, new List<Competition> { season });
-
-            while (!playoff.IsComplete())
-            {
-                playoff.PlayNextDay(random).ForEach(g =>
-                {
-                    gameRepo.Update(g);
-                });
-            }
-            playoffRepo.Update((Playoff)playoff);
-
             test.Update(league);
             session.Flush();
         }
+        private void PlayAnotherYear(int nextYear, string leagueName, Random random)
+        {
+            var leagueRepo = new RepositoryNHibernate<League>();                        
+            var compRepo = new CompetitionRepositoryNHibernate();
+            var gameRepo = new ScheduleGameRepository();
 
+            var league = leagueRepo.Where(m => m.Name.Equals(leagueName)).First();
+
+            league.CompetitionConfigs.OrderBy(m => m.Ordering).ToList().ForEach(c =>
+            {
+                var parentCompList = new List<Competition>();
+
+                c.Parents.ToList().ForEach(p =>
+                {
+                    parentCompList.Add(compRepo.GetByNameAndYear(p.Name, nextYear));
+                });
+
+                var competition = c.CreateCompetition(nextYear, parentCompList);
+
+                while(!competition.IsComplete())
+                {
+                    competition.PlayNextDay(random).ForEach(g =>
+                    {
+                        gameRepo.Update(g);
+                    });
+                }
+
+                competition.ProcessEndOfSeason();
+
+                compRepo.Update(competition);
+                
+            });
+
+            session.Flush();
+            
+        }
+
+        private void PlayAYear()
+        {
+            //assumes data is added
+        }
+   
 
         //can use this to get some base data going
-        [Fact]
+        //[Fact]
         public void ShouldPopulateDatabase()
         {
-            AddDataForTests();
-            var repo = new StandingsRepositoryNHibernate();
+            SetupConfigForTests();
+            PlayAnotherYear(1, "NHL", new Random());
+            PlayAnotherYear(2, "NHL", new Random());
+            PlayAnotherYear(3, "NHL", new Random());
+            PlayAnotherYear(4, "NHL", new Random());
+            PlayAnotherYear(5, "NHL", new Random());
+            PlayAnotherYear(6, "NHL", new Random());
+            PlayAnotherYear(7, "NHL", new Random());
+            PlayAnotherYear(8, "NHL", new Random());
+            PlayAnotherYear(9, "NHL", new Random());
+            PlayAnotherYear(10, "NHL", new Random());
 
-            var data = repo.GetByCompetition(1);
 
-            Equal(7, data.Count);
-
-            dropDatabase = true;
+            dropDatabase = false;
 
         }
 

@@ -6,19 +6,20 @@ using TeamApp.Domain.Competitions;
 namespace TeamApp.Domain
 {
     public class League:BaseDataObject,ITimePeriod
-    {
-        private string v;
+    {        
         public virtual int? FirstYear { get; set; }
         public virtual int? LastYear { get; set; }
         public League() { }
-        public League(string v)
+        public League(string name, int? firstYear, int? lastYear)
         {
-            this.v = v;
-            Competitions = new List<CompetitionConfig>();
+            Name = name;
+            FirstYear = firstYear;
+            LastYear = lastYear;
+            CompetitionConfigs = new List<CompetitionConfig>();
         }
 
         public virtual string Name { get; set; }
 
-        public virtual IList<CompetitionConfig> Competitions { get; set; }
+        public virtual IList<CompetitionConfig> CompetitionConfigs { get; set; }
     }
 }
