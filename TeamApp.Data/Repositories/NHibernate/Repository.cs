@@ -33,7 +33,7 @@ namespace TeamApp.Data.Repositories.NHibernate
         }
 
         public object Add(T entity)
-        {
+        {            
             return session.Save(entity);
         }
 

@@ -13,7 +13,7 @@ namespace TeamApp.Data.Repositories.NHibernate
         {
             compRepo = new RepositoryNHibernate<Competition>();
         }
-        public IList<SeasonTeam> GetByCompetition(int competitionId)
+        public IList<SeasonTeam> GetByCompetition(long competitionId)
         {
             var competition = compRepo.Where(c => c.Id == competitionId).First();
             

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TeamApp.Domain.Repositories
 {
-    public interface IRepository<T> where T : IDataObject
+    public interface IRepository<T>: IQueryable<T> where T : IDataObject
     {
         object Add(T team);
         void Update(T team);

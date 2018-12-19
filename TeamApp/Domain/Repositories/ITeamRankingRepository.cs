@@ -7,6 +7,6 @@ namespace TeamApp.Domain.Repositories
 {
     public interface ITeamRankingRepository:IRepository<TeamRanking>
     {
-        IList<TeamRanking> GetByCompetition(int competitionId);
+        IList<TeamRanking> GetByCompetition(long competitionId);
     }
 }

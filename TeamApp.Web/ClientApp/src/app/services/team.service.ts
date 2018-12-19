@@ -8,8 +8,7 @@ import { HttpClient } from '@angular/common/http';
 
 export class TeamService {
   http: HttpClient;
-  baseUrl: string;
-  teams: Team[];
+  baseUrl: string;  
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.http = http;

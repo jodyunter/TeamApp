@@ -8,7 +8,7 @@ namespace TeamApp.Data.Repositories.NHibernate
 {
     public class TeamRankingRepositoryNHibernate : RepositoryNHibernate<TeamRanking>, ITeamRankingRepository
     {
-        public IList<TeamRanking> GetByCompetition(int competitionId)
+        public IList<TeamRanking> GetByCompetition(long competitionId)
         {
             return this.Where(tr => tr.Team.Competition.Id == competitionId).ToList();
         }
