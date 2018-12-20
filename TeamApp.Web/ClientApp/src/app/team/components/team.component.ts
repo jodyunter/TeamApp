@@ -11,7 +11,7 @@ import { TeamService } from '../../services/team.service';
 export class TeamComponent implements OnInit {
   teams: Team[];
   selectedTeam: Team;
-
+ 
   constructor(private teamService: TeamService, private ref: ChangeDetectorRef) {    
     setInterval(() => {
       this.getTeams();
@@ -38,13 +38,13 @@ export class TeamComponent implements OnInit {
   getTeams(): void {
     this.teamService.getTeams().subscribe(teams => this.teams = teams);
   }
+
   onSelect(team: Team): void {
     this.selectedTeam = team;    
   }
 
-  setSelectedTeam(): void {    
-    this.selectedTeam = this.teams[0];
-    
+  cancelEditOrCreate(): void {
+    this.selectedTeam = null;
   }
 
   ngOnInit() {

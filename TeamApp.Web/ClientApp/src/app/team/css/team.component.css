@@ -2,7 +2,7 @@ table.darkTable {
   font-family: "Arial Black", Gadget, sans-serif;
   border: 2px solid #000000;
   background-color: #4A4A4A;
-  width: 45%;
+  width: 100%;
   height: 200px;
   text-align: center;
   border-collapse: collapse;
@@ -28,7 +28,7 @@ table.darkTable tr:nth-child(even) {
 }
 
 table.darkTable thead {
-  background: #000000;
+  background: #808080;
   border-bottom: 3px solid #000000;
 }
 
@@ -61,7 +61,7 @@ table.darkTable tfoot {
 
 .button {
   background-color: #888888; /* Green */
-  border: 2px solid darkblue;
+  border: 2px solid white;
   color: white;
   padding: 15px 32px;
   text-align: center;
@@ -81,6 +81,19 @@ table.darkTable tfoot {
   transition-duration:0.4s;
 }
 
+.teamPanel {
+  width:75%;
+  height:200px;
+  display: inline-block;
+  vertical-align:top;
+  float:left;
+  padding-right:20px
+}
 .editPanel {
-  width: 40%;
+  width: 25%;
+  height:200px;
+  display: inline-block;
+  vertical-align:top;
+  float:right;
+
 }
