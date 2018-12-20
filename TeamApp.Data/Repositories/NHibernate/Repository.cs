@@ -39,7 +39,17 @@ namespace TeamApp.Data.Repositories.NHibernate
 
         public IDataObject Update(T entity)
         {
-           return session.Merge<IDataObject>(entity);
+            //return session.Merge<IDataObject>(entity);
+            try
+            {
+                session.SaveOrUpdate(entity);
+            }
+            catch (Exception e)
+            {
+                session.Merge((IDataObject)entity);
+            }
+
+            return null;
         }
 
         public void Remove(T entity)

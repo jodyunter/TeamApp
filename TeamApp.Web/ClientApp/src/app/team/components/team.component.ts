@@ -44,7 +44,7 @@ export class TeamComponent implements OnInit {
   }
 
   cancelEditOrCreate(): void {
-    this.selectedTeam = null;
+    this.selectedTeam = null;    
   }
 
   ngOnInit() {

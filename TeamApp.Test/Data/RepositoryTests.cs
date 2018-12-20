@@ -16,6 +16,7 @@ using TeamApp.Domain.Competitions.Seasons;
 using System.Collections.Generic;
 using TeamApp.Test.Helpers;
 using TeamApp.Domain.Competitions.Seasons.Config;
+using TeamApp.Data.Repositories;
 
 namespace TeamApp.Test.Data
 {
@@ -25,6 +26,7 @@ namespace TeamApp.Test.Data
         private Configuration configuration;
 
         protected bool dropDatabase = true;
+        protected bool dropFirst = false;
         protected SchemaExport schemaExport;
 
         public RepositoryTests()
@@ -32,6 +34,10 @@ namespace TeamApp.Test.Data
             session = NHibernateHelper.OpenSession();
             configuration = NHibernateHelper.GetConfiguration().BuildConfiguration();
             schemaExport = new SchemaExport(configuration);
+            if (dropFirst)
+            {
+                DropDatabase();
+            }
             SetupDatabase();                    
         }
 
@@ -63,7 +69,8 @@ namespace TeamApp.Test.Data
         
         public void ShouldExterciseTeamRepositoryNHibernate()
         {
-            var repo = new TeamRepositoryNHibernate();
+            var repo = new TeamRepository(new RepositoryNHibernate<Team>());
+
             var newTeamId = (long)repo.Add(new Team("Add Team", "AddNick", "AddShort", 5, "Me", 1, null, true));
             var newTeam = repo.Get(newTeamId);
             NotEqual(0L, newTeam.Id);
@@ -99,10 +106,8 @@ namespace TeamApp.Test.Data
         #region Competition Repo Tests
         [Fact]
         public void ShouldExerciseCompetitionRepositoryNHibernate()
-        {
-            dropDatabase = true;
-
-            SetupConfigForTests();
+        {            
+            SetupConfigForTests("NHL");
             PlayAnotherYear(1, "NHL", new Random());
             PlayAnotherYear(2, "NHL", new Random());
             PlayAnotherYear(3, "NHL", new Random());
@@ -123,7 +128,7 @@ namespace TeamApp.Test.Data
         [Fact]
         public void ShouldExerciseTeamRankingRepositoryNHibernate()
         {
-            SetupConfigForTests();
+            SetupConfigForTests("NHL");
             PlayAnotherYear(1, "NHL", new Random(55123));
 
             var repo = new TeamRankingRepositoryNHibernate();
@@ -139,7 +144,7 @@ namespace TeamApp.Test.Data
         [Fact]
         public void ShouldExerciseStandingsRepository()
         {
-            SetupConfigForTests();
+            SetupConfigForTests("NHL");
             PlayAnotherYear(1, "NHL", new Random(55123));
             var repo = new StandingsRepositoryNHibernate();
             var compRepo = new CompetitionRepositoryNHibernate();
@@ -148,18 +153,38 @@ namespace TeamApp.Test.Data
             Equals(7, teams.Count);
         }
         #endregion
+        #region League Repo Tests
+        [Fact]
+        public void ShouldExterciseLeagueRepository()
+        {            
+            SetupConfigForTests("Other League");
+            PlayAnotherYear(1, "Other League", new Random(55123));
+
+            SetupConfigForTests("NHL");
+            SetupConfigForTests("Dude League");
+
+            var repo = new LeagueRepository(new RepositoryNHibernate<League>());
+
+            Equals(3, repo.GetAll().Count());
+
+
+        }
+        #endregion
         [Fact]
         public void ShouldExportSchema()
         {
             schemaExport.SetOutputFile("../../../sqloutput/ddl.sql");
-            schemaExport.Execute(false, false, false);
+            schemaExport.Execute(false, true, false);
+
+            dropDatabase = false;
+
         }
 
-        private void SetupConfigForTests()
+        private void SetupConfigForTests(string leagueName)
         {
-            var test = new RepositoryNHibernate<League>();
+            var test = new LeagueRepository(new RepositoryNHibernate<League>());
 
-            var league = RepositoryTestData.CreateBasicLeague("NHL");
+            var league = RepositoryTestData.CreateBasicLeague(leagueName);
             var seasonConfig = RepositoryTestData.CreateBasicSeasonConfiguration(league);
             var playoffConfig = RepositoryTestData.CreateBasicPlayoffConfiguration(seasonConfig);
 
@@ -168,11 +193,11 @@ namespace TeamApp.Test.Data
         }
         private void PlayAnotherYear(int nextYear, string leagueName, Random random)
         {
-            var leagueRepo = new RepositoryNHibernate<League>();                        
+            var leagueRepo = new LeagueRepository(new RepositoryNHibernate<League>());
             var compRepo = new CompetitionRepositoryNHibernate();
             var gameRepo = new ScheduleGameRepository();
 
-            var league = leagueRepo.Where(m => m.Name.Equals(leagueName)).First();
+            var league = leagueRepo.Where(m => m.Name.Equals(leagueName)).First();            
 
             league.CompetitionConfigs.OrderBy(m => m.Ordering).ToList().ForEach(c =>
             {
@@ -213,7 +238,7 @@ namespace TeamApp.Test.Data
         [Fact]
         public void ShouldPopulateDatabase()
         {
-            SetupConfigForTests();
+            SetupConfigForTests("NHL");
             PlayAnotherYear(1, "NHL", new Random());
             PlayAnotherYear(2, "NHL", new Random());
             PlayAnotherYear(3, "NHL", new Random());

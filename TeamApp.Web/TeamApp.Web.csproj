@@ -50,7 +50,6 @@
     <Folder Include="ClientApp\src\app\league\config\season\models\" />
     <Folder Include="ClientApp\src\app\league\config\season\pages\" />
     <Folder Include="ClientApp\src\app\league\css\" />
-    <Folder Include="ClientApp\src\app\league\pages\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
