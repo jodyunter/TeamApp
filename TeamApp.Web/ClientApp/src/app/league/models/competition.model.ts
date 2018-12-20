@@ -1,0 +1,3 @@
+#
+# competition.ps1
+#

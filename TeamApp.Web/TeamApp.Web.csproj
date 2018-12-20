@@ -39,6 +39,20 @@
     <ProjectReference Include="..\TeamApp.Services\TeamApp.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ClientApp\src\app\league\components\" />
+    <Folder Include="ClientApp\src\app\league\config\playoff\components\" />
+    <Folder Include="ClientApp\src\app\league\config\playoff\css\" />
+    <Folder Include="ClientApp\src\app\league\config\playoff\models\" />
+    <Folder Include="ClientApp\src\app\league\config\playoff\pages\" />
+    <Folder Include="ClientApp\src\app\league\config\season\components\" />
+    <Folder Include="ClientApp\src\app\league\config\season\css\" />
+    <Folder Include="ClientApp\src\app\league\config\season\models\" />
+    <Folder Include="ClientApp\src\app\league\config\season\pages\" />
+    <Folder Include="ClientApp\src\app\league\css\" />
+    <Folder Include="ClientApp\src\app\league\pages\" />
+  </ItemGroup>
+
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">
