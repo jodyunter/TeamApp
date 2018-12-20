@@ -1,20 +1,22 @@
 <h2>My Teams</h2>
+
+<p *ngIf="!teams"><em>Loading...</em></p>
 <table class="darkTable">
   <thead>
-  <tr>
-    <th colspan="1">Id</th>
-    <th colspan="7">Name</th>
-    <th colspan="3">Owner</th>
-    <th colspan="1">Skill</th>
-    <th colspan="1">Start</th>
-    <th colspan="1">End</th>
-    <th colspan="1">Active</th>
-  </tr>
+    <tr>
+      <th colspan="1">Id</th>
+      <th colspan="7">Name</th>
+      <th colspan="3">Owner</th>
+      <th colspan="1">Skill</th>
+      <th colspan="1">Start</th>
+      <th colspan="1">End</th>
+      <th colspan="1">Active</th>
+    </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let team of teams" (click)="onSelect(team)">
-      <td colspan="1">{{team.id}}</td>      
-      <td class="darkleft" colspan="7">{{team.name}} {{team.nickname}}</td>
+    <tr *ngFor="let team of teams | async" (click)="onSelect(team)">
+      <td colspan="1">{{team.id}}</td>
+      <td class="darkleft" colspan="7">{{team.name}} {{team.nickName}}</td>
       <td class="darkleft" colspan="3">{{team.owner}}</td>
       <td>{{team.skill}}</td>
       <td colspan="1">{{team.firstYear}}</td>
@@ -24,4 +26,8 @@
   </tbody>
 </table>
 
+<button (click)="createNewTeam()">Create Team</button>
 <app-team-detail [team]="selectedTeam"></app-team-detail>
+<div *ngIf="selectedTeam">
+  <button (click)="saveTeam()">Save Team</button>
+</div>

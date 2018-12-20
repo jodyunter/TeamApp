@@ -1,11 +1,11 @@
 interface Team {
   id: number,
   name: string,
-  nickname: string,
-  shortname: string,
+  nickName: string,
+  shortName: string,
   skill: number,
   owner: string,
-  firstyear: number,
-  lastyear: number,
+  firstYear: number,
+  lastYear: number,
   active: boolean
 }

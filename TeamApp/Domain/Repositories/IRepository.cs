@@ -8,7 +8,7 @@ namespace TeamApp.Domain.Repositories
     public interface IRepository<T>: IQueryable<T> where T : IDataObject
     {
         object Add(T team);
-        void Update(T team);
+        IDataObject Update(T team);
         void Remove(T team);
         T Get(long id);
         IEnumerable<T> GetAll();

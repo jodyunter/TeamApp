@@ -12,7 +12,8 @@ namespace TeamApp.Services
         TeamViewModel GetTeamById(int id);
         List<TeamViewModel> GetTeamByStatus(bool active);
         List<TeamViewModel> GetAllTeams();
-        List<TeamViewModel> SaveTeams(IEnumerable<TeamViewModel> models);
+        List<TeamViewModel> SaveTeams(IEnumerable<TeamViewModel> models);        
+        TeamViewModel SaveTeam(TeamViewModel model);
 
     }
 }

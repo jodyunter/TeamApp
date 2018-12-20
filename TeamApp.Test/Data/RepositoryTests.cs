@@ -210,7 +210,7 @@ namespace TeamApp.Test.Data
    
 
         //can use this to get some base data going
-        //[Fact]
+        [Fact]
         public void ShouldPopulateDatabase()
         {
             SetupConfigForTests();

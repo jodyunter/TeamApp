@@ -1,13 +1,22 @@
 {
-  "DatabaseToUse": "JodyTest",
+  "DatabaseToUse": "JodyHomeTest",
   "SessionContext": "thread_static",
   "ConnectionStrings": {
-    "JodyTest": {
+    "JodyWorkTest": {
       "ConnectionString": "Data Source=localhost;Initial Catalog=JodyTest;Integrated Security=True",
+      "Driver": "NHibernate.Driver.SqlClientDriver",
+      "Provider": "NHibernate.Connection.DriverConnectionProvider"
+    },
+    "JodyHomeTest": {
+      "ConnectionString": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=jodytest;Integrated Security=True",
+      "Driver": "NHibernate.Driver.SqlClientDriver",
+      "Provider": "NHibernate.Connection.DriverConnectionProvider"
+    },
+    "JodyTest": {
+      "ConnectionString": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=jodytest;Integrated Security=True",
       "Driver": "NHibernate.Driver.SqlClientDriver",
       "Provider": "NHibernate.Connection.DriverConnectionProvider"
     }
   }
-
 
 }

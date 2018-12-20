@@ -1,5 +1,5 @@
 {
-  "DatabaseToUse": "JodyWorkTest",
+  "DatabaseToUse": "JodyHomeTest",
   "SessionContext": "web",
   "ConnectionStrings": {
     "JodyWorkTest": {
@@ -8,7 +8,7 @@
       "Provider": "NHibernate.Connection.DriverConnectionProvider"
     },
     "JodyHomeTest": {
-      "ConnetionString": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=jodytest;Integrated Security=True",
+      "ConnectionString": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=jodytest;Integrated Security=True",
       "Driver": "NHibernate.Driver.SqlClientDriver",
       "Provider": "NHibernate.Connection.DriverConnectionProvider"
     },
@@ -18,4 +18,5 @@
       "Provider": "NHibernate.Connection.DriverConnectionProvider"
     }
   }
+
 }

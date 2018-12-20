@@ -55,9 +55,19 @@ namespace TeamApp.Services.Implementation
                 repository.Update(t);                
             });
 
+            repository.Flush();
+
             return models.ToList();
         }
-        
+
+
+        public TeamViewModel SaveTeam(TeamViewModel model)
+        {
+            var newTeam = MapModelToDomain(model);            
+            newTeam = (Team)repository.Update(newTeam);
+
+            return MapDomainToModel(newTeam);
+        }
 
     }
 }

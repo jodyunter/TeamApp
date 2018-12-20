@@ -25,11 +25,11 @@ namespace TeamApp.Web.Controllers
             return teams;
 
         }
-        [HttpPut("[action]")]
-        public IEnumerable<TeamViewModel> SaveTeams(TeamViewModel[] models)
+        [HttpPost("[action]")]
+        public TeamViewModel SaveTeam([FromBody]TeamViewModel models)
         {
 
-            var result = teamService.SaveTeams(models.ToList());
+            var result = teamService.SaveTeam(models);
             return result;
         }
     }

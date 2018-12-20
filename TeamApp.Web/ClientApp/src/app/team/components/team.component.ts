@@ -14,16 +14,29 @@ export class TeamComponent implements OnInit {
   constructor(private teamService: TeamService) {
       
   }
-
-  saveTeams(): void {
-    this.teamService.saveTeams(teams).subscribe();
+  createNewTeam(): void {
+    this.selectedTeam = {
+      id: 0,
+      name: "",
+      nickName: "",
+      shortName: "",
+      owner:"",
+      skill: 5,
+      firstYear: 1,
+      lastYear: null,
+      active: true
+    } as Team;
+  }
+  saveTeam(): void {
+    this.teamService.saveTeam(this.selectedTeam).subscribe(team => this.selectedTeam = team);
+    this.getTeams();
   }
 
   getTeams(): void {
     this.teamService.getTeams().subscribe(teams => this.teams = teams);
   }
   onSelect(team: Team): void {
-    this.selectedTeam = team;
+    this.selectedTeam = team;    
   }
 
   ngOnInit() {

@@ -40,17 +40,8 @@ namespace TeamApp.Data.Repositories.NHibernate
             var driverFormatter = "ConnectionStrings:{0}:Driver";            
             var connectionString = settings[string.Format(connectionStringFormatter, settingsToUse)];
             var providerString = settings[string.Format(providerFormatter, settingsToUse)];
-            var driverString = settings[string.Format(driverFormatter, settingsToUse)];            
-            /*
-           return Fluently.Configure()
-                  .Database(MsSqlConfiguration.MsSql2012
-                    .ConnectionString(settings["ConnectionStrings:JodyTest:ConnectionString"])
-                    .Provider("NHibernate.Connection.DriverConnectionProvider")
-                    .Driver("NHibernate.Driver.SqlClientDriver")
-                    .ShowSql())
-                  .Mappings(m => m
-                    .FluentMappings.AddFromAssemblyOf<Team>());
-                    */
+            var driverString = settings[string.Format(driverFormatter, settingsToUse)];
+            
             var storeConfig = new StoreConfiguration();
 
             return Fluently.Configure()
