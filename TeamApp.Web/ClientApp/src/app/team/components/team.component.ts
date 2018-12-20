@@ -1,18 +1,22 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { TeamService } from '../../services/team.service';
 
 @Component({
   selector: 'app-team',
   templateUrl: '../pages/team.component.html',
-  styleUrls: ['../css/team.component.css']
+  styleUrls: ['../css/team.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class TeamComponent implements OnInit {
   teams: Team[];
   selectedTeam: Team;
 
-  constructor(private teamService: TeamService) {
-      
+  constructor(private teamService: TeamService, private ref: ChangeDetectorRef) {    
+    setInterval(() => {
+      this.getTeams();
+      this.ref.markForCheck();
+    }, 1000);
   }
   createNewTeam(): void {
     this.selectedTeam = {
@@ -28,8 +32,7 @@ export class TeamComponent implements OnInit {
     } as Team;
   }
   saveTeam(): void {
-    this.teamService.saveTeam(this.selectedTeam).subscribe(team => this.selectedTeam = team);
-    this.getTeams();
+    this.teamService.saveTeam(this.selectedTeam).subscribe(team => this.selectedTeam = team);    
   }
 
   getTeams(): void {
@@ -37,6 +40,11 @@ export class TeamComponent implements OnInit {
   }
   onSelect(team: Team): void {
     this.selectedTeam = team;    
+  }
+
+  setSelectedTeam(): void {    
+    this.selectedTeam = this.teams[0];
+    
   }
 
   ngOnInit() {

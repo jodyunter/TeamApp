@@ -15,18 +15,28 @@ const httpOptions = {
 export class TeamService {
   http: HttpClient;
   baseUrl: string;  
+  teams: Observable<Team[]>;
+  
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.http = http;
     this.baseUrl = baseUrl;
+    this.teams = this.getTeamsForCache();
   }
+  
 
-  getTeams(): Observable<Team[]> {    
+  getTeamsForCache(): Observable<Team[]> {
     return this.http.get<Team[]>(this.baseUrl + 'api/Team/GetTeams');    
   }
 
+  getTeams(): Observable<Team[]> {
+    return this.teams; 
+  }
+
   saveTeam(team: Team): Observable<Team> {
-    return this.http.post<Team>(this.baseUrl + 'api/Team/SaveTeam', team, httpOptions);
+    var savedTeam = this.http.post<Team>(this.baseUrl + 'api/Team/SaveTeam', team, httpOptions);
+    this.teams = this.getTeamsForCache();
+    return savedTeam;
   }
 }
 

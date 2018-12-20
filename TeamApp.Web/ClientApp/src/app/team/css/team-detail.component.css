@@ -1,5 +1,6 @@
 .readonly {
-  color:white;
+  color: black;
+  background-color: lightgrey;
 }
 
 input[type=text], select, .readonly {

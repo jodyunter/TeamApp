@@ -1,6 +1,6 @@
-<div *ngIf="team">
-  <h3>{{team.name | uppercase}} Details</h3>  
-  <div>
+<div *ngIf="team">  
+  <div>    
+    <span class="readonly">{{team.name}} {{team.nickName}} Details</span><br />
     <label>Id:</label>
     <span class="readonly">{{team.id}}</span>
     <label>Name:</label>

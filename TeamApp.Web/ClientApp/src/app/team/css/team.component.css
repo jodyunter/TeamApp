@@ -2,7 +2,7 @@ table.darkTable {
   font-family: "Arial Black", Gadget, sans-serif;
   border: 2px solid #000000;
   background-color: #4A4A4A;
-  width: 100%;
+  width: 45%;
   height: 200px;
   text-align: center;
   border-collapse: collapse;
@@ -15,7 +15,7 @@ table.darkTable {
 
 table.darkTable td, table.darkTable th {
   border: 1px solid #4A4A4A;
-  padding: 3px 2px;
+  padding: 3px 10px 5px 10px;
 }
 
 table.darkTable tbody td {
@@ -58,3 +58,29 @@ table.darkTable tfoot {
   table.darkTable tfoot td {
     font-size: 12px;
   }
+
+.button {
+  background-color: #888888; /* Green */
+  border: 2px solid darkblue;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  width: 100%;
+  transition-duration:0.4s;
+}
+
+.button:hover {
+  background-color:darkblue;
+  transition-duration:0.4s;
+}
+.button:active {
+  background-color:blue;
+  transition-duration:0.4s;
+}
+
+.editPanel {
+  width: 40%;
+}
