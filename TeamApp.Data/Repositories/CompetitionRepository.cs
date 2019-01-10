@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Repositories;
 
-namespace TeamApp.Data.Repositories.NHibernate
+namespace TeamApp.Data.Repositories
 {
-    public class CompetitionRepositoryNHibernate:RepositoryNHibernate<Competition>, ICompetitionRepository
-    {        
+    public class CompetitionRepository : DataRepository<Competition>, ICompetitionRepository
+    {
+        public CompetitionRepository(IRepository<Competition> repo) : base(repo) { }
+
         public Competition GetByNameAndYear(string name, int year)
         {
             return this.Where(c => c.Name.Equals(name) && c.Year == year).First();

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using TeamApp.Domain;
-using TeamApp.Domain.Competitions;
+﻿using System.Linq;
 using TeamApp.Domain.Repositories;
-using TeamApp.Domain.Schedules;
 using TeamApp.Services.ViewModels.Views;
 
 namespace TeamApp.Services

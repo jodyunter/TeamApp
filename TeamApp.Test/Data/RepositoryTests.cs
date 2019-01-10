@@ -1,5 +1,4 @@
-﻿
-using NHibernate;
+﻿using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
 using System;
@@ -11,12 +10,10 @@ using Xunit;
 using System.Linq;
 using TeamApp.Domain.Schedules;
 using TeamApp.Domain.Competitions;
-using TeamApp.Domain.Competitions.Playoffs;
-using TeamApp.Domain.Competitions.Seasons;
 using System.Collections.Generic;
 using TeamApp.Test.Helpers;
-using TeamApp.Domain.Competitions.Seasons.Config;
 using TeamApp.Data.Repositories;
+using TeamApp.Domain.Competitions.Seasons;
 
 namespace TeamApp.Test.Data
 {
@@ -114,7 +111,7 @@ namespace TeamApp.Test.Data
             PlayAnotherYear(4, "NHL", new Random());
             PlayAnotherYear(5, "NHL", new Random());
 
-            var repo = new CompetitionRepositoryNHibernate();
+            var repo = new CompetitionRepository(new RepositoryNHibernate<Competition>());
             Equals(2, repo.GetAll().Count());
 
             Equals(7, repo.GetByNameAndYear("My Season", 5).Teams.Count());
@@ -131,8 +128,8 @@ namespace TeamApp.Test.Data
             SetupConfigForTests("NHL");
             PlayAnotherYear(1, "NHL", new Random(55123));
 
-            var repo = new TeamRankingRepositoryNHibernate();
-            var compRepo = new CompetitionRepositoryNHibernate();
+            var repo = new TeamRankingRepository(new RepositoryNHibernate<TeamRanking>());
+            var compRepo = new CompetitionRepository(new RepositoryNHibernate<Competition>());
 
             var comp = compRepo.GetByNameAndYear("My Playoff", 1);
             var rankings = repo.GetByCompetition(comp.Id);
@@ -146,8 +143,8 @@ namespace TeamApp.Test.Data
         {
             SetupConfigForTests("NHL");
             PlayAnotherYear(1, "NHL", new Random(55123));
-            var repo = new StandingsRepositoryNHibernate();
-            var compRepo = new CompetitionRepositoryNHibernate();
+            var compRepo = new CompetitionRepository(new RepositoryNHibernate<Competition>());
+            var repo = new StandingsRepository(new RepositoryNHibernate<SeasonTeam>(), compRepo);            
             var teams = repo.GetByCompetition(compRepo.GetByNameAndYear("My Season", 1).Id);
             
             Equals(7, teams.Count);
@@ -194,8 +191,8 @@ namespace TeamApp.Test.Data
         private void PlayAnotherYear(int nextYear, string leagueName, Random random)
         {
             var leagueRepo = new LeagueRepository(new RepositoryNHibernate<League>());
-            var compRepo = new CompetitionRepositoryNHibernate();
-            var gameRepo = new ScheduleGameRepository();
+            var compRepo = new CompetitionRepository(new RepositoryNHibernate<Competition>());
+            var gameRepo = new ScheduleGameRepository(new RepositoryNHibernate<ScheduleGame>());
 
             var league = leagueRepo.Where(m => m.Name.Equals(leagueName)).First();            
 
@@ -251,7 +248,7 @@ namespace TeamApp.Test.Data
             PlayAnotherYear(10, "NHL", new Random());
 
 
-            dropDatabase = false;
+            dropDatabase = true;
 
         }
 
