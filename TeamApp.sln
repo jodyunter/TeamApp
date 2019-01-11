@@ -5,11 +5,11 @@ VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp", "TeamApp\TeamApp.csproj", "{E89C0BF5-E560-489A-A26E-97542A87575E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Test.Unit", "TeamApp.Test\TeamApp.Test.Unit.csproj", "{47954BD3-2EFC-43FE-8F11-2447514A21E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Test.Unit", "TeamApp.Test.Unit\TeamApp.Test.Unit.csproj", "{47954BD3-2EFC-43FE-8F11-2447514A21E2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Console", "TeamApp.Console\TeamApp.Console.csproj", "{D718A11F-A1A5-4676-8290-95CB863B4CFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Interface.Console", "TeamApp.Interface.Console\TeamApp.Interface.Console.csproj", "{D718A11F-A1A5-4676-8290-95CB863B4CFB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Web", "TeamApp.Web\TeamApp.Web.csproj", "{9310BE48-DD1C-445B-A838-6C15996F851F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Interface.Web", "TeamApp.Interface.Web\TeamApp.Interface.Web.csproj", "{9310BE48-DD1C-445B-A838-6C15996F851F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Data", "TeamApp.Data\TeamApp.Data.csproj", "{2F68BE96-14D7-4A10-BA17-D41B5321BF7C}"
 EndProject
@@ -37,9 +37,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Games", "Games", "{5A3348E5
 		View Upcoming Games.txt = View Upcoming Games.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamApp.Test.Database", "TeamApp.Test.Database\TeamApp.Test.Database.csproj", "{130D824C-D4A1-481E-BB81-FD205DA4C275}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Test.Database", "TeamApp.Test.Database\TeamApp.Test.Database.csproj", "{130D824C-D4A1-481E-BB81-FD205DA4C275}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamApp.Test.Service", "TeamApp.Test.Service\TeamApp.Test.Service.csproj", "{F12F2431-ABFA-4FF4-B153-095C3D3F7296}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Test.Service", "TeamApp.Test.Service\TeamApp.Test.Service.csproj", "{F12F2431-ABFA-4FF4-B153-095C3D3F7296}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

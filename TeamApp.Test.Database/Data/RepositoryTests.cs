@@ -173,7 +173,7 @@ namespace TeamApp.Test.Data
             schemaExport.SetOutputFile("../../../sqloutput/ddl.sql");
             schemaExport.Execute(false, true, false);
 
-            dropDatabase = false;
+            dropDatabase = true;
 
         }
 
