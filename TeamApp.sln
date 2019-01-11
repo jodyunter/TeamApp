@@ -15,28 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Data", "TeamApp.Dat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Services", "TeamApp.Services\TeamApp.Services.csproj", "{2674325B-78BF-4C00-AB0B-449B5EC14435}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{4763C66F-A279-4B18-9315-EC88B3A281A9}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Administrator", "Administrator", "{0C43943F-90D3-440D-8B1E-EDC8464113CE}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "User", "User", "{BD28E1AE-D879-46F1-B307-56ECC837E128}"
-	ProjectSection(SolutionItems) = preProject
-		Create Competitions.txt = Create Competitions.txt
-		Create League.txt = Create League.txt
-		Create Team.txt = Create Team.txt
-		Edit Competitions.txt = Edit Competitions.txt
-		Edit League.txt = Edit League.txt
-		Edit Team.txt = Edit Team.txt
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Games", "Games", "{5A3348E5-9D8F-4AC5-AC34-CD2E152F4E5A}"
-	ProjectSection(SolutionItems) = preProject
-		Play Games.txt = Play Games.txt
-		Schedule Exhibition Games.txt = Schedule Exhibition Games.txt
-		View Game Results.txt = View Game Results.txt
-		View Upcoming Games.txt = View Upcoming Games.txt
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Test.Database", "TeamApp.Test.Database\TeamApp.Test.Database.csproj", "{130D824C-D4A1-481E-BB81-FD205DA4C275}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Test.Service", "TeamApp.Test.Service\TeamApp.Test.Service.csproj", "{F12F2431-ABFA-4FF4-B153-095C3D3F7296}"
@@ -82,11 +60,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{0C43943F-90D3-440D-8B1E-EDC8464113CE} = {4763C66F-A279-4B18-9315-EC88B3A281A9}
-		{BD28E1AE-D879-46F1-B307-56ECC837E128} = {4763C66F-A279-4B18-9315-EC88B3A281A9}
-		{5A3348E5-9D8F-4AC5-AC34-CD2E152F4E5A} = {BD28E1AE-D879-46F1-B307-56ECC837E128}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4FE84BF3-8ECF-4518-9A21-DFB576F45C46}
