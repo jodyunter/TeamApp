@@ -9,7 +9,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.2.0-preview3-35497" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
-    <PackageReference Include="Moq" Version="4.10.1" />
     <PackageReference Include="NHibernate" Version="5.1.3" />
     <PackageReference Include="System.Data.Common" Version="4.3.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.6.0-preview3-27014-02" />
@@ -18,19 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TeamApp.Data\TeamApp.Data.csproj" />
     <ProjectReference Include="..\TeamApp.Services\TeamApp.Services.csproj" />
     <ProjectReference Include="..\TeamApp\TeamApp.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="sqloutput\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="settings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

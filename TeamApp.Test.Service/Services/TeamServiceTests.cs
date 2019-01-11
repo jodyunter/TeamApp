@@ -1,7 +1,4 @@
 ﻿using Moq;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using TeamApp.Domain;
 using TeamApp.Domain.Repositories;
 using TeamApp.Services.Implementation;

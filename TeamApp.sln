@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp", "TeamApp\TeamApp.csproj", "{E89C0BF5-E560-489A-A26E-97542A87575E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Test", "TeamApp.Test\TeamApp.Test.csproj", "{47954BD3-2EFC-43FE-8F11-2447514A21E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Test.Unit", "TeamApp.Test\TeamApp.Test.Unit.csproj", "{47954BD3-2EFC-43FE-8F11-2447514A21E2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Console", "TeamApp.Console\TeamApp.Console.csproj", "{D718A11F-A1A5-4676-8290-95CB863B4CFB}"
 EndProject
@@ -37,6 +37,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Games", "Games", "{5A3348E5
 		View Upcoming Games.txt = View Upcoming Games.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamApp.Test.Database", "TeamApp.Test.Database\TeamApp.Test.Database.csproj", "{130D824C-D4A1-481E-BB81-FD205DA4C275}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamApp.Test.Service", "TeamApp.Test.Service\TeamApp.Test.Service.csproj", "{F12F2431-ABFA-4FF4-B153-095C3D3F7296}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +71,14 @@ Global
 		{2674325B-78BF-4C00-AB0B-449B5EC14435}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2674325B-78BF-4C00-AB0B-449B5EC14435}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2674325B-78BF-4C00-AB0B-449B5EC14435}.Release|Any CPU.Build.0 = Release|Any CPU
+		{130D824C-D4A1-481E-BB81-FD205DA4C275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{130D824C-D4A1-481E-BB81-FD205DA4C275}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{130D824C-D4A1-481E-BB81-FD205DA4C275}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{130D824C-D4A1-481E-BB81-FD205DA4C275}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F12F2431-ABFA-4FF4-B153-095C3D3F7296}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F12F2431-ABFA-4FF4-B153-095C3D3F7296}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F12F2431-ABFA-4FF4-B153-095C3D3F7296}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F12F2431-ABFA-4FF4-B153-095C3D3F7296}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

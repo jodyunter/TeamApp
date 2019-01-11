@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TeamApp.Test\TeamApp.Test.csproj" />
+    <ProjectReference Include="..\TeamApp.Test\TeamApp.Test.Unit.csproj" />
     <ProjectReference Include="..\TeamApp\TeamApp.csproj" />
   </ItemGroup>
 
