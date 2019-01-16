@@ -10,13 +10,45 @@ using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Competitions.Seasons;
 using TeamApp.Domain.Competitions.Playoffs;
 using TeamApp.Domain.Competitions.Playoffs.Series;
+using TeamApp.Data.Repositories.NHibernate;
+using NHibernate.Tool.hbm2ddl;
+using TeamApp.Services;
 
 namespace TeamApp.Console
 {
     class Program
     {
+        static void SetupConfig(bool dropFirst)
+        {
+            var session = NHibernateHelper.OpenSession();
+            var configuration = NHibernateHelper.GetConfiguration().BuildConfiguration();
+            var schemaExport = new SchemaExport(configuration);
+
+            if (dropFirst)
+                schemaExport.Drop(false, true);
+
+            schemaExport.Create(false, true);
+
+            var league = Data2.CreateBasicLeague("NHL");
+            var seasonCompetition = Data2.CreateBasicSeasonConfiguration(league);
+            var playoffConfig = Data2.CreateBasicPlayoffConfiguration(seasonCompetition);
+
+            
+        }
         static void Main(string[] args)
         {
+                                   
+            SetupConfig(true);
+            
+            
+
+            /*
+            var app = new Application();
+            app.loadLeague("NHL");
+            WriteLine(app.League.Name);
+            */
+
+            /*
             var league = Data2.CreateBasicLeague("NHL");
             var seasonCompetition = Data2.CreateBasicSeasonConfiguration(league);
             var playoffConfig = Data2.CreateBasicPlayoffConfiguration(seasonCompetition);
@@ -98,7 +130,7 @@ namespace TeamApp.Console
 
                 currentRound = playoff.CurrentRound;
             }
-            
+            */
             WriteLine("Press Enter to continue");
             ReadLine();
 

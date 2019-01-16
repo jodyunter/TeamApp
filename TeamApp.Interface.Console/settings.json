@@ -1,5 +1,5 @@
 {
-  "DatabaseToUse": "JodyHomeTest",
+  "DatabaseToUse": "JodyWorkTest",
   "SessionContext": "thread_static",
   "ConnectionStrings": {
     "JodyWorkTest": {

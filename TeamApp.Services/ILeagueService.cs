@@ -12,5 +12,6 @@ namespace TeamApp.Services
         IEnumerable<LeagueViewModel> GetAll();
         IEnumerable<CompetitionConfigViewModel> GetCompetitionConfigs(long leagueId);
         IEnumerable<SeasonCompetitionConfigViewModel> GetSeasonCompetitionConfig(long competitiongConfigId);
+        
     }
 }
