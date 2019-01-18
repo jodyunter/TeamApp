@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TeamApp.Domain.Repositories;
 
 namespace TeamApp.Services.Implementation
 {

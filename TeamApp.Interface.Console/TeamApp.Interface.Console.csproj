@@ -7,11 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.0-preview.18572.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.0-preview.18572.1" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\TeamApp.Services\TeamApp.Services.csproj" />
     <ProjectReference Include="..\TeamApp.Test.Unit\TeamApp.Test.Unit.csproj" />
     <ProjectReference Include="..\TeamApp\TeamApp.csproj" />
   </ItemGroup>

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using TeamApp.Domain;
+using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Repositories;
 using TeamApp.Services.ViewModels.Views;
 using TeamApp.Services.ViewModels.Views.CompetitionConfig;
@@ -11,11 +12,16 @@ namespace TeamApp.Services.Implementation
 {
     public class LeagueService : BaseService<League, LeagueViewModel>, ILeagueService
     {
-        private ILeagueRepository repository;
-        public LeagueService(ILeagueRepository repo)
+        private ILeagueRepository leagueRepository;
+        private ICompetitionRepository competitionRepository;
+        private IScheduleGameRepository scheduleGameRepository;
+
+        public LeagueService(ILeagueRepository repo, ICompetitionRepository compRepo, IScheduleGameRepository gameRepo)
         {
-            repository = repo;
-        }
+            leagueRepository = repo;
+            competitionRepository = compRepo;
+            scheduleGameRepository = gameRepo;
+        }        
 
         public IEnumerable<LeagueViewModel> GetAll()
         {
@@ -30,6 +36,42 @@ namespace TeamApp.Services.Implementation
         public IEnumerable<SeasonCompetitionConfigViewModel> GetSeasonCompetitionConfig(long competitiongConfigId)
         {
             throw new NotImplementedException();
+        }
+
+        //currently only works for a full year, we need to change this to slowly pick up where the series picks up
+        //eventually we want to be able to say "play this day" or "play next game" or "play next 5 games"
+        public void PlayAnotherYear(string leagueName, Random random)
+        {
+
+            var nextYear = competitionRepository.Max(c => c.Year) + 1;
+            var league = leagueRepository.Where(m => m.Name.Equals(leagueName)).First();
+
+            league.CompetitionConfigs.OrderBy(m => m.Ordering).ToList().ForEach(c =>
+            {
+                var parentCompList = new List<Competition>();
+
+                c.Parents.ToList().ForEach(p =>
+                {
+                    parentCompList.Add(competitionRepository.GetByNameAndYear(p.Name, nextYear));
+                });
+
+                var competition = c.CreateCompetition(nextYear, parentCompList);
+
+                while (!competition.IsComplete())
+                {
+                    competition.PlayNextDay(random).ForEach(g =>
+                    {
+                        scheduleGameRepository.Update(g);
+                    });
+                }
+
+                competition.ProcessEndOfSeason();
+
+                competitionRepository.Update(competition);
+
+            });
+
+            leagueRepository.Flush();
         }
     }
 }

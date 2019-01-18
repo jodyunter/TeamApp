@@ -13,35 +13,55 @@ using TeamApp.Domain.Competitions.Playoffs.Series;
 using TeamApp.Data.Repositories.NHibernate;
 using NHibernate.Tool.hbm2ddl;
 using TeamApp.Services;
+using TeamApp.Console.App;
 
 namespace TeamApp.Console
 {
     class Program
     {
-        static void SetupConfig(bool dropFirst)
+        static void SetupConfig(TeamApplication teamApp, bool setupDatabase, bool dropFirst, bool setupData)
         {
-            var session = NHibernateHelper.OpenSession();
-            var configuration = NHibernateHelper.GetConfiguration().BuildConfiguration();
-            var schemaExport = new SchemaExport(configuration);
+            if (setupDatabase)
+            {
+                var session = NHibernateHelper.OpenSession();
+                var configuration = NHibernateHelper.GetConfiguration().BuildConfiguration();
+                var schemaExport = new SchemaExport(configuration);
 
-            if (dropFirst)
-                schemaExport.Drop(false, true);
+                if (dropFirst)
+                    schemaExport.Drop(false, true);
 
-            schemaExport.Create(false, true);
+                schemaExport.Create(false, true);
 
-            var league = Data2.CreateBasicLeague("NHL");
-            var seasonCompetition = Data2.CreateBasicSeasonConfiguration(league);
-            var playoffConfig = Data2.CreateBasicPlayoffConfiguration(seasonCompetition);
+            }
+
+            if (setupData)
+            {
+
+                var league = Data2.CreateBasicLeague("NHL");
+                var seasonCompetition = Data2.CreateBasicSeasonConfiguration(league);
+                var playoffConfig = Data2.CreateBasicPlayoffConfiguration(seasonCompetition);
+
+                teamApp.LeagueRepository.Update(league);
+            }
+
 
             
         }
         static void Main(string[] args)
         {
-                                   
-            SetupConfig(true);
-            
+                                               
+
+            var teamApp = new TeamApplication();
+            //SetupConfig(teamApp, true, true, true);
+
+            var league = teamApp.LeagueRepository.Where(l => l.Name.Equals("NHL")).FirstOrDefault();
+
+            WriteLine("Loaded league: " + league.Name);
+
+            teamApp.LeagueService.PlayAnotherYear("NHL", new Random());
             
 
+            
             /*
             var app = new Application();
             app.loadLeague("NHL");
