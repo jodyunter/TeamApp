@@ -111,13 +111,14 @@ namespace TeamApp.Test.Data
             PlayAnotherYear(4, "NHL", new Random());
             PlayAnotherYear(5, "NHL", new Random());
 
-            var repo = new CompetitionRepository(new RepositoryNHibernate<Competition>());
-            Equals(2, repo.GetAll().Count());
+            var repo = new CompetitionRepository(new RepositoryNHibernate<Competition>());            
+            //two seasons and two playoffs each year
+            StrictEqual(10, repo.GetAll().Count());
 
-            Equals(7, repo.GetByNameAndYear("My Season", 5).Teams.Count());
+            StrictEqual(7, repo.GetByNameAndYear("My Season", 5).Teams.Count());
 
             var comps = repo.GetByYear(1);
-            Equals(2, comps.Count());
+            StrictEqual(2, comps.Count());
             
         }
         #endregion
@@ -133,7 +134,7 @@ namespace TeamApp.Test.Data
 
             var comp = compRepo.GetByNameAndYear("My Playoff", 1);
             var rankings = repo.GetByCompetition(comp.Id);
-            Equals(8, rankings.Count());
+            StrictEqual(8, rankings.Count());
         }
 
         #endregion
@@ -147,7 +148,7 @@ namespace TeamApp.Test.Data
             var repo = new StandingsRepository(new RepositoryNHibernate<SeasonTeam>(), compRepo);            
             var teams = repo.GetByCompetition(compRepo.GetByNameAndYear("My Season", 1).Id);
             
-            Equals(7, teams.Count);
+            StrictEqual(7, teams.Count);
         }
         #endregion
         #region League Repo Tests
@@ -162,9 +163,46 @@ namespace TeamApp.Test.Data
 
             var repo = new LeagueRepository(new RepositoryNHibernate<League>());
 
-            Equals(3, repo.GetAll().Count());
+            StrictEqual(3, repo.GetAll().Count());
 
 
+        }
+        #endregion
+        #region Season Repo Tests
+        [Fact]
+        public void ShouldExerciseSeasonRepositoryNHibernate()
+        {
+            SetupConfigForTests("NHL");
+            PlayAnotherYear(1, "NHL", new Random());
+
+            var leagueRepo = new LeagueRepository(new RepositoryNHibernate<League>());            
+            var seasonRepo = new SeasonRepository(new RepositoryNHibernate<Season>());
+
+            var league = leagueRepo.Where(l => l.Name.Equals("NHL")).FirstOrDefault();
+
+            var parentConfig = league.CompetitionConfigs.Where(s => s.Name.Equals("My Season")).FirstOrDefault();
+
+            var seasonConfig = RepositoryTestData.CreateBasicSeasonConfiguration(league);
+            seasonConfig.Parents.Add(parentConfig);
+
+            leagueRepo.Update(league);
+
+            PlayAnotherYear(2, "NHL", new Random());
+
+            var seasons1 = seasonRepo.GetByLeagueAndYear(league.Id, 1).Count();
+            var seasons2 = seasonRepo.GetByLeagueAndYear(league.Id, 2).Count();
+
+            leagueRepo.Flush();
+
+            StrictEqual(1, seasons1);
+            StrictEqual(2, seasons2);
+
+            var seasonA = seasonRepo.GetBySeasonCompetitionConfigAndYear(parentConfig.Id, 2);
+            var seasonB = seasonRepo.GetBySeasonCompetitionConfigAndYear(seasonConfig.Id, 2);
+
+            StrictEqual(2, seasonA.Year);
+            StrictEqual(2, seasonB.Year);
+            NotStrictEqual(seasonA.Id, seasonB.Id);
         }
         #endregion
         [Fact]

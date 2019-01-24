@@ -7,6 +7,7 @@ namespace TeamApp.Domain.Repositories
 {
     public interface ISeasonRepository:IRepository<Season>
     {
-        Season GetByLeagueAndYear(int leagueId, int year);
+        IList<Season> GetByLeagueAndYear(long leagueId, int year);
+        Season GetBySeasonCompetitionConfigAndYear(long seasonCompetitionConfigId, int year);
     }
 }

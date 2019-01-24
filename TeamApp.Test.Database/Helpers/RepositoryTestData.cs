@@ -21,14 +21,15 @@ namespace TeamApp.Test.Helpers
         {
             return new League(name, 1, null);
         }
-        public static SeasonCompetitionConfig CreateBasicSeasonConfiguration(League league)
+        
+        public static SeasonCompetitionConfig CreateBasicSeasonConfiguration(string seasonName, League league)
         {
             var TOP = "TOP";
-            var NHL = "NHL";                         
+            var NHL = "NHL";
 
             var divMap = new Dictionary<string, List<string>>()
             {
-                { TOP, new List<string>() { NHL } }     
+                { TOP, new List<string>() { NHL } }
 
             };
 
@@ -44,13 +45,13 @@ namespace TeamApp.Test.Helpers
             };
 
             var objects = new Dictionary<string, object>();
-           
+
             var teamMap = new Dictionary<string, Team>();
 
             var gameRules = new GameRules("Season Rules", true, 3, 1, 7, 6);
 
-            SeasonCompetitionConfig competition = new SeasonCompetitionConfig("My Season", league, 1, null, 1, 1, new List<SeasonTeamRule>(), new List<SeasonDivisionRule>(), gameRules, new List<SeasonScheduleRule>(), new List<CompetitionConfig>());
-           
+            SeasonCompetitionConfig competition = new SeasonCompetitionConfig(seasonName, league, 1, null, 1, 1, new List<SeasonTeamRule>(), new List<SeasonDivisionRule>(), gameRules, new List<SeasonScheduleRule>(), new List<CompetitionConfig>());
+
             competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.DIVISION_TYPE, NHL, SeasonScheduleRule.NONE, null, 5, true, 1, null)); //42
             /*
             for (int i = 0; i < teamNameMap[NHL].Count; i++)
@@ -66,11 +67,11 @@ namespace TeamApp.Test.Helpers
 
             var seasonCompetitionList = new List<SeasonCompetitionConfig>()
             {
-                competition   
+                competition
             };
 
 
-            foreach(KeyValuePair<string, List<string>> data in divMap)
+            foreach (KeyValuePair<string, List<string>> data in divMap)
             {
                 data.Value.ForEach(divisionName =>
                 {
@@ -83,11 +84,15 @@ namespace TeamApp.Test.Helpers
                         CreateTeamsForDivision(competition, teamMap, teamNameMap[divisionName], divisionName);
                     }
                 });
- 
+
             }
 
             league.CompetitionConfigs.Add(competition);
             return competition;
+        }
+        public static SeasonCompetitionConfig CreateBasicSeasonConfiguration(League league)
+        {
+            return CreateBasicSeasonConfiguration("My Season", league);
 
         }
 
