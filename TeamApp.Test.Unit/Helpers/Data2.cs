@@ -111,6 +111,7 @@ namespace TeamApp.Test.Helpers
             var playoffConfig = new PlayoffCompetitionConfig("My Playoff", seasonConfig.League, 2, gameRules, 1, null, rankingRules, seriesRules, new List<CompetitionConfig> { seasonConfig });
 
             seasonConfig.League.CompetitionConfigs.Add(playoffConfig);
+            playoffConfig.Parents.Add(seasonConfig);
             return playoffConfig;
 
 

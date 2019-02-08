@@ -43,7 +43,10 @@ namespace TeamApp.Services.Implementation
         public void PlayAnotherYear(string leagueName, Random random)
         {
 
-            var nextYear = competitionRepository.Max(c => c.Year) + 1;
+            var nextYear = 1;
+
+            if (competitionRepository.Count() != 0) nextYear = competitionRepository.Max(c => c == null ? 0 : c.Year) + 1;
+            
             var league = leagueRepository.Where(m => m.Name.Equals(leagueName)).First();
 
             league.CompetitionConfigs.OrderBy(m => m.Ordering).ToList().ForEach(c =>

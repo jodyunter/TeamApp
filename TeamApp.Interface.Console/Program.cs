@@ -58,9 +58,11 @@ namespace TeamApp.Console
 
             WriteLine("Loaded league: " + league.Name);
 
-            teamApp.LeagueService.PlayAnotherYear("NHL", new Random());
-                       
-
+            for (int i = 0; i < 10; i++)
+            {
+                teamApp.LeagueService.PlayAnotherYear("NHL", new Random());
+            }
+                                               
             
             /*
             var app = new Application();

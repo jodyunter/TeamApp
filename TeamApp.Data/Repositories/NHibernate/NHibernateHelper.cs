@@ -49,7 +49,8 @@ namespace TeamApp.Data.Repositories.NHibernate
                      .ConnectionString(connectionString)
                      .Provider(providerString)
                      .Driver(driverString)
-                     .ShowSql()) 
+                     //.ShowSql()
+                     )
                    .CurrentSessionContext("thread_static")
                    .Mappings(m =>                   
                    m.AutoMappings.Add(
