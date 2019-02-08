@@ -253,7 +253,7 @@ namespace TeamApp.Test.Data
                     });
                 }
 
-                competition.ProcessEndOfSeason();
+                competition.ProcessEndOfCompetition();
 
                 compRepo.Update(competition);
                 

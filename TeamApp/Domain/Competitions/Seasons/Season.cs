@@ -40,7 +40,7 @@ namespace TeamApp.Domain.Competitions.Seasons
             }
         }
 
-        public override void ProcessEndOfSeason()
+        public override void ProcessEndOfCompetition()
         {
             SortAllTeams();
         }

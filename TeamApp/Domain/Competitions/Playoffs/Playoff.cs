@@ -24,7 +24,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
             CurrentRound = currentRound;
         }
 
-        public override void ProcessEndOfSeason()
+        public override void ProcessEndOfCompetition()
         {
             //nothing to do for end of series at this point in time
         }

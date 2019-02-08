@@ -8,6 +8,6 @@ namespace TeamApp.Data.Repositories
 {
     public class LeagueRepository : DataRepository<League>, ILeagueRepository
     {
-        public LeagueRepository(IRepository<League> repo) : base(repo) { }
+        public LeagueRepository(IRepository<League> repo) : base(repo) { }        
     }
 }

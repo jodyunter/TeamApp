@@ -37,6 +37,7 @@ namespace TeamApp.Services.Implementation
         {
             throw new NotImplementedException();
         }
+        
 
         //currently only works for a full year, we need to change this to slowly pick up where the series picks up
         //eventually we want to be able to say "play this day" or "play next game" or "play next 5 games"
@@ -68,7 +69,7 @@ namespace TeamApp.Services.Implementation
                     });
                 }
 
-                competition.ProcessEndOfSeason();
+                competition.ProcessEndOfCompetition();
 
                 competitionRepository.Update(competition);
 

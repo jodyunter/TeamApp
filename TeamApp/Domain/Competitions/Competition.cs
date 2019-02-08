@@ -14,7 +14,7 @@ namespace TeamApp.Domain.Competitions
         public virtual IList<SingleYearTeam> Teams { get; set; }
         public abstract void ProcessGame(ScheduleGame game);
         public abstract bool IsComplete();
-        public abstract void ProcessEndOfSeason();
+        public abstract void ProcessEndOfCompetition();
 
         public Competition() : base() { }
         protected Competition(CompetitionConfig competitionConfig, string name, int year, Schedule schedule, IList<TeamRanking> rankings, List<SingleYearTeam> teams)
