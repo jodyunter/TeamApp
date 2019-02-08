@@ -58,7 +58,7 @@ namespace TeamApp.Services.Implementation
                 {
                     parentCompList.Add(competitionRepository.GetByNameAndYear(p.Name, nextYear));
                 });
-
+                
                 var competition = c.CreateCompetition(nextYear, parentCompList);
 
                 while (!competition.IsComplete())

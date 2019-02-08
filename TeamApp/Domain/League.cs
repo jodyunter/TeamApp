@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using TeamApp.Domain.Competitions;
 
 namespace TeamApp.Domain
@@ -21,5 +21,19 @@ namespace TeamApp.Domain
         public virtual string Name { get; set; }
 
         public virtual IList<CompetitionConfig> CompetitionConfigs { get; set; }
+        
+        public CompetitionConfig GetNextCompetitionConfig(CompetitionConfig current, int currentYear)
+        {
+            if (CompetitionConfigs == null || CompetitionConfigs.Count() == 0) throw new Exception("Competition Configs are null");
+
+            if (current == null)
+            {
+                return CompetitionConfigs.OrderBy(c => c.Ordering).ToList().Where(c => c.IsActive(currentYear)).First();
+            }
+            else
+            {
+                return CompetitionConfigs.OrderBy(c => c.Ordering).ToList().Where(c => c.IsActive(currentYear) && (c.Ordering > current.Ordering)).FirstOrDefault();
+            }
+        }        
     }
 }
