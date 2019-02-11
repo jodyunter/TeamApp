@@ -13,7 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\Dynamodb\" />
+    <Folder Include="Repositories\NonRelational\Dynamodb\" />
+    <Folder Include="Repositories\NonRelational\" />
   </ItemGroup>
 
 </Project>

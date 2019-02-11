@@ -3,7 +3,7 @@ using TeamApp.Domain.Repositories;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace TeamApp.Data.Repositories
+namespace TeamApp.Data.Relational.Repositories
 {
     public class TeamRankingRepository : DataRepository<TeamRanking>, ITeamRankingRepository
     {

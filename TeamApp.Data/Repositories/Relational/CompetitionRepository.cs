@@ -4,7 +4,7 @@ using System.Linq;
 using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Repositories;
 
-namespace TeamApp.Data.Repositories
+namespace TeamApp.Data.Relational.Repositories
 {
     public class CompetitionRepository : DataRepository<Competition>, ICompetitionRepository
     {

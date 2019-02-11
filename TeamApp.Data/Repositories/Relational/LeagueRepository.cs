@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TeamApp.Domain;
+﻿using TeamApp.Domain;
 using TeamApp.Domain.Repositories;
 
-namespace TeamApp.Data.Repositories
+namespace TeamApp.Data.Relational.Repositories
 {
     public class LeagueRepository : DataRepository<League>, ILeagueRepository
     {

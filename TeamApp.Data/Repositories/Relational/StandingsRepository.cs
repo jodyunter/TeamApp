@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Competitions.Seasons;
 using TeamApp.Domain.Repositories;
 
-namespace TeamApp.Data.Repositories
+namespace TeamApp.Data.Relational.Repositories
 {
     public class StandingsRepository : DataRepository<SeasonTeam>, IStandingsRepository
     {
         private ICompetitionRepository compRepo;
-        private NHibernate.RepositoryNHibernate<SeasonTeam> repositoryNHibernate;
+        //private RepositoryNHibernate<SeasonTeam> repositoryNHibernate;
 
         public StandingsRepository(IRepository<SeasonTeam> repo, ICompetitionRepository competitionRepo) : base(repo) { compRepo = competitionRepo;  }
 

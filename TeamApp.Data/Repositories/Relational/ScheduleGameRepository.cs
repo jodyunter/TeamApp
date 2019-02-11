@@ -3,7 +3,7 @@ using System.Linq;
 using TeamApp.Domain.Repositories;
 using TeamApp.Domain.Schedules;
 
-namespace TeamApp.Data.Repositories
+namespace TeamApp.Data.Relational.Repositories
 {
     public class ScheduleGameRepository:DataRepository<ScheduleGame>, IScheduleGameRepository
     {

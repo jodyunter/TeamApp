@@ -3,16 +3,15 @@ using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
 using System;
 using static Xunit.Assert;
-using TeamApp.Data.Repositories.NHibernate;
+using TeamApp.Data.Repositories.Relational.NHibernate;
 using TeamApp.Domain;
-using TeamApp.Domain.Repositories;
 using Xunit;
 using System.Linq;
 using TeamApp.Domain.Schedules;
 using TeamApp.Domain.Competitions;
 using System.Collections.Generic;
 using TeamApp.Test.Helpers;
-using TeamApp.Data.Repositories;
+using TeamApp.Data.Relational.Repositories;
 using TeamApp.Domain.Competitions.Seasons;
 
 namespace TeamApp.Test.Data

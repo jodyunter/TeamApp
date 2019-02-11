@@ -3,7 +3,7 @@ using System.Linq;
 using TeamApp.Domain.Competitions.Seasons;
 using TeamApp.Domain.Repositories;
 
-namespace TeamApp.Data.Repositories
+namespace TeamApp.Data.Relational.Repositories
 {
     public class SeasonRepository:DataRepository<Season>, ISeasonRepository
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TeamApp.Data.Repositories;
-using TeamApp.Data.Repositories.NHibernate;
+using TeamApp.Data.Relational.Repositories;
+using TeamApp.Data.Repositories.Relational.NHibernate;
 using TeamApp.Domain;
 using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Competitions.Seasons;

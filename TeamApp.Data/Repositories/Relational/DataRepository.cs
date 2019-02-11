@@ -7,7 +7,7 @@ using System.Text;
 using TeamApp.Domain;
 using TeamApp.Domain.Repositories;
 
-namespace TeamApp.Data.Repositories
+namespace TeamApp.Data.Relational.Repositories
 {
     public abstract class DataRepository<T> : IRepository<T> where T : IDataObject
     {

@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using TeamApp.Domain.Competitions.Seasons.Config;
-using TeamApp.Domain.Schedules;
 using TeamApp.Test.Helpers;
 using static System.Console;
 using System.Linq;
-using TeamApp.Console.Views.Season;
-using TeamApp.Domain.Competitions;
-using TeamApp.Domain.Competitions.Seasons;
-using TeamApp.Domain.Competitions.Playoffs;
-using TeamApp.Domain.Competitions.Playoffs.Series;
-using TeamApp.Data.Repositories.NHibernate;
+using TeamApp.Data.Repositories.Relational.NHibernate;
 using NHibernate.Tool.hbm2ddl;
-using TeamApp.Services;
 using TeamApp.Console.App;
 
 namespace TeamApp.Console

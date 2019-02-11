@@ -2,7 +2,7 @@
 using TeamApp.Domain;
 using TeamApp.Domain.Repositories;
 using System.Linq;
-namespace TeamApp.Data.Repositories
+namespace TeamApp.Data.Relational.Repositories
 {
     public class TeamRepository:DataRepository<Team>, ITeamRepository
     {

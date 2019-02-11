@@ -8,7 +8,7 @@ using System.Text;
 using TeamApp.Domain;
 using TeamApp.Domain.Repositories;
 
-namespace TeamApp.Data.Repositories.NHibernate
+namespace TeamApp.Data.Repositories.Relational.NHibernate
 {
     public class RepositoryNHibernate<T> :IRepository<T>, IQueryable<T> where T : IDataObject
     {

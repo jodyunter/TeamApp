@@ -2,13 +2,10 @@
 using System.Linq;
 using TeamApp.Domain;
 using FluentNHibernate.Automapping;
-using TeamApp.Domain.Competitions;
-using TeamApp.Domain.Competitions.Seasons.Config;
 using System.Collections.Generic;
 using FluentNHibernate;
-using TeamApp.Domain.Competitions.Playoffs.Series;
 
-namespace TeamApp.Data.Repositories.NHibernate
+namespace TeamApp.Data.Repositories.Relational.NHibernate
 {
     public class StoreConfiguration : DefaultAutomappingConfiguration
     {
