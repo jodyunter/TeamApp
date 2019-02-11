@@ -125,7 +125,7 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
                     if (rankingsForGroup.Count > 0)
                     {
                         var ranking = rankingsForGroup.Where(r => r.Rank == fromValue).ToList().First();
-                        return new PlayoffTeam(playoff, ranking.Team.Parent, ranking.Team.Name, ranking.Team.NickName, ranking.Team.ShortName, ranking.Team.Skill, ranking.Team.Owner, playoff.Year);
+                        return (PlayoffTeam)ranking.Team;                        
                     }
                     return null;
                 case PlayoffSeriesRule.FROM_SERIES:

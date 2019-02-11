@@ -57,3 +57,29 @@ join Competition c on c.Id = p.Competition_id
 where ps.Name = 'Final'
 group by case when bos.HomeWins = 4 then ht.Name else at.Name end
 order by count(case when bos.HomeWins = 4 then ht.Name else at.Name end) desc
+
+
+select  asyt.Id, hsyt.Id, c.Year, ps.Name,
+ case when bos.HomeWins = 4 then ht.Name
+ else at.Name
+ end 'Champion',
+ case when bos.HomeWins = 4 then bos.HomeWins
+ else bos.AwayWins
+ end ' ',
+  case when bos.HomeWins = 4 then bos.AwayWins
+ else bos.HomeWins
+ end ' ',
+ case when bos.HomeWins = 4 then at.Name
+ else ht.Name
+ end 'Runner Up'
+from PlayoffSeries ps
+join BestOfSeries bos on bos.PlayoffSeries_id = ps.Id
+join PlayoffTeam hpt on hpt.SingleYearTeam_id = ps.HomeTeam_id
+join SingleYearTeam hsyt on hsyt.Id =  hpt.SingleYearTeam_id
+join Team ht on ht.Id = hsyt.Parent_id
+join PlayoffTeam apt on apt.SingleYearTeam_id = ps.AwayTeam_id
+join SingleYearTeam asyt on asyt.Id = apt.SingleYearTeam_id
+join Team at on at.id = asyt.Parent_id
+join Playoff p on p.Competition_id = ps.Playoff_id
+join Competition c on c.Id = p.Competition_id
+where c.Year = 51

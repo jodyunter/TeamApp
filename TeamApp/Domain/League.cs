@@ -22,7 +22,7 @@ namespace TeamApp.Domain
 
         public virtual IList<CompetitionConfig> CompetitionConfigs { get; set; }
         
-        public CompetitionConfig GetNextCompetitionConfig(CompetitionConfig current, int currentYear)
+        public virtual CompetitionConfig GetNextCompetitionConfig(CompetitionConfig current, int currentYear)
         {
             if (CompetitionConfigs == null || CompetitionConfigs.Count() == 0) throw new Exception("Competition Configs are null");
 
