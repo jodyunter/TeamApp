@@ -1,0 +1,184 @@
+{
+  "TopLevelType": "Yearly Data",
+  "Year": 1,
+  "Competition Data": {
+    "Season Data": {
+      "Name": "Season 1",
+      "Start": 1,
+      "End": 15,
+      "Started": false,
+      "Finished": false,
+      "Order": 1,
+      "Configuration": "My Season",
+      "Division Data": {
+        "1": [
+          {
+            "Name": "NHL",
+            "Parent": "",
+            "Order": 1
+          }
+        ],
+        "2": [
+          {
+            "Name": "East",
+            "Parent": "NHL",
+            "Order": 1
+          },
+          {
+            "Name": "West",
+            "Parent": "NHL",
+            "Order": 2
+          }
+        ]    
+      },
+      "Team Data": [
+        {
+          "Name": "Team 1",
+          "Stats": {
+            "Wins": 0,
+            "Loses": 0,
+            "Ties": 0,
+            "Goals For": 0,
+            "Goals Against": 0
+          },
+          "Ranking": {
+            "NHL": 0,
+            "East": 0
+          }
+        },
+        {
+          "Name": "Team 2",
+          "Stats": {
+            "Wins": 0,
+            "Loses": 0,
+            "Ties": 0,
+            "Goals For": 0,
+            "Goals Against": 0
+          },
+          "Ranking": {
+            "NHL": 0,
+            "East": 0
+          }
+        },
+        {
+          "Name": "Team 3",
+          "Stats": {
+            "Wins": 0,
+            "Loses": 0,
+            "Ties": 0,
+            "Goals For": 0,
+            "Goals Against": 0
+          },
+          "Ranking": {
+            "NHL": 0,
+            "East": 0
+          }
+        },
+        {
+          "Name": "Team 4",
+          "Stats": {
+            "Wins": 0,
+            "Loses": 0,
+            "Ties": 0,
+            "Goals For": 0,
+            "Goals Against": 0
+          },
+          "Ranking": {
+            "NHL": 0,
+            "East": 0
+          }
+        },
+        {
+          "Name": "Team 5",
+          "Stats": {
+            "Wins": 0,
+            "Loses": 0,
+            "Ties": 0,
+            "Goals For": 0,
+            "Goals Against": 0
+          },
+          "Ranking": {
+            "NHL": 0,
+            "East": 0
+          }
+        },
+        {
+          "Name": "Team 6",
+          "Stats": {
+            "Wins": 0,
+            "Loses": 0,
+            "Ties": 0,
+            "Goals For": 0,
+            "Goals Against": 0
+          },
+          "Ranking": {
+            "NHL": 0,
+            "West": 0
+          }
+        },
+        {
+          "Name": "Team 7",
+          "Stats": {
+            "Wins": 0,
+            "Loses": 0,
+            "Ties": 0,
+            "Goals For": 0,
+            "Goals Against": 0
+          },
+          "Ranking": {
+            "NHL": 0,
+            "West": 0
+          }
+        },
+        {
+          "Name": "Team 8",
+          "Stats": {
+            "Wins": 0,
+            "Loses": 0,
+            "Ties": 0,
+            "Goals For": 0,
+            "Goals Against": 0
+          },
+          "Ranking": {
+            "NHL": 0,
+            "Weest": 0
+          }
+        },
+        {
+          "Name": "Team 9",
+          "Stats": {
+            "Wins": 0,
+            "Loses": 0,
+            "Ties": 0,
+            "Goals For": 0,
+            "Goals Against": 0
+          },
+          "Ranking": {
+            "NHL": 0,
+            "West": 0
+          }
+        },
+        {
+          "Name": "Team 10",
+          "Stats": {
+            "Wins": 0,
+            "Loses": 0,
+            "Ties": 0,
+            "Goals For": 0,
+            "Goals Against": 0
+          },
+          "Ranking": {
+            "NHL": 0,
+            "West": 0
+          }
+        }
+      ]
+    },
+    "Playoff Data": {
+
+    }
+  },
+  "Games": []
+    
+  
+}
