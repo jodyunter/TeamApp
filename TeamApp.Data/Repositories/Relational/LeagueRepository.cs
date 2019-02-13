@@ -1,10 +1,11 @@
-﻿using TeamApp.Domain;
+﻿using TeamApp.Data.Repositories.Relational;
+using TeamApp.Domain;
 using TeamApp.Domain.Repositories;
 
 namespace TeamApp.Data.Relational.Repositories
 {
     public class LeagueRepository : DataRepository<League>, ILeagueRepository
     {
-        public LeagueRepository(IRepository<League> repo) : base(repo) { }        
+        public LeagueRepository(IRelationalRepository<League> repo) : base(repo) { }        
     }
 }

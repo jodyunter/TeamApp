@@ -29,7 +29,7 @@ namespace TeamApp.Web.Controllers
         public TeamViewModel SaveTeam([FromBody]TeamViewModel models)
         {
 
-            var result = teamService.SaveTeam(models);
+            var result = teamService.SaveTeam(models, "no user yet");
             return result;
         }
     }

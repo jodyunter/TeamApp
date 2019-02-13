@@ -18,6 +18,8 @@ namespace TeamApp.Test.Data
 {
     public class RepositoryTests:IDisposable
     {
+        private string user = "repo user";
+
         protected ISession session;
         private Configuration configuration;
 
@@ -64,10 +66,10 @@ namespace TeamApp.Test.Data
         [Fact]
         
         public void ShouldExterciseTeamRepositoryNHibernate()
-        {
+        {            
             var repo = new TeamRepository(new RepositoryNHibernate<Team>());
 
-            var newTeamId = (long)repo.Add(new Team("Add Team", "AddNick", "AddShort", 5, "Me", 1, null, true));
+            var newTeamId = (long)repo.Add(new Team("Add Team", "AddNick", "AddShort", 5, "Me", 1, null, true), user);
             var newTeam = repo.Get(newTeamId);
             NotEqual(0L, newTeam.Id);
 
@@ -80,7 +82,7 @@ namespace TeamApp.Test.Data
             newTeam.LastYear = 25;
             newTeam.Active = false;
 
-            repo.Update(newTeam);
+            repo.Update(newTeam, user);
 
             var updatedTeam = repo.Get(newTeam.Id);
 
@@ -88,7 +90,7 @@ namespace TeamApp.Test.Data
             
             for (int i = 0; i < 10; i++)
             {
-                repo.Add(new Team("Team " + i, "AddNick" + i, "AddShort" + i, 5, "Me" + i, 1, i, true));
+                repo.Add(new Team("Team " + i, "AddNick" + i, "AddShort" + i, 5, "Me" + i, 1, i, true), user);
             }
 
             Equals(11, repo.GetAll().ToList().Count);
@@ -103,12 +105,12 @@ namespace TeamApp.Test.Data
         [Fact]
         public void ShouldExerciseCompetitionRepositoryNHibernate()
         {            
-            SetupConfigForTests("NHL");
-            PlayAnotherYear(1, "NHL", new Random());
-            PlayAnotherYear(2, "NHL", new Random());
-            PlayAnotherYear(3, "NHL", new Random());
-            PlayAnotherYear(4, "NHL", new Random());
-            PlayAnotherYear(5, "NHL", new Random());
+            SetupConfigForTests("NHL", user);
+            PlayAnotherYear(1, "NHL", new Random(), user);
+            PlayAnotherYear(2, "NHL", new Random(), user);
+            PlayAnotherYear(3, "NHL", new Random(), user);
+            PlayAnotherYear(4, "NHL", new Random(), user);
+            PlayAnotherYear(5, "NHL", new Random(), user);
 
             var repo = new CompetitionRepository(new RepositoryNHibernate<Competition>());            
             //two seasons and two playoffs each year
@@ -125,8 +127,8 @@ namespace TeamApp.Test.Data
         [Fact]
         public void ShouldExerciseTeamRankingRepositoryNHibernate()
         {
-            SetupConfigForTests("NHL");
-            PlayAnotherYear(1, "NHL", new Random(55123));
+            SetupConfigForTests("NHL", user);
+            PlayAnotherYear(1, "NHL", new Random(55123), user);
 
             var repo = new TeamRankingRepository(new RepositoryNHibernate<TeamRanking>());
             var compRepo = new CompetitionRepository(new RepositoryNHibernate<Competition>());
@@ -140,9 +142,9 @@ namespace TeamApp.Test.Data
         #region Standings Repo Tests
         [Fact]
         public void ShouldExerciseStandingsRepository()
-        {
-            SetupConfigForTests("NHL");
-            PlayAnotherYear(1, "NHL", new Random(55123));
+        {            
+            SetupConfigForTests("NHL", user);
+            PlayAnotherYear(1, "NHL", new Random(55123), user);
             var compRepo = new CompetitionRepository(new RepositoryNHibernate<Competition>());
             var repo = new StandingsRepository(new RepositoryNHibernate<SeasonTeam>(), compRepo);            
             var teams = repo.GetByCompetition(compRepo.GetByNameAndYear("My Season", 1).Id);
@@ -154,11 +156,11 @@ namespace TeamApp.Test.Data
         [Fact]
         public void ShouldExterciseLeagueRepository()
         {            
-            SetupConfigForTests("Other League");
-            PlayAnotherYear(1, "Other League", new Random(55123));
+            SetupConfigForTests("Other League", user);
+            PlayAnotherYear(1, "Other League", new Random(55123), user);
 
-            SetupConfigForTests("NHL");
-            SetupConfigForTests("Dude League");
+            SetupConfigForTests("NHL", user);
+            SetupConfigForTests("Dude League", user);
 
             var repo = new LeagueRepository(new RepositoryNHibernate<League>());
 
@@ -170,9 +172,9 @@ namespace TeamApp.Test.Data
         #region Season Repo Tests
         [Fact]
         public void ShouldExerciseSeasonRepositoryNHibernate()
-        {
-            SetupConfigForTests("NHL");
-            PlayAnotherYear(1, "NHL", new Random());
+        {            
+            SetupConfigForTests("NHL", user);
+            PlayAnotherYear(1, "NHL", new Random(), user);
 
             var leagueRepo = new LeagueRepository(new RepositoryNHibernate<League>());            
             var seasonRepo = new SeasonRepository(new RepositoryNHibernate<Season>());
@@ -184,9 +186,9 @@ namespace TeamApp.Test.Data
             var seasonConfig = RepositoryTestData.CreateBasicSeasonConfiguration(league);
             seasonConfig.Parents.Add(parentConfig);
 
-            leagueRepo.Update(league);
+            leagueRepo.Update(league, user);
 
-            PlayAnotherYear(2, "NHL", new Random());
+            PlayAnotherYear(2, "NHL", new Random(), user);
 
             var seasons1 = seasonRepo.GetByLeagueAndYear(league.Id, 1).Count();
             var seasons2 = seasonRepo.GetByLeagueAndYear(league.Id, 2).Count();
@@ -214,7 +216,7 @@ namespace TeamApp.Test.Data
 
         }
 
-        private void SetupConfigForTests(string leagueName)
+        private void SetupConfigForTests(string leagueName, string user)
         {
             var test = new LeagueRepository(new RepositoryNHibernate<League>());
 
@@ -222,10 +224,10 @@ namespace TeamApp.Test.Data
             var seasonConfig = RepositoryTestData.CreateBasicSeasonConfiguration(league);
             var playoffConfig = RepositoryTestData.CreateBasicPlayoffConfiguration(seasonConfig);
 
-            test.Update(league);
+            test.Update(league, user);
             session.Flush();
         }
-        private void PlayAnotherYear(int nextYear, string leagueName, Random random)
+        private void PlayAnotherYear(int nextYear, string leagueName, Random random, string user)
         {
             var leagueRepo = new LeagueRepository(new RepositoryNHibernate<League>());
             var compRepo = new CompetitionRepository(new RepositoryNHibernate<Competition>());
@@ -248,13 +250,13 @@ namespace TeamApp.Test.Data
                 {
                     competition.PlayNextDay(random).ForEach(g =>
                     {
-                        gameRepo.Update(g);
+                        gameRepo.Update(g, user);
                     });
                 }
 
                 competition.ProcessEndOfCompetition();
 
-                compRepo.Update(competition);
+                compRepo.Update(competition, user);
                 
             });
 
@@ -272,17 +274,17 @@ namespace TeamApp.Test.Data
         [Fact]
         public void ShouldPopulateDatabase()
         {
-            SetupConfigForTests("NHL");
-            PlayAnotherYear(1, "NHL", new Random());
-            PlayAnotherYear(2, "NHL", new Random());
-            PlayAnotherYear(3, "NHL", new Random());
-            PlayAnotherYear(4, "NHL", new Random());
-            PlayAnotherYear(5, "NHL", new Random());
-            PlayAnotherYear(6, "NHL", new Random());
-            PlayAnotherYear(7, "NHL", new Random());
-            PlayAnotherYear(8, "NHL", new Random());
-            PlayAnotherYear(9, "NHL", new Random());
-            PlayAnotherYear(10, "NHL", new Random());
+            SetupConfigForTests("NHL", user);
+            PlayAnotherYear(1, "NHL", new Random(), user);
+            PlayAnotherYear(2, "NHL", new Random(), user);
+            PlayAnotherYear(3, "NHL", new Random(), user);
+            PlayAnotherYear(4, "NHL", new Random(), user);
+            PlayAnotherYear(5, "NHL", new Random(), user);
+            PlayAnotherYear(6, "NHL", new Random(), user);
+            PlayAnotherYear(7, "NHL", new Random(), user);
+            PlayAnotherYear(8, "NHL", new Random(), user);
+            PlayAnotherYear(9, "NHL", new Random(), user);
+            PlayAnotherYear(10, "NHL", new Random(), user);
 
 
             dropDatabase = true;

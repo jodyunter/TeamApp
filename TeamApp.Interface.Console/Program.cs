@@ -10,7 +10,7 @@ namespace TeamApp.Console
 {
     class Program
     {
-        static void SetupConfig(TeamApplication teamApp, bool setupDatabase, bool dropFirst, bool setupData)
+        static void SetupConfig(TeamApplication teamApp, bool setupDatabase, bool dropFirst, bool setupData, string user)
         {
             if (setupDatabase)
             {
@@ -32,7 +32,7 @@ namespace TeamApp.Console
                 var seasonCompetition = Data2.CreateBasicSeasonConfiguration(league);
                 var playoffConfig = Data2.CreateBasicPlayoffConfiguration(seasonCompetition);
 
-                teamApp.LeagueRepository.Update(league);
+                teamApp.LeagueRepository.Update(league, user);
             }
 
 
@@ -40,7 +40,8 @@ namespace TeamApp.Console
         }
         static void Main(string[] args)
         {
-                                               
+
+            string user = "Jody Program";
 
             var teamApp = new TeamApplication();
             //SetupConfig(teamApp, true, true, true);
@@ -51,7 +52,7 @@ namespace TeamApp.Console
 
             for (int i = 0; i < 1; i++)
             {
-                teamApp.LeagueService.PlayAnotherYear("NHL", new Random());
+                teamApp.LeagueService.PlayAnotherYear("NHL", new Random(), user);
             }
                                                
             

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TeamApp.Data.Repositories.Relational;
 using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Repositories;
 
@@ -8,7 +9,7 @@ namespace TeamApp.Data.Relational.Repositories
 {
     public class CompetitionRepository : DataRepository<Competition>, ICompetitionRepository
     {
-        public CompetitionRepository(IRepository<Competition> repo) : base(repo) { }
+        public CompetitionRepository(IRelationalRepository<Competition> repo) : base(repo) { }
 
         public Competition GetByNameAndYear(string name, int year)
         {

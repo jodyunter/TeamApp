@@ -10,7 +10,7 @@ using TeamApp.Domain.Repositories;
 
 namespace TeamApp.Data.Repositories.Relational.NHibernate
 {
-    public class RepositoryNHibernate<T> :IRepository<T>, IQueryable<T> where T : IDataObject
+    public class RepositoryNHibernate<T> :IRelationalRepository<T>, IQueryable<T> where T : IDataObject
     {
         protected readonly ISession session;
 
@@ -32,12 +32,12 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
             return session.Query<T>().GetEnumerator();
         }
 
-        public object Add(T entity)
+        public object Add(T entity, string user)
         {            
             return session.Save(entity);
         }
 
-        public IDataObject Update(T entity)
+        public IDataObject Update(T entity, string user)
         {
             //return session.Merge<IDataObject>(entity);
             try

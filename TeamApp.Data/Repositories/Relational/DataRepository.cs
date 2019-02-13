@@ -4,15 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using TeamApp.Data.Repositories.Relational;
 using TeamApp.Domain;
 using TeamApp.Domain.Repositories;
 
 namespace TeamApp.Data.Relational.Repositories
 {
-    public abstract class DataRepository<T> : IRepository<T> where T : IDataObject
+    public abstract class DataRepository<T> : IRelationalRepository<T> where T : IDataObject
     {
-        private IRepository<T> baseRepo;
-        public DataRepository(IRepository<T> baseImplementation)
+        private IRelationalRepository<T> baseRepo;
+        public DataRepository(IRelationalRepository<T> baseImplementation)
         {
             baseRepo = baseImplementation;
         }        
@@ -23,9 +24,10 @@ namespace TeamApp.Data.Relational.Repositories
 
         public IQueryProvider Provider { get { return baseRepo.Provider; } }
 
-        public object Add(T team)
+        public object Add(T o, string user)
         {
-            return baseRepo.Add(team);
+            SetModifiedValues(o, user);
+            return baseRepo.Add(o,user);
         }
 
         public void Flush()
@@ -48,19 +50,31 @@ namespace TeamApp.Data.Relational.Repositories
             return baseRepo.GetEnumerator();
         }
 
-        public void Remove(T team)
+        public void Remove(T o)
         {
-            baseRepo.Remove(team);
+            baseRepo.Remove(o);
         }
 
-        public IDataObject Update(T team)
+        public IDataObject Update(T o, string user)
         {
-            return baseRepo.Update(team);
+            SetModifiedValues(o, user);
+            return baseRepo.Update(o, user);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return baseRepo.GetEnumerator();
+        }
+
+        private void SetModifiedValues(T o, string user)
+        {
+            o.LastModifiedBy = user;
+            o.LastModifiedOn = DateTime.Now;
+            if (o.CreatedBy == null)
+            {
+                o.CreatedBy = user;
+                o.CreatedOn = DateTime.Now;
+            }
         }
     }
 }

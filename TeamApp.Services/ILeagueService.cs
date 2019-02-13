@@ -12,7 +12,7 @@ namespace TeamApp.Services
         IEnumerable<LeagueViewModel> GetAll();
         IEnumerable<CompetitionConfigViewModel> GetCompetitionConfigs(long leagueId);
         IEnumerable<SeasonCompetitionConfigViewModel> GetSeasonCompetitionConfig(long competitiongConfigId);
-        void PlayAnotherYear(string leagueName, Random random);
+        void PlayAnotherYear(string leagueName, Random random, string user);
 
 
     }
