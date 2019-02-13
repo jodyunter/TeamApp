@@ -39,8 +39,8 @@ namespace TeamApp.Console
             
         }
         static void Main(string[] args)
-        {
-
+        {            
+            
             string user = "Jody Program";
 
             var teamApp = new TeamApplication();

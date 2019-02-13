@@ -5,6 +5,7 @@ using FluentNHibernate.Conventions.Helpers;
 using Microsoft.Extensions.Configuration;
 using NHibernate;
 using NHibernate.Context;
+using NHibernate.Event;
 using System.IO;
 using TeamApp.Domain;
 using TeamApp.Domain.Competitions;
@@ -60,7 +61,9 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
                        .IncludeBase<PlayoffSeries>()                       
                        .IncludeBase<Competition>()
                        .Conventions.Add(DefaultCascade.All())
-                       ));
+                       ))
+                       .ExposeConfiguration(c => c.EventListeners.PreUpdateEventListeners
+                                    = new IPreUpdateEventListener[] { new AuditEventListener() });
                     
         }
 

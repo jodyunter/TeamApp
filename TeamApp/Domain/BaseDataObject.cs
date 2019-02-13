@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace TeamApp.Domain
 {
@@ -12,6 +13,7 @@ namespace TeamApp.Domain
         public virtual string LastModifiedBy { get; set; }
         public virtual DateTime LastModifiedOn { get; set; }
 
-        public BaseDataObject() { }
+        public BaseDataObject() {            
+        }
     }
 }
