@@ -70,5 +70,10 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
         {
             session.Flush();
         }
+
+        public IDataObject GetById(long id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

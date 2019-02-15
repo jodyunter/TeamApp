@@ -13,6 +13,8 @@ namespace TeamApp.Domain.Repositories
         T Get(long id);
         IEnumerable<T> GetAll();
         void Flush();
+
+        IDataObject GetById(long id);
        
     }
 }

@@ -17,7 +17,7 @@ namespace TeamApp.Data.Relational.Repositories
         {
             var competition = compRepo.Where(c => c.Id == competitionId).First();
 
-            return this.Where(st => st.Competition == competition).ToList();
+            return baseRepo.Where(st => st.Competition == competition).ToList();
         }
     }
 }

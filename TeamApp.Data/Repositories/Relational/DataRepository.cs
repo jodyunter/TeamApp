@@ -10,9 +10,9 @@ using TeamApp.Domain.Repositories;
 
 namespace TeamApp.Data.Relational.Repositories
 {
-    public abstract class DataRepository<T> : IRelationalRepository<T> where T : IDataObject
+    public abstract class DataRepository<T> where T : IDataObject
     {
-        private IRelationalRepository<T> baseRepo;
+        protected IRelationalRepository<T> baseRepo;
         public DataRepository(IRelationalRepository<T> baseImplementation)
         {
             baseRepo = baseImplementation;
@@ -44,6 +44,11 @@ namespace TeamApp.Data.Relational.Repositories
             return baseRepo.GetAll();
         }
 
+        public IDataObject GetById(long id)
+        {
+            return baseRepo.GetById(id);
+        }
+
         public IEnumerator<T> GetEnumerator()
         {
             return baseRepo.GetEnumerator();
@@ -58,10 +63,6 @@ namespace TeamApp.Data.Relational.Repositories
         {            
             return baseRepo.Update(o);
         }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return baseRepo.GetEnumerator();
-        }        
+    
     }
 }
