@@ -41,7 +41,7 @@ namespace TeamApp.Services.Implementation
 
         //currently only works for a full year, we need to change this to slowly pick up where the series picks up
         //eventually we want to be able to say "play this day" or "play next game" or "play next 5 games"
-        public void PlayAnotherYear(string leagueName, Random random, string user)
+        public void PlayAnotherYear(string leagueName, Random random)
         {
 
             var nextYear = 1;
@@ -65,13 +65,13 @@ namespace TeamApp.Services.Implementation
                 {
                     competition.PlayNextDay(random).ForEach(g =>
                     {
-                        scheduleGameRepository.Update(g, user);
+                        scheduleGameRepository.Update(g);
                     });
                 }
 
                 competition.ProcessEndOfCompetition();
 
-                competitionRepository.Update(competition, user);
+                competitionRepository.Update(competition);
 
             });
 

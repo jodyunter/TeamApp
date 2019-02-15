@@ -32,12 +32,12 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
             return session.Query<T>().GetEnumerator();
         }
 
-        public object Add(T entity, string user)
-        
+        public object Add(T entity)
+        { 
             return session.Save(entity);
         }
 
-        public IDataObject Update(T entity, string user)
+        public IDataObject Update(T entity)
         {
             //return session.Merge<IDataObject>(entity);
             try

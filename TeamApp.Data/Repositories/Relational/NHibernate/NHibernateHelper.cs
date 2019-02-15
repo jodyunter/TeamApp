@@ -63,7 +63,9 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
                        .Conventions.Add(DefaultCascade.All())
                        ))
                        .ExposeConfiguration(c => c.EventListeners.PreUpdateEventListeners
-                                    = new IPreUpdateEventListener[] { new AuditEventListener() });
+                                  = new IPreUpdateEventListener[] { new AuditEventListener() })
+                       .ExposeConfiguration(c => c.EventListeners.PreInsertEventListeners
+                                  = new IPreInsertEventListener[] { new AuditEventListener() });
                     
         }
 

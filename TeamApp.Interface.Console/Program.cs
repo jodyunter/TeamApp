@@ -5,6 +5,7 @@ using System.Linq;
 using TeamApp.Data.Repositories.Relational.NHibernate;
 using NHibernate.Tool.hbm2ddl;
 using TeamApp.Console.App;
+using System.Threading;
 
 namespace TeamApp.Console
 {
@@ -32,7 +33,7 @@ namespace TeamApp.Console
                 var seasonCompetition = Data2.CreateBasicSeasonConfiguration(league);
                 var playoffConfig = Data2.CreateBasicPlayoffConfiguration(seasonCompetition);
 
-                teamApp.LeagueRepository.Update(league, user);
+                teamApp.LeagueRepository.Update(league);
             }
 
 
@@ -40,8 +41,9 @@ namespace TeamApp.Console
         }
         static void Main(string[] args)
         {            
-            
-            string user = "Jody Program";
+                        
+            var user = new User("Jody_Program_User");
+            Thread.CurrentPrincipal = user;
 
             var teamApp = new TeamApplication();
             //SetupConfig(teamApp, true, true, true);
@@ -52,7 +54,7 @@ namespace TeamApp.Console
 
             for (int i = 0; i < 1; i++)
             {
-                teamApp.LeagueService.PlayAnotherYear("NHL", new Random(), user);
+                teamApp.LeagueService.PlayAnotherYear("NHL", new Random());
             }
                                                
             

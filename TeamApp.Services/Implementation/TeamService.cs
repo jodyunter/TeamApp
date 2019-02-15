@@ -47,12 +47,12 @@ namespace TeamApp.Services.Implementation
         }
         
 
-        public List<TeamViewModel> SaveTeams(IEnumerable<TeamViewModel> models, string user)
+        public List<TeamViewModel> SaveTeams(IEnumerable<TeamViewModel> models)
         {
 
             MapModelToDomain(models.ToList()).ForEach(t =>
             {
-                repository.Update(t, user);                
+                repository.Update(t);                
             });
 
             repository.Flush();
@@ -61,10 +61,10 @@ namespace TeamApp.Services.Implementation
         }
 
 
-        public TeamViewModel SaveTeam(TeamViewModel model, string user)
+        public TeamViewModel SaveTeam(TeamViewModel model)
         {
             var newTeam = MapModelToDomain(model);            
-            newTeam = (Team)repository.Update(newTeam, user);
+            newTeam = (Team)repository.Update(newTeam);
 
             return MapDomainToModel(newTeam);
         }

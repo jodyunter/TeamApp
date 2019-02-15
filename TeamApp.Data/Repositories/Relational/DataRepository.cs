@@ -24,10 +24,9 @@ namespace TeamApp.Data.Relational.Repositories
 
         public IQueryProvider Provider { get { return baseRepo.Provider; } }
 
-        public object Add(T o, string user)
-        {
-            SetModifiedValues(o, user);
-            return baseRepo.Add(o,user);
+        public object Add(T o)
+        {            
+            return baseRepo.Add(o);
         }
 
         public void Flush()
@@ -55,26 +54,14 @@ namespace TeamApp.Data.Relational.Repositories
             baseRepo.Remove(o);
         }
 
-        public IDataObject Update(T o, string user)
-        {
-            SetModifiedValues(o, user);
-            return baseRepo.Update(o, user);
+        public IDataObject Update(T o)
+        {            
+            return baseRepo.Update(o);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return baseRepo.GetEnumerator();
-        }
-
-        private void SetModifiedValues(T o, string user)
-        {
-            o.LastModifiedBy = user;
-            o.LastModifiedOn = DateTime.Now;
-            if (o.CreatedBy == null)
-            {
-                o.CreatedBy = user;
-                o.CreatedOn = DateTime.Now;
-            }
         }
     }
 }
