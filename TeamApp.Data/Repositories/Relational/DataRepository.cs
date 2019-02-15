@@ -62,6 +62,6 @@ namespace TeamApp.Data.Relational.Repositories
         IEnumerator IEnumerable.GetEnumerator()
         {
             return baseRepo.GetEnumerator();
-        }
+        }        
     }
 }
