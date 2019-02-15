@@ -48,8 +48,8 @@ namespace TeamApp.Services.Implementation
 
             if (competitionRepository.Count() != 0) nextYear = competitionRepository.Max(c => c == null ? 0 : c.Year) + 1;
             
-            var league = leagueRepository.Where(m => m.Name.Equals(leagueName)).First();
-
+            var league = leagueRepository.Where(m => m.Name.Equals(leagueName)).First();     
+     
             league.CompetitionConfigs.OrderBy(m => m.Ordering).ToList().ForEach(c =>
             {
                 var parentCompList = new List<Competition>();

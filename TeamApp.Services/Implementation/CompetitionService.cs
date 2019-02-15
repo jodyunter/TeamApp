@@ -6,8 +6,9 @@ using TeamApp.Services.ViewModels.Views.Season;
 
 namespace TeamApp.Services.Implementation
 {
-    public class CompetitionService : BaseService<Competition, CompetitionSimpleViewModel>, ICompetitionService
-    {
+    //todo: probably the wrong view model
+    public class CompetitionService : ICompetitionService
+    {                
         public void PlayCompetition(Competition competition)
         {
 
