@@ -11,7 +11,7 @@ namespace TeamApp.Data.Relational.Repositories
         public TeamRankingRepository(IRelationalRepository<TeamRanking> repo) : base(repo) { }
         public IList<TeamRanking> GetByCompetition(long competitionId)
         {
-            return this.Where(tr => tr.Team.Competition.Id == competitionId).ToList();
+            return baseRepo.Where(tr => tr.Team.Competition.Id == competitionId).ToList();
         }
     }
 }

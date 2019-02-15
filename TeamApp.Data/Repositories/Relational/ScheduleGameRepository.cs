@@ -12,12 +12,12 @@ namespace TeamApp.Data.Relational.Repositories
 
         public IEnumerable<ScheduleGame> GetGamesForDays(int firstDay, int lastDay)
         {
-            return this.Where(g => g.Day >= firstDay && g.Day <= lastDay).ToList();
+            return baseRepo.Where(g => g.Day >= firstDay && g.Day <= lastDay).ToList();
         }
 
         public IEnumerable<ScheduleGame> GetInCompleteGamesBetweenDays(int currentDay, int newDay)
         {
-            return this.Where(g => g.Day >= currentDay && g.Day < newDay && g.Complete == false).ToList();
+            return baseRepo.Where(g => g.Day >= currentDay && g.Day < newDay && g.Complete == false).ToList();
         }
     
     }

@@ -15,7 +15,7 @@ namespace TeamApp.Data.Relational.Repositories
 
         public IList<SeasonTeam> GetByCompetition(long competitionId)
         {
-            var competition = compRepo.Where(c => c.Id == competitionId).First();
+            var competition = compRepo.GetById(competitionId);
 
             return baseRepo.Where(st => st.Competition == competition).ToList();
         }

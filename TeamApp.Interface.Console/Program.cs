@@ -48,7 +48,7 @@ namespace TeamApp.Console
             var teamApp = new TeamApplication();
             //SetupConfig(teamApp, true, true, true);
 
-            var league = teamApp.LeagueRepository.Where(l => l.Name.Equals("NHL")).FirstOrDefault();
+            var league = teamApp.LeagueRepository.GetByName("NHL");
 
             WriteLine("Loaded league: " + league.Name);
 

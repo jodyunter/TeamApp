@@ -11,7 +11,7 @@ namespace TeamApp.Data.Relational.Repositories
 
         public League GetByName(string name)
         {
-            return this.Where(l => l.Name == name).FirstOrDefault();
+            return baseRepo.Where(l => l.Name == name).FirstOrDefault();
         }
     }
 }

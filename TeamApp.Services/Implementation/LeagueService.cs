@@ -53,8 +53,8 @@ namespace TeamApp.Services.Implementation
 
             var nextYear = GetCurrentYearForLeague(league) + 1;
 
+            var competitionConfig = league.GetNextCompetitionConfig(null, nextYear);
             
-     
             league.CompetitionConfigs.OrderBy(m => m.Ordering).ToList().ForEach(c =>
             {
                 var parentCompList = new List<Competition>();

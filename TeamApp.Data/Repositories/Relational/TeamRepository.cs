@@ -11,12 +11,12 @@ namespace TeamApp.Data.Relational.Repositories
         public TeamRepository(IRelationalRepository<Team> baseRepo) : base(baseRepo) { }
         public Team GetByName(string name)
         {
-            return this.Where(t => t.Name.Equals(name)).FirstOrDefault();
+            return baseRepo.Where(t => t.Name.Equals(name)).FirstOrDefault();
         }
 
         public List<Team> GetByStatus(bool active)
         {
-            return this.Where(t => t.Active == active).ToList();
+            return baseRepo.Where(t => t.Active == active).ToList();
         }
     }
 }

@@ -14,22 +14,22 @@ namespace TeamApp.Data.Relational.Repositories
 
         public Competition GetByNameAndYear(string name, int year)
         {
-            return this.Where(c => c.Name.Equals(name) && c.Year == year).FirstOrDefault();
+            return baseRepo.Where(c => c.Name.Equals(name) && c.Year == year).FirstOrDefault();
         }
 
         public IList<Competition> GetByYear(int year)
         {
-            return this.Where(c => c.Year == year).ToList();
+            return baseRepo.Where(c => c.Year == year).ToList();
         }
 
         public Competition GetCurrentCompetitionForLeagueAndYear(int leagueId, int year)
         {
-            return this.Where(c => c.Year == year && c.CompetitionConfig.League.Id == leagueId && !c.IsComplete()).FirstOrDefault();
+            return baseRepo.Where(c => c.Year == year && c.CompetitionConfig.League.Id == leagueId && !c.IsComplete()).FirstOrDefault();
         }
 
         public int GetCurrentYearForLeague(League l)
         {
-            var competitionList = this.Where(c => c.CompetitionConfig.League == l).ToList();
+            var competitionList = baseRepo.Where(c => c.CompetitionConfig.League == l).ToList();
 
             return competitionList.Max(c => c.Year);
             

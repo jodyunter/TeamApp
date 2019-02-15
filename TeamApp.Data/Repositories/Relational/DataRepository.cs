@@ -10,7 +10,7 @@ using TeamApp.Domain.Repositories;
 
 namespace TeamApp.Data.Relational.Repositories
 {
-    public abstract class DataRepository<T> where T : IDataObject
+    public abstract class DataRepository<T>:IRepository<T> where T : IDataObject
     {
         protected IRelationalRepository<T> baseRepo;
         public DataRepository(IRelationalRepository<T> baseImplementation)

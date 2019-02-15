@@ -12,11 +12,11 @@ namespace TeamApp.Data.Relational.Repositories
 
         public Season GetBySeasonCompetitionConfigAndYear(long seasonCompetitionConfigId, int year)
         {
-            return this.Where(s => s.CompetitionConfig.Id == seasonCompetitionConfigId && s.Year == year).FirstOrDefault();
+            return baseRepo.Where(s => s.CompetitionConfig.Id == seasonCompetitionConfigId && s.Year == year).FirstOrDefault();
         }
         public IList<Season> GetByLeagueAndYear(long leagueId, int year)
         {
-            return this.Where(s => s.CompetitionConfig.League.Id == leagueId && s.Year == year).ToList();
+            return baseRepo.Where(s => s.CompetitionConfig.League.Id == leagueId && s.Year == year).ToList();
         }
     }
 }

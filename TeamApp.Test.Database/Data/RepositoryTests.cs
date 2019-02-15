@@ -179,7 +179,7 @@ namespace TeamApp.Test.Data
             var leagueRepo = new LeagueRepository(new RepositoryNHibernate<League>());            
             var seasonRepo = new SeasonRepository(new RepositoryNHibernate<Season>());
 
-            var league = leagueRepo.Where(l => l.Name.Equals("NHL")).FirstOrDefault();
+            var league = leagueRepo.GetByName("NHL");
 
             var parentConfig = league.CompetitionConfigs.Where(s => s.Name.Equals("My Season")).FirstOrDefault();
 
@@ -233,7 +233,7 @@ namespace TeamApp.Test.Data
             var compRepo = new CompetitionRepository(new RepositoryNHibernate<Competition>());
             var gameRepo = new ScheduleGameRepository(new RepositoryNHibernate<ScheduleGame>());
 
-            var league = leagueRepo.Where(m => m.Name.Equals(leagueName)).First();            
+            var league = leagueRepo.GetByName(leagueName);
 
             league.CompetitionConfigs.OrderBy(m => m.Ordering).ToList().ForEach(c =>
             {
