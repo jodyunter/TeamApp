@@ -102,7 +102,7 @@ namespace TeamApp.Test.Helpers
 
             var rankingRules = new List<PlayoffRankingRule>()
             {
-                new PlayoffRankingRule(null, "NHL", 1,seasonConfig, "NHL", 1, 6)
+                new PlayoffRankingRule(null, "NHL", 1,seasonConfig, "NHL", 1, 6,1, null)
             };
 
             var seriesRules = new List<PlayoffSeriesRule>()

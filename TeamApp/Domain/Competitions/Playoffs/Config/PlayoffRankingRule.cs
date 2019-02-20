@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TeamApp.Domain.Competitions.Playoffs.Config
 {
-    public class PlayoffRankingRule:BaseDataObject
+    public class PlayoffRankingRule:BaseDataObject,ITimePeriod
     {
         public virtual PlayoffCompetitionConfig PlayoffConfig { get; set; }
         //you will get the same competition for the current year
@@ -14,10 +14,13 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
         public virtual string SourceGroupName { get; set; }
         public virtual int SourceFirstRank { get; set; }
         public virtual int SourceLastRank { get; set; }
+        public int? FirstYear { get; set; }
+        public int? LastYear { get; set; }
+
         //todo how to pool candidates, then sort them
 
         public PlayoffRankingRule() { }
-        public PlayoffRankingRule(PlayoffCompetitionConfig config, string groupName, int startingRank, CompetitionConfig sourceCompetition, string sourceGroupName, int sourceFirstRank, int sourceLastRank)
+        public PlayoffRankingRule(PlayoffCompetitionConfig config, string groupName, int startingRank, CompetitionConfig sourceCompetition, string sourceGroupName, int sourceFirstRank, int sourceLastRank, int? firstYear, int? lastYear)
         {
             PlayoffConfig = config;
             GroupName = groupName;
@@ -26,6 +29,8 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
             SourceGroupName = sourceGroupName;
             SourceFirstRank = sourceFirstRank;
             SourceLastRank = sourceLastRank;
+            FirstYear = firstYear;
+            LastYear = lastYear;
         }
     }
 }

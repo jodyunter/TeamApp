@@ -148,14 +148,14 @@ namespace TeamApp.Test.Helpers
 
             var rankingRules = new List<PlayoffRankingRule>()
             {
-                new PlayoffRankingRule(null, "NHL", 1,seasonConfig, "NHL", 1, 20),
-                new PlayoffRankingRule(null, "West",1,seasonConfig, "West",1, 6),
-                new PlayoffRankingRule(null, "East",1,seasonConfig, "East",1, 8),
-                new PlayoffRankingRule(null, "East",9,seasonConfig, "Central",5,5), //how do we rank two teams from two divisions into one?
-                new PlayoffRankingRule(null, "East",10,seasonConfig, "West",5,5),
-                new PlayoffRankingRule(null, "Central",1,seasonConfig,"Central",1,6),
-                new PlayoffRankingRule(null, "NorthEast",1,seasonConfig,"NorthEast",1,4),
-                new PlayoffRankingRule(null, "Atlantic",1,seasonConfig,"Atlantic",1,4)
+                new PlayoffRankingRule(null, "NHL", 1,seasonConfig, "NHL", 1, 20,1, null),
+                new PlayoffRankingRule(null, "West",1,seasonConfig, "West",1, 6,1, null),
+                new PlayoffRankingRule(null, "East",1,seasonConfig, "East",1, 8,1, null),
+                new PlayoffRankingRule(null, "East",9,seasonConfig, "Central",5,5,1, null), //how do we rank two teams from two divisions into one?
+                new PlayoffRankingRule(null, "East",10,seasonConfig, "West",5,5,1, null),
+                new PlayoffRankingRule(null, "Central",1,seasonConfig,"Central",1,6,1, null),
+                new PlayoffRankingRule(null, "NorthEast",1,seasonConfig,"NorthEast",1,4,1, null),
+                new PlayoffRankingRule(null, "Atlantic",1,seasonConfig,"Atlantic",1,4,1, null)
             };
 
             var seriesRules = new List<PlayoffSeriesRule>()

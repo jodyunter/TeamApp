@@ -43,7 +43,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
             {
                 session.SaveOrUpdate(entity);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 session.Merge((IDataObject)entity);
             }

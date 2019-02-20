@@ -72,16 +72,17 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
             return season;
         }
 
+        //todo properly test these with years
         public virtual void ProcessDivisionRules(Season season, Dictionary<string, SeasonDivision> seasonDivisions)
         {
             //first create all the divisions
-            DivisionRules.ToList().ForEach(rule =>
+            DivisionRules.Where(dr => dr.IsActive(season.Year)).ToList().ForEach(rule =>
             {
                 seasonDivisions.Add(rule.DivisionName, new SeasonDivision(season, null, season.Year, rule.DivisionName, rule.Level, rule.Ordering, null));
             });
 
             //now setup parent divisions relationships
-            DivisionRules.ToList().ForEach(rule =>
+            DivisionRules.Where(dr => dr.IsActive(season.Year)).ToList().ForEach(rule =>
             {
                 if (rule.ParentName != null)
                 {
@@ -91,9 +92,10 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
 
         }
 
+        //todo properly test these with years
         public virtual void ProcessTeamRules(Season season, Dictionary<string, SeasonDivision> seasonDivisions, Dictionary<string, SingleYearTeam> teams)
         {
-            TeamRules.ToList().ForEach(rule =>
+            TeamRules.Where(tr => tr.IsActive(season.Year)).ToList().ForEach(rule =>
             {                
                 var team = rule.Team;
                 var seasonDivision = seasonDivisions[rule.Division];
@@ -105,13 +107,14 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
             });
         }
 
+        //todo properly test these with years
         public virtual void CreateSeasonSchedule(Season season)
         {
             int day = 1;
 
             season.Schedule = new Schedule();
 
-            ScheduleRules.ToList().ForEach(rule =>
+            ScheduleRules.Where(sr => sr.IsActive(season.Year)).ToList().ForEach(rule =>
             {
                 if (rule.HomeTeamType == rule.AwayTeamType && rule.HomeTeamValue == rule.AwayTeamValue)
                 {

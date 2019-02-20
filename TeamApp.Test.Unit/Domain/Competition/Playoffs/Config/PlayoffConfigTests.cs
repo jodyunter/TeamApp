@@ -31,12 +31,15 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
             var playoffConfig = new PlayoffCompetitionConfig("My Playoff", null, 2, gameRules, 1, null, null, null, new List<CompetitionConfig>() { seasonCompetition  });
 
             var rankingRules = new List<PlayoffRankingRule>();           
-            rankingRules.Add(new PlayoffRankingRule(playoffConfig, "East", 3, seasonCompetition, "East", 5, 8));
-            rankingRules.Add(new PlayoffRankingRule(playoffConfig, "West", 15, seasonCompetition, "West", 3, 3));
-        
-            playoffConfig.Rankings = rankingRules;
+            rankingRules.Add(new PlayoffRankingRule(playoffConfig, "East", 3, seasonCompetition, "East", 5, 8,1, 12));
+            rankingRules.Add(new PlayoffRankingRule(playoffConfig, "West", 15, seasonCompetition, "West", 3, 3,1, null));
+            //test out the active rule
+            //playoff is for year 5, this rule ends year 4
+            rankingRules.Add(new PlayoffRankingRule(playoffConfig, "Other", 25, seasonCompetition, "Other", 3, 3, 1, 4));
 
-            var playoff = new Playoff(playoffConfig, "My Playoff", 1, 15, 1, null, new List<SingleYearTeam>(), null, null);
+            playoffConfig.RankingRules = rankingRules;
+
+            var playoff = new Playoff(playoffConfig, "My Playoff", 5, 15, 1, null, new List<SingleYearTeam>(), null, null);
 
             playoffConfig.ProcessRankingRulesAndAddTeams(playoff, new List<Competition> { season });
 
@@ -52,6 +55,7 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
             var teamName = playoff.Rankings.Where(ra => ra.GroupName.Equals("West")).ToList()[0].Team.Name;
 
             True(season.Rankings.Where(ra => ra.GroupName.Equals("West") && ra.Team.Name.Equals(teamName)).First().Rank == 3);
+            Null(playoff.Rankings.Where(ra => ra.GroupName.Equals("Other")).FirstOrDefault());
         }
 
     }

@@ -9,16 +9,16 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
     public class PlayoffCompetitionConfig:CompetitionConfig
     {
         public virtual IList<PlayoffSeriesRule> SeriesRules { get; set; }
-        public virtual IList<PlayoffRankingRule> Rankings { get; set; }
+        public virtual IList<PlayoffRankingRule> RankingRules { get; set; }
 
         public PlayoffCompetitionConfig():base() { }
 
-        public PlayoffCompetitionConfig(string name, League league, int order, GameRules gameRules, int? firstYear, int? lastYear, List<PlayoffRankingRule> rankings, List<PlayoffSeriesRule> seriesRules, List<CompetitionConfig> parents)
+        public PlayoffCompetitionConfig(string name, League league, int order, GameRules gameRules, int? firstYear, int? lastYear, List<PlayoffRankingRule> rankingRules, List<PlayoffSeriesRule> seriesRules, List<CompetitionConfig> parents)
             :base(name, league, order, gameRules, parents, firstYear, lastYear)
         {
-            Rankings = rankings;
-            if (Rankings != null)
-                Rankings.ToList().ForEach(r => r.PlayoffConfig = this);
+            RankingRules = rankingRules;
+            if (RankingRules != null)
+                RankingRules.ToList().ForEach(r => r.PlayoffConfig = this);
             SeriesRules = seriesRules;
             if (SeriesRules != null)
                 SeriesRules.ToList().ForEach(sr => sr.PlayoffConfig = this);
@@ -29,7 +29,7 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
             var playoff = new Playoff(this, Name, year, -1, 1, null, null, null, null);
 
             ProcessRankingRulesAndAddTeams(playoff, parents);
-            ProcessSeries(playoff);
+            ProcessSeriesRules(playoff);
 
             if (parents != null) //assume shared schedule
                 playoff.Schedule = parents[0].Schedule;
@@ -39,22 +39,24 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
             return playoff;
         }
 
-        public virtual void ProcessSeries(Playoff playoff)
+        //need to test out the time period
+        public virtual void ProcessSeriesRules(Playoff playoff)
         {
             playoff.Series = new List<PlayoffSeries>();
 
-            SeriesRules.ToList().ForEach(rule =>
+            SeriesRules.Where(sr => sr.IsActive(playoff.Year)).ToList().ForEach(rule =>
             {
                 playoff.Series.Add(SetupSeriesFromRule(playoff, rule));
             });
         }
 
+        //need to  test out the time period
         public virtual void ProcessRankingRulesAndAddTeams(Playoff playoff, List<Competition> parents)
         {
             playoff.Teams = new List<SingleYearTeam>();
             playoff.Rankings = new List<TeamRanking>();
 
-            Rankings.ToList().ForEach(rule =>
+            RankingRules.Where(rr => rr.IsActive(playoff.Year)).ToList().ForEach(rule =>
             {
                 //get the competition
                 var sourceCompetition = parents.Where(p => p.Name.Equals(rule.SourceCompetition.Name)).FirstOrDefault(); //this is the source competition
