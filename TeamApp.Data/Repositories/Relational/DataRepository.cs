@@ -44,11 +44,6 @@ namespace TeamApp.Data.Relational.Repositories
             return baseRepo.GetAll();
         }
 
-        public IDataObject GetById(long id)
-        {
-            return baseRepo.GetById(id);
-        }
-
         public IEnumerator<T> GetEnumerator()
         {
             return baseRepo.GetEnumerator();
@@ -59,7 +54,7 @@ namespace TeamApp.Data.Relational.Repositories
             baseRepo.Remove(o);
         }
 
-        public IDataObject Update(T o)
+        public T Update(T o)
         {            
             return baseRepo.Update(o);
         }

@@ -37,7 +37,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
             return session.Save(entity);
         }
 
-        public IDataObject Update(T entity)
+        public T Update(T entity)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
                 session.Merge((IDataObject)entity);
             }
 
-            return null;
+            return default(T);
         }
 
         public void Remove(T entity)

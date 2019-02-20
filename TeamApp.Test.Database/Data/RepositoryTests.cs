@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using TeamApp.Test.Helpers;
 using TeamApp.Data.Relational.Repositories;
 using TeamApp.Domain.Competitions.Seasons;
+using System.Threading;
 
 namespace TeamApp.Test.Data
 {
@@ -29,6 +30,9 @@ namespace TeamApp.Test.Data
 
         public RepositoryTests()
         {
+            var user = new User("Jody_Program_User");
+            Thread.CurrentPrincipal = user;
+
             session = NHibernateHelper.OpenSession();
             configuration = NHibernateHelper.GetConfiguration().BuildConfiguration();
             schemaExport = new SchemaExport(configuration);

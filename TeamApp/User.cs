@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Security.Principal;
 using System.Text;
 
-namespace TeamApp.Console.App
+namespace TeamApp
 {
     public class User:IPrincipal
     {       

@@ -14,8 +14,8 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
         public virtual string SourceGroupName { get; set; }
         public virtual int SourceFirstRank { get; set; }
         public virtual int SourceLastRank { get; set; }
-        public int? FirstYear { get; set; }
-        public int? LastYear { get; set; }
+        public virtual int? FirstYear { get; set; }
+        public virtual int? LastYear { get; set; }
 
         //todo how to pool candidates, then sort them
 

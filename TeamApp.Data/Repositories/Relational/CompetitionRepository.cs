@@ -31,7 +31,7 @@ namespace TeamApp.Data.Relational.Repositories
         {
             var competitionList = baseRepo.Where(c => c.CompetitionConfig.League == l).ToList();
 
-            return competitionList.Max(c => c.Year);
+            return competitionList.Count > 0 ? competitionList.Max(c => c.Year) : 0;
             
         }
         

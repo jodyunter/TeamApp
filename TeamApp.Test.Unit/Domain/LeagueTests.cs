@@ -36,7 +36,8 @@ namespace TeamApp.Test.Domain
 
             Equal(seasonConfig3.Name, league.GetNextCompetitionConfig(seasonConfig1, 12).Name);
             Equal(seasonConfig4.Name, league.GetNextCompetitionConfig(seasonConfig1, 13).Name);
-            
+            Null(league.GetNextCompetitionConfig(seasonConfig4, 13));
+
 
 
         }

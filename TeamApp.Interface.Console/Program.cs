@@ -1,7 +1,7 @@
 ﻿using System;
 using TeamApp.Test.Helpers;
 using static System.Console;
-using System.Linq;
+using TeamApp;
 using TeamApp.Data.Repositories.Relational.NHibernate;
 using NHibernate.Tool.hbm2ddl;
 using TeamApp.Console.App;
@@ -11,7 +11,7 @@ namespace TeamApp.Console
 {
     class Program
     {
-        static void SetupConfig(TeamApplication teamApp, bool setupDatabase, bool dropFirst, bool setupData, string user)
+        static void SetupConfig(TeamApplication teamApp, bool setupDatabase, bool dropFirst, bool setupData)
         {
             if (setupDatabase)
             {
@@ -46,7 +46,7 @@ namespace TeamApp.Console
             Thread.CurrentPrincipal = user;
 
             var teamApp = new TeamApplication();
-            //SetupConfig(teamApp, true, true, true);
+            SetupConfig(teamApp, true, true, true);
 
             var league = teamApp.LeagueRepository.GetByName("NHL");
 

@@ -12,6 +12,7 @@ namespace TeamApp.Services.Implementation
 {
     public class LeagueService : BaseService<League, LeagueViewModel>, ILeagueService
     {
+        //should replace all repos with services except for league repo
         private ILeagueRepository leagueRepository;
         private ICompetitionRepository competitionRepository;
         private IScheduleGameRepository scheduleGameRepository;
@@ -42,7 +43,7 @@ namespace TeamApp.Services.Implementation
         {
             throw new NotImplementedException();
         }
-        
+       
 
         //currently only works for a full year, we need to change this to slowly pick up where the series picks up
         //eventually we want to be able to say "play this day" or "play next game" or "play next 5 games"
@@ -51,34 +52,65 @@ namespace TeamApp.Services.Implementation
 
             var league = leagueRepository.GetByName(leagueName);
 
-            var nextYear = GetCurrentYearForLeague(league) + 1;
+            var year = GetCurrentYearForLeague(league);
 
-            var competitionConfig = league.GetNextCompetitionConfig(null, nextYear);
-            
-            league.CompetitionConfigs.OrderBy(m => m.Ordering).ToList().ForEach(c =>
+            CompetitionConfig competitionConfig = null;
+
+            //if year is 0, there are no years yet for this league
+            if (year != 0)
             {
+                competitionConfig = league.GetNextCompetitionConfig(null, year);
+                
+                //if there are no competition configs for the year, then they are all done, go to next year
+                if (competitionConfig == null)
+                {
+                    year++;
+                }
+            }
+            else
+            {
+                //if it's all new set the year up one
+                year++;
+            }
+
+            //get the first config for the new year
+            competitionConfig = league.GetNextCompetitionConfig(null, year);
+
+            while (competitionConfig != null)
+            {
+  
+                //get all parents for this competition in the year
                 var parentCompList = new List<Competition>();
 
-                c.Parents.ToList().ForEach(p =>
+                competitionConfig.Parents.ToList().ForEach(p =>
                 {
-                    parentCompList.Add(competitionRepository.GetByNameAndYear(p.Name, nextYear));
+                    parentCompList.Add(competitionRepository.GetByNameAndYear(p.Name, year));
                 });
-                
-                var competition = c.CreateCompetition(nextYear, parentCompList);
 
-                while (!competition.IsComplete())
+                //get the competitoin if it exists
+                var competition = competitionRepository.GetByNameAndYear(competitionConfig.Name, year);
+                //if it doesn't create it
+                if (competition == null) competition = competitionConfig.CreateCompetition(year, parentCompList);
+                //check if it is complete
+                bool isComplete = competition.IsComplete();
+                //if not complete, play it
+                if (!isComplete)
                 {
-                    competition.PlayNextDay(random).ForEach(g =>
+                    while (!competition.IsComplete())
                     {
-                        scheduleGameRepository.Update(g);
-                    });
+                        competition.PlayNextDay(random).ForEach(g =>
+                        {
+                            scheduleGameRepository.Update(g);
+                        });
+                    }
+
+                    competition.ProcessEndOfCompetition();
+
+                    competitionRepository.Update(competition);
                 }
-
-                competition.ProcessEndOfCompetition();
-
-                competitionRepository.Update(competition);
-
-            });
+                //get the next config
+                competitionConfig = league.GetNextCompetitionConfig(competitionConfig, year);
+            }
 
             leagueRepository.Flush();
         }
