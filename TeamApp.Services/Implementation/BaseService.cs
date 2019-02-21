@@ -6,6 +6,7 @@ using TeamApp.Domain.Repositories;
 
 namespace TeamApp.Services.Implementation
 {
+    //todo this shouldn't be a service.  We should have these mappers available seperately as needed
     public class BaseService<Domain, Model> 
     {
         virtual public List<Model> MapDomainToModel(List<Domain> objs)
