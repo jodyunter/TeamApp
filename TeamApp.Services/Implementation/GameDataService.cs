@@ -86,7 +86,9 @@ namespace TeamApp.Services.Implementation
                     if (comp.IsComplete())
                     {
                         //if the competition is complete find the next and try to start it
-                        comp.CompetitionConfig.League.GetNextCompetitionConfig(comp.CompetitionConfig, currentYear);
+                        //currently a league cannot have two competitions
+                        var nextConfig = comp.CompetitionConfig.League.GetNextCompetitionConfig(comp.CompetitionConfig, currentYear);
+                        
                     }
                 });
             }
