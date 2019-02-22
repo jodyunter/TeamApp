@@ -17,23 +17,24 @@ namespace TeamApp.Data.Relational.Repositories
             return baseRepo.Where(c => c.Name.Equals(name) && c.Year == year).FirstOrDefault();
         }
 
-        public IList<Competition> GetByYear(int year)
+        public IEnumerable<Competition> GetByYear(int year)
         {
             return baseRepo.Where(c => c.Year == year).ToList();
         }
 
-        public Competition GetCurrentCompetitionForLeagueAndYear(int leagueId, int year)
+        public IEnumerable<Competition> GetParentCompetitionsForCompetitionConfig(CompetitionConfig config, int year)
         {
-            return baseRepo.Where(c => c.Year == year && c.CompetitionConfig.League.Id == leagueId && !c.IsComplete()).FirstOrDefault();
+            return baseRepo.Where(c => c.CompetitionConfig == config && c.Year == year);
         }
 
-        public int GetCurrentYearForLeague(League l)
+        public IEnumerable<Competition> GetStartedAndUnfinishedCompetitionsByYear(int year)
         {
-            var competitionList = baseRepo.Where(c => c.CompetitionConfig.League == l).ToList();
-
-            return competitionList.Count > 0 ? competitionList.Max(c => c.Year) : 0;
-            
+            return baseRepo.Where(c => c.Started && !c.Finished && c.Year == year);
         }
-        
+
+        public bool IsCompetitionCompleteForYear(int year, CompetitionConfig config)
+        {
+            return baseRepo.Where(c => c.Finished && c.CompetitionConfig == config).Count() > 0;
+        }
     }
 }

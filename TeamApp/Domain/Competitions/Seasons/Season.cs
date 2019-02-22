@@ -40,9 +40,10 @@ namespace TeamApp.Domain.Competitions.Seasons
             }
         }
 
-        public override void ProcessEndOfCompetition()
+        public override void ProcessEndOfCompetitionDetails(int endingDay)
         {
             SortAllTeams();
+            EndDay = endingDay;
         }
         public virtual SeasonDivision GetDivisionByName(string divisionName)
         {
@@ -95,9 +96,9 @@ namespace TeamApp.Domain.Competitions.Seasons
             });
         }
 
-        public override bool IsComplete()
+        public override bool AreGamesComplete()
         {
-            return Schedule.IsComplete();
+            return Schedule.IsComplete();            
         }
     }
 }

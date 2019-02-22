@@ -14,8 +14,8 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
         public virtual IList<SeasonScheduleRule> ScheduleRules { get; set; }
 
         public SeasonCompetitionConfig() { }
-        public SeasonCompetitionConfig(string name, League league, int? firstYear, int? lastYear, int order, int startDay, List<SeasonTeamRule> teamRules, List<SeasonDivisionRule> divisionRules, GameRules gameRules, List<SeasonScheduleRule> scheduleRules, List<CompetitionConfig> parents)
-            : base(name, league, order, gameRules, parents, firstYear, lastYear)
+        public SeasonCompetitionConfig(string name, League league, int startingDay, int? firstYear, int? lastYear, int order, List<SeasonTeamRule> teamRules, List<SeasonDivisionRule> divisionRules, GameRules gameRules, List<SeasonScheduleRule> scheduleRules, List<CompetitionConfig> parents)
+            : base(name, league, order, startingDay, gameRules, parents, firstYear, lastYear)
         {            
             TeamRules = teamRules;
             DivisionRules = divisionRules;
@@ -53,7 +53,7 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
             return GetTeamsInDivision(divisionName).Where(s => s.Equals(teamName)).FirstOrDefault() != null;
         }
 
-        public override Competition CreateCompetition(int day, int year, List<Competition> Parents)
+        public override Competition CreateCompetition(int day, int year, IList<Competition> parents)
         {
             var season = new Season(this, Name, year, null, null, null, null, false, false, day, null);
 
@@ -68,6 +68,9 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
             season.Teams = teams.Values.ToList();
 
             CreateSeasonSchedule(season);
+
+            season.StartDay = day;
+            season.Started = true;
 
             return season;
         }

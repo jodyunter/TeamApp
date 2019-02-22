@@ -17,8 +17,14 @@ namespace TeamApp.Domain.Competitions
         public virtual int? StartDay { get; set; }
         public virtual int? EndDay { get; set; }
         public abstract void ProcessGame(ScheduleGame game);
-        public abstract bool IsComplete();
-        public abstract void ProcessEndOfCompetition();
+        public abstract bool AreGamesComplete();
+        public abstract void ProcessEndOfCompetitionDetails(int endingDay);
+
+        public virtual void ProcessEndOfCompetition(int endingDay)
+        {
+            EndDay = endingDay;
+            Finished = true;
+        }
 
         public Competition() : base() { }
         protected Competition(CompetitionConfig competitionConfig, string name, int year, Schedule schedule, IList<TeamRanking> rankings, List<SingleYearTeam> teams, bool started, bool finished, int? startDay, int? endDay)

@@ -13,8 +13,8 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
 
         public PlayoffCompetitionConfig():base() { }
 
-        public PlayoffCompetitionConfig(string name, League league, int order, GameRules gameRules, int? firstYear, int? lastYear, List<PlayoffRankingRule> rankingRules, List<PlayoffSeriesRule> seriesRules, List<CompetitionConfig> parents)
-            :base(name, league, order, gameRules, parents, firstYear, lastYear)
+        public PlayoffCompetitionConfig(string name, League league, int order, int startingDay, GameRules gameRules, int? firstYear, int? lastYear, List<PlayoffRankingRule> rankingRules, List<PlayoffSeriesRule> seriesRules, List<CompetitionConfig> parents)
+            :base(name, league, order, startingDay, gameRules, parents, firstYear, lastYear)
         {
             RankingRules = rankingRules;
             if (RankingRules != null)
@@ -24,7 +24,7 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
                 SeriesRules.ToList().ForEach(sr => sr.PlayoffConfig = this);
         }
 
-        public override Competition CreateCompetition(int day, int year, List<Competition> parents)
+        public override Competition CreateCompetition(int day, int year, IList<Competition> parents)
         {
             var playoff = new Playoff(this, Name, year, 1, null, null, null, null, false, false, day, null);
 
@@ -35,6 +35,8 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
                 playoff.Schedule = parents[0].Schedule;
 
             playoff.BeginRound();
+
+            playoff.StartDay = day;
 
             return playoff;
         }
@@ -51,7 +53,7 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
         }
 
         //need to  test out the time period
-        public virtual void ProcessRankingRulesAndAddTeams(Playoff playoff, List<Competition> parents)
+        public virtual void ProcessRankingRulesAndAddTeams(Playoff playoff, IList<Competition> parents)
         {
             playoff.Teams = new List<SingleYearTeam>();
             playoff.Rankings = new List<TeamRanking>();

@@ -12,9 +12,10 @@ namespace TeamApp.Domain.Competitions
         public virtual IList<CompetitionConfig> Parents { get; set; } //this would be the list of competitions where they could get thier teams from
         public virtual int? FirstYear { get; set; }
         public virtual int? LastYear { get; set; }
+        public virtual int CompetitionStartingDay { get; set; }
 
         protected CompetitionConfig() { }
-        protected CompetitionConfig(string name, League league, int order, GameRules gameRules, List<CompetitionConfig> parents, int? firstYear, int? lastYear)
+        protected CompetitionConfig(string name, League league, int order, int competitionStartingDay, GameRules gameRules, List<CompetitionConfig> parents, int? firstYear, int? lastYear)
         {
             Name = name;
             League = league;
@@ -23,8 +24,11 @@ namespace TeamApp.Domain.Competitions
             Parents = parents;
             FirstYear = firstYear;
             LastYear = lastYear;
+            CompetitionStartingDay = competitionStartingDay;
         }
 
-        public abstract Competition CreateCompetition(int day, int year, List<Competition> parents);
+        public abstract Competition CreateCompetition(int day, int year, IList<Competition> parents);       
+        
+                
     }
 }

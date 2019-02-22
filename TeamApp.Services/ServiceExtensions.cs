@@ -20,12 +20,14 @@ namespace TeamApp.Services
             services.AddSingleton<ICompetitionRepository, CompetitionRepository>();
             services.AddSingleton<ILeagueRepository, LeagueRepository>();
             services.AddSingleton<IScheduleGameRepository, ScheduleGameRepository>();
+            services.AddSingleton<ICompetitionConfigRepository, CompetitionConfigRepository>();
             services.AddSingleton(typeof(IRelationalRepository<League>), typeof(RepositoryNHibernate<League>));
             services.AddSingleton(typeof(IRelationalRepository<Team>), typeof(RepositoryNHibernate<Team>));
             services.AddSingleton(typeof(IRelationalRepository<ScheduleGame>), typeof(RepositoryNHibernate<ScheduleGame>));
             services.AddSingleton(typeof(IRelationalRepository<SeasonTeam>), typeof(RepositoryNHibernate<SeasonTeam>));
             services.AddSingleton(typeof(IRelationalRepository<Competition>), typeof(RepositoryNHibernate<Competition>));
-            services.AddSingleton(typeof(IRelationalRepository<TeamRanking>), typeof(RepositoryNHibernate<TeamRanking>)); 
+            services.AddSingleton(typeof(IRelationalRepository<TeamRanking>), typeof(RepositoryNHibernate<TeamRanking>));
+            services.AddSingleton(typeof(IRelationalRepository<CompetitionConfig>), typeof(RepositoryNHibernate<CompetitionConfig>));
 
             return services;
         }

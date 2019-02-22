@@ -22,7 +22,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
             CurrentRound = currentRound;
         }
 
-        public override void ProcessEndOfCompetition()
+        public override void ProcessEndOfCompetitionDetails(int endingDay)
         {
             //nothing to do for end of series at this point in time
         }
@@ -168,7 +168,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
             return complete;
         }
 
-        public override bool IsComplete()
+        public override bool AreGamesComplete()
         {
             var complete = true;
             var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;

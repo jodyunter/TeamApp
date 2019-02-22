@@ -15,15 +15,24 @@ namespace TeamApp.Data.Relational.Repositories
             return baseRepo.Where(g => g.Day >= firstDay && g.Day <= lastDay).ToList();
         }
 
-        public IEnumerable<ScheduleGame> GetInCompleteGamesBetweenDays(int currentDay, int newDay)
-        {
-            return baseRepo.Where(g => g.Day >= currentDay && g.Day < newDay && g.Complete == false).ToList();
-        }
-
         public IEnumerable<ScheduleGame> GetGamesForDay(int day, int year)
         {
             return baseRepo.Where(g => g.Day == day && g.Year == year).ToList();
         }
-    
+
+        public IEnumerable<ScheduleGame> GetInCompleteGamesForDay(int day, int year)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<ScheduleGame> GetCompleteAndUnProcessedGamesForDay(int day, int year)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<ScheduleGame> GetInCompleteOrUnProcessedGamesForDay(int day, int year)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

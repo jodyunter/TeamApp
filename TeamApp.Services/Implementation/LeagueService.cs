@@ -23,11 +23,6 @@ namespace TeamApp.Services.Implementation
             competitionRepository = compRepo;
             scheduleGameRepository = gameRepo;
         }        
-        
-        public int GetCurrentYearForLeague(League l)
-        {            
-            return competitionRepository.GetCurrentYearForLeague(l);
-        }
 
         public IEnumerable<LeagueViewModel> GetAll()
         {
@@ -55,7 +50,7 @@ namespace TeamApp.Services.Implementation
 
             var league = leagueRepository.GetByName(leagueName);
 
-            var year = GetCurrentYearForLeague(league);
+            var year = 12;
 
             CompetitionConfig competitionConfig = null;
 
@@ -95,11 +90,11 @@ namespace TeamApp.Services.Implementation
                 //if it doesn't create it
                 if (competition == null) competition = competitionConfig.CreateCompetition(1, year, parentCompList);
                 //check if it is complete
-                bool isComplete = competition.IsComplete();
+                bool isComplete = competition.AreGamesComplete();
                 //if not complete, play it
                 if (!isComplete)
                 {
-                    while (!competition.IsComplete())
+                    while (!competition.AreGamesComplete())
                     {
                         competition.PlayNextDay(random).ForEach(g =>
                         {
@@ -107,7 +102,7 @@ namespace TeamApp.Services.Implementation
                         });
                     }
 
-                    competition.ProcessEndOfCompetition();
+                    competition.ProcessEndOfCompetition(0);
 
                     competitionRepository.Update(competition);
                 }

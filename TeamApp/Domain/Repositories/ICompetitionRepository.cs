@@ -8,7 +8,10 @@ namespace TeamApp.Domain.Repositories
     public interface ICompetitionRepository:IRepository<Competition>
     {
         Competition GetByNameAndYear(string name, int year);        
-        IList<Competition> GetByYear(int year);
-        int GetCurrentYearForLeague(League l);
+        IEnumerable<Competition> GetByYear(int year);
+       
+        IEnumerable<Competition> GetStartedAndUnfinishedCompetitionsByYear(int year);
+        IEnumerable<Competition> GetParentCompetitionsForCompetitionConfig(CompetitionConfig config, int year);
+        bool IsCompetitionCompleteForYear(int year, CompetitionConfig config);
     }
 }
