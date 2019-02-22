@@ -9,7 +9,7 @@ namespace TeamApp.Data.Relational.Repositories
     public class TeamRankingRepository : DataRepository<TeamRanking>, ITeamRankingRepository
     {
         public TeamRankingRepository(IRelationalRepository<TeamRanking> repo) : base(repo) { }
-        public IList<TeamRanking> GetByCompetition(long competitionId)
+        public IEnumerable<TeamRanking> GetByCompetition(long competitionId)
         {
             return baseRepo.Where(tr => tr.Team.Competition.Id == competitionId).ToList();
         }

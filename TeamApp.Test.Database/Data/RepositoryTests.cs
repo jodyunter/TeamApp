@@ -187,15 +187,31 @@ namespace TeamApp.Test.Data
         [Fact]
         public void ShouldExerciseTeamRankingRepositoryNHibernate()
         {
-            SetupConfigForTests("NHL");
-            PlayAnotherYear(1, "NHL", new Random(55123));
-
-            var repo = new TeamRankingRepository(new RepositoryNHibernate<TeamRanking>());
             var compRepo = new CompetitionRepository(new RepositoryNHibernate<Competition>());
+            var repo = new TeamRankingRepository(new RepositoryNHibernate<TeamRanking>());
 
-            var comp = compRepo.GetByNameAndYear("My Playoff", 1);
-            var rankings = repo.GetByCompetition(comp.Id);
-            StrictEqual(8, rankings.Count());
+            var comp1 = new Season(null, "Season 1", 1, null, null, null, null, false, false, 1, null);
+            var comp2 = new Playoff(null, "Playoff 1", 1, 1, null, null, null, null, false, false, 1, null);
+
+            compRepo.Update(comp1);
+            compRepo.Update(comp2);
+
+            for (int i = 0; i < 10; i++)
+            {
+                var ranking = new TeamRanking(1, "Group 1", new SingleYearTeam(comp1, null, "Team " + (i * 10), null, null, 5, null, 1), 1);
+                repo.Update(ranking);
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                var ranking = new TeamRanking(1, "Group 5", new SingleYearTeam(comp2, null, "Team " + (i * 100), null, null, 5, null, 1), 1);
+                repo.Update(ranking);
+            }
+            
+            var rankings = repo.GetByCompetition(comp1.Id);
+            StrictEqual(10, rankings.Count());
+            rankings = repo.GetByCompetition(comp2.Id);
+            StrictEqual(5, rankings.Count());
         }
 
         #endregion
