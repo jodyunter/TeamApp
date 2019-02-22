@@ -15,6 +15,7 @@ namespace TeamApp.Domain.Schedules
             Games = new List<ScheduleGame>();
         }
 
+        //this should include a processed check too
         public bool IsComplete()
         {
             return Games.TrueForAll(g => g.Complete);

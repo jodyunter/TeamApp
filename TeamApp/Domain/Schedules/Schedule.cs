@@ -18,7 +18,7 @@ namespace TeamApp.Domain.Schedules
             if (Days.ContainsKey(dayNumber)) throw new ApplicationException("Day already exists");
             Days.Add(dayNumber, new ScheduleDay(dayNumber));
         }
-
+        
         public ScheduleDay GetNextInCompleteDay()
         {
             ScheduleDay nextDay = null;

@@ -9,6 +9,7 @@ namespace TeamApp.Domain.Repositories
     {
         IEnumerable<ScheduleGame> GetInCompleteGamesBetweenDays(int currentDay, int newDay);
         IEnumerable<ScheduleGame> GetGamesForDays(int firstDay, int lastDay);
+        IEnumerable<ScheduleGame> GetGamesForDay(int day, int year);
 
     }
 }
