@@ -45,6 +45,9 @@ namespace TeamApp.Services.Implementation
         }
        
 
+        //todo:
+        //move this to the game data service        
+        //to play a 
         //currently only works for a full year, we need to change this to slowly pick up where the series picks up
         //eventually we want to be able to say "play this day" or "play next game" or "play next 5 games"
         public void PlayAnotherYear(string leagueName, Random random)
