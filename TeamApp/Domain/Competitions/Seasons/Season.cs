@@ -9,8 +9,8 @@ namespace TeamApp.Domain.Competitions.Seasons
         public virtual IList<SeasonDivision> Divisions { get; set; }
 
         public Season() : base() { }
-        public Season(CompetitionConfig competitionConfig, string name, int year, List<SeasonDivision> divisions, List<SingleYearTeam> teams, Schedule schedule, List<TeamRanking> rankings)
-            :base(competitionConfig, name, year, schedule, rankings, teams)
+        public Season(CompetitionConfig competitionConfig, string name, int year, List<SeasonDivision> divisions, List<SingleYearTeam> teams, Schedule schedule, List<TeamRanking> rankings, bool started, bool finished, int? startDay, int? endDay)
+            :base(competitionConfig, name, year, schedule, rankings, teams, started, finished, startDay, endDay)
         {
             Divisions = divisions;
         }

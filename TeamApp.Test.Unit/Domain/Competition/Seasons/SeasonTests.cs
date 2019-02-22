@@ -19,7 +19,7 @@ namespace TeamApp.Test.Domain.Competitions.Seasons
         public void ShouldProcessGame()
         {
             var seasonConfig = new SeasonCompetitionConfig("Test", null, null, null, 1, 1, null, null, null, null, null);
-            var season = new Season(seasonConfig, seasonConfig.Name, 1, null, null, null, null);
+            var season = new Season(seasonConfig, seasonConfig.Name, 1, null, null, null, null, true, false, 1, null);
             var teams = new List<Team>() { CreateTeam("Team 1"), CreateTeam("Team 2"), CreateTeam("Team 3"), CreateTeam("Team 4") };
             var rules = new GameRules(null, true, 1, 0, 7, 6);
             var games = new List<ScheduleGame>()
@@ -79,7 +79,7 @@ namespace TeamApp.Test.Domain.Competitions.Seasons
             
             var seasonCompetition = ((List<SeasonCompetitionConfig>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
 
-            var season = (Season)seasonCompetition.CreateCompetition(1, null);
+            var season = (Season)seasonCompetition.CreateCompetition(1, 1, null);
 
             var schedule = Scheduler.CreateGames(season, season.Year, 1, 1, 
                season.GetAllTeamsInDivision(season.GetDivisionByName("NHL")).Select(t => t.Parent).ToList(),
@@ -104,7 +104,7 @@ namespace TeamApp.Test.Domain.Competitions.Seasons
             
             var seasonCompetition = ((List<SeasonCompetitionConfig>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
 
-            var season = (Season)seasonCompetition.CreateCompetition(1, null);
+            var season = (Season)seasonCompetition.CreateCompetition(1, 1, null);
 
             StrictEqual(22, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("NHL")).First()).Count);
             StrictEqual(10, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("East")).First()).Count);

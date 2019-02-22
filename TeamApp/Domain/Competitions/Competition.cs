@@ -12,12 +12,16 @@ namespace TeamApp.Domain.Competitions
         public virtual Schedule Schedule { get; set; }
         public virtual IList<TeamRanking> Rankings { get; set; }
         public virtual IList<SingleYearTeam> Teams { get; set; }
+        public virtual bool Started { get; set; }
+        public virtual bool Finished { get; set; }
+        public virtual int? StartDay { get; set; }
+        public virtual int? EndDay { get; set; }
         public abstract void ProcessGame(ScheduleGame game);
         public abstract bool IsComplete();
         public abstract void ProcessEndOfCompetition();
 
         public Competition() : base() { }
-        protected Competition(CompetitionConfig competitionConfig, string name, int year, Schedule schedule, IList<TeamRanking> rankings, List<SingleYearTeam> teams)
+        protected Competition(CompetitionConfig competitionConfig, string name, int year, Schedule schedule, IList<TeamRanking> rankings, List<SingleYearTeam> teams, bool started, bool finished, int? startDay, int? endDay)
         {
             CompetitionConfig = competitionConfig;
             Name = name;
@@ -27,10 +31,14 @@ namespace TeamApp.Domain.Competitions
             if (Rankings == null) Rankings = new List<TeamRanking>();
             Teams = teams;
             if (Teams == null) Teams = new List<SingleYearTeam>();
+            StartDay = startDay;
+            EndDay = endDay;
+            Started = started;
+            Finished = finished;
         }
 
         public virtual void PlayGame(ScheduleGame game, Random random)
-        {
+        {            
             if (!game.IsComplete()) game.Play(random);
             if (!game.Processed) { ProcessGame(game); game.Processed = true; }
         }

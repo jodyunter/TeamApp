@@ -215,7 +215,7 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs
 
             var gameRules = new GameRules("Test", false, 3, 1, 7, 6);
             var playoffConfig = new PlayoffCompetitionConfig("My Playoff", null, 1, gameRules, 1, null, null, null, null); //todo eventually can't use this constructor
-            var playoff = new Playoff(playoffConfig, "My Playoff", 1, 1, 1, null, null, null, null);
+            var playoff = new Playoff(playoffConfig, "My Playoff", 1, 1, null, null, null, null, true, false, 1, null);
             
             playoff.CompetitionConfig = playoffConfig;
             playoffConfig.GameRules = gameRules;

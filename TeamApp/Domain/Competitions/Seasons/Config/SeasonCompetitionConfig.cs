@@ -53,9 +53,9 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
             return GetTeamsInDivision(divisionName).Where(s => s.Equals(teamName)).FirstOrDefault() != null;
         }
 
-        public override Competition CreateCompetition(int year, List<Competition> Parents)
+        public override Competition CreateCompetition(int day, int year, List<Competition> Parents)
         {
-            var season = new Season(this, Name, year, null, null, null, null);
+            var season = new Season(this, Name, year, null, null, null, null, false, false, day, null);
 
             //setup divisions
             var divisions = new Dictionary<string, SeasonDivision>();

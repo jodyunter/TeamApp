@@ -2,6 +2,7 @@
 using TeamApp.Domain;
 using TeamApp.Domain.Repositories;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace TeamApp.Data.Relational.Repositories
 {
@@ -12,6 +13,11 @@ namespace TeamApp.Data.Relational.Repositories
         public League GetByName(string name)
         {
             return baseRepo.Where(l => l.Name == name).FirstOrDefault();
+        }
+
+        public IList<League> GetActiveLeagues(int year)
+        {
+            return baseRepo.Where(l => l.IsActive(year)).ToList();
         }
     }
 }

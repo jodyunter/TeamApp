@@ -93,7 +93,7 @@ namespace TeamApp.Services.Implementation
                 //get the competitoin if it exists
                 var competition = competitionRepository.GetByNameAndYear(competitionConfig.Name, year);
                 //if it doesn't create it
-                if (competition == null) competition = competitionConfig.CreateCompetition(year, parentCompList);
+                if (competition == null) competition = competitionConfig.CreateCompetition(1, year, parentCompList);
                 //check if it is complete
                 bool isComplete = competition.IsComplete();
                 //if not complete, play it

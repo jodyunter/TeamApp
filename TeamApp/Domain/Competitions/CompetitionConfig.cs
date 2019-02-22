@@ -25,6 +25,6 @@ namespace TeamApp.Domain.Competitions
             LastYear = lastYear;
         }
 
-        public abstract Competition CreateCompetition(int year, List<Competition> parents);
+        public abstract Competition CreateCompetition(int day, int year, List<Competition> parents);
     }
 }

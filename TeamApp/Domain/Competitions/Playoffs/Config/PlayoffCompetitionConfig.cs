@@ -24,9 +24,9 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
                 SeriesRules.ToList().ForEach(sr => sr.PlayoffConfig = this);
         }
 
-        public override Competition CreateCompetition(int year, List<Competition> parents)
+        public override Competition CreateCompetition(int day, int year, List<Competition> parents)
         {
-            var playoff = new Playoff(this, Name, year, -1, 1, null, null, null, null);
+            var playoff = new Playoff(this, Name, year, 1, null, null, null, null, false, false, day, null);
 
             ProcessRankingRulesAndAddTeams(playoff, parents);
             ProcessSeriesRules(playoff);

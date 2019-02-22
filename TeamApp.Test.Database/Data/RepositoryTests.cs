@@ -248,7 +248,7 @@ namespace TeamApp.Test.Data
                     parentCompList.Add(compRepo.GetByNameAndYear(p.Name, nextYear));
                 });
 
-                var competition = c.CreateCompetition(nextYear, parentCompList);
+                var competition = c.CreateCompetition(1, nextYear, parentCompList);
 
                 while(!competition.IsComplete())
                 {

@@ -8,17 +8,15 @@ using TeamApp.Domain.Competitions.Playoffs.Series;
 namespace TeamApp.Domain.Competitions.Playoffs
 {
     public class Playoff : Competition
-    {
-        public virtual int StartingDay { get; set; }
+    {        
         public virtual int CurrentRound { get; set; }
         public virtual IList<PlayoffSeries> Series { get; set; }
 
         public Playoff() : base() { }
 
-        public Playoff(CompetitionConfig competitionConfig, string name, int year, int startingDay, int currentRound, List<PlayoffSeries> series, List<SingleYearTeam> teams, Schedule schedule, IList<TeamRanking> rankings)
-            :base(competitionConfig, name, year, schedule, rankings, teams)
-        {            
-            StartingDay = startingDay;                     
+        public Playoff(CompetitionConfig competitionConfig, string name, int year, int currentRound, List<PlayoffSeries> series, List<SingleYearTeam> teams, Schedule schedule, IList<TeamRanking> rankings, bool started, bool finished, int? startDay, int? endDay)
+            :base(competitionConfig, name, year, schedule, rankings, teams, started, finished, startDay, endDay)
+        {                        
             Series = series;
             Teams = teams;
             CurrentRound = currentRound;
@@ -31,6 +29,8 @@ namespace TeamApp.Domain.Competitions.Playoffs
 
         public virtual void BeginRound()
         {
+            Started = true;
+
             if (IsRoundComplete(CurrentRound)) CurrentRound++;
             //else return;
 
@@ -87,7 +87,9 @@ namespace TeamApp.Domain.Competitions.Playoffs
         {
             var newGames = series.CreateNeededGamesForSeries();
 
-            Scheduler.AddGamesToSchedule(Schedule, newGames.ToList<ScheduleGame>(), series.StartingDay > 0 ? series.StartingDay: StartingDay);
+            if (StartDay == null) throw new Exception("Start day cannot be null when we create series games.");
+            var start = (int)StartDay;
+            Scheduler.AddGamesToSchedule(Schedule, newGames.ToList<ScheduleGame>(), series.StartingDay > 0 ? series.StartingDay: start);
         }
 
         public virtual void AddSeries(PlayoffSeries series)

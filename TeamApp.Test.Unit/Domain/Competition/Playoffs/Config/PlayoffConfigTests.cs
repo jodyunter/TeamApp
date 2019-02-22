@@ -20,7 +20,7 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
         {
             var data = Data1.CreateBasicSeasonConfiguration();
             var seasonCompetition = ((List<SeasonCompetitionConfig>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
-            var season = (Season)seasonCompetition.CreateCompetition(1, null);            
+            var season = (Season)seasonCompetition.CreateCompetition(1, 1, null);            
             Random r = new Random(12345);            
             while (!season.Schedule.IsComplete())
                 season.PlayNextDay(r);
@@ -39,7 +39,7 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
 
             playoffConfig.RankingRules = rankingRules;
 
-            var playoff = new Playoff(playoffConfig, "My Playoff", 5, 15, 1, null, new List<SingleYearTeam>(), null, null);
+            var playoff = new Playoff(playoffConfig, "My Playoff", 5, 1, null, new List<SingleYearTeam>(), null, null, true, false, 15, null);
 
             playoffConfig.ProcessRankingRulesAndAddTeams(playoff, new List<Competition> { season });
 
