@@ -67,7 +67,7 @@ namespace TeamApp.Services.Implementation
 
             leagueRepo.Flush();
         }
-
+       
         public bool IncrementDay(int currentDay, int currentYear)
         {
             var gameData = gameDataRepo.GetCurrentData();
@@ -77,12 +77,21 @@ namespace TeamApp.Services.Implementation
 
             if (incompleteOrNotProcessedGames)
             {
-                //set a message that says we can't go to the next day, games incomplete
+                //set a message that says we can't go to the next day, games incomplete or not processed
             }
             else
             {
-                //check each competition, if it's done, get the league, get the next competition config and start it
+                competitionRepo.GetByYear(gameData.CurrentYear).ToList().ForEach(comp =>
+                {
+                    if (comp.IsComplete())
+                    {
+                        //if the competition is complete find the next and try to start it
+                        comp.CompetitionConfig.League.GetNextCompetitionConfig(comp.CompetitionConfig, currentYear);
+                    }
+                });
             }
+
+            return false;
         }
     }
 }

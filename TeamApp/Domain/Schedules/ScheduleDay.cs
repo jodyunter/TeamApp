@@ -18,7 +18,7 @@ namespace TeamApp.Domain.Schedules
         //this should include a processed check too
         public bool IsComplete()
         {
-            return Games.TrueForAll(g => g.Complete);
+            return Games.TrueForAll(g => g.Complete && g.Processed);
         }
         public bool DoesTeamPlayInDay(string teamName)
         {
