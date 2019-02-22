@@ -219,11 +219,25 @@ namespace TeamApp.Test.Data
         [Fact]
         public void ShouldExerciseStandingsRepository()
         {
-            SetupConfigForTests("NHL");
-            PlayAnotherYear(1, "NHL", new Random(55123));
             var compRepo = new CompetitionRepository(new RepositoryNHibernate<Competition>());
+
             var repo = new StandingsRepository(new RepositoryNHibernate<SeasonTeam>(), compRepo);
-            var teams = repo.GetByCompetition(compRepo.GetByNameAndYear("My Season", 1).Id);
+
+
+            var season = new Season(null, "Season 1", 1, null, null, null, null, true, false, 1, null);
+            var seasonTeams = new List<SingleYearTeam>()
+            {
+                new SeasonTeam(season, null, "Team 1", null, null, 5, null, 1, null, null),
+                new SeasonTeam(season, null, "Team 2", null, null, 5, null, 1, null, null),
+                new SeasonTeam(season, null, "Team 3", null, null, 5, null, 1, null, null),
+                new SeasonTeam(season, null, "Team 4", null, null, 5, null, 1, null, null),
+                new SeasonTeam(season, null, "Team 5", null, null, 5, null, 1, null, null),
+                new SeasonTeam(season, null, "Team 6", null, null, 5, null, 1, null, null),
+                new SeasonTeam(season, null, "Team 7", null, null, 5, null, 1, null, null),
+            };
+            season.Teams = seasonTeams;
+            compRepo.Update(season);
+            var teams = repo.GetByCompetition(compRepo.GetByNameAndYear("Season 1", 1).Id);
 
             StrictEqual(7, teams.Count);
         }
