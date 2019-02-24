@@ -22,8 +22,7 @@ using TeamApp.Domain.Competitions.Playoffs.Config;
 namespace TeamApp.Test.Data
 {
     public class RepositoryTests : IDisposable
-    {
-        private string user = "repo user";
+    {     
 
         protected ISession session;
         private Configuration configuration;
@@ -246,15 +245,22 @@ namespace TeamApp.Test.Data
         [Fact]
         public void ShouldExterciseLeagueRepository()
         {
-            SetupConfigForTests("Other League");
-            PlayAnotherYear(1, "Other League", new Random(55123));
+            var league1 = new League("League 1", 1, null);
+            var league2 = new League("League 2", 1, 12);
+            var league3 = new League("League 3", 1, 8);
+            var league4 = new League("League 4", 1, 4);
+            var league5 = new League("League 5", 1, 2);
 
-            SetupConfigForTests("NHL");
-            SetupConfigForTests("Dude League");
-
+            
             var repo = new LeagueRepository(new RepositoryNHibernate<League>());
 
-            StrictEqual(3, repo.GetAll().Count());
+            Equal("League 3", repo.GetByName("League 3").Name);
+            StrictEqual(5, repo.GetActiveLeagues(1).Count());
+            StrictEqual(1, repo.GetActiveLeagues(13).Count());
+            StrictEqual(2, repo.GetActiveLeagues(12).Count());
+            StrictEqual(3, repo.GetActiveLeagues(7).Count());
+            StrictEqual(4, repo.GetActiveLeagues(3).Count());
+            StrictEqual(5, repo.GetActiveLeagues(2).Count());
 
 
         }
@@ -296,6 +302,7 @@ namespace TeamApp.Test.Data
             NotStrictEqual(seasonA.Id, seasonB.Id);
         }
         #endregion
+
         [Fact]
         public void ShouldExportSchema()
         {
@@ -305,7 +312,6 @@ namespace TeamApp.Test.Data
             dropDatabase = true;
 
         }
-
         private void SetupConfigForTests(string leagueName)
         {
             var test = new LeagueRepository(new RepositoryNHibernate<League>());
