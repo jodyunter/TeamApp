@@ -68,46 +68,6 @@ namespace TeamApp.Test.Data
         }
 
 
-
-        #region Team Repo Tests
-        [Fact]
-
-        public void ShouldExterciseTeamRepositoryNHibernate()
-        {
-            var repo = new TeamRepository(new RepositoryNHibernate<Team>());
-
-            var newTeamId = (long)repo.Add(new Team("Add Team", "AddNick", "AddShort", 5, "Me", 1, null, true));
-            var newTeam = repo.Get(newTeamId);
-            NotEqual(0L, newTeam.Id);
-
-            newTeam.Name = "Updated Name";
-            newTeam.NickName = "UpdatedNick";
-            newTeam.ShortName = "UpdatedShort";
-            newTeam.Skill = 10;
-            newTeam.Owner = "Not Me";
-            newTeam.FirstYear = 15;
-            newTeam.LastYear = 25;
-            newTeam.Active = false;
-
-            repo.Update(newTeam);
-
-            var updatedTeam = repo.Get(newTeam.Id);
-
-            Equals("Updated Name", newTeam.Name);
-
-            for (int i = 0; i < 10; i++)
-            {
-                repo.Add(new Team("Team " + i, "AddNick" + i, "AddShort" + i, 5, "Me" + i, 1, i, true));
-            }
-
-            Equals(11, repo.GetAll().ToList().Count);
-
-
-            Equals(1, repo.GetByStatus(false));
-            Equals(10, repo.GetByStatus(true));
-            Equals("AddNick5", repo.GetByName("Team 5").NickName);
-        }
-        #endregion
         #region Competition Repo Tests
         [Fact]
         public void ShouldExerciseCompetitionRepositoryNHibernate()
@@ -134,7 +94,7 @@ namespace TeamApp.Test.Data
             repo.Update(c6);
             repo.Update(c7);
             repo.Update(c8);
-            
+
 
             //getall
             StrictEqual(8, repo.GetAll().Count());
@@ -146,7 +106,7 @@ namespace TeamApp.Test.Data
             StrictEqual(2, repo.GetStartedAndUnfinishedCompetitionsByYear(8).Count());
             StrictEqual(0, repo.GetStartedAndUnfinishedCompetitionsByYear(6).Count());
             //IsCompetitionCompleteForYear
-            False(repo.IsCompetitionCompleteForYear(5, cc1));  
+            False(repo.IsCompetitionCompleteForYear(5, cc1));
             False(repo.IsCompetitionCompleteForYear(12, cc1)); //hasn't even been created yet!
             //GetParentCompetitionsForCompetitionConfig
             var parents = repo.GetParentCompetitionsForCompetitionConfig(cc2, 5).ToList();
@@ -161,13 +121,13 @@ namespace TeamApp.Test.Data
         public void ShouldExerciseCompetitionConfigRepositoryNHibernate()
         {
             var repo = new CompetitionConfigRepository(new RepositoryNHibernate<CompetitionConfig>());
-            
+
             var config1 = new SeasonCompetitionConfig("Season 1", null, 1, 1, 12, 1, null, null, null, null, null);
             var config2 = new SeasonCompetitionConfig("Season 2", null, 1, 1, 12, 1, null, null, null, null, null);
             var config3 = new SeasonCompetitionConfig("Season 3", null, 1, 3, 12, 1, null, null, null, null, null);
             var config4 = new SeasonCompetitionConfig("Season 4", null, 5, 1, 12, 1, null, null, null, null, null);
             var config5 = new SeasonCompetitionConfig("Season 5", null, 5, 2, 12, 1, null, null, null, null, null);
-            
+
             repo.Update(config1);
             repo.Update(config2);
             repo.Update(config3);
@@ -181,66 +141,7 @@ namespace TeamApp.Test.Data
             StrictEqual(5, repo.GetConfigByYear(8).Count());
             StrictEqual(4, repo.GetConfigByYear(2).Count());
         }
-        #endregion
-        #region Team Ranking Repo Tests
-        [Fact]
-        public void ShouldExerciseTeamRankingRepositoryNHibernate()
-        {
-            var compRepo = new CompetitionRepository(new RepositoryNHibernate<Competition>());
-            var repo = new TeamRankingRepository(new RepositoryNHibernate<TeamRanking>());
-
-            var comp1 = new Season(null, "Season 1", 1, null, null, null, null, false, false, 1, null);
-            var comp2 = new Playoff(null, "Playoff 1", 1, 1, null, null, null, null, false, false, 1, null);
-
-            compRepo.Update(comp1);
-            compRepo.Update(comp2);
-
-            for (int i = 0; i < 10; i++)
-            {
-                var ranking = new TeamRanking(1, "Group 1", new SingleYearTeam(comp1, null, "Team " + (i * 10), null, null, 5, null, 1), 1);
-                repo.Update(ranking);
-            }
-
-            for (int i = 0; i < 5; i++)
-            {
-                var ranking = new TeamRanking(1, "Group 5", new SingleYearTeam(comp2, null, "Team " + (i * 100), null, null, 5, null, 1), 1);
-                repo.Update(ranking);
-            }
-            
-            var rankings = repo.GetByCompetition(comp1.Id);
-            StrictEqual(10, rankings.Count());
-            rankings = repo.GetByCompetition(comp2.Id);
-            StrictEqual(5, rankings.Count());
-        }
-
-        #endregion
-        #region Standings Repo Tests
-        [Fact]
-        public void ShouldExerciseStandingsRepository()
-        {
-            var compRepo = new CompetitionRepository(new RepositoryNHibernate<Competition>());
-
-            var repo = new StandingsRepository(new RepositoryNHibernate<SeasonTeam>(), compRepo);
-
-
-            var season = new Season(null, "Season 1", 1, null, null, null, null, true, false, 1, null);
-            var seasonTeams = new List<SingleYearTeam>()
-            {
-                new SeasonTeam(season, null, "Team 1", null, null, 5, null, 1, null, null),
-                new SeasonTeam(season, null, "Team 2", null, null, 5, null, 1, null, null),
-                new SeasonTeam(season, null, "Team 3", null, null, 5, null, 1, null, null),
-                new SeasonTeam(season, null, "Team 4", null, null, 5, null, 1, null, null),
-                new SeasonTeam(season, null, "Team 5", null, null, 5, null, 1, null, null),
-                new SeasonTeam(season, null, "Team 6", null, null, 5, null, 1, null, null),
-                new SeasonTeam(season, null, "Team 7", null, null, 5, null, 1, null, null),
-            };
-            season.Teams = seasonTeams;
-            compRepo.Update(season);
-            var teams = repo.GetByCompetition(compRepo.GetByNameAndYear("Season 1", 1).Id);
-
-            StrictEqual(7, teams.Count);
-        }
-        #endregion
+        #endregion        
         #region League Repo Tests
         [Fact]
         public void ShouldExterciseLeagueRepository()
@@ -251,8 +152,13 @@ namespace TeamApp.Test.Data
             var league4 = new League("League 4", 1, 4);
             var league5 = new League("League 5", 1, 2);
 
-            
             var repo = new LeagueRepository(new RepositoryNHibernate<League>());
+
+            repo.Update(league1);
+            repo.Update(league2);
+            repo.Update(league3);
+            repo.Update(league4);
+            repo.Update(league5);
 
             Equal("League 3", repo.GetByName("League 3").Name);
             StrictEqual(5, repo.GetActiveLeagues(1).Count());
@@ -263,6 +169,13 @@ namespace TeamApp.Test.Data
             StrictEqual(5, repo.GetActiveLeagues(2).Count());
 
 
+        }
+        #endregion
+        #region Schedule Game Repo Tests
+        [Fact]
+        public void ShouldExerciseScheduleGameRepositoryNHibernate()
+        {
+            True(false);
         }
         #endregion
         #region Season Repo Tests
@@ -302,7 +215,105 @@ namespace TeamApp.Test.Data
             NotStrictEqual(seasonA.Id, seasonB.Id);
         }
         #endregion
+        #region Standings Repo Tests
+        [Fact]
+        public void ShouldExerciseStandingsRepository()
+        {
+            var compRepo = new CompetitionRepository(new RepositoryNHibernate<Competition>());
 
+            var repo = new StandingsRepository(new RepositoryNHibernate<SeasonTeam>(), compRepo);
+
+
+            var season = new Season(null, "Season 1", 1, null, null, null, null, true, false, 1, null);
+            var seasonTeams = new List<SingleYearTeam>()
+            {
+                new SeasonTeam(season, null, "Team 1", null, null, 5, null, 1, null, null),
+                new SeasonTeam(season, null, "Team 2", null, null, 5, null, 1, null, null),
+                new SeasonTeam(season, null, "Team 3", null, null, 5, null, 1, null, null),
+                new SeasonTeam(season, null, "Team 4", null, null, 5, null, 1, null, null),
+                new SeasonTeam(season, null, "Team 5", null, null, 5, null, 1, null, null),
+                new SeasonTeam(season, null, "Team 6", null, null, 5, null, 1, null, null),
+                new SeasonTeam(season, null, "Team 7", null, null, 5, null, 1, null, null),
+            };
+            season.Teams = seasonTeams;
+            compRepo.Update(season);
+            var teams = repo.GetByCompetition(compRepo.GetByNameAndYear("Season 1", 1).Id);
+
+            StrictEqual(7, teams.Count);
+        }
+        #endregion
+        #region Team Repo Tests
+        [Fact]
+
+        public void ShouldExterciseTeamRepositoryNHibernate()
+        {
+            var repo = new TeamRepository(new RepositoryNHibernate<Team>());
+
+            var newTeamId = (long)repo.Add(new Team("Add Team", "AddNick", "AddShort", 5, "Me", 1, null, true));
+            var newTeam = repo.Get(newTeamId);
+            NotEqual(0L, newTeam.Id);
+
+            newTeam.Name = "Updated Name";
+            newTeam.NickName = "UpdatedNick";
+            newTeam.ShortName = "UpdatedShort";
+            newTeam.Skill = 10;
+            newTeam.Owner = "Not Me";
+            newTeam.FirstYear = 15;
+            newTeam.LastYear = 25;
+            newTeam.Active = false;
+
+            repo.Update(newTeam);
+
+            var updatedTeam = repo.Get(newTeam.Id);
+
+            Equals("Updated Name", newTeam.Name);
+
+            for (int i = 0; i < 10; i++)
+            {
+                repo.Add(new Team("Team " + i, "AddNick" + i, "AddShort" + i, 5, "Me" + i, 1, i, true));
+            }
+
+            Equals(11, repo.GetAll().ToList().Count);
+
+
+            Equals(1, repo.GetByStatus(false));
+            Equals(10, repo.GetByStatus(true));
+            Equals("AddNick5", repo.GetByName("Team 5").NickName);
+        }
+        #endregion
+        #region Team Ranking Repo Tests
+        [Fact]
+        public void ShouldExerciseTeamRankingRepositoryNHibernate()
+        {
+            var compRepo = new CompetitionRepository(new RepositoryNHibernate<Competition>());
+            var repo = new TeamRankingRepository(new RepositoryNHibernate<TeamRanking>());
+
+            var comp1 = new Season(null, "Season 1", 1, null, null, null, null, false, false, 1, null);
+            var comp2 = new Playoff(null, "Playoff 1", 1, 1, null, null, null, null, false, false, 1, null);
+
+            compRepo.Update(comp1);
+            compRepo.Update(comp2);
+
+            for (int i = 0; i < 10; i++)
+            {
+                var ranking = new TeamRanking(1, "Group 1", new SingleYearTeam(comp1, null, "Team " + (i * 10), null, null, 5, null, 1), 1);
+                repo.Update(ranking);
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                var ranking = new TeamRanking(1, "Group 5", new SingleYearTeam(comp2, null, "Team " + (i * 100), null, null, 5, null, 1), 1);
+                repo.Update(ranking);
+            }
+
+            var rankings = repo.GetByCompetition(comp1.Id);
+            StrictEqual(10, rankings.Count());
+            rankings = repo.GetByCompetition(comp2.Id);
+            StrictEqual(5, rankings.Count());
+        }
+
+        #endregion
+        
         [Fact]
         public void ShouldExportSchema()
         {

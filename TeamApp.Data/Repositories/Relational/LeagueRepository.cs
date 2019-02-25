@@ -17,7 +17,7 @@ namespace TeamApp.Data.Relational.Repositories
 
         public IEnumerable<League> GetActiveLeagues(int year)
         {
-            return baseRepo.Where(l => l.IsActive(year)).ToList();
+            return baseRepo.ToList().Where(l => l.IsActive(year)).ToList();
         }
     }
 }
