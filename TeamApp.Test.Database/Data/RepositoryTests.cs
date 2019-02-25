@@ -10,7 +10,6 @@ using System.Linq;
 using TeamApp.Domain.Schedules;
 using TeamApp.Domain.Competitions;
 using System.Collections.Generic;
-using TeamApp.Test.Helpers;
 using TeamApp.Data.Relational.Repositories;
 using TeamApp.Domain.Competitions.Seasons;
 using System.Threading;
@@ -175,43 +174,44 @@ namespace TeamApp.Test.Data
         [Fact]
         public void ShouldExerciseScheduleGameRepositoryNHibernate()
         {
-            True(false);
+            var gameRepo = new ScheduleGameRepository(new RepositoryNHibernate<ScheduleGame>());
+
+            //IEnumerable<ScheduleGame> GetGamesForDay(int day, int year);
+            for (int i = 0; i < 7; i++)
+            {
+                gameRepo.Update(new ScheduleGame(null, i, i % 2, 1, null, null, 0, 0, false, 1, null, false));
+            }
+
+            for (int i = 7; i < 22; i++)
+            {
+                gameRepo.Update(new ScheduleGame(null, i, i % 2 + 2, 2, null, null, 0, 0, false, 1, null, false));
+            }
+
+            StrictEqual(4, gameRepo.GetGamesForDay(0, 1).Count());
+            StrictEqual(3, gameRepo.GetGamesForDay(1, 1).Count());
+            StrictEqual(7, gameRepo.GetGamesForDay(2, 2).Count());
+            StrictEqual(8, gameRepo.GetGamesForDay(3, 2).Count());
+
+            //IEnumerable<ScheduleGame> GetInCompleteGamesForDay(int day, int year);
+            gameRepo.Update(new ScheduleGame(null, 22, 3, 2, null, null, 0, 0, true, 1, null, false));
+            gameRepo.Update(new ScheduleGame(null, 23, 3, 2, null, null, 0, 0, true, 1, null, false));
+            StrictEqual(10, gameRepo.GetGamesForDay(3, 2).Count());
+            StrictEqual(8, gameRepo.GetInCompleteGamesForDay(3, 2).Count());
+
+            //IEnumerable<ScheduleGame> GetCompleteAndUnProcessedGamesForDay(int day, int year);
+            StrictEqual(2, gameRepo.GetCompleteAndUnProcessedGamesForDay(3, 2).Count());
+
+            //IEnumerable<ScheduleGame> GetInCompleteOrUnProcessedGamesForDay(int day, int year);
+            StrictEqual(10, gameRepo.GetInCompleteOrUnProcessedGamesForDay(3, 2).Count());
         }
         #endregion
         #region Season Repo Tests
         [Fact]
         public void ShouldExerciseSeasonRepositoryNHibernate()
         {
-            
-            var leagueRepo = new LeagueRepository(new RepositoryNHibernate<League>());
-            var seasonRepo = new SeasonRepository(new RepositoryNHibernate<Season>());
 
-            var league = new League("NHL", 1, null);
-            league = leagueRepo.Update(league);
-
-            var parentConfig = league.CompetitionConfigs.Where(s => s.Name.Equals("My Season")).FirstOrDefault();
-
-            var seasonConfig = RepositoryTestData.CreateBasicSeasonConfiguration(league);
-            seasonConfig.Parents.Add(parentConfig);
-
-            leagueRepo.Update(league);
-
-            PlayAnotherYear(2, "NHL", new Random());
-
-            var seasons1 = seasonRepo.GetByLeagueAndYear(league.Id, 1).Count();
-            var seasons2 = seasonRepo.GetByLeagueAndYear(league.Id, 2).Count();
-
-            leagueRepo.Flush();
-
-            StrictEqual(1, seasons1);
-            StrictEqual(2, seasons2);
-
-            var seasonA = seasonRepo.GetBySeasonCompetitionConfigAndYear(parentConfig.Id, 2);
-            var seasonB = seasonRepo.GetBySeasonCompetitionConfigAndYear(seasonConfig.Id, 2);
-
-            StrictEqual(2, seasonA.Year);
-            StrictEqual(2, seasonB.Year);
-            NotStrictEqual(seasonA.Id, seasonB.Id);
+            //we weren't using any of the methods so we removed them
+            True(true);
         }
         #endregion
         #region Standings Repo Tests
@@ -322,82 +322,7 @@ namespace TeamApp.Test.Data
             dropDatabase = true;
 
         }
-        private void SetupConfigForTests(string leagueName)
-        {
-            var test = new LeagueRepository(new RepositoryNHibernate<League>());
 
-            var league = RepositoryTestData.CreateBasicLeague(leagueName);
-            var seasonConfig = RepositoryTestData.CreateBasicSeasonConfiguration(league);
-            var playoffConfig = RepositoryTestData.CreateBasicPlayoffConfiguration(seasonConfig);
-
-            test.Update(league);
-            session.Flush();
-        }
-        private void PlayAnotherYear(int nextYear, string leagueName, Random random)
-        {
-            var leagueRepo = new LeagueRepository(new RepositoryNHibernate<League>());
-            var compRepo = new CompetitionRepository(new RepositoryNHibernate<Competition>());
-            var gameRepo = new ScheduleGameRepository(new RepositoryNHibernate<ScheduleGame>());
-
-            var league = leagueRepo.GetByName(leagueName);
-
-            league.CompetitionConfigs.OrderBy(m => m.Ordering).ToList().ForEach(c =>
-            {
-                var parentCompList = new List<Competition>();
-
-                c.Parents.ToList().ForEach(p =>
-                {
-                    parentCompList.Add(compRepo.GetByNameAndYear(p.Name, nextYear));
-                });
-
-                var competition = c.CreateCompetition(1, nextYear, parentCompList);
-
-                while (!competition.AreGamesComplete())
-                {
-                    competition.PlayNextDay(random).ForEach(g =>
-                    {
-                        gameRepo.Update(g);
-                    });
-                }
-
-                competition.ProcessEndOfCompetition(0);
-
-                compRepo.Update(competition);
-
-            });
-
-            session.Flush();
-
-        }
-
-        private void PlayAYear()
-        {
-            //assumes data is added
-        }
-
-
-        //can use this to get some base data going
-        [Fact]
-        public void ShouldPopulateDatabase()
-        {
-            SetupConfigForTests("NHL");
-            PlayAnotherYear(1, "NHL", new Random());
-            PlayAnotherYear(2, "NHL", new Random());
-            PlayAnotherYear(3, "NHL", new Random());
-            PlayAnotherYear(4, "NHL", new Random());
-            PlayAnotherYear(5, "NHL", new Random());
-            PlayAnotherYear(6, "NHL", new Random());
-            PlayAnotherYear(7, "NHL", new Random());
-            PlayAnotherYear(8, "NHL", new Random());
-            PlayAnotherYear(9, "NHL", new Random());
-            PlayAnotherYear(10, "NHL", new Random());
-
-
-            dropDatabase = true;
-
-        }
-
-        //team tests
 
     }
 }

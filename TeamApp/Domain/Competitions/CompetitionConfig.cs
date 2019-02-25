@@ -25,6 +25,7 @@ namespace TeamApp.Domain.Competitions
             FirstYear = firstYear;
             LastYear = lastYear;
             CompetitionStartingDay = competitionStartingDay;
+            Parents = new List<CompetitionConfig>();            
         }
 
         public abstract Competition CreateCompetition(int day, int year, IList<Competition> parents);       
