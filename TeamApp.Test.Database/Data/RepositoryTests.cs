@@ -182,13 +182,12 @@ namespace TeamApp.Test.Data
         [Fact]
         public void ShouldExerciseSeasonRepositoryNHibernate()
         {
-            SetupConfigForTests("NHL");
-            PlayAnotherYear(1, "NHL", new Random());
-
+            
             var leagueRepo = new LeagueRepository(new RepositoryNHibernate<League>());
             var seasonRepo = new SeasonRepository(new RepositoryNHibernate<Season>());
 
-            var league = leagueRepo.GetByName("NHL");
+            var league = new League("NHL", 1, null);
+            league = leagueRepo.Update(league);
 
             var parentConfig = league.CompetitionConfigs.Where(s => s.Name.Equals("My Season")).FirstOrDefault();
 
