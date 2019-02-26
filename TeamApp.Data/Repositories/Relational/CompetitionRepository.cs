@@ -12,12 +12,12 @@ namespace TeamApp.Data.Relational.Repositories
     {        
         public CompetitionRepository(IRelationalRepository<Competition> repo) : base(repo) { }
 
-        public IEnumerable<Competition> GetByLeagueAndYear(int leagueId, int year)
+        public IEnumerable<Competition> GetByLeagueAndYear(long leagueId, int year)
         {
-            throw new NotImplementedException();
+            return baseRepo.Where(c => c.CompetitionConfig.League.Id == leagueId && c.Year == year).ToList();
         }
 
-        public IEnumerable<Competition> GetByLeagueAndYear(int leagueId, int year, bool started, bool finished)
+        public IEnumerable<Competition> GetByLeagueAndYear(long leagueId, int year, bool started, bool finished)
         {
             throw new NotImplementedException();
         }

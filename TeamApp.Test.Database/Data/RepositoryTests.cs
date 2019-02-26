@@ -71,17 +71,21 @@ namespace TeamApp.Test.Data
         [Fact]
         public void ShouldExerciseCompetitionRepositoryNHibernate()
         {
-            var repo = new CompetitionRepository(new RepositoryNHibernate<Competition>());
-            var configRepo = new CompetitionConfigRepository(new RepositoryNHibernate<CompetitionConfig>());
+            var league1 = new League("NHL", 1, null);
+            var league2 = new League("NHL 2", 1, null);
 
-            var cc0 = new SeasonCompetitionConfig("Test B", null, 1, 1, null, 1, null, null, null, null, null);
-            var cc1 = new SeasonCompetitionConfig("Test 1", null, 1, 1, null, 1, null, null, null, null, null);
+            var leagueRepo = new LeagueRepository(new RepositoryNHibernate<League>());
+
+            var repo = new CompetitionRepository(new RepositoryNHibernate<Competition>());
+            var configRepo = new CompetitionConfigRepository(new RepositoryNHibernate<CompetitionConfig>());            
+            var cc0 = new SeasonCompetitionConfig("Test B", league1, 1, 1, null, 1, null, null, null, null, null);
+            var cc1 = new SeasonCompetitionConfig("Test 1", league1, 1, 1, null, 1, null, null, null, null, null);
             var c1 = new Season(cc1, "Test 1", 5, null, null, null, null, true, false, 5, 55);
-            var cc2 = new PlayoffCompetitionConfig("P3", null, 2, 25, null, 1, null, null, null, new List<CompetitionConfig> { cc1, cc0 });
+            var cc2 = new PlayoffCompetitionConfig("P3", league1, 2, 25, null, 1, null, null, null, new List<CompetitionConfig> { cc1, cc0 });
             var c8 = new Playoff(cc2, "P3", 5, 5, null, null, null, null, false, false, 5, 12);
             var c2 = new Season(null, "Test 2", 6, null, null, null, null, true, true, 5, 55);
             var c3 = new Season(null, "Test 3", 7, null, null, null, null, true, false, 5, 55);
-            var c4 = new Season(null, "Test 4", 8, null, null, null, null, true, false, 5, 55);
+            var c4 = new Season(cc1, "Test 4", 8, null, null, null, null, true, false, 5, 55);
             var c5 = new Season(null, "Test 5", 9, null, null, null, null, true, false, 5, 55);
             var c6 = new Playoff(null, "P1", 8, 5, null, null, null, null, true, false, 5, 12);
             var c7 = new Playoff(null, "P2", 8, 5, null, null, null, null, false, false, 5, 12);
@@ -123,11 +127,14 @@ namespace TeamApp.Test.Data
             Null(shouldBeNull);
 
             //IEnumerable<Competition> GetByLeagueAndYear(int leagueId, int year)
-            True(false);
+            StrictEqual(2, repo.GetByLeagueAndYear(league1.Id, 5).Count());
+            StrictEqual(1, repo.GetByLeagueAndYear(league1.Id, 8).Count());
+            StrictEqual(0, repo.GetByLeagueAndYear(league2.Id, 15).Count());            
 
             //IEnumerable<Competition> GetByLeagueAndYear(int leagueId, int year, bool started, bool finished)
             True(false);
         }
+
         #endregion
         #region Competition Config Repo Tests
         [Fact]
