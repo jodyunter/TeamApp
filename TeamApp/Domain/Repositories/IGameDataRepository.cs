@@ -6,7 +6,6 @@ namespace TeamApp.Domain.Repositories
 {
     public interface IGameDataRepository:IRepository<GameData>
     {
-        GameData GetCurrentData();
-        GameData SaveCurrentData(GameData data);
+        GameData GetCurrentData();     
     }
 }

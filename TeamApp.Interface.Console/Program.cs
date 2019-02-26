@@ -1,44 +1,14 @@
 ﻿using System;
-using TeamApp.Test.Helpers;
 using static System.Console;
-using TeamApp;
-using TeamApp.Data.Repositories.Relational.NHibernate;
-using NHibernate.Tool.hbm2ddl;
 using TeamApp.Console.App;
 using System.Threading;
+using System.Linq;
 
 namespace TeamApp.Console
 {
     class Program
     {
-        static void SetupConfig(TeamApplication teamApp, bool setupDatabase, bool dropFirst, bool setupData)
-        {
-            if (setupDatabase)
-            {
-                var session = NHibernateHelper.OpenSession();
-                var configuration = NHibernateHelper.GetConfiguration().BuildConfiguration();
-                var schemaExport = new SchemaExport(configuration);
 
-                if (dropFirst)
-                    schemaExport.Drop(false, true);
-
-                schemaExport.Create(false, true);
-
-            }
-
-            if (setupData)
-            {
-
-                var league = Data2.CreateBasicLeague("NHL");
-                var seasonCompetition = Data2.CreateBasicSeasonConfiguration(league);
-                var playoffConfig = Data2.CreateBasicPlayoffConfiguration(seasonCompetition);
-
-                teamApp.LeagueRepository.Update(league);
-            }
-
-
-            
-        }
         static void Main(string[] args)
         {            
                         
@@ -46,15 +16,28 @@ namespace TeamApp.Console
             Thread.CurrentPrincipal = user;
 
             var teamApp = new TeamApplication();
-            SetupConfig(teamApp, true, true, true);
+            teamApp.SetupConfig(true, true, true);
 
-            var league = teamApp.LeagueRepository.GetByName("NHL");
+            var currentData = teamApp.GameDataService.GetCurrentData();
+            teamApp.GameDataService.ProcessDay();
+            teamApp.GameDataService.PlayDay(new Random());
+            teamApp.GameDataService.ProcessDay();
 
-            WriteLine("Loaded league: " + league.Name);
-
-            for (int i = 0; i < 1; i++)
+            teamApp.ScheduleGameService.GetGamesForDay(currentData.CurrentDay, currentData.CurrentYear).ToList().ForEach(game =>
             {
-                teamApp.LeagueService.PlayAnotherYear("NHL", new Random());
+                WriteLine(game.ToString());
+            });
+
+            if (!teamApp.GameDataService.IncrementDay())
+            {
+                WriteLine("Could not increment day.");
+            }
+            else
+            {
+                teamApp.ScheduleGameService.GetGamesForDay(currentData.CurrentDay + 1, currentData.CurrentYear).ToList().ForEach(game =>
+                {
+                    WriteLine(game.ToString());
+                });
             }
                                                
             

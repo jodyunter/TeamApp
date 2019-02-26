@@ -11,6 +11,7 @@ namespace TeamApp.Domain.Repositories
         IEnumerable<Competition> GetByYear(int year);
        
         IEnumerable<Competition> GetStartedAndUnfinishedCompetitionsByYear(int year);
+        IEnumerable<Competition> GetCompetitionsForCompetitionConfig(CompetitionConfig config, int year);
         IEnumerable<Competition> GetParentCompetitionsForCompetitionConfig(CompetitionConfig config, int year);
         bool IsCompetitionCompleteForYear(int year, CompetitionConfig config);
     }

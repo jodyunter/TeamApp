@@ -110,6 +110,10 @@ namespace TeamApp.Test.Data
             //GetParentCompetitionsForCompetitionConfig
             var parents = repo.GetParentCompetitionsForCompetitionConfig(cc2, 5).ToList();
             StrictEqual(1, parents.Count());
+            Equal("Test 1", parents[0].Name);
+            Equal(5, parents[0].Year);
+            //GetCompetitionsForCompetitionConfig
+            var competitionForConfig = repo.GetCompetitionsForCompetitionConfig(cc2, 5).ToList();
             Equal("P3", parents[0].Name);
             Equal(5, parents[0].Year);
 

@@ -22,8 +22,19 @@ namespace TeamApp.Data.Relational.Repositories
             return baseRepo.Where(c => c.Year == year).ToList();
         }
 
+        public IEnumerable<Competition> GetCompetitionsForCompetitionConfig(CompetitionConfig config, int year)
+        {
+            return baseRepo.Where(c => c.CompetitionConfig == config && c.Year == year);
+        }
+
         public IEnumerable<Competition> GetParentCompetitionsForCompetitionConfig(CompetitionConfig config, int year)
         {
+            IEnumerable<Competition> parentComps = new List<Competition>();
+
+            config.Parents.ToList().ForEach(parentConfigs =>
+            {
+                
+            });
             return baseRepo.Where(c => c.CompetitionConfig == config && c.Year == year);
         }
 

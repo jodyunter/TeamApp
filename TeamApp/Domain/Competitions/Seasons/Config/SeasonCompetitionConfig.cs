@@ -53,7 +53,7 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
             return GetTeamsInDivision(divisionName).Where(s => s.Equals(teamName)).FirstOrDefault() != null;
         }
 
-        public override Competition CreateCompetition(int day, int year, IList<Competition> parents)
+        public override Competition CreateCompetitionDetails(int day, int year, IList<Competition> parents)
         {
             var season = new Season(this, Name, year, null, null, null, null, false, false, day, null);
 

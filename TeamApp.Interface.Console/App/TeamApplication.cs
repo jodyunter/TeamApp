@@ -1,4 +1,6 @@
-﻿using TeamApp.Data.Relational.Repositories;
+﻿using NHibernate.Tool.hbm2ddl;
+using TeamApp.Data.Relational.Repositories;
+using TeamApp.Data.Repositories.Relational;
 using TeamApp.Data.Repositories.Relational.NHibernate;
 using TeamApp.Domain;
 using TeamApp.Domain.Competitions;
@@ -7,32 +9,75 @@ using TeamApp.Domain.Repositories;
 using TeamApp.Domain.Schedules;
 using TeamApp.Services;
 using TeamApp.Services.Implementation;
+using TeamApp.Test.Helpers;
 
 namespace TeamApp.Console.App
 {
     public class TeamApplication
     {
-        
-        public ILeagueRepository LeagueRepository { get; set; }    
-        public IStandingsRepository StandingsRepository { get; set; }
-        public ITeamRepository TeamRepository { get; set; }
-        public ICompetitionRepository CompetitionRepository { get; set; }
-        public ITeamRankingRepository TeamRankingRepository { get; set; }
-        public IScheduleGameRepository ScheduleGameRepository { get; set; }
+
+        private ILeagueRepository leagueRepository;
+        private IStandingsRepository standingsRepository;
+        private ITeamRepository teamRepository;
+        private ICompetitionRepository competitionRepository;
+        private ITeamRankingRepository teamRankingRepository;
+        private IScheduleGameRepository scheduleGameRepository;
+        private ICompetitionConfigRepository competitionConfigRepository;
+        private IGameDataRepository gameDataRepository;
         public ILeagueService LeagueService { get; set; }
         public IStandingsService StandingsService { get; set; }
+        public IGameDataService GameDataService { get; set; }
+        public IScheduleGameService ScheduleGameService { get; set; }
+        
         public TeamApplication()
         {
-            LeagueRepository = new LeagueRepository(new RepositoryNHibernate<League>());
-            TeamRepository = new TeamRepository(new RepositoryNHibernate<Team>());
-            CompetitionRepository = new CompetitionRepository(new RepositoryNHibernate<Competition>());
-            StandingsRepository = new StandingsRepository(new RepositoryNHibernate<SeasonTeam>(), CompetitionRepository);
-            TeamRankingRepository = new TeamRankingRepository(new RepositoryNHibernate<TeamRanking>());
-            ScheduleGameRepository = new ScheduleGameRepository(new RepositoryNHibernate<ScheduleGame>());
-            LeagueService = new LeagueService(LeagueRepository, CompetitionRepository, ScheduleGameRepository);
-            StandingsService = new StandingsService(StandingsRepository, TeamRankingRepository);
+            leagueRepository = new LeagueRepository(new RepositoryNHibernate<League>());
+            teamRepository = new TeamRepository(new RepositoryNHibernate<Team>());
+            competitionRepository = new CompetitionRepository(new RepositoryNHibernate<Competition>());
+            standingsRepository = new StandingsRepository(new RepositoryNHibernate<SeasonTeam>(), competitionRepository);
+            teamRankingRepository = new TeamRankingRepository(new RepositoryNHibernate<TeamRanking>());
+            scheduleGameRepository = new ScheduleGameRepository(new RepositoryNHibernate<ScheduleGame>());
+            gameDataRepository = new GameDataRepository(new RepositoryNHibernate<GameData>());
+            competitionConfigRepository = new CompetitionConfigRepository(new RepositoryNHibernate<CompetitionConfig>());
+
+            LeagueService = new LeagueService(leagueRepository, competitionRepository, scheduleGameRepository);
+            StandingsService = new StandingsService(standingsRepository, teamRankingRepository);
+            GameDataService = new GameDataService(gameDataRepository, leagueRepository, scheduleGameRepository, competitionRepository, competitionConfigRepository);
+            ScheduleGameService = new ScheduleGameService(scheduleGameRepository);
         }
 
-            
+        public void SetupConfig(bool setupDatabase, bool dropFirst, bool setupData)
+        {
+            if (setupDatabase)
+            {
+                var session = NHibernateHelper.OpenSession();
+                var configuration = NHibernateHelper.GetConfiguration().BuildConfiguration();
+                var schemaExport = new SchemaExport(configuration);
+
+                if (dropFirst)                    
+                    schemaExport.Drop(false, true);
+
+                schemaExport.Create(false, true);
+
+            }
+
+            if (setupData)
+            {
+                var gameData = new GameData();
+                gameData.CurrentDay = 1;
+                gameData.CurrentYear = 1;
+                gameDataRepository.Update(gameData);
+
+                var league = Data2.CreateBasicLeague("NHL");
+                var seasonCompetition = Data2.CreateBasicSeasonConfiguration(league);
+                var playoffConfig = Data2.CreateBasicPlayoffConfiguration(seasonCompetition);
+
+                leagueRepository.Update(league);
+            }
+
+
+
+        }
+
     }
 }

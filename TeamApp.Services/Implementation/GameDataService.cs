@@ -1,19 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TeamApp.Domain;
 using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Repositories;
 
 namespace TeamApp.Services.Implementation
 {
-    public class GameDataService
+    public class GameDataService: IGameDataService
     {
         private IGameDataRepository gameDataRepo;
         private ILeagueRepository leagueRepo;
-        private IScheduleGameRepository scheduleGameRepository;
+        private IScheduleGameRepository scheduleGameRepo;
         private ICompetitionRepository competitionRepo;
         private ICompetitionConfigRepository competitionConfigRepo;
 
+        public GameDataService(IGameDataRepository gameDataRepository, ILeagueRepository leagueRepository, IScheduleGameRepository scheduleGameRepository, ICompetitionRepository competitionRepository, ICompetitionConfigRepository competitionConfigRepository)
+        {
+            gameDataRepo = gameDataRepository;
+            leagueRepo = leagueRepository;
+            scheduleGameRepo = scheduleGameRepository;
+            competitionRepo = competitionRepository;
+            competitionConfigRepo = competitionConfigRepository;
+        }
 
         public bool IsYearComplete(int year)
         {
@@ -57,13 +66,13 @@ namespace TeamApp.Services.Implementation
             var gameData = gameDataRepo.GetCurrentData();
 
             //var gamesToPlay = scheduleGameRepository.GetGamesForDay(gameData.CurrentDay, gameData.CurrentYear).Where(g => !g.Complete).ToList();
-            var gamesToPlay = scheduleGameRepository.GetInCompleteGamesForDay(gameData.CurrentDay, gameData.CurrentYear).ToList();
+            var gamesToPlay = scheduleGameRepo.GetInCompleteGamesForDay(gameData.CurrentDay, gameData.CurrentYear).ToList();
 
             gamesToPlay.ForEach(game =>
             {
                 var competition = game.Competition;
                 competition.PlayGame(game, random);
-                scheduleGameRepository.Update(game);
+                scheduleGameRepo.Update(game);
             });
 
             leagueRepo.Flush();
@@ -74,7 +83,7 @@ namespace TeamApp.Services.Implementation
             var gameData = gameDataRepo.GetCurrentData();
 
             //var gamesToProcess = scheduleGameRepository.GetGamesForDay(gameData.CurrentDay, gameData.CurrentYear).Where(g => g.Complete && !g.Processed).ToList();
-            var gamesToProcess = scheduleGameRepository.GetCompleteAndUnProcessedGamesForDay(gameData.CurrentDay, gameData.CurrentYear).ToList();
+            var gamesToProcess = scheduleGameRepo.GetCompleteAndUnProcessedGamesForDay(gameData.CurrentDay, gameData.CurrentYear).ToList();
 
             var competitionList = new HashSet<Competition>();
 
@@ -82,7 +91,7 @@ namespace TeamApp.Services.Implementation
             {
                 var competition = game.Competition;
                 competition.ProcessGame(game);
-                scheduleGameRepository.Update(game);
+                scheduleGameRepo.Update(game);
                 competitionRepo.Update(competition);
                 competitionList.Add(competition);
             });
@@ -95,11 +104,12 @@ namespace TeamApp.Services.Implementation
             leagueRepo.Flush();
         }
        
-        public bool IncrementDay(int currentDay, int currentYear)
+        //should probably NOT have parameters here
+        public bool IncrementDay()
         {
             var gameData = gameDataRepo.GetCurrentData();
 
-            int unfinishedGames = scheduleGameRepository.GetInCompleteOrUnProcessedGamesForDay(gameData.CurrentDay, gameData.CurrentYear).Count();
+            int unfinishedGames = scheduleGameRepo.GetInCompleteOrUnProcessedGamesForDay(gameData.CurrentDay, gameData.CurrentYear).Count();
 
             if (unfinishedGames > 0)
             {
@@ -108,7 +118,7 @@ namespace TeamApp.Services.Implementation
             }
             else
             {
-                gameData.CurrentDay = currentDay + 1;
+                gameData.CurrentDay = gameData.CurrentDay + 1;
                 SetupComeptitionsForDay(gameData.CurrentDay, gameData.CurrentYear);
                 gameDataRepo.Update(gameData);
                 gameDataRepo.Flush();
@@ -120,10 +130,10 @@ namespace TeamApp.Services.Implementation
 
         public void SetupComeptitionsForDay(int day, int year)
         {
+            //this doesn't let us start at an unknown date.
             var configs = competitionConfigRepo.GetConfigByStartingDayAndYear(day, year).ToList();
 
-
-            configs.ForEach(config => {
+            configs.ForEach(config => {                
                 var parents = competitionRepo.GetParentCompetitionsForCompetitionConfig(config, year).ToList();
 
                 var comp = config.CreateCompetition(day, year, parents);
@@ -132,6 +142,16 @@ namespace TeamApp.Services.Implementation
             });
 
             competitionRepo.Flush();
+        }
+
+        public GameData GetCurrentData()
+        {
+            return gameDataRepo.GetCurrentData();
+        }
+
+        public void SaveCurrentData(GameData data)
+        {
+            gameDataRepo.Update(data);
         }
     }
 }

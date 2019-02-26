@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System.Collections.Generic;
 
 namespace TeamApp.Domain.Competitions
 {
@@ -27,8 +28,27 @@ namespace TeamApp.Domain.Competitions
             CompetitionStartingDay = competitionStartingDay;
             Parents = new List<CompetitionConfig>();            
         }
+                
+        public virtual Competition CreateCompetition(int day, int year, IList<Competition> parents)
+        {
+            bool areAllParentsDone = true; ;
 
-        public abstract Competition CreateCompetition(int day, int year, IList<Competition> parents);       
+            if (!(parents == null || parents.Count() == 0))
+            {
+                parents.ToList().ForEach(competition =>
+                {
+                    areAllParentsDone = areAllParentsDone && competition.Finished;
+                });
+            }
+
+            if (areAllParentsDone)
+                return CreateCompetitionDetails(day, year, parents);
+
+            throw new System.Exception("Not all parents are done!");
+                    
+        }
+
+        public abstract Competition CreateCompetitionDetails(int day, int year, IList<Competition> parents);       
         
                 
     }

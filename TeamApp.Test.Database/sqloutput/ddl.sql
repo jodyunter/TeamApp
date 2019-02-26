@@ -1,154 +1,154 @@
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKAB9494C2E6B94E68]') and parent_object_id = OBJECT_ID(N'[Competition]'))
-alter table [Competition]  drop constraint FKAB9494C2E6B94E68
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKDD9FA7245E54DF51]') and parent_object_id = OBJECT_ID(N'[Competition]'))
+alter table [Competition]  drop constraint FKDD9FA7245E54DF51
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK45D912DCD488EE47]') and parent_object_id = OBJECT_ID(N'Playoff'))
-alter table Playoff  drop constraint FK45D912DCD488EE47
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK96144CD69FDEB3DA]') and parent_object_id = OBJECT_ID(N'Playoff'))
+alter table Playoff  drop constraint FK96144CD69FDEB3DA
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKCD8F25A6D488EE47]') and parent_object_id = OBJECT_ID(N'Season'))
-alter table Season  drop constraint FKCD8F25A6D488EE47
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK5CD1D4C19FDEB3DA]') and parent_object_id = OBJECT_ID(N'Season'))
+alter table Season  drop constraint FK5CD1D4C19FDEB3DA
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK184F5873B54F50C9]') and parent_object_id = OBJECT_ID(N'[CompetitionConfig]'))
-alter table [CompetitionConfig]  drop constraint FK184F5873B54F50C9
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK33A0AAB7990DC2D5]') and parent_object_id = OBJECT_ID(N'[CompetitionConfig]'))
+alter table [CompetitionConfig]  drop constraint FK33A0AAB7990DC2D5
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK184F587342AC8057]') and parent_object_id = OBJECT_ID(N'[CompetitionConfig]'))
-alter table [CompetitionConfig]  drop constraint FK184F587342AC8057
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK33A0AAB78EF7C8CD]') and parent_object_id = OBJECT_ID(N'[CompetitionConfig]'))
+alter table [CompetitionConfig]  drop constraint FK33A0AAB78EF7C8CD
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK184F5873E6B94E68]') and parent_object_id = OBJECT_ID(N'[CompetitionConfig]'))
-alter table [CompetitionConfig]  drop constraint FK184F5873E6B94E68
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK33A0AAB75E54DF51]') and parent_object_id = OBJECT_ID(N'[CompetitionConfig]'))
+alter table [CompetitionConfig]  drop constraint FK33A0AAB75E54DF51
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK40076F98E6B94E68]') and parent_object_id = OBJECT_ID(N'PlayoffCompetitionConfig'))
-alter table PlayoffCompetitionConfig  drop constraint FK40076F98E6B94E68
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKF1542ADD5E54DF51]') and parent_object_id = OBJECT_ID(N'PlayoffCompetitionConfig'))
+alter table PlayoffCompetitionConfig  drop constraint FKF1542ADD5E54DF51
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKFD084AB4E6B94E68]') and parent_object_id = OBJECT_ID(N'SeasonCompetitionConfig'))
-alter table SeasonCompetitionConfig  drop constraint FKFD084AB4E6B94E68
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK362921DD5E54DF51]') and parent_object_id = OBJECT_ID(N'SeasonCompetitionConfig'))
+alter table SeasonCompetitionConfig  drop constraint FK362921DD5E54DF51
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKC8205F73B1A06E69]') and parent_object_id = OBJECT_ID(N'[PlayoffRankingRule]'))
-alter table [PlayoffRankingRule]  drop constraint FKC8205F73B1A06E69
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK2844E4E32A9BE325]') and parent_object_id = OBJECT_ID(N'[PlayoffRankingRule]'))
+alter table [PlayoffRankingRule]  drop constraint FK2844E4E32A9BE325
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKC8205F7318433D5A]') and parent_object_id = OBJECT_ID(N'[PlayoffRankingRule]'))
-alter table [PlayoffRankingRule]  drop constraint FKC8205F7318433D5A
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK2844E4E3992DF378]') and parent_object_id = OBJECT_ID(N'[PlayoffRankingRule]'))
+alter table [PlayoffRankingRule]  drop constraint FK2844E4E3992DF378
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK59C5C8FEB1A06E69]') and parent_object_id = OBJECT_ID(N'[PlayoffSeriesRule]'))
-alter table [PlayoffSeriesRule]  drop constraint FK59C5C8FEB1A06E69
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKBE17B96D2A9BE325]') and parent_object_id = OBJECT_ID(N'[PlayoffSeriesRule]'))
+alter table [PlayoffSeriesRule]  drop constraint FKBE17B96D2A9BE325
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK59C5C8FE42AC8057]') and parent_object_id = OBJECT_ID(N'[PlayoffSeriesRule]'))
-alter table [PlayoffSeriesRule]  drop constraint FK59C5C8FE42AC8057
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKBE17B96D8EF7C8CD]') and parent_object_id = OBJECT_ID(N'[PlayoffSeriesRule]'))
+alter table [PlayoffSeriesRule]  drop constraint FKBE17B96D8EF7C8CD
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK50B4636173EDC08A]') and parent_object_id = OBJECT_ID(N'[PlayoffSeries]'))
-alter table [PlayoffSeries]  drop constraint FK50B4636173EDC08A
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK484C7744E04E4A4C]') and parent_object_id = OBJECT_ID(N'[PlayoffSeries]'))
+alter table [PlayoffSeries]  drop constraint FK484C7744E04E4A4C
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK50B46361AC2E2024]') and parent_object_id = OBJECT_ID(N'[PlayoffSeries]'))
-alter table [PlayoffSeries]  drop constraint FK50B46361AC2E2024
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK484C7744A045DE27]') and parent_object_id = OBJECT_ID(N'[PlayoffSeries]'))
+alter table [PlayoffSeries]  drop constraint FK484C7744A045DE27
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK50B4636166391554]') and parent_object_id = OBJECT_ID(N'[PlayoffSeries]'))
-alter table [PlayoffSeries]  drop constraint FK50B4636166391554
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK484C77445A04B383]') and parent_object_id = OBJECT_ID(N'[PlayoffSeries]'))
+alter table [PlayoffSeries]  drop constraint FK484C77445A04B383
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK79BF030E8B31DD69]') and parent_object_id = OBJECT_ID(N'BestOfSeries'))
-alter table BestOfSeries  drop constraint FK79BF030E8B31DD69
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKB71E2123E5E70307]') and parent_object_id = OBJECT_ID(N'BestOfSeries'))
+alter table BestOfSeries  drop constraint FKB71E2123E5E70307
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK726CDD558B31DD69]') and parent_object_id = OBJECT_ID(N'TotalGoalsSeries'))
-alter table TotalGoalsSeries  drop constraint FK726CDD558B31DD69
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK495C7E1E5E70307]') and parent_object_id = OBJECT_ID(N'TotalGoalsSeries'))
+alter table TotalGoalsSeries  drop constraint FK495C7E1E5E70307
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK796E9EE334E80653]') and parent_object_id = OBJECT_ID(N'[SeasonDivisionRule]'))
-alter table [SeasonDivisionRule]  drop constraint FK796E9EE334E80653
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKEBEB7C7BAE70844E]') and parent_object_id = OBJECT_ID(N'[SeasonDivisionRule]'))
+alter table [SeasonDivisionRule]  drop constraint FKEBEB7C7BAE70844E
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK6B5DEE1134E80653]') and parent_object_id = OBJECT_ID(N'[SeasonScheduleRule]'))
-alter table [SeasonScheduleRule]  drop constraint FK6B5DEE1134E80653
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKD1D70061AE70844E]') and parent_object_id = OBJECT_ID(N'[SeasonScheduleRule]'))
+alter table [SeasonScheduleRule]  drop constraint FKD1D70061AE70844E
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKA24D17D734E80653]') and parent_object_id = OBJECT_ID(N'[SeasonTeamRule]'))
-alter table [SeasonTeamRule]  drop constraint FKA24D17D734E80653
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK4E35A86FAE70844E]') and parent_object_id = OBJECT_ID(N'[SeasonTeamRule]'))
+alter table [SeasonTeamRule]  drop constraint FK4E35A86FAE70844E
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKA24D17D7C98B26EE]') and parent_object_id = OBJECT_ID(N'[SeasonTeamRule]'))
-alter table [SeasonTeamRule]  drop constraint FKA24D17D7C98B26EE
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK4E35A86F358E47C3]') and parent_object_id = OBJECT_ID(N'[SeasonTeamRule]'))
+alter table [SeasonTeamRule]  drop constraint FK4E35A86F358E47C3
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKEFE5B7AB130C7074]') and parent_object_id = OBJECT_ID(N'[SeasonDivision]'))
-alter table [SeasonDivision]  drop constraint FKEFE5B7AB130C7074
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK2007879CE2EF6E03]') and parent_object_id = OBJECT_ID(N'[SeasonDivision]'))
+alter table [SeasonDivision]  drop constraint FK2007879CE2EF6E03
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKEFE5B7AB259FA9FD]') and parent_object_id = OBJECT_ID(N'[SeasonDivision]'))
-alter table [SeasonDivision]  drop constraint FKEFE5B7AB259FA9FD
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK2007879CB63B04FF]') and parent_object_id = OBJECT_ID(N'[SeasonDivision]'))
+alter table [SeasonDivision]  drop constraint FK2007879CB63B04FF
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK2352FC66493201C2]') and parent_object_id = OBJECT_ID(N'[TeamRanking]'))
-alter table [TeamRanking]  drop constraint FK2352FC66493201C2
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK4C86B38CAF79B54]') and parent_object_id = OBJECT_ID(N'[TeamRanking]'))
+alter table [TeamRanking]  drop constraint FK4C86B38CAF79B54
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK2352FC66D488EE47]') and parent_object_id = OBJECT_ID(N'[TeamRanking]'))
-alter table [TeamRanking]  drop constraint FK2352FC66D488EE47
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK4C86B389FDEB3DA]') and parent_object_id = OBJECT_ID(N'[TeamRanking]'))
+alter table [TeamRanking]  drop constraint FK4C86B389FDEB3DA
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK576383608CD759D8]') and parent_object_id = OBJECT_ID(N'[Game]'))
-alter table [Game]  drop constraint FK576383608CD759D8
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKCDB9F5058735A84D]') and parent_object_id = OBJECT_ID(N'[Game]'))
+alter table [Game]  drop constraint FKCDB9F5058735A84D
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK5763836046C06CA8]') and parent_object_id = OBJECT_ID(N'[Game]'))
-alter table [Game]  drop constraint FK5763836046C06CA8
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKCDB9F5057D74C5E9]') and parent_object_id = OBJECT_ID(N'[Game]'))
+alter table [Game]  drop constraint FKCDB9F5057D74C5E9
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK57638360B5876F84]') and parent_object_id = OBJECT_ID(N'[Game]'))
-alter table [Game]  drop constraint FK57638360B5876F84
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKCDB9F505929BD0AA]') and parent_object_id = OBJECT_ID(N'[Game]'))
+alter table [Game]  drop constraint FKCDB9F505929BD0AA
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK5D330F0D29E327F3]') and parent_object_id = OBJECT_ID(N'ScheduleGame'))
-alter table ScheduleGame  drop constraint FK5D330F0D29E327F3
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKEFB945D7DF132B56]') and parent_object_id = OBJECT_ID(N'ScheduleGame'))
+alter table ScheduleGame  drop constraint FKEFB945D7DF132B56
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK5D330F0DD488EE47]') and parent_object_id = OBJECT_ID(N'ScheduleGame'))
-alter table ScheduleGame  drop constraint FK5D330F0DD488EE47
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKEFB945D79FDEB3DA]') and parent_object_id = OBJECT_ID(N'ScheduleGame'))
+alter table ScheduleGame  drop constraint FKEFB945D79FDEB3DA
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKA46B1B7B6622E0D4]') and parent_object_id = OBJECT_ID(N'PlayoffGame'))
-alter table PlayoffGame  drop constraint FKA46B1B7B6622E0D4
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK5CA371B56C31E25E]') and parent_object_id = OBJECT_ID(N'PlayoffGame'))
+alter table PlayoffGame  drop constraint FK5CA371B56C31E25E
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKA46B1B7B7D1912BC]') and parent_object_id = OBJECT_ID(N'PlayoffGame'))
-alter table PlayoffGame  drop constraint FKA46B1B7B7D1912BC
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK5CA371B5FE609A47]') and parent_object_id = OBJECT_ID(N'PlayoffGame'))
+alter table PlayoffGame  drop constraint FK5CA371B5FE609A47
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK933FC5ECD488EE47]') and parent_object_id = OBJECT_ID(N'[SingleYearTeam]'))
-alter table [SingleYearTeam]  drop constraint FK933FC5ECD488EE47
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK6E11A8E29FDEB3DA]') and parent_object_id = OBJECT_ID(N'[SingleYearTeam]'))
+alter table [SingleYearTeam]  drop constraint FK6E11A8E29FDEB3DA
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK933FC5EC8286F7FD]') and parent_object_id = OBJECT_ID(N'[SingleYearTeam]'))
-alter table [SingleYearTeam]  drop constraint FK933FC5EC8286F7FD
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK6E11A8E2A7D49F80]') and parent_object_id = OBJECT_ID(N'[SingleYearTeam]'))
+alter table [SingleYearTeam]  drop constraint FK6E11A8E2A7D49F80
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK276731354A4ABE12]') and parent_object_id = OBJECT_ID(N'PlayoffTeam'))
-alter table PlayoffTeam  drop constraint FK276731354A4ABE12
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FK118022772ECA8230]') and parent_object_id = OBJECT_ID(N'PlayoffTeam'))
+alter table PlayoffTeam  drop constraint FK118022772ECA8230
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKBDFA40044A4ABE12]') and parent_object_id = OBJECT_ID(N'SeasonTeam'))
-alter table SeasonTeam  drop constraint FKBDFA40044A4ABE12
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKFEF83EF92ECA8230]') and parent_object_id = OBJECT_ID(N'SeasonTeam'))
+alter table SeasonTeam  drop constraint FKFEF83EF92ECA8230
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKBDFA4004BBE766FB]') and parent_object_id = OBJECT_ID(N'SeasonTeam'))
-alter table SeasonTeam  drop constraint FKBDFA4004BBE766FB
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKFEF83EF9BABFD02D]') and parent_object_id = OBJECT_ID(N'SeasonTeam'))
+alter table SeasonTeam  drop constraint FKFEF83EF9BABFD02D
 
 
-    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKBDFA40045BD359A9]') and parent_object_id = OBJECT_ID(N'SeasonTeam'))
-alter table SeasonTeam  drop constraint FKBDFA40045BD359A9
+    if exists (select 1 from sys.objects where object_id = OBJECT_ID(N'[FKFEF83EF9CE117ECA]') and parent_object_id = OBJECT_ID(N'SeasonTeam'))
+alter table SeasonTeam  drop constraint FKFEF83EF9CE117ECA
 
 
     if exists (select * from dbo.sysobjects where id = object_id(N'[Competition]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [Competition]
