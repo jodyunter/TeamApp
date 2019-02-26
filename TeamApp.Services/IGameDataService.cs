@@ -13,7 +13,7 @@ namespace TeamApp.Services
         void ProcessDay();
         bool IncrementDay();
         void SetupComeptitionsForDay(int day, int year);
-        GameData GetCurrentData();
+        GameData GetCurrentData();//need to change to a view model!
         void SaveCurrentData(GameData data);
     }
 }

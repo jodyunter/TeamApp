@@ -34,15 +34,41 @@ namespace TeamApp.Test.Services
 
             True(team is TeamViewModel);
             Equals("Team 1", team.Name);
-            Equals(1, team.Id);
-            Equals(15, team.FirstYear);
-            Equals(27, team.LastYear);
+            StrictEqual(1, team.Id);
+            StrictEqual(15, team.FirstYear);
+            StrictEqual(27, team.LastYear);
             Equals("Nick1", team.NickName);
             Equals("Short", team.ShortName);
-            Equals(5, team.Skill);
+            StrictEqual(5, team.Skill);
             Equals("Me", team.Owner);
             Equals(false, team.Active);
             
+        }
+
+        [Fact]
+        public void GetTeamById()
+        {
+            True(false);
+        }
+        [Fact]
+        public void GetTeamByStatus()
+        {
+            True(false);
+        }
+        [Fact]
+        public void GetAllTeams()
+        {
+            True(false);
+        }
+        [Fact]
+        public void SaveTeams()
+        {
+            True(false);
+        }
+        [Fact]
+        public void SaveTeam()
+        {
+            True(false);
         }
 
     }

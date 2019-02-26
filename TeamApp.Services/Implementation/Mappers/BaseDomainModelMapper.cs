@@ -4,10 +4,9 @@ using System.Collections.Generic;
 using System.Text;
 using TeamApp.Domain.Repositories;
 
-namespace TeamApp.Services.Implementation
-{
-    //todo this shouldn't be a service.  We should have these mappers available seperately as needed
-    public class BaseService<Domain, Model> 
+namespace TeamApp.Services.Implementation.Mappers
+{    
+    public class BaseDomainModelMapper<Domain, Model> 
     {
         virtual public List<Model> MapDomainToModel(List<Domain> objs)
         {

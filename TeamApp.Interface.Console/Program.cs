@@ -42,7 +42,7 @@ namespace TeamApp.Console
                     WriteLine(game.ToString());
                 });
             }
-                                                    
+                        
             
             /*
             var app = new Application();

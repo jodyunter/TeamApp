@@ -120,8 +120,13 @@ namespace TeamApp.Test.Data
             Equal(5, competitionForConfig.Year);
 
             var shouldBeNull = repo.GetCompetitionForCompetitionConfig(cc0, 5);
-            Null(shouldBeNull);            
+            Null(shouldBeNull);
 
+            //IEnumerable<Competition> GetByLeagueAndYear(int leagueId, int year)
+            True(false);
+
+            //IEnumerable<Competition> GetByLeagueAndYear(int leagueId, int year, bool started, bool finished)
+            True(false);
         }
         #endregion
         #region Competition Config Repo Tests

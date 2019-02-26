@@ -9,7 +9,8 @@ namespace TeamApp.Domain.Repositories
     {
         Competition GetByNameAndYear(string name, int year);        
         IEnumerable<Competition> GetByYear(int year);
-       
+        IEnumerable<Competition> GetByLeagueAndYear(int leagueId, int year);
+        IEnumerable<Competition> GetByLeagueAndYear(int leagueId, int year, bool started, bool finished);
         IEnumerable<Competition> GetStartedAndUnfinishedCompetitionsByYear(int year);
         Competition GetCompetitionForCompetitionConfig(CompetitionConfig config, int year);
         IEnumerable<Competition> GetParentCompetitionsForCompetitionConfig(CompetitionConfig config, int year);

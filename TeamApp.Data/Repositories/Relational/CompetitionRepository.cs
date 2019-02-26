@@ -12,6 +12,16 @@ namespace TeamApp.Data.Relational.Repositories
     {        
         public CompetitionRepository(IRelationalRepository<Competition> repo) : base(repo) { }
 
+        public IEnumerable<Competition> GetByLeagueAndYear(int leagueId, int year)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Competition> GetByLeagueAndYear(int leagueId, int year, bool started, bool finished)
+        {
+            throw new NotImplementedException();
+        }
+
         public Competition GetByNameAndYear(string name, int year)
         {
             return baseRepo.Where(c => c.Name.Equals(name) && c.Year == year).FirstOrDefault();

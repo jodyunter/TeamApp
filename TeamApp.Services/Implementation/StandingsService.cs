@@ -2,19 +2,22 @@
 using System.Linq;
 using TeamApp.Domain.Competitions.Seasons;
 using TeamApp.Domain.Repositories;
+using TeamApp.Services.Implementation.Mappers;
 using TeamApp.ViewModels.Views.Standings;
 
 namespace TeamApp.Services.Implementation
 {
-    public class StandingsService:BaseService<SeasonTeam, StandingsTeamViewModel>, IStandingsService
+    public class StandingsService: IStandingsService
     {
         private IStandingsRepository standingsRepository;
         private ITeamRankingRepository teamRankingRepository;
+        private SeasonTeamToStandingsTeamViewModelMapper mapper;
 
         public StandingsService(IStandingsRepository StandingsRepository, ITeamRankingRepository TeamRankingRepository)
         {
             standingsRepository = StandingsRepository;
             teamRankingRepository = TeamRankingRepository;
+            mapper = new SeasonTeamToStandingsTeamViewModelMapper();
         }
 
         public SeasonListViewModel GetSeasonList()
@@ -26,7 +29,7 @@ namespace TeamApp.Services.Implementation
         {
             var teams = standingsRepository.GetByCompetition(competitionId);
             
-            var models = MapDomainToModel(teams.ToList());
+            var models = mapper.MapDomainToModel(teams.ToList());
 
             var ranks = teamRankingRepository.GetByCompetition(competitionId).ToList();
 
@@ -42,8 +45,6 @@ namespace TeamApp.Services.Implementation
             {
                 Teams = models
             };
-
-
             
         }
         
@@ -56,24 +57,6 @@ namespace TeamApp.Services.Implementation
             }
 
             model.Rankings.Add(new StandingsRankingViewModel() { GroupName = divname, Rank = rank, GroupLevel = level });
-        }
-        public override StandingsTeamViewModel MapDomainToModel(SeasonTeam obj)
-        {
-            var model = new StandingsTeamViewModel
-            {
-                TeamName = obj.Name,
-                Division = obj.Division.Name,
-                Wins = obj.Stats.Wins,
-                Ties = obj.Stats.Ties,
-                Loses = obj.Stats.Loses,
-                GoalsFor = obj.Stats.GoalsFor,
-                GoalsAgainst = obj.Stats.GoalsAgainst,
-                GamesPlayed = obj.Stats.Games,
-                GoalDifference = obj.Stats.GoalDifference,
-                Points = obj.Stats.Points
-            };            
-
-            return model;
         }
     }
 }
