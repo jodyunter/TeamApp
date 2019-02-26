@@ -34,5 +34,10 @@ namespace TeamApp.Data.Relational.Repositories
         {
             return baseRepo.Where(g => g.Day == day && g.Year == year && (!g.Complete || !g.Processed)).ToList();
         }
+
+        public void UpdateAll(IEnumerable<ScheduleGame> games)
+        {
+            games.ToList().ForEach(game => { baseRepo.Update(game); });
+        }
     }
 }

@@ -102,7 +102,7 @@ namespace TeamApp.Domain
 
         public override string ToString()
         {
-            var formatter = "{0,10}: {1,3} - {2,3} :{3,-10} {4}";
+            var formatter = "{0,15}: {1,3} - {2,3} :{3,-15} {4}";
             var result = "";
 
             if (Complete) result += " Final";

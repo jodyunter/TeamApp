@@ -9,7 +9,7 @@ using TeamApp.Domain.Repositories;
 namespace TeamApp.Data.Relational.Repositories
 {
     public class CompetitionRepository : DataRepository<Competition>, ICompetitionRepository
-    {
+    {        
         public CompetitionRepository(IRelationalRepository<Competition> repo) : base(repo) { }
 
         public Competition GetByNameAndYear(string name, int year)
@@ -22,22 +22,23 @@ namespace TeamApp.Data.Relational.Repositories
             return baseRepo.Where(c => c.Year == year).ToList();
         }
 
-        public IEnumerable<Competition> GetCompetitionsForCompetitionConfig(CompetitionConfig config, int year)
+        public Competition GetCompetitionForCompetitionConfig(CompetitionConfig config, int year)
         {
-            return baseRepo.Where(c => c.CompetitionConfig == config && c.Year == year);
+            return baseRepo.Where(c => c.CompetitionConfig == config && c.Year == year).FirstOrDefault();
         }
 
         public IEnumerable<Competition> GetParentCompetitionsForCompetitionConfig(CompetitionConfig config, int year)
         {
-            IEnumerable<Competition> parentComps = new List<Competition>();
+            var parentComps = new List<Competition>();
 
-            config.Parents.ToList().ForEach(parentConfigs =>
+            config.Parents.ToList().ForEach(parentConfig =>
             {
-                
+                var parentComp = GetCompetitionForCompetitionConfig(parentConfig, year);
+                if (parentComp != null) parentComps.Add(parentComp);
             });
-            return baseRepo.Where(c => c.CompetitionConfig == config && c.Year == year);
-        }
 
+            return parentComps;
+        }
         public IEnumerable<Competition> GetStartedAndUnfinishedCompetitionsByYear(int year)
         {
             return baseRepo.Where(c => c.Started && !c.Finished && c.Year == year);

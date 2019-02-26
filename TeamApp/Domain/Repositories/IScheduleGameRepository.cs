@@ -11,6 +11,7 @@ namespace TeamApp.Domain.Repositories
         IEnumerable<ScheduleGame> GetInCompleteGamesForDay(int day, int year);
         IEnumerable<ScheduleGame> GetCompleteAndUnProcessedGamesForDay(int day, int year);
         IEnumerable<ScheduleGame> GetInCompleteOrUnProcessedGamesForDay(int day, int year);
+        void UpdateAll(IEnumerable<ScheduleGame> games);
 
     }
 }

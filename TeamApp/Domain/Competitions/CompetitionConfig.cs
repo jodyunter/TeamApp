@@ -26,7 +26,10 @@ namespace TeamApp.Domain.Competitions
             FirstYear = firstYear;
             LastYear = lastYear;
             CompetitionStartingDay = competitionStartingDay;
-            Parents = new List<CompetitionConfig>();            
+            if (parents == null)
+                Parents = new List<CompetitionConfig>();
+            else
+                Parents = parents;
         }
                 
         public virtual Competition CreateCompetition(int day, int year, IList<Competition> parents)
@@ -43,6 +46,7 @@ namespace TeamApp.Domain.Competitions
 
             if (areAllParentsDone)
                 return CreateCompetitionDetails(day, year, parents);
+            
 
             throw new System.Exception("Not all parents are done!");
                     

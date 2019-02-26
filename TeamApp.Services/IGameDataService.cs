@@ -12,6 +12,7 @@ namespace TeamApp.Services
         void PlayDay(Random random);
         void ProcessDay();
         bool IncrementDay();
+        void SetupComeptitionsForDay(int day, int year);
         GameData GetCurrentData();
         void SaveCurrentData(GameData data);
     }

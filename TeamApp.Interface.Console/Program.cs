@@ -16,13 +16,15 @@ namespace TeamApp.Console
             Thread.CurrentPrincipal = user;
 
             var teamApp = new TeamApplication();
-            teamApp.SetupConfig(true, true, true);
+            //teamApp.SetupConfig(true, true, true);
 
             var currentData = teamApp.GameDataService.GetCurrentData();
+            teamApp.GameDataService.SetupComeptitionsForDay(currentData.CurrentDay, currentData.CurrentYear);
             teamApp.GameDataService.ProcessDay();
             teamApp.GameDataService.PlayDay(new Random());
             teamApp.GameDataService.ProcessDay();
 
+            WriteLine("Game: " + currentData.CurrentDay);
             teamApp.ScheduleGameService.GetGamesForDay(currentData.CurrentDay, currentData.CurrentYear).ToList().ForEach(game =>
             {
                 WriteLine(game.ToString());
@@ -34,12 +36,13 @@ namespace TeamApp.Console
             }
             else
             {
-                teamApp.ScheduleGameService.GetGamesForDay(currentData.CurrentDay + 1, currentData.CurrentYear).ToList().ForEach(game =>
+                WriteLine("Game: " + currentData.CurrentDay);
+                teamApp.ScheduleGameService.GetGamesForDay(currentData.CurrentDay, currentData.CurrentYear).ToList().ForEach(game =>
                 {
                     WriteLine(game.ToString());
                 });
             }
-                                               
+                                                    
             
             /*
             var app = new Application();

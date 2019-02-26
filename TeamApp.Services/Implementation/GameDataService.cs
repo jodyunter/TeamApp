@@ -133,15 +133,26 @@ namespace TeamApp.Services.Implementation
             //this doesn't let us start at an unknown date.
             var configs = competitionConfigRepo.GetConfigByStartingDayAndYear(day, year).ToList();
 
-            configs.ForEach(config => {                
-                var parents = competitionRepo.GetParentCompetitionsForCompetitionConfig(config, year).ToList();
+            configs.ForEach(config =>
+            {
+                var comp = competitionRepo.GetCompetitionForCompetitionConfig(config, year);
 
-                var comp = config.CreateCompetition(day, year, parents);
-
-                competitionRepo.Update(comp);
+                //assume that if it's been setup we completed this part
+                if (comp == null)
+                {                    
+                    var parents = competitionRepo.GetParentCompetitionsForCompetitionConfig(config, year).ToList();
+                    comp = config.CreateCompetition(day, year, parents);
+                    comp.Schedule.Days.ToList().ForEach(scheduleDay =>
+                    {
+                        scheduleDay.Value.Games.ForEach(game => { scheduleGameRepo.Update(game); });
+                    });
+                    competitionRepo.Update(comp);
+                    competitionRepo.Flush();
+                }
+               
             });
 
-            competitionRepo.Flush();
+            
         }
 
         public GameData GetCurrentData()

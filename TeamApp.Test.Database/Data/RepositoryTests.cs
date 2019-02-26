@@ -74,9 +74,10 @@ namespace TeamApp.Test.Data
             var repo = new CompetitionRepository(new RepositoryNHibernate<Competition>());
             var configRepo = new CompetitionConfigRepository(new RepositoryNHibernate<CompetitionConfig>());
 
+            var cc0 = new SeasonCompetitionConfig("Test B", null, 1, 1, null, 1, null, null, null, null, null);
             var cc1 = new SeasonCompetitionConfig("Test 1", null, 1, 1, null, 1, null, null, null, null, null);
             var c1 = new Season(cc1, "Test 1", 5, null, null, null, null, true, false, 5, 55);
-            var cc2 = new PlayoffCompetitionConfig("P3", null, 2, 25, null, 1, null, null, null, new List<CompetitionConfig> { cc1 });
+            var cc2 = new PlayoffCompetitionConfig("P3", null, 2, 25, null, 1, null, null, null, new List<CompetitionConfig> { cc1, cc0 });
             var c8 = new Playoff(cc2, "P3", 5, 5, null, null, null, null, false, false, 5, 12);
             var c2 = new Season(null, "Test 2", 6, null, null, null, null, true, true, 5, 55);
             var c3 = new Season(null, "Test 3", 7, null, null, null, null, true, false, 5, 55);
@@ -85,6 +86,7 @@ namespace TeamApp.Test.Data
             var c6 = new Playoff(null, "P1", 8, 5, null, null, null, null, true, false, 5, 12);
             var c7 = new Playoff(null, "P2", 8, 5, null, null, null, null, false, false, 5, 12);
 
+            configRepo.Update(cc2);
             repo.Update(c1);
             repo.Update(c2);
             repo.Update(c3);
@@ -113,9 +115,12 @@ namespace TeamApp.Test.Data
             Equal("Test 1", parents[0].Name);
             Equal(5, parents[0].Year);
             //GetCompetitionsForCompetitionConfig
-            var competitionForConfig = repo.GetCompetitionsForCompetitionConfig(cc2, 5).ToList();
-            Equal("P3", parents[0].Name);
-            Equal(5, parents[0].Year);
+            var competitionForConfig = repo.GetCompetitionForCompetitionConfig(cc2, 5);
+            Equal("P3", competitionForConfig.Name);
+            Equal(5, competitionForConfig.Year);
+
+            var shouldBeNull = repo.GetCompetitionForCompetitionConfig(cc0, 5);
+            Null(shouldBeNull);            
 
         }
         #endregion
