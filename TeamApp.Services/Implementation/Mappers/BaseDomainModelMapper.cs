@@ -1,18 +1,16 @@
 ﻿using AutoMapper;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using TeamApp.Domain.Repositories;
+using System.Linq;
 
 namespace TeamApp.Services.Implementation.Mappers
 {    
     public class BaseDomainModelMapper<Domain, Model> 
     {
-        virtual public List<Model> MapDomainToModel(List<Domain> objs)
+        virtual public IEnumerable<Model> MapDomainToModel(IEnumerable<Domain> objs)
         {
             var result = new List<Model>();
 
-            objs.ForEach(obj =>
+            objs.ToList().ForEach(obj =>
             {
                 result.Add(MapDomainToModel(obj));
             });
@@ -40,11 +38,11 @@ namespace TeamApp.Services.Implementation.Mappers
             return config.CreateMapper().Map<Model, Domain>(mod);
         }
 
-        virtual public List<Domain> MapModelToDomain(List<Model> models)
+        virtual public IEnumerable<Domain> MapModelToDomain(IEnumerable<Model> models)
         {
             var result = new List<Domain>();
 
-            models.ForEach(obj =>
+            models.ToList().ForEach(obj =>
             {
                 result.Add(MapModelToDomain(obj));
             });

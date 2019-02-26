@@ -33,7 +33,7 @@ namespace TeamApp.Services.Implementation
             return mapper.MapDomainToModel(team);
         }
 
-        public List<TeamViewModel> GetTeamByStatus(bool active)
+        public IEnumerable<TeamViewModel> GetTeamByStatus(bool active)
         {
             var teams = repository.GetByStatus(active);
 
@@ -41,7 +41,7 @@ namespace TeamApp.Services.Implementation
             
         }
 
-        public List<TeamViewModel> GetAllTeams()
+        public IEnumerable<TeamViewModel> GetAllTeams()
         {
             var teams = repository.GetAll().ToList();
 
@@ -49,10 +49,10 @@ namespace TeamApp.Services.Implementation
         }
         
 
-        public List<TeamViewModel> SaveTeams(IEnumerable<TeamViewModel> models)
+        public IEnumerable<TeamViewModel> SaveTeams(IEnumerable<TeamViewModel> models)
         {
 
-            mapper.MapModelToDomain(models.ToList()).ForEach(t =>
+            mapper.MapModelToDomain(models).ToList().ForEach(t =>
             {
                 repository.Update(t);                
             });

@@ -28,8 +28,8 @@ namespace TeamApp.Services.Implementation
         public StandingsViewModel GetStandings(int competitionId)
         {
             var teams = standingsRepository.GetByCompetition(competitionId);
-            
-            var models = mapper.MapDomainToModel(teams.ToList());
+
+            var models = mapper.MapDomainToModel(teams).ToList();
 
             var ranks = teamRankingRepository.GetByCompetition(competitionId).ToList();
 

@@ -18,6 +18,13 @@ namespace TeamApp.Services.Implementation
             simpleViewMapper = new CompetitionToCompetitionSimpleViewModelMapper();
         }
 
+        public IEnumerable<CompetitionSimpleViewModel> GetActiveCompetitions(int year)
+        {
+            var competitions = competitionRepository.GetStartedAndUnfinishedCompetitionsByYear(year);
+
+            return simpleViewMapper.MapDomainToModel(competitions);
+        }
+
         public IEnumerable<CompetitionSimpleViewModel> GetCompetitionListByLeagueAndYear(int leagueId, int year)
         {
             var competitions = competitionRepository.GetByLeagueAndYear(leagueId, year).ToList();

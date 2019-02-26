@@ -19,7 +19,7 @@ namespace TeamApp.Data.Relational.Repositories
 
         public IEnumerable<Competition> GetByLeagueAndYear(long leagueId, int year, bool started, bool finished)
         {
-            throw new NotImplementedException();
+            return baseRepo.Where(c => c.CompetitionConfig.League.Id == leagueId && c.Year == year && c.Started == started && c.Finished == finished).ToList();
         }
 
         public Competition GetByNameAndYear(string name, int year)

@@ -89,6 +89,10 @@ namespace TeamApp.Test.Data
             var c5 = new Season(null, "Test 5", 9, null, null, null, null, true, false, 5, 55);
             var c6 = new Playoff(null, "P1", 8, 5, null, null, null, null, true, false, 5, 12);
             var c7 = new Playoff(null, "P2", 8, 5, null, null, null, null, false, false, 5, 12);
+            var c9 = new Playoff(cc2, "P9", 15, 5, null, null, null, null, false, false, 5, 12);
+            var c10 = new Playoff(cc2, "P10", 15, 5, null, null, null, null, false, true, 5, 12);
+            var c11 = new Playoff(cc2, "P11", 15, 5, null, null, null, null, true, false, 5, 12);
+            var c12 = new Playoff(cc2, "P12", 15, 5, null, null, null, null, true, true, 5, 12);
 
             configRepo.Update(cc2);
             repo.Update(c1);
@@ -99,10 +103,14 @@ namespace TeamApp.Test.Data
             repo.Update(c6);
             repo.Update(c7);
             repo.Update(c8);
+            repo.Update(c9);
+            repo.Update(c10);
+            repo.Update(c11);
+            repo.Update(c12);
 
 
             //getall
-            StrictEqual(8, repo.GetAll().Count());
+            StrictEqual(12, repo.GetAll().Count());
             //GetByNameAndYear
             Equal("P3", repo.GetByNameAndYear("P3", 5).Name);
             //GetByYear
@@ -129,10 +137,13 @@ namespace TeamApp.Test.Data
             //IEnumerable<Competition> GetByLeagueAndYear(int leagueId, int year)
             StrictEqual(2, repo.GetByLeagueAndYear(league1.Id, 5).Count());
             StrictEqual(1, repo.GetByLeagueAndYear(league1.Id, 8).Count());
-            StrictEqual(0, repo.GetByLeagueAndYear(league2.Id, 15).Count());            
+            StrictEqual(0, repo.GetByLeagueAndYear(league2.Id, 15).Count());
 
             //IEnumerable<Competition> GetByLeagueAndYear(int leagueId, int year, bool started, bool finished)
-            True(false);
+            Equals("P9", repo.GetByLeagueAndYear(league1.Id, 15, false, false).First().Name);
+            Equals("P10", repo.GetByLeagueAndYear(league1.Id, 15, false, true).First().Name);
+            Equals("P11", repo.GetByLeagueAndYear(league1.Id, 15, true, false).First().Name);
+            Equals("P12", repo.GetByLeagueAndYear(league1.Id, 15, true, true).First().Name);
         }
 
         #endregion

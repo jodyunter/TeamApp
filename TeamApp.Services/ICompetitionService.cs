@@ -7,5 +7,6 @@ namespace TeamApp.Services
     {
         IEnumerable<CompetitionSimpleViewModel> GetCompetitionListByLeagueAndYear(int leagueId, int year);
         IEnumerable<CompetitionSimpleViewModel> GetCompetitionListLeaugeAndYear(int leagueId, int year, bool started, bool finished);
+        IEnumerable<CompetitionSimpleViewModel> GetActiveCompetitions(int year);
     }
 }

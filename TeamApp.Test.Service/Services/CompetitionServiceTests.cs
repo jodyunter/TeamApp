@@ -18,6 +18,11 @@ namespace TeamApp.Test.Service.Services
         {
             True(false);
         }
+        [Fact]
+        public void ShouldGetActiveCompetitions()
+        {
+            True(false);
+        }
 
     }
 }

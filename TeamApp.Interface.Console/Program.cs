@@ -17,6 +17,11 @@ namespace TeamApp.Console
 
             var teamApp = new TeamApplication();
             //teamApp.SetupConfig(true, true, true);
+            var leagueView = teamApp.LeagueService.GetByName("NHL");
+            
+            WriteLine("League: " + leagueView.Name + " loaded.");
+
+            var competitionConfigs = teamApp.LeagueService.GetCompetitionConfigs(leagueView.Id);            
 
             var currentData = teamApp.GameDataService.GetCurrentData();
             teamApp.GameDataService.SetupComeptitionsForDay(currentData.CurrentDay, currentData.CurrentYear);
@@ -42,8 +47,7 @@ namespace TeamApp.Console
                     WriteLine(game.ToString());
                 });
             }
-                        
-            
+                               
             /*
             var app = new Application();
             app.loadLeague("NHL");
