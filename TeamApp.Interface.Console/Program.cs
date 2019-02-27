@@ -16,12 +16,10 @@ namespace TeamApp.Console
             Thread.CurrentPrincipal = user;
 
             var teamApp = new TeamApplication();
-            //teamApp.SetupConfig(true, true, true);
+            teamApp.SetupConfig(true, true, true);
             var leagueView = teamApp.LeagueService.GetByName("NHL");
             
-            WriteLine("League: " + leagueView.Name + " loaded.");
-
-            var competitionConfigs = teamApp.LeagueService.GetCompetitionConfigs(leagueView.Id);            
+            WriteLine("League: " + leagueView.Name + " loaded.");            
 
             var currentData = teamApp.GameDataService.GetCurrentData();
             teamApp.GameDataService.SetupComeptitionsForDay(currentData.CurrentDay, currentData.CurrentYear);
@@ -47,7 +45,12 @@ namespace TeamApp.Console
                     WriteLine(game.ToString());
                 });
             }
-                               
+
+            teamApp.CompetitionService.GetActiveCompetitions(currentData.CurrentYear).ToList().ForEach(m =>
+            {
+                var standings = teamApp.StandingsService.GetStandings(m.Id);
+            });
+            
             /*
             var app = new Application();
             app.loadLeague("NHL");

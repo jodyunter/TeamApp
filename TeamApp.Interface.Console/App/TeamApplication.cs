@@ -23,11 +23,12 @@ namespace TeamApp.Console.App
         private ITeamRankingRepository teamRankingRepository;
         private IScheduleGameRepository scheduleGameRepository;
         private ICompetitionConfigRepository competitionConfigRepository;
-        private IGameDataRepository gameDataRepository;
+        private IGameDataRepository gameDataRepository;        
         public ILeagueService LeagueService { get; set; }
         public IStandingsService StandingsService { get; set; }
         public IGameDataService GameDataService { get; set; }
         public IScheduleGameService ScheduleGameService { get; set; }
+        public ICompetitionService CompetitionService { get; set; }
         
         public TeamApplication()
         {
@@ -44,6 +45,7 @@ namespace TeamApp.Console.App
             StandingsService = new StandingsService(standingsRepository, teamRankingRepository);
             GameDataService = new GameDataService(gameDataRepository, leagueRepository, scheduleGameRepository, competitionRepository, competitionConfigRepository);
             ScheduleGameService = new ScheduleGameService(scheduleGameRepository);
+            CompetitionService = new CompetitionService(competitionRepository);
         }
 
         public void SetupConfig(bool setupDatabase, bool dropFirst, bool setupData)

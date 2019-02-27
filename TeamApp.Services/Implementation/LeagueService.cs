@@ -14,11 +14,12 @@ namespace TeamApp.Services.Implementation
     public class LeagueService : ILeagueService
     {        
         private ILeagueRepository leagueRepository;
-        private BaseDomainModelMapper<League, LeagueViewModel> mapper;
+        private BaseDomainModelMapper<League, LeagueViewModel> mapper;        
 
         public LeagueService(ILeagueRepository repo)
         {
             leagueRepository = repo;
+            mapper = new BaseDomainModelMapper<League, LeagueViewModel>();
         }        
 
         public IEnumerable<LeagueViewModel> GetAll()
