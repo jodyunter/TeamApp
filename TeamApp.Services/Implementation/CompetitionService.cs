@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Repositories;
 using TeamApp.Services.Implementation.Mappers;
 using TeamApp.ViewModels.Views.Competition;
@@ -10,12 +11,12 @@ namespace TeamApp.Services.Implementation
     public class CompetitionService : ICompetitionService
     {
         private ICompetitionRepository competitionRepository;
-        private CompetitionToCompetitionSimpleViewModelMapper simpleViewMapper;
+        private BaseDomainModelMapper<Competition, CompetitionSimpleViewModel> simpleViewMapper;
 
         public CompetitionService(ICompetitionRepository repo)
         {
             competitionRepository = repo;
-            simpleViewMapper = new CompetitionToCompetitionSimpleViewModelMapper();
+            simpleViewMapper = new BaseDomainModelMapper<Competition, CompetitionSimpleViewModel>();
         }
 
         public IEnumerable<CompetitionSimpleViewModel> GetActiveCompetitions(int year)

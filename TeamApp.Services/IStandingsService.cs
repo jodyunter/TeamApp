@@ -4,6 +4,6 @@ namespace TeamApp.Services
 {
     public interface IStandingsService
     {
-        StandingsViewModel GetStandings(int competitionId);        
+        StandingsViewModel GetStandings(long competitionId);        
     }
 }

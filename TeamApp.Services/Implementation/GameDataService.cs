@@ -98,7 +98,7 @@ namespace TeamApp.Services.Implementation
 
             competitionList.ToList().ForEach(competition =>
             {
-                if (competition.AreGamesComplete()) competition.ProcessEndOfCompetition(gameData.CurrentDay);
+                if (competition.AreGamesComplete()) competition.ProcessEndOfCompetition(gameData.CurrentDay);                
             });
 
             leagueRepo.Flush();

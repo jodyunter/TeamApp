@@ -6,6 +6,10 @@ namespace TeamApp.Console.Views.Season
 {
     public class StandingsView
     {
+        public const int LEAGUE = 1;
+        public const int CONFERENCE = 2;
+        public const int DIVISION = 3;
+
         public static string formatter = "{0,3}. {1,-15}{2,5}{3,5}{4,5}{5,5}{6,5}{7,5}{8,5}{9,5}{10,15}";        
         public StandingsViewModel Model { get; set; }
         public StandingsView(StandingsViewModel model)
@@ -33,7 +37,7 @@ namespace TeamApp.Console.Views.Season
 
             var result = initialGroupName + "\n" + GetHeader();
 
-            groupList.ForEach(item =>
+            orderedTeams.ForEach(item =>
             {
                 if (!item.Ranking.GroupName.Equals(initialGroupName))
                 {
@@ -41,10 +45,10 @@ namespace TeamApp.Console.Views.Season
                     initialGroupName = item.Ranking.GroupName;
                 }
 
-                result += item.GetView();
+                result += "\n" + item.GetView();
             });
 
-            return result;
+            return result + "\n";
         }
     }
 }

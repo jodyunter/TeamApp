@@ -102,13 +102,13 @@ namespace TeamApp.Domain
 
         public override string ToString()
         {
-            var formatter = "{0,15}: {1,3} - {2,3} :{3,-15} {4}";
+            var formatter = "{0,15}: {1,2}{5,2}{2,2} :{3,-15} {4}";
             var result = "";
 
             if (Complete) result += " Final";
             else result += " " + CurrentPeriod.DisplayWithSuffix();
 
-            return string.Format(formatter, HomeTeam.Name, HomeScore, AwayScore, AwayTeam.Name, result);
+            return string.Format(formatter, HomeTeam.Name, HomeScore, AwayScore, AwayTeam.Name, result, "-");
         }
     }
 

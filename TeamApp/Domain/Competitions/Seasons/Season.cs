@@ -37,6 +37,8 @@ namespace TeamApp.Domain.Competitions.Seasons
                 home.Stats.GoalsAgainst += game.AwayScore;
                 away.Stats.GoalsFor += game.AwayScore;
                 away.Stats.GoalsAgainst += game.HomeScore;
+
+                SortAllTeams();
             }
         }
 

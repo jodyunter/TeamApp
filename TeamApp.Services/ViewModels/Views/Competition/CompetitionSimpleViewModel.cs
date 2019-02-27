@@ -14,6 +14,10 @@ namespace TeamApp.ViewModels.Views.Competition
         public string LeagueName { get; set; }
         public string Type { get; set; }
 
+        public CompetitionSimpleViewModel()
+        {
+
+        }
         public CompetitionSimpleViewModel(long id, string name, int year, bool started, bool complete, string leagueName, string type)
         {
             Id = id;

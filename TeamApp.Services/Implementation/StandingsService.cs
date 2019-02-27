@@ -25,7 +25,7 @@ namespace TeamApp.Services.Implementation
             return null;   
         }
 
-        public StandingsViewModel GetStandings(int competitionId)
+        public StandingsViewModel GetStandings(long competitionId)
         {
             var teams = standingsRepository.GetByCompetition(competitionId);
 

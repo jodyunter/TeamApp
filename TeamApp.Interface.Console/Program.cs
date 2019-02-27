@@ -3,6 +3,7 @@ using static System.Console;
 using TeamApp.Console.App;
 using System.Threading;
 using System.Linq;
+using TeamApp.Console.Views.Season;
 
 namespace TeamApp.Console
 {
@@ -16,7 +17,7 @@ namespace TeamApp.Console
             Thread.CurrentPrincipal = user;
 
             var teamApp = new TeamApplication();
-            teamApp.SetupConfig(true, true, true);
+            //teamApp.SetupConfig(true, true, true);
             var leagueView = teamApp.LeagueService.GetByName("NHL");
             
             WriteLine("League: " + leagueView.Name + " loaded.");            
@@ -49,6 +50,10 @@ namespace TeamApp.Console
             teamApp.CompetitionService.GetActiveCompetitions(currentData.CurrentYear).ToList().ForEach(m =>
             {
                 var standings = teamApp.StandingsService.GetStandings(m.Id);
+                var view = new StandingsView(standings);
+
+                WriteLine(view.GetView(StandingsView.LEAGUE));
+
             });
             
             /*
