@@ -41,6 +41,9 @@ namespace TeamApp.Data.Relational.Repositories
         {
             var parentComps = new List<Competition>();
 
+            if (config.Parents == null)
+                return new List<Competition>();
+
             config.Parents.ToList().ForEach(parentConfig =>
             {
                 var parentComp = GetCompetitionForCompetitionConfig(parentConfig, year);

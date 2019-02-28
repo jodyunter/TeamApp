@@ -1,4 +1,5 @@
 ﻿using NHibernate.Tool.hbm2ddl;
+using System.Collections.Generic;
 using TeamApp.Data.Relational.Repositories;
 using TeamApp.Data.Repositories.Relational;
 using TeamApp.Data.Repositories.Relational.NHibernate;
@@ -81,8 +82,8 @@ namespace TeamApp.Console.App
 
                 var league = DataCreator.CreateLeague("NHL");
                 var teams = DataCreator.CreateTeams();
-                var seasonCompetition = DataCreator.CreateSeasonConfiguration(league, teams);
-                //var playoffConfig = Data2.CreateBasicPlayoffConfiguration(seasonCompetition);
+                var seasonCompetition = DataCreator.CreateSeasonConfiguration(league, teams, null, 1, 1);
+                var playoffConfig = DataCreator.CreatePlayoffConfiguration(league, new List<CompetitionConfig>() { seasonCompetition }, 2, null, 1, null);                 
 
                 leagueRepository.Update(league);
             }

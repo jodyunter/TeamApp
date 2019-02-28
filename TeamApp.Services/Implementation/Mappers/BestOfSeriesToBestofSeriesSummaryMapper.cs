@@ -20,6 +20,7 @@ namespace TeamApp.Services.Implementation.Mappers
             model.Year = obj.Playoff.Year;
             model.Games = obj.Games.Count;
             model.Round = obj.Round;
+            model.Name = obj.Name;
             return model;
             
         }

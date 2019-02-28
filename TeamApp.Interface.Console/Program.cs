@@ -70,10 +70,12 @@ namespace TeamApp.Console
                         {
                             var playoffs = teamApp.PlayoffService.GetPlayoffSummary(m.Id);
 
+                            var format = "{0,2} {1,5}{2,12}: {3,2}{4,3}{5,2} :{-6,12}";
                             playoffs.Series.ToList().ForEach(series =>
                             {
-                                WriteLine(series.Name + " " + series.HomeTeamName + ": " + series.HomeWins + " - " + series.AwayWins + " :" + series.AwayTeamName);
-                            });                            
+                                var output = string.Format(format, series.Round, series.Name, series.HomeTeamName, series.HomeWins, "-", series.AwayWins, series.AwayTeamName);
+                                WriteLine(output);
+                            });
                         }
                         else WriteLine("No type defined");
 

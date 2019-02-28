@@ -74,7 +74,9 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
 
                 int nextRank = firstRank;
 
-                for (int i = rule.SourceFirstRank; i <= rule.SourceLastRank; i++)
+                var lastRank = rule.SourceLastRank == null ? sourceGroup.Max(m => m.Rank) : rule.SourceLastRank;
+
+                for (int i = rule.SourceFirstRank; i <= lastRank; i++)
                 {
                     var sourceRanking = sourceGroup.Where(r => r.Rank == i).FirstOrDefault();
 

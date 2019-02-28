@@ -13,14 +13,14 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
         public virtual CompetitionConfig SourceCompetition { get; set; }
         public virtual string SourceGroupName { get; set; }
         public virtual int SourceFirstRank { get; set; }
-        public virtual int SourceLastRank { get; set; }
+        public virtual int? SourceLastRank { get; set; }
         public virtual int? FirstYear { get; set; }
         public virtual int? LastYear { get; set; }
 
         //todo how to pool candidates, then sort them
 
         public PlayoffRankingRule() { }
-        public PlayoffRankingRule(PlayoffCompetitionConfig config, string groupName, int startingRank, CompetitionConfig sourceCompetition, string sourceGroupName, int sourceFirstRank, int sourceLastRank, int? firstYear, int? lastYear)
+        public PlayoffRankingRule(PlayoffCompetitionConfig config, string groupName, int startingRank, CompetitionConfig sourceCompetition, string sourceGroupName, int sourceFirstRank, int? sourceLastRank, int? firstYear, int? lastYear)
         {
             PlayoffConfig = config;
             GroupName = groupName;

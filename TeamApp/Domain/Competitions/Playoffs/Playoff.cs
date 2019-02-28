@@ -158,7 +158,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
             if (seriesRulesList.Count == 0) return true;
 
             //for each series rule, check to see if the series exists and if it does, is it complete?
-            seriesRulesList.ForEach(sr =>
+            seriesRulesList.Where(sr => sr.IsActive(Year)).ToList().ForEach(sr =>
             {
                 var series = Series.Where(s => s.Name == sr.Name).FirstOrDefault();
                 
