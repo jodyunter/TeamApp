@@ -7,6 +7,6 @@ namespace TeamApp.Services
 {
     public interface IPlayoffService
     {
-        PlayoffSummaryViewModel GetPlayoffSummary(int competitionId);        
+        PlayoffSummaryViewModel GetPlayoffSummary(long competitionId);        
     }
 }

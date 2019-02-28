@@ -144,6 +144,9 @@ namespace TeamApp.Test.Data
             Equals("P10", repo.GetByLeagueAndYear(league1.Id, 15, false, true).First().Name);
             Equals("P11", repo.GetByLeagueAndYear(league1.Id, 15, true, false).First().Name);
             Equals("P12", repo.GetByLeagueAndYear(league1.Id, 15, true, true).First().Name);
+
+            //IEnumerable<CompetitionSimpleViewModel> GetCompetitionsByYear(int year);
+            True(false);
         }
 
         #endregion

@@ -10,6 +10,7 @@ namespace TeamApp.Services.ViewModels.Views.Competition.Playoff
         public string PlayoffName { get; set; }
         public string Name { get; set; }
         public int Year { get; set; }
+        public int Round { get; set; }
         public string HomeTeamName { get; set; }
         public string AwayTeamName { get; set; }
         public int HomeWins { get; set; }

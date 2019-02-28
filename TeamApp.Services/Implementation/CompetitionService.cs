@@ -11,12 +11,12 @@ namespace TeamApp.Services.Implementation
     public class CompetitionService : ICompetitionService
     {
         private ICompetitionRepository competitionRepository;
-        private BaseDomainModelMapper<Competition, CompetitionSimpleViewModel> simpleViewMapper;
+        private CompetitionToCompetitionSimpleMapper simpleViewMapper;
 
         public CompetitionService(ICompetitionRepository repo)
         {
             competitionRepository = repo;
-            simpleViewMapper = new BaseDomainModelMapper<Competition, CompetitionSimpleViewModel>();
+            simpleViewMapper = new CompetitionToCompetitionSimpleMapper();
         }
 
         public IEnumerable<CompetitionSimpleViewModel> GetActiveCompetitions(int year)
@@ -36,6 +36,13 @@ namespace TeamApp.Services.Implementation
         public IEnumerable<CompetitionSimpleViewModel> GetCompetitionListLeaugeAndYear(int leagueId, int year, bool started, bool finished)
         {
             var competitions = competitionRepository.GetByLeagueAndYear(leagueId, year, started, finished).ToList();
+
+            return simpleViewMapper.MapDomainToModel(competitions);
+        }
+
+        public IEnumerable<CompetitionSimpleViewModel> GetCompetitionsByYear(int year)
+        {
+            var competitions = competitionRepository.GetByYear(year);
 
             return simpleViewMapper.MapDomainToModel(competitions);
         }

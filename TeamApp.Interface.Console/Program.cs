@@ -34,6 +34,7 @@ namespace TeamApp.Console
                 teamApp.GameDataService.PlayDay(new Random());
                 teamApp.GameDataService.ProcessDay();
 
+                WriteLine("Year: " + currentData.CurrentYear);
                 WriteLine("Day: " + currentData.CurrentDay);
                 teamApp.ScheduleGameService.GetGamesForDay(currentData.CurrentDay, currentData.CurrentYear).ToList().ForEach(game =>
                 {
@@ -53,16 +54,60 @@ namespace TeamApp.Console
                     });
                 }
 
-                teamApp.CompetitionService.GetActiveCompetitions(currentData.CurrentYear).ToList().ForEach(m =>
+                var activeComps = teamApp.CompetitionService.GetActiveCompetitions(currentData.CurrentYear).ToList();
+                if (activeComps.Count > 0)
                 {
-                    var standings = teamApp.StandingsService.GetStandings(m.Id);
-                    var view = new StandingsView(standings);
+                    activeComps.ToList().ForEach(m =>
+                    {
+                        if (m.Type == "Season")
+                        {
+                            var standings = teamApp.StandingsService.GetStandings(m.Id);
+                            var view = new StandingsView(standings);
 
-                    WriteLine(view.GetView(StandingsView.LEAGUE));
+                            WriteLine(view.GetView(StandingsView.LEAGUE));
+                        }
+                        else if (m.Type == "Playoff")
+                        {
+                            var playoffs = teamApp.PlayoffService.GetPlayoffSummary(m.Id);
 
-                });
+                            playoffs.Series.ToList().ForEach(series =>
+                            {
+                                WriteLine(series.Name + " " + series.HomeTeamName + ": " + series.HomeWins + " - " + series.AwayWins + " :" + series.AwayTeamName);
+                            });                            
+                        }
+                        else WriteLine("No type defined");
 
-                WriteLine("Press Enter to continue");
+                    });
+                }
+                else
+                {
+                    teamApp.CompetitionService.GetCompetitionsByYear(currentData.CurrentYear).ToList().ForEach(m =>
+                    {
+                        if (m.Type == "Season")
+                        {
+                            var standings = teamApp.StandingsService.GetStandings(m.Id);
+                            var view = new StandingsView(standings);
+
+                            WriteLine(view.GetView(StandingsView.LEAGUE));
+                        }
+                        else if (m.Type == "Playoff")
+                        {
+                            var playoffs = teamApp.PlayoffService.GetPlayoffSummary(m.Id);
+
+                            var format = "{0,2} {1,5}{2,12}: {3,2}{4,3}{5,2} :{-6,12}";
+                            playoffs.Series.ToList().ForEach(series =>
+                            {
+                                var output = string.Format(format, series.Round, series.Name, series.HomeTeamName, series.HomeWins, "-", series.AwayWins, series.AwayTeamName);
+                                WriteLine(output);
+                            });
+                        }
+                        else WriteLine("No type defined");
+                    });
+
+                    teamApp.GameDataService.IncrementYear();
+                    
+                }
+                WriteLine("Press Enter to continue or type 'quit'");
                 var input = ReadLine();
                 if (input.Equals("quit"))
                 {
@@ -159,7 +204,7 @@ namespace TeamApp.Console
                 currentRound = playoff.CurrentRound;
             }
             */
-            WriteLine("Press Enter to continue");
+            WriteLine("Press Enter to Close the app");
             ReadLine();
 
         }

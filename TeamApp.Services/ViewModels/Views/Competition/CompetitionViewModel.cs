@@ -14,8 +14,8 @@ namespace TeamApp.ViewModels.Views.Competition
         public List<GameViewModel> LastDayGames { get; set; }        
         public string Champion { get; set; }
 
-        public CompetitionViewModel(long id, string name, int year, bool started, bool complete, string leagueName, int nextGameDay, List<GameViewModel> nextDayGames, List<GameViewModel> lastDayGames, string champion)
-            :base(id, name, year, started, complete, leagueName)
+        public CompetitionViewModel(long id, string name, int year, bool started, bool complete, string leagueName, int nextGameDay, List<GameViewModel> nextDayGames, List<GameViewModel> lastDayGames, string champion, string type)
+            :base(id, name, year, started, complete, leagueName, type)
         {
             NextGameDay = nextGameDay;
             NextDayGames = nextDayGames;

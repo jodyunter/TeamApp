@@ -8,6 +8,16 @@ namespace TeamApp.Test.Service.Services
     public class CompetitionServiceTests
     {
         [Fact]
+        public void ShouldMapSimpleView()
+        {
+            True(false);
+        }
+        [Fact]
+        public void ShouldMapRegularView()
+        {
+            True(false);
+        }
+        [Fact]
         public void ShouldGetByYearAndLeagueNoFlags()
         {
             True(false);

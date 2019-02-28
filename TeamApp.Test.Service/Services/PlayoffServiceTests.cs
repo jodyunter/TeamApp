@@ -33,6 +33,7 @@ namespace TeamApp.Test.Service.Services
             StrictEqual(3, mappedSeries.HomeWins);
             StrictEqual(2, mappedSeries.AwayWins);
             StrictEqual(4, mappedSeries.Games);
+            StrictEqual(1, mappedSeries.Round);
         }
         [Fact] 
         public void ShouldMapPlayoffSummary()
@@ -52,6 +53,8 @@ namespace TeamApp.Test.Service.Services
             var playoffSummaryModel = mapper.MapDomainToModel(playoff);
 
             StrictEqual(2, playoffSummaryModel.Series.ToList().Count);
+            StrictEqual(5, playoffSummaryModel.CurrentRound);
+            StrictEqual(1, playoffSummaryModel.Year);
             Equals(CompetitionViewModel.PLAYOFF_TYPE, playoffSummaryModel.Type);
 
         }

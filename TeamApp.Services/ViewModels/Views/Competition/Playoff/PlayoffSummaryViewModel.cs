@@ -8,17 +8,15 @@ namespace TeamApp.Services.ViewModels.Views.Competition.Playoff
     public class PlayoffSummaryViewModel:CompetitionSimpleViewModel
     {
  
+        public int CurrentRound { get; set; }
         public IEnumerable<BestOfSeriesSummaryViewModel> Series { get; set; }
 
         public PlayoffSummaryViewModel() { }
-        public PlayoffSummaryViewModel(CompetitionSimpleViewModel model, IEnumerable<BestOfSeriesSummaryViewModel> series)
+        public PlayoffSummaryViewModel(CompetitionSimpleViewModel model, int currentRound, IEnumerable<BestOfSeriesSummaryViewModel> series)
+            :base(model.Id, model.Name, model.Year, model.Started, model.Complete, model.LeagueName, model.Type)
         {
-
-        }
-        public PlayoffSummaryViewModel(long id, string name, int year, bool started, bool complete, string leagueName, IEnumerable<BestOfSeriesSummaryViewModel> series)
-            :base(id, name, year, started, complete, leagueName)
-        {
-            this.Series = series;
+            CurrentRound = currentRound;
+            Series = series;
         }
     }
 }

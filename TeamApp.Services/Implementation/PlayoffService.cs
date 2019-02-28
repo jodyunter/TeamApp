@@ -21,7 +21,7 @@ namespace TeamApp.Services.Implementation
         }
 
 
-        public PlayoffSummaryViewModel GetPlayoffSummary(int competitionId)
+        public PlayoffSummaryViewModel GetPlayoffSummary(long competitionId)
         {
             var competition = (Playoff)competitionRepo.Get(competitionId);
 

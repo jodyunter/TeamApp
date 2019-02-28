@@ -14,35 +14,21 @@ namespace TeamApp.ViewModels.Views.Competition
         public bool Started { get; set; }
         public bool Complete { get; set; }
         public string LeagueName { get; set; }
-        public string Type
-        {
-            get
-            {
-                if (GetType() == typeof(Playoff))
-                {
-                    return CompetitionViewModel.PLAYOFF_TYPE;
-                }
-                else if (GetType() == typeof(Season))
-                {
-                    return CompetitionViewModel.SEASON_TYPE;
-                }
-
-                return "NONE";
-            }
-        }
+        public string Type { get; set; }      
 
         public CompetitionSimpleViewModel()
         {
 
         }
-        public CompetitionSimpleViewModel(long id, string name, int year, bool started, bool complete, string leagueName)
+        public CompetitionSimpleViewModel(long id, string name, int year, bool started, bool complete, string leagueName, string type)
         {
             Id = id;
             Name = name;
             Year = year;
             Started = started;
             Complete = complete;
-            LeagueName = leagueName;            
+            LeagueName = leagueName;
+            Type = type;
         }
     }
 }
