@@ -8,8 +8,8 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
 {
     public class PlayoffCompetitionConfig:CompetitionConfig
     {
-        public virtual IList<PlayoffSeriesRule> SeriesRules { get; set; }
-        public virtual IList<PlayoffRankingRule> RankingRules { get; set; }
+        public virtual IEnumerable<PlayoffSeriesRule> SeriesRules { get; set; }
+        public virtual IEnumerable<PlayoffRankingRule> RankingRules { get; set; }
 
         public PlayoffCompetitionConfig():base() { }
 
@@ -24,6 +24,16 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
                 SeriesRules.ToList().ForEach(sr => sr.PlayoffConfig = this);
         }
 
+
+        public virtual IEnumerable<PlayoffSeriesRule> GetActiveSeriesRules(int year)
+        {
+            return SeriesRules.Where(sr => sr.IsActive(year));
+        }
+
+        public virtual IEnumerable<PlayoffRankingRule> GetActiveRankingRules(int year)
+        {
+            return RankingRules.Where(rr => rr.IsActive(year));
+        }
         public override Competition CreateCompetitionDetails(int day, int year, IList<Competition> parents)
         {
             var playoff = new Playoff(this, Name, year, 1, null, null, null, null, false, false, day, null);
@@ -46,7 +56,7 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
         {
             playoff.Series = new List<PlayoffSeries>();
 
-            SeriesRules.Where(sr => sr.IsActive(playoff.Year)).ToList().ForEach(rule =>
+            GetActiveSeriesRules(playoff.Year).ToList().ForEach(rule =>
             {
                 playoff.Series.Add(SetupSeriesFromRule(playoff, rule));
             });
@@ -58,7 +68,7 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
             playoff.Teams = new List<SingleYearTeam>();
             playoff.Rankings = new List<TeamRanking>();
 
-            RankingRules.Where(rr => rr.IsActive(playoff.Year)).ToList().ForEach(rule =>
+            GetActiveRankingRules(playoff.Year).ToList().ForEach(rule =>
             {
                 //get the competition
                 var sourceCompetition = parents.Where(p => p.Name.Equals(rule.SourceCompetition.Name)).FirstOrDefault(); //this is the source competition
@@ -95,7 +105,8 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
                     nextRank++;
                 }
                 
-            });
+            });    
+            
         }
 
         public virtual PlayoffSeries SetupSeriesFromRule(Playoff playoff, PlayoffSeriesRule rule)
@@ -127,7 +138,7 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
             switch (fromType)
             {                
                 case PlayoffSeriesRule.FROM_RANKING:
-                    var rankingsForGroup = playoff.Rankings.Where(r => r.GroupName == fromName).ToList();
+                    var rankingsForGroup = playoff.Rankings.Where(r => r.GroupName == fromName).ToList();                    
                     if (rankingsForGroup.Count > 0)
                     {
                         var ranking = rankingsForGroup.Where(r => r.Rank == fromValue).ToList().First();

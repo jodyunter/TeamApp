@@ -65,17 +65,18 @@ namespace TeamApp.Domain.Competitions.Playoffs
 
             //add any missing teams, and setup the games for each series
             Series.Where(s => s.Round == CurrentRound).ToList().ForEach(s =>
-            {                
+            {
+                var activeSeriesList = playoffConfig.GetActiveSeriesRules(Year);
                 //teams that relied on the previous round may still need their team
                 if (s.HomeTeam == null)
                 {
-                    var rule = playoffConfig.SeriesRules.Where(sr => sr.Name.Equals(s.Name)).FirstOrDefault();
+                    var rule = activeSeriesList.Where(sr => sr.Name.Equals(s.Name)).FirstOrDefault();
                     s.HomeTeam = playoffConfig.GetTeamByRule(this, rule.HomeFromType, rule.HomeFromName, rule.HomeFromValue);
                 }
 
                 if (s.AwayTeam == null)
                 {
-                    var rule = playoffConfig.SeriesRules.Where(sr => sr.Name.Equals(s.Name)).FirstOrDefault();
+                    var rule = activeSeriesList.Where(sr => sr.Name.Equals(s.Name)).FirstOrDefault();
                     s.AwayTeam = playoffConfig.GetTeamByRule(this, rule.AwayFromType, rule.AwayFromName, rule.AwayFromValue);
                 }
                 SetupSeriesGames(s);
@@ -128,7 +129,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
         {
             var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
 
-            var seriesRule = playoffConfig.SeriesRules.Where(s => s.Name.Equals(series.Name)).First();
+            var seriesRule = playoffConfig.GetActiveSeriesRules(Year).Where(s => s.Name.Equals(series.Name)).First();
             
             ProcessEndOfSeriesTeam(seriesRule.WinnerGroupName, seriesRule.WinnerRankFrom, series.GetWinner());
             ProcessEndOfSeriesTeam(seriesRule.LoserGroupName, seriesRule.LoserRankFrom, series.GetLoser());
@@ -152,13 +153,13 @@ namespace TeamApp.Domain.Competitions.Playoffs
             var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
 
             //get all rules for this orund
-            var seriesRulesList = playoffConfig.SeriesRules.Where(sr => sr.Round == round).ToList();
+            var seriesRulesList = playoffConfig.GetActiveSeriesRules(Year).Where(sr => sr.Round == round).ToList();
 
             //if no rules, then it is complete
             if (seriesRulesList.Count == 0) return true;
 
             //for each series rule, check to see if the series exists and if it does, is it complete?
-            seriesRulesList.Where(sr => sr.IsActive(Year)).ToList().ForEach(sr =>
+            seriesRulesList.ForEach(sr =>
             {
                 var series = Series.Where(s => s.Name == sr.Name).FirstOrDefault();
                 
@@ -173,9 +174,11 @@ namespace TeamApp.Domain.Competitions.Playoffs
             var complete = true;
             var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
 
-            for (int i = 0; i < playoffConfig.SeriesRules.Count; i++)
+            var activeSeries = playoffConfig.GetActiveSeriesRules(Year).ToList();
+
+            for (int i = 0; i < activeSeries.Count; i++)
             {
-                complete = complete && IsRoundComplete(playoffConfig.SeriesRules[i].Round);
+                complete = complete && IsRoundComplete(activeSeries[i].Round);
             }
 
             return complete;

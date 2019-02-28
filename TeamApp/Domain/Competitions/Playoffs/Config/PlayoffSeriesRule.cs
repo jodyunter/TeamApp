@@ -34,7 +34,7 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
         public virtual string WinnerGroupName { get; set; } //this is where the winner goes to after the series is done
         public virtual string WinnerRankFrom { get; set; }  //this is the group from where the ranking number will be taken
         public virtual string LoserGroupName { get; set; }
-        public virtual string LoserRankFrom { get; set; }
+        public virtual string LoserRankFrom { get; set; }        
 
         public PlayoffSeriesRule() { }
         public PlayoffSeriesRule(PlayoffCompetitionConfig config, string name, int round, int seriesType, int seriesNumber, GameRules gameRules, int homeFromType, string homeFromName, int homeFromValue, int awayFromType, string awayFromName, int awayFromValue, int? firstYear, int? lastYear, int[] homeGameProgression, string winnerGroupName, string winnerRankFrom, string loserGroupName, string loserRankFrom)

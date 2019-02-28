@@ -100,7 +100,7 @@ namespace TeamApp.Test.Helpers
 
             var playoffRankingRules = new List<PlayoffRankingRule>()
             {
-                new PlayoffRankingRule(playoffConfig, "NHL", 1, regularSeasonConfig, "NHL", 1, null,1, 1),
+                new PlayoffRankingRule(playoffConfig, "NHL", 1, regularSeasonConfig, "NHL", 1, null,1, 1), //common ranking
                 new PlayoffRankingRule(playoffConfig, "Top Seeds", 1, regularSeasonConfig, "East", 1, 1, 2, null),
                 new PlayoffRankingRule(playoffConfig, "Top Seeds", 1, regularSeasonConfig, "West", 1, 1, 2, null),
                 new PlayoffRankingRule(playoffConfig, "Rest of Teams", 1, regularSeasonConfig, "East", 2, null, 2, null),
