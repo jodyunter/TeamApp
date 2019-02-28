@@ -85,20 +85,23 @@ namespace TeamApp.Services.Implementation
             //var gamesToProcess = scheduleGameRepository.GetGamesForDay(gameData.CurrentDay, gameData.CurrentYear).Where(g => g.Complete && !g.Processed).ToList();
             var gamesToProcess = scheduleGameRepo.GetCompleteAndUnProcessedGamesForDay(gameData.CurrentDay, gameData.CurrentYear).ToList();
 
-            var competitionList = new HashSet<Competition>();
+            var competitionList = competitionRepo.GetStartedAndUnfinishedCompetitionsByYear(gameData.CurrentYear).ToDictionary(key => key.Id);
 
             gamesToProcess.ForEach(game =>
             {
-                var competition = game.Competition;
+                var competition = competitionList[game.Competition.Id];
                 competition.ProcessGame(game);
-                scheduleGameRepo.Update(game);
-                competitionRepo.Update(competition);
-                competitionList.Add(competition);
+                scheduleGameRepo.Update(game);      
             });
 
-            competitionList.ToList().ForEach(competition =>
+            competitionList.Values.ToList().ForEach(competition =>
             {
-                if (competition.AreGamesComplete()) competition.ProcessEndOfCompetition(gameData.CurrentDay);                
+                if (competition.AreGamesComplete())
+                {
+                    competition.ProcessEndOfCompetition(gameData.CurrentDay);
+                }
+
+                competitionRepo.Update(competition);
             });
 
             leagueRepo.Flush();
@@ -142,12 +145,16 @@ namespace TeamApp.Services.Implementation
                 {                    
                     var parents = competitionRepo.GetParentCompetitionsForCompetitionConfig(config, year).ToList();
                     comp = config.CreateCompetition(day, year, parents);
-                    comp.Schedule.Days.ToList().ForEach(scheduleDay =>
+                    //if it's null it isn't ready to be created
+                    if (comp != null)
                     {
-                        scheduleDay.Value.Games.ForEach(game => { scheduleGameRepo.Update(game); });
-                    });
-                    competitionRepo.Update(comp);
-                    competitionRepo.Flush();
+                        comp.Schedule.Days.ToList().ForEach(scheduleDay =>
+                        {
+                            scheduleDay.Value.Games.ForEach(game => { scheduleGameRepo.Update(game); });
+                        });
+                        competitionRepo.Update(comp);
+                        competitionRepo.Flush();
+                    }
                 }
                
             });

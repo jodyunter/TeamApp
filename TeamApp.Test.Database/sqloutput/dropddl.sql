@@ -1,3 +1,30 @@
+-- ================================================
+-- Template generated from Template Explorer using:
+-- Create Procedure (New Menu).SQL
+--
+-- Use the Specify Values for Template Parameters 
+-- command (Ctrl-Shift-M) to fill in the parameter 
+-- values below.
+--
+-- This block of comments will not be included in
+-- the definition of the procedure.
+-- ================================================
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE DropAllTables 
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
 IF OBJECT_ID (N'BestOfSeries', N'U') IS NOT NULL drop table BestOfSeries
 IF OBJECT_ID (N'TotalGoalsSeries', N'U') IS NOT NULL drop table TotalGoalsSeries
 IF OBJECT_ID (N'GameData', N'U') IS NOT NULL drop table GameData
@@ -26,3 +53,5 @@ IF OBJECT_ID (N'CompetitionConfig', N'U') IS NOT NULL drop table CompetitionConf
 IF OBJECT_ID (N'GameRules', N'U') IS NOT NULL drop table League
 IF OBJECT_ID (N'GameRules', N'U') IS NOT NULL drop table GameRules
 
+END
+GO

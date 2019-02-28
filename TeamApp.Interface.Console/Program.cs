@@ -5,6 +5,7 @@ using System.Threading;
 using System.Linq;
 using TeamApp.Console.Views.Season;
 
+
 namespace TeamApp.Console
 {
     class Program
@@ -17,44 +18,57 @@ namespace TeamApp.Console
             Thread.CurrentPrincipal = user;
 
             var teamApp = new TeamApplication();
-            //teamApp.SetupConfig(true, true, true);
-            var leagueView = teamApp.LeagueService.GetByName("NHL");
-            
-            WriteLine("League: " + leagueView.Name + " loaded.");            
+            teamApp.SetupConfig(true, true, true);
+            var stop = false;
 
-            var currentData = teamApp.GameDataService.GetCurrentData();
-            teamApp.GameDataService.SetupComeptitionsForDay(currentData.CurrentDay, currentData.CurrentYear);
-            teamApp.GameDataService.ProcessDay();
-            teamApp.GameDataService.PlayDay(new Random());
-            teamApp.GameDataService.ProcessDay();
+            while (!stop)
+            {
+                teamApp.ClearScreen();                
+                var leagueView = teamApp.LeagueService.GetByName("NHL");
 
-            WriteLine("Game: " + currentData.CurrentDay);
-            teamApp.ScheduleGameService.GetGamesForDay(currentData.CurrentDay, currentData.CurrentYear).ToList().ForEach(game =>
-            {
-                WriteLine(game.ToString());
-            });
+                WriteLine("League: " + leagueView.Name + " loaded.");
 
-            if (!teamApp.GameDataService.IncrementDay())
-            {
-                WriteLine("Could not increment day.");
-            }
-            else
-            {
-                WriteLine("Game: " + currentData.CurrentDay);
+                var currentData = teamApp.GameDataService.GetCurrentData();
+                teamApp.GameDataService.SetupComeptitionsForDay(currentData.CurrentDay, currentData.CurrentYear);
+                teamApp.GameDataService.ProcessDay();
+                teamApp.GameDataService.PlayDay(new Random());
+                teamApp.GameDataService.ProcessDay();
+
+                WriteLine("Day: " + currentData.CurrentDay);
                 teamApp.ScheduleGameService.GetGamesForDay(currentData.CurrentDay, currentData.CurrentYear).ToList().ForEach(game =>
                 {
                     WriteLine(game.ToString());
                 });
+
+                if (!teamApp.GameDataService.IncrementDay())
+                {
+                    WriteLine("Could not increment day.");
+                }
+                else
+                {
+                    WriteLine("Game: " + currentData.CurrentDay);
+                    teamApp.ScheduleGameService.GetGamesForDay(currentData.CurrentDay, currentData.CurrentYear).ToList().ForEach(game =>
+                    {
+                        WriteLine(game.ToString());
+                    });
+                }
+
+                teamApp.CompetitionService.GetActiveCompetitions(currentData.CurrentYear).ToList().ForEach(m =>
+                {
+                    var standings = teamApp.StandingsService.GetStandings(m.Id);
+                    var view = new StandingsView(standings);
+
+                    WriteLine(view.GetView(StandingsView.LEAGUE));
+
+                });
+
+                WriteLine("Press Enter to continue");
+                var input = ReadLine();
+                if (input.Equals("quit"))
+                {
+                    stop = true;
+                }
             }
-
-            teamApp.CompetitionService.GetActiveCompetitions(currentData.CurrentYear).ToList().ForEach(m =>
-            {
-                var standings = teamApp.StandingsService.GetStandings(m.Id);
-                var view = new StandingsView(standings);
-
-                WriteLine(view.GetView(StandingsView.LEAGUE));
-
-            });
             
             /*
             var app = new Application();

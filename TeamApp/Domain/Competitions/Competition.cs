@@ -24,6 +24,7 @@ namespace TeamApp.Domain.Competitions
         {
             EndDay = endingDay;
             Finished = true;
+            ProcessEndOfCompetitionDetails(endingDay);
         }
 
         public Competition() : base() { }

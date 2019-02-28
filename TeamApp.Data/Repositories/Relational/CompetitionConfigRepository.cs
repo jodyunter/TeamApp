@@ -14,7 +14,7 @@ namespace TeamApp.Data.Repositories.Relational
 
         public IEnumerable<CompetitionConfig> GetConfigByStartingDayAndYear(int day, int year)
         {
-            return baseRepo.Where(c => c.CompetitionStartingDay == day).ToList().Where(c => c.IsActive(year));
+            return baseRepo.Where(c => c.CompetitionStartingDay == null || c.CompetitionStartingDay == day).ToList().Where(c => c.IsActive(year));
         }
 
         public IEnumerable<CompetitionConfig> GetConfigByYear(int year)

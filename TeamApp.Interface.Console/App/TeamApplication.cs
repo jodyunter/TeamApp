@@ -29,6 +29,7 @@ namespace TeamApp.Console.App
         public IGameDataService GameDataService { get; set; }
         public IScheduleGameService ScheduleGameService { get; set; }
         public ICompetitionService CompetitionService { get; set; }
+        private ConsoleHelper consoleHelper = new ConsoleHelper();
         
         public TeamApplication()
         {
@@ -53,12 +54,18 @@ namespace TeamApp.Console.App
             if (setupDatabase)
             {
                 var session = NHibernateHelper.OpenSession();
+
+
+                if (dropFirst)
+                {                    
+                    var query = session.CreateSQLQuery("exec DropAllTables");
+                    query.ExecuteUpdate();
+                    //D:\Visual Studio Projects\gitrepos\TeamApp\TeamApp.Test.Database\sqloutput\dropddl.sql
+                    
+                }
+
                 var configuration = NHibernateHelper.GetConfiguration().BuildConfiguration();
                 var schemaExport = new SchemaExport(configuration);
-
-                if (dropFirst)                    
-                    schemaExport.Drop(false, true);
-
                 schemaExport.Create(false, true);
 
             }
@@ -79,6 +86,11 @@ namespace TeamApp.Console.App
 
 
 
+        }
+
+        public void ClearScreen()
+        {
+            consoleHelper.Clear();
         }
 
     }
