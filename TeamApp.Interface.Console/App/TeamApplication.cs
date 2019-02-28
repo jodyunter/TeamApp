@@ -29,6 +29,7 @@ namespace TeamApp.Console.App
         public IGameDataService GameDataService { get; set; }
         public IScheduleGameService ScheduleGameService { get; set; }
         public ICompetitionService CompetitionService { get; set; }
+        public IPlayoffService PlayoffService { get; set; }
         private ConsoleHelper consoleHelper = new ConsoleHelper();
         
         public TeamApplication()
@@ -47,6 +48,7 @@ namespace TeamApp.Console.App
             GameDataService = new GameDataService(gameDataRepository, leagueRepository, scheduleGameRepository, competitionRepository, competitionConfigRepository);
             ScheduleGameService = new ScheduleGameService(scheduleGameRepository);
             CompetitionService = new CompetitionService(competitionRepository);
+            PlayoffService = new PlayoffService(competitionRepository);
         }
 
         public void SetupConfig(bool setupDatabase, bool dropFirst, bool setupData)
