@@ -8,7 +8,7 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
     {
         public virtual PlayoffCompetitionConfig PlayoffConfig { get; set; }
         //you will get the same competition for the current year
-        public virtual string GroupName { get; set; }
+        public virtual PlayoffRankingGroup Group { get; set; }
         public virtual int StartingRank { get; set; }
         public virtual CompetitionConfig SourceCompetition { get; set; }
         public virtual string SourceGroupName { get; set; }
