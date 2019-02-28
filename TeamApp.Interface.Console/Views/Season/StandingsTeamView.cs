@@ -22,7 +22,7 @@ namespace TeamApp.Console.Views.Season
         {
 
             return string.Format(formatter, Ranking.Rank, Model.TeamName, Model.Wins, Model.Loses, Model.Ties, Model.Points, Model.GamesPlayed, Model.GoalsFor,
-                Model.GoalsAgainst, Model.GoalDifference, Ranking.GroupName);
+                Model.GoalsAgainst, Model.GoalDifference, Model.Division);
         }
     }
 }

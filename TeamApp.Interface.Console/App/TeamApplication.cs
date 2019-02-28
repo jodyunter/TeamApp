@@ -79,9 +79,10 @@ namespace TeamApp.Console.App
                 gameData.CurrentYear = 1;
                 gameDataRepository.Update(gameData);
 
-                var league = Data2.CreateBasicLeague("NHL");
-                var seasonCompetition = Data2.CreateBasicSeasonConfiguration(league);
-                var playoffConfig = Data2.CreateBasicPlayoffConfiguration(seasonCompetition);
+                var league = DataCreator.CreateLeague("NHL");
+                var teams = DataCreator.CreateTeams();
+                var seasonCompetition = DataCreator.CreateSeasonConfiguration(league, teams);
+                //var playoffConfig = Data2.CreateBasicPlayoffConfiguration(seasonCompetition);
 
                 leagueRepository.Update(league);
             }

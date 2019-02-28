@@ -65,11 +65,6 @@ namespace TeamApp.Test.Helpers
             }
             */
 
-            var seasonCompetitionList = new List<SeasonCompetitionConfig>()
-            {
-                competition   
-            };
-
 
             foreach(KeyValuePair<string, List<string>> data in divMap)
             {
