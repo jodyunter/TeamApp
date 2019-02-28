@@ -8,6 +8,7 @@ namespace TeamApp.Services.ViewModels.Views.Competition.Playoff
     {
         public long Id { get; set; }
         public string Name { get; set; }
+        public int Year { get; set; }        
         public List<BestOfSeriesSummaryViewModel> Series { get; set; }
     }
 }
