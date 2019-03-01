@@ -91,10 +91,10 @@ namespace TeamApp.Test.Helpers
         {
             var gameRules = new GameRules("Playoff Rules", false, 3, 1, 7, 6);
 
-            var rankingRules = new List<PlayoffRankingRule>()
-            {
-                new PlayoffRankingRule(null, "NHL", 1,seasonConfig, "NHL", 1, 6,1, null)
-            };
+            //var rankingrules = new list<playoffrankingrule>()
+            //{
+            //    new playoffrankingrule(null, "nhl",  "nhl", 1, 6,1, null)
+            //};
 
             var seriesRules = new List<PlayoffSeriesRule>()
             {
@@ -104,7 +104,7 @@ namespace TeamApp.Test.Helpers
                 new PlayoffSeriesRule(null, "Final", 2, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "FINALISTS", 1, FROM_RANKING, "FINALISTS", 2, 1, null, new int[] {1,0,0 }, null, null, null, null)
             };
 
-            var playoffConfig = new PlayoffCompetitionConfig("My Playoff", seasonConfig.League, 2, null, gameRules, 1, null, rankingRules, seriesRules, new List<CompetitionConfig> { seasonConfig });
+            var playoffConfig = new PlayoffCompetitionConfig("My Playoff", seasonConfig.League, 2, null, gameRules, 1, null, new List<PlayoffRankingRule>(), seriesRules, new List<CompetitionConfig> { seasonConfig });
 
             seasonConfig.League.CompetitionConfigs.Add(playoffConfig);
             playoffConfig.Parents.Add(seasonConfig);

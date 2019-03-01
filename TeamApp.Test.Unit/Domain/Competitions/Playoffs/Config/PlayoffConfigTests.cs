@@ -31,11 +31,11 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
             var playoffConfig = new PlayoffCompetitionConfig("My Playoff", null, 2, 55, gameRules, 1, null, null, null, new List<CompetitionConfig>() { seasonCompetition  });
 
             var rankingRules = new List<PlayoffRankingRule>();           
-            rankingRules.Add(new PlayoffRankingRule(playoffConfig, "East", 3, seasonCompetition, "East", 5, 8,1, 12));
-            rankingRules.Add(new PlayoffRankingRule(playoffConfig, "West", 15, seasonCompetition, "West", 3, 3,1, null));
+            //rankingRules.Add(new PlayoffRankingRule(playoffConfig, "East", 3, seasonCompetition, "East", 5, 8,1, 12));
+            //rankingRules.Add(new PlayoffRankingRule(playoffConfig, "West", 15, seasonCompetition, "West", 3, 3,1, null));
             //test out the active rule
             //playoff is for year 5, this rule ends year 4
-            rankingRules.Add(new PlayoffRankingRule(playoffConfig, "Other", 25, seasonCompetition, "Other", 3, 3, 1, 4));
+            //rankingRules.Add(new PlayoffRankingRule(playoffConfig, "Other", 25, seasonCompetition, "Other", 3, 3, 1, 4));
 
             playoffConfig.RankingRules = rankingRules;
 

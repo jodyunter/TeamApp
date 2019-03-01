@@ -68,44 +68,44 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
             playoff.Teams = new List<SingleYearTeam>();
             playoff.Rankings = new List<TeamRanking>();
 
-            GetActiveRankingRules(playoff.Year).ToList().ForEach(rule =>
+            //setup rankings based on each competition to use later on in the series
+            if (parents != null)
             {
-                //get the competition
-                var sourceCompetition = parents.Where(p => p.Name.Equals(rule.SourceCompetition.Name)).FirstOrDefault(); //this is the source competition
-
-                if (sourceCompetition == null) throw new ApplicationException("Playoff Ranking Rule has bad source competition: " + rule.SourceCompetition.Name);
-
-                //get the group with the rankings
-                var sourceGroup = sourceCompetition.Rankings.Where(r => r.GroupName == rule.SourceGroupName).ToList();                
-
-                if (sourceGroup == null) throw new ApplicationException("Playoff Ranking Rule has bad source group name: " + rule.SourceGroupName);
-
-                int firstRank = rule.StartingRank;
-
-                int nextRank = firstRank;
-
-                var lastRank = rule.SourceLastRank == null ? sourceGroup.Max(m => m.Rank) : rule.SourceLastRank;
-
-                for (int i = rule.SourceFirstRank; i <= lastRank; i++)
+                parents.ToList().ForEach(comp =>
                 {
-                    var sourceRanking = sourceGroup.Where(r => r.Rank == i).FirstOrDefault();
+                    comp.Rankings.ToList().ForEach(sourceRanking =>
+                    {
+                        var team = playoff.Teams.Where(t => t.Name.Equals(sourceRanking.Team.Name)).FirstOrDefault();
+                        if (team == null)
+                        {
+                            team = new PlayoffTeam(playoff, sourceRanking.Team.Parent, sourceRanking.Team.Name, sourceRanking.Team.NickName, sourceRanking.Team.ShortName,
+                                sourceRanking.Team.Skill, sourceRanking.Team.Owner, playoff.Year);
+                        }
+                        playoff.Rankings.Add(new TeamRanking(sourceRanking.Rank, sourceRanking.GroupName, team, sourceRanking.GroupLevel));
+                    });
+                });
+            }
 
-                    if (sourceRanking == null) throw new ApplicationException("Playoff Source Rank did not exist: " + rule.SourceCompetition.Name + " " + rule.SourceGroupName + " rank: " + i);
+            RankingRules.ToList().ForEach(rankingRule =>
+            {
+                var groupOfTeamRankings = playoff.Rankings.Where(ranking => ranking.GroupName == rankingRule.GroupName);
 
-                    var sourceTeam = sourceRanking.Team;
-
-                    var newTeam = new PlayoffTeam(playoff, sourceTeam.Parent, sourceTeam.Name, sourceTeam.NickName, sourceTeam.ShortName, sourceTeam.Skill, sourceTeam.Owner, playoff.Year);                    
-
-                    var playoffRanking = new TeamRanking(nextRank, rule.GroupName, newTeam, 1);
-
-                    playoff.Rankings.Add(playoffRanking);
-
-                    playoff.Teams.Add(newTeam);
-
-                    nextRank++;
+                var teamRankings = groupOfTeamRankings.Where(team => team.Rank >= rankingRule.SourceFirstRank).ToList();
+                if (rankingRule.SourceLastRank != null)
+                {
+                    teamRankings = teamRankings.Where(t => t.Rank <= rankingRule.SourceLastRank).ToList();
                 }
-                
-            });    
+
+                teamRankings.ForEach(teamRank =>
+                {
+                    var teamName = teamRank.Team.Name;
+                    var rankingFromGroup = rankingRule.RankingGroupName;
+
+                    var rank = playoff.Rankings.Where(pr => pr.GroupName.Equals(rankingFromGroup) && pr.Team.Name.Equals(teamName)).First().Rank;
+                    var teamRanking = new TeamRanking(rank, rankingRule.GroupName, teamRank.Team, 1);
+                    playoff.Rankings.Add(teamRanking);
+                });
+            });
             
         }
 
