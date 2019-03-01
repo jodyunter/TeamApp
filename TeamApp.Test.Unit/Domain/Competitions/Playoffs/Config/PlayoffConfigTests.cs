@@ -15,48 +15,157 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
 {
     public class PlayoffConfigTests
     {
-        [Fact]
-        public void shouldTestRankingRules()
+        private List<Team> teams = new List<Team>()
         {
-            var data = Data1.CreateBasicSeasonConfiguration();
-            var seasonCompetition = ((List<SeasonCompetitionConfig>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
-            var season = (Season)seasonCompetition.CreateCompetition(1, 1, null);            
-            Random r = new Random(12345);            
-            while (!season.Schedule.IsComplete())
-                season.PlayNextDay(r);
+            new Team("Team 1", "T1", "T1", 5, "Me", 1, null, true),
+            new Team("Team 2", "T1", "T1", 5, "Me", 1, null, true),
+            new Team("Team 3", "T1", "T1", 5, "Me", 1, null, true),
+            new Team("Team 4", "T1", "T1", 5, "Me", 1, null, true),
+            new Team("Team 5", "T1", "T1", 5, "Me", 1, null, true),
+            new Team("Team 6", "T1", "T1", 5, "Me", 1, null, true),
+            new Team("Team 7", "T1", "T1", 5, "Me", 1, null, true),
+            new Team("Team 8", "T1", "T1", 5, "Me", 1, null, true),
+            new Team("Team 9", "T1", "T1", 5, "Me", 1, null, true),
+            new Team("Team 10", "T1", "T1", 5, "Me", 1, null, true),
+            new Team("Team 11", "T1", "T1", 5, "Me", 1, null, true),
+            new Team("Team 12", "T1", "T1", 5, "Me", 1, null, true),
+        };
 
-            season.SortAllTeams();
+        private void CreateSeasonDivisions(Season season)
+        {
+            var nhl = new SeasonDivision(season, null, 1, "NHL", 1, 1, null);
+            var east = new SeasonDivision(season, nhl, 1, "East", 2, 1, null);
+            var west = new SeasonDivision(season, nhl, 1, "West", 2, 2, null);
+            var central = new SeasonDivision(season, nhl, 1, "Central", 2, 3, null);
 
-            var gameRules = new GameRules("Playoff Game Rules", false, 3, 1, 7, 6);
-            var playoffConfig = new PlayoffCompetitionConfig("My Playoff", null, 2, 55, gameRules, 1, null, null, null, new List<CompetitionConfig>() { seasonCompetition  });
-
-            var rankingRules = new List<PlayoffRankingRule>();           
-            //rankingRules.Add(new PlayoffRankingRule(playoffConfig, "East", 3, seasonCompetition, "East", 5, 8,1, 12));
-            //rankingRules.Add(new PlayoffRankingRule(playoffConfig, "West", 15, seasonCompetition, "West", 3, 3,1, null));
-            //test out the active rule
-            //playoff is for year 5, this rule ends year 4
-            //rankingRules.Add(new PlayoffRankingRule(playoffConfig, "Other", 25, seasonCompetition, "Other", 3, 3, 1, 4));
-
-            playoffConfig.RankingRules = rankingRules;
-
-            var playoff = new Playoff(playoffConfig, "My Playoff", 5, 1, null, new List<SingleYearTeam>(), null, null, true, false, 15, null);
-
-            playoffConfig.ProcessRankingRulesAndAddTeams(playoff, new List<Competition> { season });
-
-            StrictEqual(5, playoff.Teams.Count);
-            StrictEqual(5, playoff.Rankings.Count);
-
-            StrictEqual(4, playoff.Rankings.Where(ra => ra.GroupName.Equals("East")).ToList().Count);
-            False(playoff.Rankings.Where(ra => ra.GroupName.Equals("East")).ToList().Select(ra => ra.Rank).ToList().Except(new int[] { 3, 4, 5, 6 }).Any());
-                        
-            StrictEqual(1, playoff.Rankings.Where(ra => ra.GroupName.Equals("West")).ToList().Count);
-            True(playoff.Rankings.Where(ra => ra.GroupName.Equals("West")).ToList()[0].Rank == 15);
-
-            var teamName = playoff.Rankings.Where(ra => ra.GroupName.Equals("West")).ToList()[0].Team.Name;
-
-            True(season.Rankings.Where(ra => ra.GroupName.Equals("West") && ra.Team.Name.Equals(teamName)).First().Rank == 3);
-            Null(playoff.Rankings.Where(ra => ra.GroupName.Equals("Other")).FirstOrDefault());
+            season.Divisions = new List<SeasonDivision>() { nhl, east, west, central };
+            
+        }
+        private void CreateSeasonTeams(Season season)
+        {
+            season.Teams = new List<SingleYearTeam>() {
+                new SeasonTeam(season, teams[0], 1, new SeasonTeamStats(), season.Divisions[1]),
+                new SeasonTeam(season, teams[1], 1, new SeasonTeamStats(), season.Divisions[1]),
+                new SeasonTeam(season, teams[2], 1, new SeasonTeamStats(), season.Divisions[1]),
+                new SeasonTeam(season, teams[3], 1, new SeasonTeamStats(), season.Divisions[1]),
+                new SeasonTeam(season, teams[4], 1, new SeasonTeamStats(), season.Divisions[2]),
+                new SeasonTeam(season, teams[5], 1, new SeasonTeamStats(), season.Divisions[2]),
+                new SeasonTeam(season, teams[6], 1, new SeasonTeamStats(), season.Divisions[2]),
+                new SeasonTeam(season, teams[7], 1, new SeasonTeamStats(), season.Divisions[2]),
+                new SeasonTeam(season, teams[8], 1, new SeasonTeamStats(), season.Divisions[3]),
+                new SeasonTeam(season, teams[9], 1, new SeasonTeamStats(), season.Divisions[3]),
+                new SeasonTeam(season, teams[10], 1, new SeasonTeamStats(), season.Divisions[3]),
+                new SeasonTeam(season, teams[11], 1, new SeasonTeamStats(), season.Divisions[3])
+            };
         }
 
+        private void CreateSeasonRankings(Season season)
+        {
+            var nhl = new int[] { 5, 4, 12, 11, 10, 1, 3, 8, 7, 2, 6, 9 };
+            var east = new int[] { 1, 2, 4, 3 };
+            var west = new int[] { 4, 1, 2, 3 };
+            var central = new int[] { 3, 4, 2, 1 };
+
+            int nhlc = 0;
+            int eastc = 0;
+            int westc = 0;
+            int centralc = 0;
+
+            season.Rankings = new List<TeamRanking>();
+
+            season.Teams.ToList().ForEach(team =>
+            {
+                season.Rankings.Add(new TeamRanking(nhl[nhlc++], "NHL", team, 1));
+
+                int rank = -1;
+                string div = "";
+                switch (((SeasonTeam)team).Division.Name)
+                {
+                    case "East":
+                        rank = east[eastc++];
+                        div = "East";
+                        break;
+                    case "West":
+                        rank = west[westc++];
+                        div = "West";
+                        break;
+                    case "Central":
+                        div = "Central";
+                        rank = central[centralc++];
+                        break;
+                }
+
+                season.Rankings.Add(new TeamRanking(rank, div, team, 1));
+            });
+        }
+
+        private void CreateRankingRules(PlayoffCompetitionConfig config)
+        {
+            config.RankingRules = new List<PlayoffRankingRule>()
+            {
+                new PlayoffRankingRule(config, "Top Seeds", "East", "NHL", 1, 1, 1, null),
+                new PlayoffRankingRule(config, "Top Seeds", "West", "NHL", 1, 1, 1, null),
+                new PlayoffRankingRule(config, "Top Seeds", "Central", "NHL", 1, 1, 1, null),
+                new PlayoffRankingRule(config, "RemainingTeams", "East", "NHL", 2, null, 1, null),
+                new PlayoffRankingRule(config, "RemainingTeams", "West", "NHL", 2, null, 1, null),
+                new PlayoffRankingRule(config, "RemainingTeams", "Central", "NHL", 2, null, 1, null),
+            };
+        }
+        [Fact]
+        public void ShouldCreateTeamRankingsFromSeason()
+        {
+            var season = new Season(null, "My Season", 1, null, null, null, null, true, false, 1, null);
+
+            CreateSeasonDivisions(season);
+            CreateSeasonTeams(season);
+            CreateSeasonRankings(season);
+
+            var playoffConfig = new PlayoffCompetitionConfig();
+            var playoff = new Playoff() { Year = 15 };
+            playoffConfig.CopyRankingsFromCompetition(playoff, season);
+            var newRankings = playoff.Rankings;
+
+            StrictEqual(12, newRankings.Where(r => r.GroupName.Equals("NHL")).Count());
+            StrictEqual(4, newRankings.Where(r => r.GroupName.Equals("East")).Count());
+            StrictEqual(4, newRankings.Where(r => r.GroupName.Equals("West")).Count());
+            StrictEqual(4, newRankings.Where(r => r.GroupName.Equals("Central")).Count());
+        }
+
+        [Fact]
+        public void ShouldCreateTeamRankingsFromPlayoff()
+        {
+            True(false);
+        }
+        [Fact]
+        public void ShouldCreateTeamRankingsFromRule()
+        {
+            var season = new Season(null, "My Season", 1, null, null, null, null, true, false, 1, null);
+            var playoffConfig = new PlayoffCompetitionConfig();
+            var playoff = new Playoff() { Year = 15 };
+
+            CreateSeasonDivisions(season);
+            CreateSeasonTeams(season);
+            CreateSeasonRankings(season);
+            CreateRankingRules(playoffConfig);
+                        
+            playoffConfig.CopyRankingsFromCompetition(playoff, season);
+
+            playoffConfig.RankingRules.ToList().ForEach(rule =>
+            {
+                playoffConfig.CreateRankingsFromRule(playoff, rule);
+            });
+
+            var topSeeds = playoff.Rankings.Where(r => r.GroupName.Equals("Top Seeds"));
+            var restOfTeams = playoff.Rankings.Where(r => r.GroupName.Equals("RemainingTeams"));
+            StrictEqual(3, topSeeds.Count());
+            StrictEqual(9, restOfTeams.Count());
+
+            var seedName = topSeeds.Select(r => r.Team.Name).ToList();
+            var restNames = restOfTeams.Select(r => r.Team.Name).ToList();
+
+            StrictEqual(0, seedName.Where(r => restNames.Contains(r)).ToList().Count());
+
+        }
+     
     }
 }

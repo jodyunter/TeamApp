@@ -43,7 +43,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
 
 
             var rankingsDictionary = new Dictionary<string, List<TeamRanking>>();
-
+            
             Rankings.ToList().ForEach(ranking =>
             {
                 if (!rankingsDictionary.ContainsKey(ranking.GroupName)) rankingsDictionary.Add(ranking.GroupName, new List<TeamRanking>());

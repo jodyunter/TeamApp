@@ -6,15 +6,14 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
 {
     public class PlayoffRankingRule:BaseDataObject,ITimePeriod
     {
-        public virtual PlayoffCompetitionConfig PlayoffConfig { get; set; }
-        //you will get the same competition for the current year
-        public virtual string GroupName { get; set; }                
-        public virtual string SourceGroupName { get; set; }
-        public virtual string RankingGroupName { get; set; }
-        public virtual int SourceFirstRank { get; set; }
-        public virtual int? SourceLastRank { get; set; }
-        public virtual int? FirstYear { get; set; }
-        public virtual int? LastYear { get; set; }        
+        public virtual PlayoffCompetitionConfig PlayoffConfig { get; set; }        
+        public virtual string GroupName { get; set; } //this is the name of the group we are creating
+        public virtual string RankingGroupName { get; set; } //this is the name of the group you want the rank from
+        public virtual string SourceGroupName { get; set; } //this is where the team(s) is coming from       
+        public virtual int SourceFirstRank { get; set; } //this is the first rank you take
+        public virtual int? SourceLastRank { get; set; } //this is the last rank you take, if it's null take them all
+        public virtual int? FirstYear { get; set; } //this is the first effective year
+        public virtual int? LastYear { get; set; }  //this is the lats effective year
 
         //todo how to pool candidates, then sort them
 

@@ -79,15 +79,15 @@ namespace TeamApp.Console.App
                 gameData.CurrentDay = 1;
                 gameData.CurrentYear = 1;
                 gameDataRepository.Update(gameData);
+                
+                var league = DataCreator.CreateLeague("nhl");
+                var teams = DataCreator.CreateTeams();
+                var seasonConfig = DataCreator.CreateSeasonConfiguration(league, teams, null, 1, 1);
+                var playoffConfig = DataCreator.CreatePlayoffConfiguration(league, new List<CompetitionConfig>() { seasonConfig }, 2, null, 1, null);
 
-                //var league = datacreator.createleague("nhl");
-                //var teams = datacreator.createteams();
-                //var seasoncompetition = datacreator.createseasonconfiguration(league, teams, null, 1, 1);
-                //var playoffconfig = datacreator.createplayoffconfiguration(league, new list<competitionconfig>() { seasoncompetition }, 2, null, 1, null);
-
-                var league = Data2.CreateBasicLeague("NHL");
-                var seasonCompetition = Data2.CreateBasicSeasonConfiguration(league);
-                var playoffCompetition = Data2.CreateBasicPlayoffConfiguration(seasonCompetition);
+                //var league = Data2.CreateBasicLeague("NHL");
+                //var seasonCompetition = Data2.CreateBasicSeasonConfiguration(league);
+                //var playoffCompetition = Data2.CreateBasicPlayoffConfiguration(seasonCompetition);
 
                 leagueRepository.Update(league);
             }

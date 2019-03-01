@@ -62,6 +62,58 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
             });
         }
 
+        //what if we have two parent competitions, and therefore end up copying this twice?
+        public virtual void CopyRankingsFromCompetition(Playoff playoff, Competition competition)
+        {
+            if (playoff.Rankings == null) playoff.Rankings = new List<TeamRanking>();
+            if (playoff.Teams == null) playoff.Teams = new List<SingleYearTeam>();
+
+            competition.Rankings.ToList().ForEach(sourceRanking =>
+            {
+                var team = playoff.Teams.Where(t => t.Name.Equals(sourceRanking.Team.Name)).FirstOrDefault();
+                if (team == null) team = CreatePlayoffTeam(playoff, sourceRanking.Team);
+
+                playoff.Rankings.Add(new TeamRanking(sourceRanking.Rank, sourceRanking.GroupName, team, sourceRanking.GroupLevel));
+            });
+            
+        }
+
+        private PlayoffTeam CreatePlayoffTeam(Playoff playoff, SingleYearTeam sourceTeam)
+        {
+            return new PlayoffTeam(playoff, sourceTeam.Parent, sourceTeam.Name, sourceTeam.NickName, sourceTeam.ShortName,
+                        sourceTeam.Skill, sourceTeam.Owner, playoff.Year);
+        }
+
+        public virtual void CreateRankingsFromRule(Playoff playoff, PlayoffRankingRule rule)
+        {
+            if (!rule.IsActive(playoff.Year)) throw new Exception("Trying to use an inactive rule in CreatRankings From rule: " + rule.FirstYear + " : " + rule.LastYear);
+
+            if (playoff.Rankings == null) playoff.Rankings = new List<TeamRanking>();
+            if (playoff.Teams == null) playoff.Teams = new List<SingleYearTeam>();
+
+            var groupToPutTeamIn = rule.GroupName;
+            var groupToGetTeamFrom = rule.SourceGroupName;
+            int firstRankToGet = rule.SourceFirstRank;
+            int? lastRankToGet = rule.SourceLastRank;
+
+            var groupToGetRankFrom = rule.RankingGroupName;
+
+            var groupOfTeams = playoff.Rankings.Where(rank => rank.GroupName.Equals(groupToGetTeamFrom)).ToList();
+            if (lastRankToGet == null) lastRankToGet = groupOfTeams.Max(r => r.Rank);
+
+            var sourceTeamRankings = groupOfTeams.Where(rank => rank.Rank >= firstRankToGet && rank.Rank <= lastRankToGet).ToList();
+
+            sourceTeamRankings.ForEach(sourceRanking =>
+            {
+                var team = playoff.Teams.Where(t => t.Name.Equals(sourceRanking.Team.Name)).FirstOrDefault();
+                if (team == null) team = CreatePlayoffTeam(playoff, sourceRanking.Team);
+                var rank = playoff.Rankings.Where(r => r.GroupName.Equals(groupToGetRankFrom) && r.Team.Name.Equals(team.Name)).First().Rank;
+
+                playoff.Rankings.Add(new TeamRanking(rank, groupToPutTeamIn, team, 1));
+            });
+            
+        }
+        
         //need to  test out the time period
         public virtual void ProcessRankingRulesAndAddTeams(Playoff playoff, IList<Competition> parents)
         {
@@ -73,38 +125,13 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
             {
                 parents.ToList().ForEach(comp =>
                 {
-                    comp.Rankings.ToList().ForEach(sourceRanking =>
-                    {
-                        var team = playoff.Teams.Where(t => t.Name.Equals(sourceRanking.Team.Name)).FirstOrDefault();
-                        if (team == null)
-                        {
-                            team = new PlayoffTeam(playoff, sourceRanking.Team.Parent, sourceRanking.Team.Name, sourceRanking.Team.NickName, sourceRanking.Team.ShortName,
-                                sourceRanking.Team.Skill, sourceRanking.Team.Owner, playoff.Year);
-                        }
-                        playoff.Rankings.Add(new TeamRanking(sourceRanking.Rank, sourceRanking.GroupName, team, sourceRanking.GroupLevel));
-                    });
+                    CopyRankingsFromCompetition(playoff, comp);
                 });
             }
 
-            RankingRules.ToList().ForEach(rankingRule =>
+            GetActiveRankingRules(playoff.Year).ToList().ForEach(rule =>
             {
-                var groupOfTeamRankings = playoff.Rankings.Where(ranking => ranking.GroupName == rankingRule.GroupName);
-
-                var teamRankings = groupOfTeamRankings.Where(team => team.Rank >= rankingRule.SourceFirstRank).ToList();
-                if (rankingRule.SourceLastRank != null)
-                {
-                    teamRankings = teamRankings.Where(t => t.Rank <= rankingRule.SourceLastRank).ToList();
-                }
-
-                teamRankings.ForEach(teamRank =>
-                {
-                    var teamName = teamRank.Team.Name;
-                    var rankingFromGroup = rankingRule.RankingGroupName;
-
-                    var rank = playoff.Rankings.Where(pr => pr.GroupName.Equals(rankingFromGroup) && pr.Team.Name.Equals(teamName)).First().Rank;
-                    var teamRanking = new TeamRanking(rank, rankingRule.GroupName, teamRank.Team, 1);
-                    playoff.Rankings.Add(teamRanking);
-                });
+                CreateRankingsFromRule(playoff, rule);
             });
             
         }
