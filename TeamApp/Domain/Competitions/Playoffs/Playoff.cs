@@ -27,23 +27,11 @@ namespace TeamApp.Domain.Competitions.Playoffs
             //nothing to do for end of series at this point in time
         }
 
-        public virtual void BeginRound()
+        //this method will sort all rankings groups starting at 1.  
+        public virtual void SeedRankingsGroups()
         {
-            Started = true;
-
-            if (IsRoundComplete(CurrentRound)) CurrentRound++;
-            //else return;
-
-            var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
-
-            int roundStartDay = Schedule.Days.Max(m => m.Value.DayNumber) + 1;
-
-            //sort all rankings starting at one.  At the end of each round, each group is assigned a ranking based on other criteria.
-            //we need to sort based on that and assign the values accordingly.
-
-
             var rankingsDictionary = new Dictionary<string, List<TeamRanking>>();
-            
+
             Rankings.ToList().ForEach(ranking =>
             {
                 if (!rankingsDictionary.ContainsKey(ranking.GroupName)) rankingsDictionary.Add(ranking.GroupName, new List<TeamRanking>());
@@ -62,6 +50,25 @@ namespace TeamApp.Domain.Competitions.Playoffs
                     value.Rank = m;
                 });
             });
+        }
+        public virtual void BeginRound()
+        {
+            Started = true;
+
+            if (IsRoundComplete(CurrentRound)) CurrentRound++;
+            //else return;
+
+            var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
+
+            int roundStartDay = Schedule.Days.Max(m => m.Value.DayNumber) + 1;
+
+            //sort all rankings starting at one.  At the end of each round, each group is assigned a ranking based on other criteria.
+            //we need to sort based on that and assign the values accordingly.
+
+
+            var rankingsDictionary = new Dictionary<string, List<TeamRanking>>();
+
+            SeedRankingsGroups();
 
             //add any missing teams, and setup the games for each series
             Series.Where(s => s.Round == CurrentRound).ToList().ForEach(s =>

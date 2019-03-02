@@ -32,7 +32,7 @@ namespace TeamApp.Data.Relational.Repositories
 
         public IEnumerable<ScheduleGame> GetInCompleteOrUnProcessedGamesForDay(int day, int year)
         {
-            return baseRepo.Where(g => g.Day == day && g.Year == year && (!g.Complete || !g.Processed)).ToList();
+            return baseRepo.Where(g => g.Day <= day && g.Year == year && (!g.Complete || !g.Processed)).ToList();
         }
 
         public void UpdateAll(IEnumerable<ScheduleGame> games)

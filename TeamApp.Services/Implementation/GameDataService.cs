@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TeamApp.Domain;
 using TeamApp.Domain.Competitions;
+using TeamApp.Domain.Competitions.Seasons;
 using TeamApp.Domain.Repositories;
 
 namespace TeamApp.Services.Implementation
@@ -13,15 +14,15 @@ namespace TeamApp.Services.Implementation
         private ILeagueRepository leagueRepo;
         private IScheduleGameRepository scheduleGameRepo;
         private ICompetitionRepository competitionRepo;
-        private ICompetitionConfigRepository competitionConfigRepo;
+        private ICompetitionConfigRepository competitionConfigRepo;        
 
-        public GameDataService(IGameDataRepository gameDataRepository, ILeagueRepository leagueRepository, IScheduleGameRepository scheduleGameRepository, ICompetitionRepository competitionRepository, ICompetitionConfigRepository competitionConfigRepository)
+        public GameDataService(IGameDataRepository gameDataRepository, ILeagueRepository leagueRepository, IScheduleGameRepository scheduleGameRepository, ICompetitionRepository competitionRepository, ICompetitionConfigRepository competitionConfigRepository, ISeasonRepository seasonRepository)
         {
             gameDataRepo = gameDataRepository;
             leagueRepo = leagueRepository;
             scheduleGameRepo = scheduleGameRepository;
             competitionRepo = competitionRepository;
-            competitionConfigRepo = competitionConfigRepository;
+            competitionConfigRepo = competitionConfigRepository;            
         }
 
         public bool IsYearComplete(int year)
@@ -117,6 +118,8 @@ namespace TeamApp.Services.Implementation
             if (unfinishedGames > 0)
             {
                 //add a mesage about needing to compelte or process games
+                leagueRepo.Flush();
+
                 return false;
             }
             else
@@ -159,7 +162,7 @@ namespace TeamApp.Services.Implementation
                
             });
 
-            
+            leagueRepo.Flush();
         }
 
         public GameData GetCurrentData()
@@ -170,6 +173,7 @@ namespace TeamApp.Services.Implementation
         public void SaveCurrentData(GameData data)
         {
             gameDataRepo.Update(data);
+            gameDataRepo.Flush();
         }
     }
 }

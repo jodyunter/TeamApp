@@ -38,7 +38,8 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
         {
             var playoff = new Playoff(this, Name, year, 1, null, null, null, null, false, false, day, null);
 
-            ProcessRankingRulesAndAddTeams(playoff, parents);
+            ProcessRankingRulesAndAddTeams(playoff, parents);            
+
             ProcessSeriesRules(playoff);
 
             if (parents != null) //assume shared schedule
@@ -133,7 +134,8 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
             {
                 CreateRankingsFromRule(playoff, rule);
             });
-            
+
+            playoff.SeedRankingsGroups();
         }
 
         public virtual PlayoffSeries SetupSeriesFromRule(Playoff playoff, PlayoffSeriesRule rule)
