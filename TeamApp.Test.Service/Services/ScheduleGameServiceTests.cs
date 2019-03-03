@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using static Xunit.Assert;
 using Xunit;
-namespace TeamApp.Test.Service.Services
+namespace TeamApp.Test.Services
 {
     public class ScheduleGameServiceTests
     {

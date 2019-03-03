@@ -12,7 +12,7 @@ using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Competitions.Seasons.Config;
 using TeamApp.Domain.Competitions.Playoffs.Config;
 
-namespace TeamApp.Test.Service.Services
+namespace TeamApp.Test.Services
 {
     public class LeagueServiceTests
     {
