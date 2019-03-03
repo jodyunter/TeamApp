@@ -46,5 +46,10 @@ namespace TeamApp.Services.Implementation
 
             return simpleViewMapper.MapDomainToModel(competitions);
         }
+
+        public CompetitionSimpleViewModel GetCompetition(long id)
+        {
+            return simpleViewMapper.MapDomainToModel(competitionRepository.Get(id));
+        }
     }
 }

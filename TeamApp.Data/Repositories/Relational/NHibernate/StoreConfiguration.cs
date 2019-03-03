@@ -14,7 +14,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
             return type.GetInterfaces().ToList().Contains(typeof(IDataObject));
         }
 
-        private static readonly IList<string> IgnoredMembers = new List<string> { "Schedule" };
+        private static readonly IList<string> IgnoredMembers = new List<string> { "Schedule", "Self" };
         private static readonly IList<string> IgnoreMembersWithDeclaryingType
             = new List<string> { "SeasonTeamStats.Points", "SeasonTeamStats.Games", "SeasonTeamStats.GoalDifference"  };
         private static readonly IList<string> DiscriminatedSubClasses

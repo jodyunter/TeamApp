@@ -4,7 +4,8 @@ using TeamApp.Console.App;
 using System.Threading;
 using System.Linq;
 using TeamApp.Console.Views.Season;
-
+using TeamApp.Domain.Competitions;
+using System.Collections.Generic;
 
 namespace TeamApp.Console
 {
@@ -36,6 +37,7 @@ namespace TeamApp.Console
 
                 WriteLine("Year: " + currentData.CurrentYear);
                 WriteLine("Day: " + currentData.CurrentDay);
+
                 teamApp.ScheduleGameService.GetGamesForDay(currentData.CurrentDay, currentData.CurrentYear).ToList().ForEach(game =>
                 {
                     WriteLine(game.ToString());
@@ -53,8 +55,10 @@ namespace TeamApp.Console
                         WriteLine(game.ToString());
                     });
                 }
+                
+                
+                var activeComps = teamApp.CompetitionService.GetActiveCompetitions(currentData.CurrentYear).ToList();                
 
-                var activeComps = teamApp.CompetitionService.GetActiveCompetitions(currentData.CurrentYear).ToList();
                 if (activeComps.Count > 0)
                 {
                     activeComps.ToList().ForEach(m =>
@@ -85,7 +89,8 @@ namespace TeamApp.Console
                 {
                     teamApp.CompetitionService.GetCompetitionsByYear(currentData.CurrentYear).ToList().ForEach(m =>
                     {
-                        if (m.Type == "Season")
+                        if (
+                        m.Type == "Season")
                         {
                             var standings = teamApp.StandingsService.GetStandings(m.Id);
                             var view = new StandingsView(standings);

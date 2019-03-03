@@ -96,10 +96,14 @@ namespace TeamApp.Domain.Competitions.Seasons
 
                 rank++;
             });
-        }
+        }       
 
         public override bool AreGamesComplete()
         {
+            if (Schedule == null)
+            {
+                SetupSchedule();
+            }
             return Schedule.IsComplete();            
         }
     }

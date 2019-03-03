@@ -147,6 +147,9 @@ namespace TeamApp.Test.Data
 
             //IEnumerable<CompetitionSimpleViewModel> GetCompetitionsByYear(int year);
             True(false);
+
+            //Competition GetCompetition(long id);
+            True(false);
         }
 
         #endregion

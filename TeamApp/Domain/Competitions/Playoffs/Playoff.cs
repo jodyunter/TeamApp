@@ -178,6 +178,8 @@ namespace TeamApp.Domain.Competitions.Playoffs
 
         public override bool AreGamesComplete()
         {
+            if (Schedule == null) SetupSchedule();
+
             var complete = true;
             var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
 

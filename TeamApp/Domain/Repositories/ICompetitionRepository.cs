@@ -15,5 +15,6 @@ namespace TeamApp.Domain.Repositories
         Competition GetCompetitionForCompetitionConfig(CompetitionConfig config, int year);
         IEnumerable<Competition> GetParentCompetitionsForCompetitionConfig(CompetitionConfig config, int year);
         bool IsCompetitionCompleteForYear(int year, CompetitionConfig config);
+        Competition GetCompetition(long id);
     }
 }

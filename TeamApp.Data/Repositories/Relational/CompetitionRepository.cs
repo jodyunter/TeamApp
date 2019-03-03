@@ -61,5 +61,10 @@ namespace TeamApp.Data.Relational.Repositories
         {
             return baseRepo.Where(c => c.Finished && c.CompetitionConfig == config).Count() > 0;
         }
+
+        public Competition GetCompetition(long id)
+        {
+            return baseRepo.Get(id);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NHibernate;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TeamApp.Domain;
@@ -87,7 +88,7 @@ namespace TeamApp.Services.Implementation
             var gamesToProcess = scheduleGameRepo.GetCompleteAndUnProcessedGamesForDay(gameData.CurrentDay, gameData.CurrentYear).ToList();
 
             var competitionList = competitionRepo.GetStartedAndUnfinishedCompetitionsByYear(gameData.CurrentYear).ToDictionary(key => key.Id);
-
+    
             gamesToProcess.ForEach(game =>
             {
                 var competition = competitionList[game.Competition.Id];
@@ -97,6 +98,7 @@ namespace TeamApp.Services.Implementation
 
             competitionList.Values.ToList().ForEach(competition =>
             {
+                if (competition.GetType() == typeof(Season)) NHibernateUtil.Initialize(((Season)competition).Schedule);
                 if (competition.AreGamesComplete())
                 {
                     competition.ProcessEndOfCompetition(gameData.CurrentDay);

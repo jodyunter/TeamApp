@@ -24,6 +24,8 @@ namespace TeamApp.Services.Implementation
         public PlayoffSummaryViewModel GetPlayoffSummary(long competitionId)
         {
             var competition = (Playoff)competitionRepo.Get(competitionId);
+            var i = competition.Series.Count;
+            var series = competition.Series[0];
 
             return mapper.MapDomainToModel(competition);
         }

@@ -28,7 +28,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
         }
 
         public IEnumerator<T> GetEnumerator()
-        {
+        {            
             return session.Query<T>().GetEnumerator();
         }
 

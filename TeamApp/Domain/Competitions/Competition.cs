@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TeamApp.Domain.Schedules;
+using System.Linq;
 
 namespace TeamApp.Domain.Competitions
 {
@@ -19,6 +20,7 @@ namespace TeamApp.Domain.Competitions
         public abstract void ProcessGame(ScheduleGame game);
         public abstract bool AreGamesComplete();
         public abstract void ProcessEndOfCompetitionDetails(int endingDay);
+        public virtual IEnumerable<ScheduleGame> Games { get; set; }
 
         public virtual void ProcessEndOfCompetition(int endingDay)
         {
@@ -79,6 +81,19 @@ namespace TeamApp.Domain.Competitions
             var day = Schedule.GetNextInCompleteDay();
 
             return day == null ? null : day;
+        }
+
+        public virtual void SetupSchedule()
+        {
+            Schedule = new Schedule();
+            if (Schedule.Days == null) Schedule.Days = new Dictionary<int, ScheduleDay>();
+
+            Games.ToList().ForEach(game =>
+            {
+                if (!Schedule.Days.ContainsKey(game.Day)) Schedule.Days.Add(game.Day, new ScheduleDay(game.Day));
+
+                Schedule.Days[game.Day].AddGame(game);
+            });
         }
     }
 }

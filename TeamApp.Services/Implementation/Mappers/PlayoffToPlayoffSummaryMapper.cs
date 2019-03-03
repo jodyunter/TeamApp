@@ -18,7 +18,13 @@ namespace TeamApp.Services.Implementation.Mappers
             var series = new List<BestOfSeriesSummaryViewModel>();
             
             if (obj.Series != null)
-                series = seriesMapper.MapDomainToModel(obj.Series.Cast<BestOfSeries>()).ToList();
+            {
+                obj.Series.ToList().ForEach(s =>
+                {
+                    series.Add(seriesMapper.MapDomainToModel((BestOfSeries)s.Self));
+                });
+            }
+                
 
             var model = new PlayoffSummaryViewModel(compMapper.MapDomainToModel(obj), obj.CurrentRound, series);
 

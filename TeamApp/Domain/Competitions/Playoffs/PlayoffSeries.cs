@@ -15,6 +15,8 @@ namespace TeamApp.Domain.Competitions.Playoffs
         public virtual PlayoffTeam AwayTeam { get; set; }
         public virtual IList<PlayoffGame> Games { get; set; }
         public virtual int[] HomeGameProgression { get; set; }
+        
+        public virtual PlayoffSeries Self { get { return this; } }
 
         public PlayoffSeries() { }
         public PlayoffSeries(Playoff playoff, string name, int round, int startingDay, PlayoffTeam homeTeam, PlayoffTeam awayTeam,            
