@@ -20,13 +20,16 @@ namespace TeamApp.Test.Domain.Competitions
             p1.Finished = false;
             p2.Finished = true;
 
-            MockCompetitionConfig config = new MockCompetitionConfig();
+            MockCompetitionConfig config = new MockCompetitionConfig();            
 
             var message = "";
             
             try
             {
                 var comp = config.CreateCompetition(1, 1, new List<Competition>() { p1, p2 });
+                Null(comp);
+                config.CompetitionStartingDay = 15;
+                comp = config.CreateCompetition(1, 1, new List<Competition>() { p1, p2 });
             }
             catch (Exception e)
             {

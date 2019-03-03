@@ -21,7 +21,7 @@ namespace TeamApp.Test.Domain.Competitions.Seasons.Config
 
             var competition = ((List<SeasonCompetitionConfig>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
 
-            Equals(expected, competition.GetTeamsInDivision(divisionName));
+            StrictEqual(expected, competition.GetTeamsInDivision(divisionName).Count);
         }
 
         [Theory]

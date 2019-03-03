@@ -33,14 +33,6 @@ namespace TeamApp.Services.Implementation
             return mapper.MapDomainToModel(team);
         }
 
-        public IEnumerable<TeamViewModel> GetTeamByStatus(bool active)
-        {
-            var teams = repository.GetByStatus(active);
-
-            return mapper.MapDomainToModel(teams);
-            
-        }
-
         public IEnumerable<TeamViewModel> GetAllTeams()
         {
             var teams = repository.GetAll().ToList();

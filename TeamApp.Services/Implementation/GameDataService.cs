@@ -115,7 +115,7 @@ namespace TeamApp.Services.Implementation
         {
             var gameData = gameDataRepo.GetCurrentData();
 
-            int unfinishedGames = scheduleGameRepo.GetInCompleteOrUnProcessedGamesForDay(gameData.CurrentDay, gameData.CurrentYear).Count();
+            int unfinishedGames = scheduleGameRepo.GetInCompleteOrUnProcessedGamesOnOrBeforeDay(gameData.CurrentDay, gameData.CurrentYear).Count();
 
             if (unfinishedGames > 0)
             {

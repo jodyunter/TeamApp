@@ -30,7 +30,7 @@ namespace TeamApp.Data.Relational.Repositories
             return baseRepo.Where(g => g.Day == day && g.Year == year && g.Complete && !g.Processed).ToList();
         }
 
-        public IEnumerable<ScheduleGame> GetInCompleteOrUnProcessedGamesForDay(int day, int year)
+        public IEnumerable<ScheduleGame> GetInCompleteOrUnProcessedGamesOnOrBeforeDay(int day, int year)
         {
             return baseRepo.Where(g => g.Day <= day && g.Year == year && (!g.Complete || !g.Processed)).ToList();
         }

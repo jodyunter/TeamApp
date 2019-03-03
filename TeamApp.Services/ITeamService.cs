@@ -9,8 +9,7 @@ namespace TeamApp.Services
     {
 
         TeamViewModel GetTeamByName(string name);
-        TeamViewModel GetTeamById(int id);
-        IEnumerable<TeamViewModel> GetTeamByStatus(bool active);
+        TeamViewModel GetTeamById(int id);        
         IEnumerable<TeamViewModel> GetAllTeams();
         IEnumerable<TeamViewModel> SaveTeams(IEnumerable<TeamViewModel> models);        
         TeamViewModel SaveTeam(TeamViewModel model);

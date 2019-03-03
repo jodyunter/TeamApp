@@ -229,13 +229,13 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs
 
             if (expectedResult == 0)
             {
-                Equals("A Team", game.HomeTeam.Name);
-                Equals("B Team", game.AwayTeam.Name);
+                Equal("A Team", game.HomeTeam.Name);
+                Equal("B Team", game.AwayTeam.Name);
             }
             else
             {
-                Equals("B Team", game.HomeTeam.Name);
-                Equals("A Team", game.AwayTeam.Name);
+                Equal("B Team", game.HomeTeam.Name);
+                Equal("A Team", game.AwayTeam.Name);
             }
         }
 
@@ -284,11 +284,11 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs
             var series2 = new BestOfSeries(null, "Test", 1, 1, homeTeam, awayTeam, 0, 0, 2, null, null);
             var series3 = new BestOfSeries(null, "Test", 1, 1, homeTeam, awayTeam, 0, 0, 2, null, null);
 
-            Equals("A Team", series1.GetWinner());
-            Equals("B Team", series1.GetLoser());
+            Equal("A Team", series1.GetWinner().Name);
+            Equal("B Team", series1.GetLoser().Name);
 
-            Equals("B Team", series2.GetWinner());
-            Equals("A Team", series2.GetLoser());
+            Equal("B Team", series2.GetWinner().Name);
+            Equal("A Team", series2.GetLoser().Name);
                         
             Null(series3.GetWinner());
             Null(series3.GetLoser());
@@ -306,11 +306,11 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs
             var series2 = new TotalGoalsSeries(null, "Test", 1, 1, homeTeam, awayTeam, 2, 5, 2, 2, null, null);
             var series3 = new TotalGoalsSeries(null, "Test", 1, 0, homeTeam, awayTeam, 16, 12, 2, 1, null, null);
 
-            Equals("A Team", series1.GetWinner());
-            Equals("B Team", series1.GetLoser());
+            Equal("A Team", series1.GetWinner().Name);
+            Equal("B Team", series1.GetLoser().Name);
 
-            Equals("B Team", series2.GetWinner());
-            Equals("A Team", series2.GetLoser());
+            Equal("B Team", series2.GetWinner().Name);
+            Equal("A Team", series2.GetLoser().Name);
 
             Null(series3.GetWinner());
             Null(series3.GetLoser());

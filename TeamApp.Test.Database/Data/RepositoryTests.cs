@@ -108,6 +108,7 @@ namespace TeamApp.Test.Data
             repo.Update(c11);
             repo.Update(c12);
 
+            var c10Id = c10.Id;
 
             //getall
             StrictEqual(12, repo.GetAll().Count());
@@ -140,16 +141,18 @@ namespace TeamApp.Test.Data
             StrictEqual(0, repo.GetByLeagueAndYear(league2.Id, 15).Count());
 
             //IEnumerable<Competition> GetByLeagueAndYear(int leagueId, int year, bool started, bool finished)
-            Equals("P9", repo.GetByLeagueAndYear(league1.Id, 15, false, false).First().Name);
-            Equals("P10", repo.GetByLeagueAndYear(league1.Id, 15, false, true).First().Name);
-            Equals("P11", repo.GetByLeagueAndYear(league1.Id, 15, true, false).First().Name);
-            Equals("P12", repo.GetByLeagueAndYear(league1.Id, 15, true, true).First().Name);
+
+            Equal("P9", repo.GetByLeagueAndYear(league1.Id, 15, false, false).First().Name);
+            Equal("P10", repo.GetByLeagueAndYear(league1.Id, 15, false, true).First().Name);
+            Equal("P11", repo.GetByLeagueAndYear(league1.Id, 15, true, false).First().Name);
+            Equal("P12", repo.GetByLeagueAndYear(league1.Id, 15, true, true).First().Name);
 
             //IEnumerable<CompetitionSimpleViewModel> GetCompetitionsByYear(int year);
-            True(false);
+            Single(repo.GetByYear(9));
+            StrictEqual(2, repo.GetByYear(5).Count());
 
             //Competition GetCompetition(long id);
-            True(false);
+            Equal("P10", repo.Get(c10Id).Name);
         }
 
         #endregion
@@ -240,7 +243,7 @@ namespace TeamApp.Test.Data
             StrictEqual(2, gameRepo.GetCompleteAndUnProcessedGamesForDay(3, 2).Count());
 
             //IEnumerable<ScheduleGame> GetInCompleteOrUnProcessedGamesForDay(int day, int year);
-            StrictEqual(10, gameRepo.GetInCompleteOrUnProcessedGamesForDay(3, 2).Count());
+            StrictEqual(17, gameRepo.GetInCompleteOrUnProcessedGamesOnOrBeforeDay(3, 2).Count());
         }
         #endregion
         #region Season Repo Tests
@@ -303,19 +306,17 @@ namespace TeamApp.Test.Data
 
             var updatedTeam = repo.Get(newTeam.Id);
 
-            Equals("Updated Name", newTeam.Name);
+            Equal("Updated Name", newTeam.Name);
 
             for (int i = 0; i < 10; i++)
             {
                 repo.Add(new Team("Team " + i, "AddNick" + i, "AddShort" + i, 5, "Me" + i, 1, i, true));
             }
 
-            Equals(11, repo.GetAll().ToList().Count);
+            Equal(11, repo.GetAll().ToList().Count);
 
-
-            Equals(1, repo.GetByStatus(false));
-            Equals(10, repo.GetByStatus(true));
-            Equals("AddNick5", repo.GetByName("Team 5").NickName);
+            //Team GetByName(string name);        
+            Equal("AddNick5", repo.GetByName("Team 5").NickName);
         }
         #endregion
         #region Team Ranking Repo Tests

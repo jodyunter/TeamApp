@@ -13,10 +13,5 @@ namespace TeamApp.Data.Relational.Repositories
         {
             return baseRepo.Where(t => t.Name.Equals(name)).FirstOrDefault();
         }
-
-        public List<Team> GetByStatus(bool active)
-        {
-            return baseRepo.Where(t => t.Active == active).ToList();
-        }
     }
 }
