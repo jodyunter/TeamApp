@@ -6,6 +6,7 @@
         public const int TEAM_TYPE = 0;
         public const int DIVISION_TYPE = 1;
         public const int NONE = 2;
+        //todo setup a FROM_COMPETITION type.  "FROM_COMPETITION Competition_Name RankingName RankingValue
 
         public virtual SeasonCompetitionConfig Competition { get; set; }
         public virtual int HomeTeamType { get; set; } //division or team
