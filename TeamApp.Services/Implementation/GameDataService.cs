@@ -17,7 +17,7 @@ namespace TeamApp.Services.Implementation
         private ICompetitionRepository competitionRepo;
         private ICompetitionConfigRepository competitionConfigRepo;        
 
-        public GameDataService(IGameDataRepository gameDataRepository, ILeagueRepository leagueRepository, IScheduleGameRepository scheduleGameRepository, ICompetitionRepository competitionRepository, ICompetitionConfigRepository competitionConfigRepository, ISeasonRepository seasonRepository)
+        public GameDataService(IGameDataRepository gameDataRepository, ILeagueRepository leagueRepository, IScheduleGameRepository scheduleGameRepository, ICompetitionRepository competitionRepository, ICompetitionConfigRepository competitionConfigRepository)
         {
             gameDataRepo = gameDataRepository;
             leagueRepo = leagueRepository;
@@ -88,12 +88,13 @@ namespace TeamApp.Services.Implementation
             var gamesToProcess = scheduleGameRepo.GetCompleteAndUnProcessedGamesForDay(gameData.CurrentDay, gameData.CurrentYear).ToList();
 
             var competitionList = competitionRepo.GetStartedAndUnfinishedCompetitionsByYear(gameData.CurrentYear).ToDictionary(key => key.Id);
-    
+               
             gamesToProcess.ForEach(game =>
             {
                 var competition = competitionList[game.Competition.Id];
                 competition.ProcessGame(game);
-                scheduleGameRepo.Update(game);      
+                scheduleGameRepo.Update(game);
+                competitionRepo.Update(competition);
             });
 
             competitionList.Values.ToList().ForEach(competition =>

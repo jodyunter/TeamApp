@@ -48,7 +48,7 @@ namespace TeamApp.Console.App
 
             LeagueService = new LeagueService(leagueRepository);
             StandingsService = new StandingsService(standingsRepository, teamRankingRepository);
-            GameDataService = new GameDataService(gameDataRepository, leagueRepository, scheduleGameRepository, competitionRepository, competitionConfigRepository, seasonRepository);
+            GameDataService = new GameDataService(gameDataRepository, leagueRepository, scheduleGameRepository, competitionRepository, competitionConfigRepository);
             ScheduleGameService = new ScheduleGameService(scheduleGameRepository);
             CompetitionService = new CompetitionService(competitionRepository);
             PlayoffService = new PlayoffService(competitionRepository);
