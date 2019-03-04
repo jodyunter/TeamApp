@@ -17,7 +17,7 @@ namespace TeamApp.Domain.Competitions
         public virtual bool Finished { get; set; }
         public virtual int? StartDay { get; set; }
         public virtual int? EndDay { get; set; }
-        public abstract void ProcessGame(ScheduleGame game);
+        public abstract IEnumerable<ScheduleGame> ProcessGame(ScheduleGame game); //this might add new games that need to be saved
         public abstract bool AreGamesComplete();
         public abstract void ProcessEndOfCompetitionDetails(int endingDay);
         public virtual IEnumerable<ScheduleGame> Games { get; set; }
@@ -46,10 +46,10 @@ namespace TeamApp.Domain.Competitions
             Finished = finished;
         }
 
+        //does not process game!
         public virtual void PlayGame(ScheduleGame game, Random random)
         {            
-            if (!game.IsComplete()) game.Play(random);
-            if (!game.Processed) { ProcessGame(game); game.Processed = true; }
+            if (!game.IsComplete()) game.Play(random);            
         }
 
         public virtual List<ScheduleGame> PlayGames(List<ScheduleGame> games, Random random)

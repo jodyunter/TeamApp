@@ -224,7 +224,11 @@ namespace TeamApp.Domain.Schedules
         public static int AddGamesToSchedule(Schedule schedule, List<ScheduleGame> games, int dayToStartOn)
         {
             int result = 0;
-
+            
+            if (dayToStartOn < 1)
+            {
+                dayToStartOn = schedule.Days.Keys.Max() + 1;
+            }
             games.ForEach(g => { result = AddGameToSchedule(schedule, g, dayToStartOn); });
 
             return result;

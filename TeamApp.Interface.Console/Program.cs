@@ -19,7 +19,7 @@ namespace TeamApp.Console
             Thread.CurrentPrincipal = user;
 
             var teamApp = new TeamApplication();
-            //teamApp.SetupConfig(true, true, true);
+            teamApp.SetupConfig(true, true, true);
             var stop = false;
 
             while (!stop)

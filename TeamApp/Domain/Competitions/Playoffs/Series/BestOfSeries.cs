@@ -42,6 +42,8 @@ namespace TeamApp.Domain.Competitions.Playoffs.Series
             }
             else
                 AwayWins++;
+
+            game.Processed = true;
         }
 
         public override int NumberOfGamesNeeded()

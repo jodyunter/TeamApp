@@ -51,9 +51,10 @@ namespace TeamApp.Domain.Competitions.Playoffs
                 });
             });
         }
-        public virtual void BeginRound()
+        public virtual IEnumerable<ScheduleGame> BeginRound()
         {
             Started = true;
+            var newGames = new List<ScheduleGame>();
 
             if (IsRoundComplete(CurrentRound)) CurrentRound++;
             //else return;
@@ -86,18 +87,22 @@ namespace TeamApp.Domain.Competitions.Playoffs
                     var rule = activeSeriesList.Where(sr => sr.Name.Equals(s.Name)).FirstOrDefault();
                     s.AwayTeam = playoffConfig.GetTeamByRule(this, rule.AwayFromType, rule.AwayFromName, rule.AwayFromValue);
                 }
-                SetupSeriesGames(s);
+                newGames = SetupSeriesGames(s).ToList();
             });
+
+            return newGames;
 
         }
 
-        public virtual void SetupSeriesGames(PlayoffSeries series)
+        public virtual IEnumerable<ScheduleGame> SetupSeriesGames(PlayoffSeries series)
         {
             var newGames = series.CreateNeededGamesForSeries();
 
             if (StartDay == null) throw new Exception("Start day cannot be null when we create series games.");
             var start = (int)StartDay;
-            Scheduler.AddGamesToSchedule(Schedule, newGames.ToList<ScheduleGame>(), series.StartingDay > 0 ? series.StartingDay: start);
+            Scheduler.AddGamesToSchedule(Schedule, newGames.ToList<ScheduleGame>(), series.StartingDay);
+
+            return newGames;
         }
 
         public virtual void AddSeries(PlayoffSeries series)
@@ -107,9 +112,10 @@ namespace TeamApp.Domain.Competitions.Playoffs
             Series.Add(series);
         }
 
-        public override void ProcessGame(ScheduleGame game)
+        public override IEnumerable<ScheduleGame> ProcessGame(ScheduleGame game)
         {
             var gameCompetition = game.Competition;
+            var newGames = new List<ScheduleGame>();
 
             if (!(gameCompetition.Name.Equals(Name)) || !(gameCompetition.Year.Equals(Year)) || !(game is PlayoffGame))
             {
@@ -126,9 +132,11 @@ namespace TeamApp.Domain.Competitions.Playoffs
             }
 
             if (IsRoundComplete(CurrentRound))
-                BeginRound();
+                newGames = BeginRound().ToList();
 
-            SetupSeriesGames(playoffGame.Series);
+            newGames.AddRange(SetupSeriesGames(playoffGame.Series));
+
+            return newGames;
             
         }
 
@@ -184,7 +192,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
             var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
 
             var activeSeries = playoffConfig.GetActiveSeriesRules(Year).ToList();
-
+            
             for (int i = 0; i < activeSeries.Count; i++)
             {
                 complete = complete && IsRoundComplete(activeSeries[i].Round);

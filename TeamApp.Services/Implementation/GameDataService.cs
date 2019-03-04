@@ -16,7 +16,7 @@ namespace TeamApp.Services.Implementation
         private IScheduleGameRepository scheduleGameRepo;
         private ICompetitionRepository competitionRepo;
         private ICompetitionConfigRepository competitionConfigRepo;        
-
+        public string DebugError { get; set; }
         public GameDataService(IGameDataRepository gameDataRepository, ILeagueRepository leagueRepository, IScheduleGameRepository scheduleGameRepository, ICompetitionRepository competitionRepository, ICompetitionConfigRepository competitionConfigRepository)
         {
             gameDataRepo = gameDataRepository;
@@ -92,8 +92,9 @@ namespace TeamApp.Services.Implementation
             gamesToProcess.ForEach(game =>
             {
                 var competition = competitionList[game.Competition.Id];
-                competition.ProcessGame(game);
+                var newGames = competition.ProcessGame(game);
                 scheduleGameRepo.Update(game);
+                scheduleGameRepo.UpdateAll(newGames);
                 competitionRepo.Update(competition);
             });
 
@@ -116,11 +117,12 @@ namespace TeamApp.Services.Implementation
         {
             var gameData = gameDataRepo.GetCurrentData();
 
-            int unfinishedGames = scheduleGameRepo.GetInCompleteOrUnProcessedGamesOnOrBeforeDay(gameData.CurrentDay, gameData.CurrentYear).Count();
+            var unfinishedGames = scheduleGameRepo.GetInCompleteOrUnProcessedGamesOnOrBeforeDay(gameData.CurrentDay, gameData.CurrentYear);
 
-            if (unfinishedGames > 0)
+            if (unfinishedGames.Count() > 0)
             {
                 //add a mesage about needing to compelte or process games
+
                 leagueRepo.Flush();
 
                 return false;

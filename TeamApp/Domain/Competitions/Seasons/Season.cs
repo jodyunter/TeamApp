@@ -15,8 +15,8 @@ namespace TeamApp.Domain.Competitions.Seasons
             Divisions = divisions;
         }
 
-        public override void ProcessGame(ScheduleGame game)
-        {
+        public override IEnumerable<ScheduleGame> ProcessGame(ScheduleGame game)
+        {            
             if (game.Complete)
             {
                 var home = (SeasonTeam)Teams.Where(t => t.Name.Equals(game.HomeTeam.Name)).First();
@@ -39,7 +39,11 @@ namespace TeamApp.Domain.Competitions.Seasons
                 away.Stats.GoalsAgainst += game.HomeScore;
 
                 SortAllTeams();
+
+                game.Processed = true;
             }
+
+            return new List<ScheduleGame>();
         }
 
         public override void ProcessEndOfCompetitionDetails(int endingDay)

@@ -89,9 +89,9 @@ namespace TeamApp.Test.Domain.Competitions
             return;
         }
 
-        public override void ProcessGame(ScheduleGame game)
+        public override IEnumerable<ScheduleGame> ProcessGame(ScheduleGame game)
         {
-            return;
+            return new List<ScheduleGame>();
         }
     }
 }

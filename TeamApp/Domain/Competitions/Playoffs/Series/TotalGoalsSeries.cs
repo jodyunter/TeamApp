@@ -35,6 +35,7 @@ namespace TeamApp.Domain.Competitions.Playoffs.Series
             HomeScore += game.HomeScore;
             AwayScore += game.AwayScore;
             GamesPlayed++;
+            game.Processed = true;
         }
 
         public override int NumberOfGamesNeeded()
