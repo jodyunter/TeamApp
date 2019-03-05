@@ -4,6 +4,7 @@ using TeamApp.Domain.Schedules;
 using System.Linq;
 using TeamApp.Domain.Competitions.Playoffs.Config;
 using TeamApp.Domain.Competitions.Playoffs.Series;
+using TeamApp.Domain.Extensions;
 
 namespace TeamApp.Domain.Competitions.Playoffs
 {
@@ -100,11 +101,47 @@ namespace TeamApp.Domain.Competitions.Playoffs
 
             if (StartDay == null) throw new Exception("Start day cannot be null when we create series games.");
             var start = (int)StartDay;
-            Scheduler.AddGamesToSchedule(Schedule, newGames.ToList<ScheduleGame>(), series.StartingDay);
+            if (start < 1 && series.Round > 1) 
+            //if there is no specific start day, we need to find a suitable day.  If round 1, then put the game wherever it fits
+            {
+                start = GetLastScheduleDayOfRound(series.Round - 1);
+            }
+            else
+            {
+                start = series.StartingDay;
+            }
+            //we need to add it to the schedule, on a day that is incomplete, but has no games from the previous round
+
+            Scheduler.AddGamesToSchedule(Schedule, newGames.ToList<ScheduleGame>(), start);
 
             return newGames;
         }
+        public virtual IEnumerable<ScheduleGame> GetGamesForRound(int round)
+        {
+            var result = new List<ScheduleGame>();
+            var startingDay = Schedule.GetNextInCompleteDay().DayNumber;
+            var lastDay = Schedule.Days.Keys.Max();
 
+            Schedule.Days.ForEach((key, value) =>
+            {
+                result.AddRange(value.Games.Where(g =>
+                    g.Day >= startingDay && g.Day <= lastDay
+                    && ((g.GetType() == typeof(PlayoffGame)) && ((PlayoffGame)g).Series.Round == round)
+                    ));
+            });
+
+            return result;
+
+        }
+
+        public virtual int GetLastScheduleDayOfRound(int round)
+        {
+            int? lastDayForRound = GetGamesForRound(round).Max(g => g.Day as int?);
+
+            if (lastDayForRound == null) return 1;
+            else
+                return (int)lastDayForRound;                       
+        }
         public virtual void AddSeries(PlayoffSeries series)
         {
             if (Series == null) Series = new List<PlayoffSeries>();
