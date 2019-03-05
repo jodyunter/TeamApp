@@ -93,6 +93,7 @@ namespace TeamApp.Services.Implementation
             {
                 var competition = competitionList[game.Competition.Id];
                 var newGames = competition.ProcessGame(game);
+                if (competition.GetType() == typeof(Season)) ((Season)competition).SortAllTeams();
                 scheduleGameRepo.Update(game);
                 scheduleGameRepo.UpdateAll(newGames);
                 competitionRepo.Update(competition);

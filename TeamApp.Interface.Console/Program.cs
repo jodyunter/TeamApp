@@ -68,7 +68,7 @@ namespace TeamApp.Console
                             var standings = teamApp.StandingsService.GetStandings(m.Id);
                             var view = new StandingsView(standings);
 
-                            WriteLine(view.GetView(StandingsView.LEAGUE));
+                            WriteLine(view.GetView(StandingsView.CONFERENCE));
                         }
                         else if (m.Type == "Playoff")
                         {
@@ -95,7 +95,7 @@ namespace TeamApp.Console
                             var standings = teamApp.StandingsService.GetStandings(m.Id);
                             var view = new StandingsView(standings);
 
-                            WriteLine(view.GetView(StandingsView.LEAGUE));
+                            WriteLine(view.GetView(StandingsView.CONFERENCE));
                         }
                         else if (m.Type == "Playoff")
                         {
