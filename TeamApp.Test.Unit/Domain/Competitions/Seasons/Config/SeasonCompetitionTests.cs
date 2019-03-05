@@ -9,18 +9,7 @@ namespace TeamApp.Test.Domain.Competitions.Seasons.Config
 {
     public class SeasonCompetitionTests
     {
-        [Theory]
-        [InlineData("NHL", 14)]
-        [InlineData("Eastern", 6)]
-        [InlineData("Western", 7)]
-        [InlineData("East", 3)]
-        [InlineData("NorthEast", 2)]
-        [InlineData("Atlantic", 1)]
-        [InlineData("West", 4)]
-        [InlineData("Central", 4)]
-        [InlineData("Central A", 2)]
-        [InlineData("Central B", 2)]
-        public void ShouldGetTeamsInDivision(string divisionName, int expected)
+        private SeasonCompetitionConfig CreateConfig()
         {
             var seasonConfig = new SeasonCompetitionConfig("My Season", null, 1, 1, null, 1, null, null, null, null, null);
             var divisionRules = new List<SeasonDivisionRule>()
@@ -77,26 +66,43 @@ namespace TeamApp.Test.Domain.Competitions.Seasons.Config
 
             seasonConfig.DivisionRules = divisionRules;
             seasonConfig.TeamRules = seasonTeamRules;
-                                   
+
+            return seasonConfig;
+
+        }
+        [Theory]
+        [InlineData("NHL", 14)]
+        [InlineData("Eastern", 6)]
+        [InlineData("Western", 7)]
+        [InlineData("East", 3)]
+        [InlineData("NorthEast", 2)]
+        [InlineData("Atlantic", 1)]
+        [InlineData("West", 4)]
+        [InlineData("Central", 4)]
+        [InlineData("Central A", 2)]
+        [InlineData("Central B", 2)]
+        public void ShouldGetTeamsInDivision(string divisionName, int expected)
+        {
+
+
+            var seasonConfig = CreateConfig();
 
             StrictEqual(expected, seasonConfig.GetTeamsInDivision(divisionName).Count);
         }
 
         [Theory]
-        [InlineData("New York", "East", true)]
-        [InlineData("New York", "Atlantic", true)]
-        [InlineData("New York", "West", false)]
-        [InlineData("New York", "NHL", true)]
-        [InlineData("Winnipeg", "NHL", true)]
-        [InlineData("Edmonton", "West", true)]
-        [InlineData("Edmonton", "East", false)]
+        [InlineData("New York Rangers", "NorthEast", true)]
+        [InlineData("New York Rangers", "Atlantic", true)]
+        [InlineData("New York Rangers", "West", false)]
+        [InlineData("New York Rangers", "NHL", true)]
+        [InlineData("Winnipeg Jets", "NHL", true)]
+        [InlineData("Edmonton Oilers", "West", true)]
+        [InlineData("Edmonton Oilers", "East", false)]
         public void IsTeamInDivision(string teamName, string divisionName, bool expected)
         {
-            var data = Data1.CreateBasicSeasonConfiguration();
+            var data = CreateConfig();            
 
-            var competition = ((List<SeasonCompetitionConfig>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
-
-            StrictEqual(expected, competition.IsTeamInDivision(teamName, divisionName));
+            StrictEqual(expected, data.IsTeamInDivision(teamName, divisionName));
 
 
         }

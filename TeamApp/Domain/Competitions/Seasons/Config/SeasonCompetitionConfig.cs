@@ -27,13 +27,29 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
         {
             var list = new List<string>();
 
-            GetTeamsInDivision(divisionName, list);
+            list.AddRange(GetTeamsAssignedToDivision(divisionName));
+
+            var parent = GetParentDivisionName(divisionName);
+
+            while (parent != null)
+            {
+                list.AddRange(GetTeamsAssignedToDivision(parent));
+                parent = GetParentDivisionName(parent);
+            }            
 
             return list;
         }
-
-        private void GetTeamsInDivision(string divisionName, List<string> teams)
+        
+        private string GetParentDivisionName(string childDivisionName)
         {
+            return DivisionRules.Where(r => r.DivisionName.Equals(childDivisionName)).Select(r => r.ParentName).FirstOrDefault();
+        }
+
+        private List<string> GetTeamsAssignedToDivision(string divisionName)
+        {
+
+            var teams = new List<string>();
+
             TeamRules.ToList().Where(tr => tr.Division.Equals(divisionName)).ToList().ForEach(rule =>
             {
                 if (rule.Division.Equals(divisionName))
@@ -42,11 +58,7 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
                 }
             });
 
-            DivisionRules.Where(r => r.ParentName != null && r.ParentName.Equals(divisionName)).ToList().ForEach(rule =>
-            {
-                GetTeamsInDivision(rule.DivisionName, teams);
-            });
-            
+            return teams;
         }
 
         public virtual bool IsTeamInDivision(string teamName, string divisionName)
