@@ -28,7 +28,10 @@ namespace TeamApp.Test.Helpers
                 new Team("Winnipeg", "Jets", "WPJ", 1, null, 1, null, true),
                 new Team("Edmonton", "Oilers", "EDO", 1, null, 1, null, true),
                 new Team("Vancouver", "Canucks", "VCC", 1, null, 1, null, true),
-                new Team("Detroit", "Red Wings", "DRW", 1, null, 1, null, true)
+                new Team("Detroit", "Red Wings", "DRW", 1, null, 1, null, true),
+                new Team("Minnesota", "Wild", "MNW", 1, null, 1, null, true),
+                new Team("Chicago", "Blackhawks", "CBH", 1, null, 1, null, true),
+                new Team("Victoria", "Cougars", "VCC", 1, null, 1, null, true)
             };
         }
         public static SeasonCompetitionConfig CreateSeasonConfiguration(League league, List<Team> teamList, List<CompetitionConfig> parents, int? startingDay, int order)
@@ -70,7 +73,10 @@ namespace TeamApp.Test.Helpers
                 new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Vancouver").First(), "West", 1, null),
                 new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Ottawa").First(), "East", 1, null),
                 new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Winnipeg").First(), "Central", 1, null),
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Toronto").First(), "Central", 1, null)
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Toronto").First(), "East", 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Minnesota").First(), "Central", 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Victoria").First(), "West", 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Chicago").First(), "Central", 1, null)
             };
 
             seasonConfig.TeamRules = seasonTeamRules;
@@ -96,7 +102,7 @@ namespace TeamApp.Test.Helpers
             {
                 //we do not need division rankings because they will come automatically
                 new PlayoffRankingRule(playoffConfig, "Top Seeds", "East", "NHL", 1, 1, 1, null),
-                new PlayoffRankingRule(playoffConfig, "Top Seeds", "West", "NHL", 1, 1, 1, null),
+                new PlayoffRankingRule(playoffConfig, "Top Seeds", "West", "NHL", 1, 1, 1, null),                
                 new PlayoffRankingRule(playoffConfig, "Rest of Teams", "East", "NHL", 2, null, 1, null),
                 new PlayoffRankingRule(playoffConfig, "Rest of Teams", "West", "NHL", 2, null, 1, null),
                 new PlayoffRankingRule(playoffConfig, "Top Seeds", "Central", "NHL", 1, 1, 1, null),
@@ -108,13 +114,20 @@ namespace TeamApp.Test.Helpers
 
             var playoffSeriesRules = new List<PlayoffSeriesRule>()
             {                            
-                new PlayoffSeriesRule(playoffConfig, "Q Final A", 1, BEST_OF_SERIES, 2, gameRules, FROM_RANKING, "Top Seeds", 3, FROM_RANKING, "Rest of Teams", 6, 1, null, new int[] {1,0,0 }, "SEMIFINALISTS", "NHL", null, null),
-                new PlayoffSeriesRule(playoffConfig, "Q Final B", 1, BEST_OF_SERIES, 2, gameRules, FROM_RANKING, "Rest of Teams", 4, FROM_RANKING, "Rest of Teams", 5, 1, null, new int[] {1,0,0 }, "SEMIFINALISTS", "NHL", null, null),
+                new PlayoffSeriesRule(playoffConfig, "R1 A", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "Rest of Teams", 2, FROM_RANKING, "Rest of Teams", 9, 1, null, new int[]  { 0,0,1,1,0,1,0 }, "QUARTERFINALISTS", "NHL", null, null),
+                new PlayoffSeriesRule(playoffConfig, "R2 B", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "Rest of Teams", 3, FROM_RANKING, "Rest of Teams", 8, 1, null, new int[]  { 0,0,1,1,0,1,0 }, "QUARTERFINALISTS", "NHL", null, null),
+                new PlayoffSeriesRule(playoffConfig, "R3 C", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "Rest of Teams", 4, FROM_RANKING, "Rest of Teams", 7, 1, null, new int[]  { 0,0,1,1,0,1,0 }, "QUARTERFINALISTS", "NHL", null, null),
+                new PlayoffSeriesRule(playoffConfig, "R4 D", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "Rest of Teams", 5, FROM_RANKING, "Rest of Teams", 6, 1, null, new int[]  { 0,0,1,1,0,1,0 }, "QUARTERFINALISTS", "NHL", null, null),
 
-                new PlayoffSeriesRule(playoffConfig, "Semi Final A", 2, BEST_OF_SERIES, 2, gameRules, FROM_RANKING, "Top Seeds", 1, FROM_RANKING, "SEMIFINALISTS", 2, 1, null, new int[] {1,0,0 }, "FINALISTS", "NHL", null, null),
-                new PlayoffSeriesRule(playoffConfig, "Semi Final B", 2, BEST_OF_SERIES, 2, gameRules, FROM_RANKING, "Top Seeds", 2, FROM_RANKING, "SEMIFINALISTS", 1, 1, null, new int[] {1,0,0 }, "FINALISTS", "NHL", null, null),
+                new PlayoffSeriesRule(playoffConfig, "QF A", 2, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "Top Seeds", 1, FROM_RANKING, "QUARTERFINALISTS", 4, 1, null, new int[]  { 0,0,1,1,0,1,0 }, "SEMIFINALISTS", "NHL", null, null),
+                new PlayoffSeriesRule(playoffConfig, "QF B", 2, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "Top Seeds", 2, FROM_RANKING, "QUARTERFINALISTS", 3, 1, null, new int[]  { 0,0,1,1,0,1,0 }, "SEMIFINALISTS", "NHL", null, null),
+                new PlayoffSeriesRule(playoffConfig, "QF C", 2, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "Top Seeds", 3, FROM_RANKING, "QUARTERFINALISTS", 2, 1, null, new int[]  { 0,0,1,1,0,1,0 }, "SEMIFINALISTS", "NHL", null, null),
+                new PlayoffSeriesRule(playoffConfig, "QF D", 2, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "Rest of Teams", 1, FROM_RANKING, "QUARTERFINALISTS", 1, 1, null, new int[]  { 0,0,1,1,0,1,0 }, "SEMIFINALISTS", "NHL", null, null),
 
-                new PlayoffSeriesRule(playoffConfig, "Final", 3, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "FINALISTS", 1, FROM_RANKING, "FINALISTS", 2, 1, null, new int[] { 0,0,1,1,0,1,0 }, null, null, null, null),
+                new PlayoffSeriesRule(playoffConfig, "Semi Final A", 3, BEST_OF_SERIES, 2, gameRules, FROM_RANKING, "SEMIFINALISTS", 1, FROM_RANKING, "SEMIFINALISTS", 4, 1, null, new int[] {1,0,0 }, "FINALISTS", "NHL", null, null),
+                new PlayoffSeriesRule(playoffConfig, "Semi Final B", 3, BEST_OF_SERIES, 2, gameRules, FROM_RANKING, "SEMIFINALISTS", 2, FROM_RANKING, "SEMIFINALISTS", 3, 1, null, new int[] {1,0,0 }, "FINALISTS", "NHL", null, null),
+
+                new PlayoffSeriesRule(playoffConfig, "Final", 4, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "FINALISTS", 1, FROM_RANKING, "FINALISTS", 2, 1, null, new int[] { 0,0,1,1,0,1,0 }, null, null, null, null),
                 //new PlayoffSeriesRule(playoffConfig, "Final", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "FINALISTS", 1, FROM_RANKING, "FINALISTS", 2, 1, 2, new int[] { 0,0,1,1,0,1,0 }, null, null, null, null)
             };
 
