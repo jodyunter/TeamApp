@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TeamApp.Domain.Extensions;
 
 namespace TeamApp.Domain.Schedules
 {
@@ -66,6 +67,18 @@ namespace TeamApp.Domain.Schedules
             return result;
         }
 
+        public IEnumerable<ScheduleGame> GetGamesBetweenDays(int startingDay, int? finalDay)
+        {
+            var result = new List<ScheduleGame>();
+            var lastDay = finalDay == null ? Days.Keys.Max() : finalDay;
+            Days.ForEach((key,value) =>
+            {
+                result.AddRange(value.Games.Where(g => g.Day >= startingDay && g.Day <= lastDay));
+            });
+
+            return result;
+            
+        }
         public Dictionary<string, int> GetAwayGamesVsTeams(string teamName, List<string> opponents)
         {
             var result = new Dictionary<string, int>();

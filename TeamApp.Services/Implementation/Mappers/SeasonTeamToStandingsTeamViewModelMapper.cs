@@ -12,7 +12,7 @@ namespace TeamApp.Services.Implementation.Mappers
         {
             var model = new StandingsTeamViewModel
             {
-                TeamName = obj.Name,
+                TeamName = obj.Name + " " + obj.NickName,
                 Division = obj.Division.Name,
                 Wins = obj.Stats.Wins,
                 Ties = obj.Stats.Ties,

@@ -27,22 +27,35 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
         {
             var list = new List<string>();
 
-            return GetTeamsInDivision(divisionName, list);
+            list.AddRange(GetTeamsAssignedToDivision(divisionName));
+
+            var parent = GetParentDivisionName(divisionName);
+
+            while (parent != null)
+            {
+                list.AddRange(GetTeamsAssignedToDivision(parent));
+                parent = GetParentDivisionName(parent);
+            }            
+
+            return list;
+        }
+        
+        private string GetParentDivisionName(string childDivisionName)
+        {
+            return DivisionRules.Where(r => r.DivisionName.Equals(childDivisionName)).Select(r => r.ParentName).FirstOrDefault();
         }
 
-        private List<string> GetTeamsInDivision(string divisionName, List<string> teams)
+        private List<string> GetTeamsAssignedToDivision(string divisionName)
         {
-            TeamRules.ToList().ForEach(rule =>
+
+            var teams = new List<string>();
+
+            TeamRules.ToList().Where(tr => tr.Division.Equals(divisionName)).ToList().ForEach(rule =>
             {
                 if (rule.Division.Equals(divisionName))
                 {
-                    teams.Add(rule.Team.Name);
+                    teams.Add(rule.Team.Name + " " + rule.Team.NickName);
                 }
-            });
-
-            DivisionRules.Where(r => r.ParentName != null && r.ParentName.Equals(divisionName)).ToList().ForEach(rule =>
-            {
-                teams.AddRange(GetTeamsInDivision(rule.DivisionName, teams));
             });
 
             return teams;
@@ -59,13 +72,13 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
 
             //setup divisions
             var divisions = new Dictionary<string, SeasonDivision>();
-            var teams = new Dictionary<string, SingleYearTeam>();
+            var teams = new List<SingleYearTeam>();
 
             ProcessDivisionRules(season, divisions);
             ProcessTeamRules(season, divisions, teams);
 
             season.Divisions = divisions.Values.ToList();
-            season.Teams = teams.Values.ToList();
+            season.Teams = teams;
 
             CreateSeasonSchedule(season);
 
@@ -96,7 +109,7 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
         }
 
         //todo properly test these with years
-        public virtual void ProcessTeamRules(Season season, Dictionary<string, SeasonDivision> seasonDivisions, Dictionary<string, SingleYearTeam> teams)
+        public virtual void ProcessTeamRules(Season season, Dictionary<string, SeasonDivision> seasonDivisions, List<SingleYearTeam> teams)
         {
             TeamRules.Where(tr => tr.IsActive(season.Year)).ToList().ForEach(rule =>
             {                
@@ -105,7 +118,7 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
                 var newTeam = new SeasonTeam(season, team, team.Name, team.NickName, team.ShortName, team.Skill, team.Owner, season.Year, null, seasonDivision);                
 
                 seasonDivision.AddTeam(newTeam);
-                teams.Add(newTeam.Name, newTeam);
+                teams.Add(newTeam);
 
             });
         }

@@ -58,7 +58,7 @@ namespace TeamApp.Test.Helpers
             var teamNameMap = new Dictionary<string, List<string>>()
             {
                 {NORTHEAST, new List<string>() { "Toronto", "Montreal", "Ottawa", "Pittsburgh","Nashville" } },
-                {ATLANTIC, new List<string>() {"Boston", "New York", "Philadelphia", "Buffalo", "New Jersey"} },
+                {ATLANTIC, new List<string>() {"Boston", "New York", "Philadelphia", "Buffalo"} },
                 //{WEST, new List<string>(){ "Calgary", "Vancouver", "Edmonton", "Los Angelas", "San Jose", "Seattle" } },
                 {WEST_A, new List<string>(){ "Calgary", "Vancouver", "Edmonton" } },
                 {WEST_B, new List<string>(){"Los Angelas", "San Jose", "Anaheim" } },
@@ -95,7 +95,7 @@ namespace TeamApp.Test.Helpers
                 for (int j = i + 1; j < i + 3; j++)
                 {
                     var homeTeam = teamNameMap[ATLANTIC][i];
-                    var awayTeam = teamNameMap[ATLANTIC][j % 5];
+                    var awayTeam = teamNameMap[ATLANTIC][j % 4];
                     competition.ScheduleRules.Add(new SeasonScheduleRule(competition, SeasonScheduleRule.TEAM_TYPE, homeTeam, SeasonScheduleRule.TEAM_TYPE, awayTeam, 1, false, 1, null)); //32            
                 }
             }

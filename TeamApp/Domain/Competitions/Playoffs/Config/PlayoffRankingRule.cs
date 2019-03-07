@@ -16,7 +16,8 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
         public virtual int? LastYear { get; set; }  //this is the lats effective year
 
         //todo how to pool candidates, then sort them
-
+        //todo HOW TO RE POOL after a round?
+        //todo how to create a second pool based on ranks from a previous pool?  TOP SEEDS combined with other groups
         public PlayoffRankingRule() { }
         public PlayoffRankingRule(PlayoffCompetitionConfig config, string groupName, string sourceGroupName, string rankingGroupName, int sourceFirstRank, int? sourceLastRank, int? firstYear, int? lastYear)
         {
