@@ -19,8 +19,8 @@ namespace TeamApp.Domain.Competitions.Seasons
         {            
             if (game.Complete)
             {
-                var home = (SeasonTeam)Teams.Where(t => t.Name.Equals(game.HomeTeam.Name)).First();
-                var away = (SeasonTeam)Teams.Where(t => t.Name.Equals(game.AwayTeam.Name)).First();
+                var home = (SeasonTeam)Teams.Where(t => t.Id == game.HomeTeam.Id).First();
+                var away = (SeasonTeam)Teams.Where(t => t.Id == game.AwayTeam.Id).First();
 
                 if (game.HomeScore == game.AwayScore)
                 {
@@ -29,8 +29,8 @@ namespace TeamApp.Domain.Competitions.Seasons
                 }
                 else
                 {
-                    ((SeasonTeam)Teams.Where(t => t.Name.Equals(game.GetWinner().Name)).First()).Stats.Wins++;
-                    ((SeasonTeam)Teams.Where(t => t.Name.Equals(game.GetLoser().Name)).First()).Stats.Loses++;
+                    ((SeasonTeam)Teams.Where(t => t.Id == game.GetWinner().Id).First()).Stats.Wins++;
+                    ((SeasonTeam)Teams.Where(t => t.Id == game.GetLoser().Id).First()).Stats.Loses++;
                 }
 
                 home.Stats.GoalsFor += game.HomeScore;
@@ -91,7 +91,7 @@ namespace TeamApp.Domain.Competitions.Seasons
 
             listOfTeams.ForEach(team =>
             {
-                var ranking = Rankings.Where(r => r.GroupName == division.Name && r.Team.Name.Equals(team.Name) && division.Level == r.GroupLevel).FirstOrDefault();
+                var ranking = Rankings.Where(r => r.GroupName == division.Name && (r.Team.Id == team.Id) && division.Level == r.GroupLevel).FirstOrDefault();
                 if (ranking == null)
                 {
                     Rankings.Add(new TeamRanking(rank, division.Name, team, division.Level));

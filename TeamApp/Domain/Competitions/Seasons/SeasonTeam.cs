@@ -32,7 +32,7 @@ namespace TeamApp.Domain.Competitions.Seasons
 
             if (statCompare == 0)
             {
-                return Name.CompareTo(other.Name);
+                return Id.CompareTo(other.Id);
             }
             else
                 return statCompare;

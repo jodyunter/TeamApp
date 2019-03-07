@@ -316,7 +316,7 @@ namespace TeamApp.Test.Data
             Equal(11, repo.GetAll().ToList().Count);
 
             //Team GetByName(string name);        
-            Equal("AddNick5", repo.GetByName("Team 5").NickName);
+            Equal("AddNick5", repo.GetByName("Team 5").ToList()[0].NickName);
         }
         #endregion
         #region Team Ranking Repo Tests

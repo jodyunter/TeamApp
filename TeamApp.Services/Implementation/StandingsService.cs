@@ -35,7 +35,7 @@ namespace TeamApp.Services.Implementation
 
             models.ForEach(model =>
             {
-                ranks.Where(r => r.Team.Name.Equals(model.TeamName)).ToList().ForEach(rank =>
+                ranks.Where(r => r.Team.Id == model.SeasonTeamId).ToList().ForEach(rank =>
                 {
                     AddRankToModel(rank.GroupName, rank.Rank, rank.GroupLevel, model);
                 });

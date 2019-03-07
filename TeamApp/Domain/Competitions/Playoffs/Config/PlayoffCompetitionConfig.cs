@@ -71,7 +71,7 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
 
             competition.Rankings.ToList().ForEach(sourceRanking =>
             {
-                var team = playoff.Teams.Where(t => t.Name.Equals(sourceRanking.Team.Name)).FirstOrDefault();
+                var team = playoff.Teams.Where(t => t.Parent.Id == sourceRanking.Team.Parent.Id).FirstOrDefault();
                 if (team == null) team = CreatePlayoffTeam(playoff, sourceRanking.Team);
 
                 playoff.Rankings.Add(new TeamRanking(sourceRanking.Rank, sourceRanking.GroupName, team, sourceRanking.GroupLevel));
@@ -106,9 +106,9 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
 
             sourceTeamRankings.ForEach(sourceRanking =>
             {
-                var team = playoff.Teams.Where(t => t.Name.Equals(sourceRanking.Team.Name)).FirstOrDefault();
+                var team = playoff.Teams.Where(t => t.Parent.Id == sourceRanking.Team.Parent.Id).FirstOrDefault();
                 if (team == null) team = CreatePlayoffTeam(playoff, sourceRanking.Team);
-                var rank = playoff.Rankings.Where(r => r.GroupName.Equals(groupToGetRankFrom) && r.Team.Name.Equals(team.Name)).First().Rank;
+                var rank = playoff.Rankings.Where(r => r.GroupName.Equals(groupToGetRankFrom) && r.Team.Parent.Id == team.Parent.Id).First().Rank;
 
                 playoff.Rankings.Add(new TeamRanking(rank, groupToPutTeamIn, team, 1));
             });

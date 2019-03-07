@@ -20,14 +20,14 @@ namespace TeamApp.Domain.Schedules
         {
             return Games.TrueForAll(g => g.Complete && g.Processed);
         }
-        public bool DoesTeamPlayInDay(string teamName)
+        public bool DoesTeamPlayInDay(long teamId)
         {
             var result = false;
 
             Games.ForEach(game =>
             {
-                if (game.HomeTeam.Name.Equals(teamName)) result = true;
-                else if (game.AwayTeam.Name.Equals(teamName)) result = true;
+                if (game.HomeTeam.Id == teamId) result = true;
+                else if (game.AwayTeam.Id == teamId) result = true;
             });
 
             return result;
@@ -39,7 +39,7 @@ namespace TeamApp.Domain.Schedules
 
             other.Games.ForEach(game =>
             {
-                result = result || DoesTeamPlayInDay(game.HomeTeam.Name) || DoesTeamPlayInDay(game.AwayTeam.Name);
+                result = result || DoesTeamPlayInDay(game.HomeTeam.Id) || DoesTeamPlayInDay(game.AwayTeam.Id);
             });
 
             return result;

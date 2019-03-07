@@ -193,7 +193,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
             {                
                 if (rankSourceGroupName == null) throw new ApplicationException("Can't have a null winner rank from.");
 
-                var rank = Rankings.Where(r => r.GroupName == rankSourceGroupName && r.Team.Name.Equals(team.Name)).First().Rank;                
+                var rank = Rankings.Where(r => r.GroupName == rankSourceGroupName && r.Team.Id == team.Id).First().Rank;                
 
                 Rankings.Add(new TeamRanking(rank, newGroupName, team, 1));
             }

@@ -248,8 +248,8 @@ namespace TeamApp.Domain.Schedules
                 if (schedule.Days.ContainsKey(currentDay))
                 {
                     bool canAdd = true;
-                    canAdd = canAdd && !schedule.Days[currentDay].DoesTeamPlayInDay(game.HomeTeam.Name);
-                    canAdd = canAdd && !schedule.Days[currentDay].DoesTeamPlayInDay(game.AwayTeam.Name);
+                    canAdd = canAdd && !schedule.Days[currentDay].DoesTeamPlayInDay(game.HomeTeam.Id);
+                    canAdd = canAdd && !schedule.Days[currentDay].DoesTeamPlayInDay(game.AwayTeam.Id);
 
                     if (canAdd) foundDayToAddTeamTo = true;
 

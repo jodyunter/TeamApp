@@ -6,7 +6,9 @@ namespace TeamApp.ViewModels.Views.Standings
 {
     public class StandingsTeamViewModel
     {
+        public long SeasonTeamId { get; set; }
         public string TeamName { get; set; }
+        public string TeamNickName { get; set; }
         public int Rank { get; set; }
         public string Division { get; set; }
         public int Wins { get; set; }

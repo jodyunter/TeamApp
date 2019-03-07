@@ -4,6 +4,7 @@ using static TeamApp.Domain.Competitions.Seasons.Config.SeasonScheduleRule;
 
 namespace TeamApp.Domain.Competitions.Seasons.Config
 {
+    //todo must stop relying on team name
     public class SeasonConfigScheduleValidator
     {   
         public Dictionary<string, int> GameCounts { get; set; }
@@ -11,7 +12,7 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
         public SeasonConfigScheduleValidator(SeasonCompetitionConfig config)
         {
             var divisionCounts = new Dictionary<string, SortedSet<string>>();
-            var teamCounts = new Dictionary<string, SortedSet<string>>();
+            var teamCounts = new Dictionary<long, SortedSet<string>>();
 
             //"TeamA:TeamB", 0
             //"TeamA:Home", 0
@@ -50,7 +51,7 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
 
             config.TeamRules.ToList().ForEach(teamRule =>
             {
-                if (!teamCounts.ContainsKey(teamRule.Team.Name)) teamCounts.Add(teamRule.Team.Name, new SortedSet<string>());
+                if (!teamCounts.ContainsKey(teamRule.Team.Id)) teamCounts.Add(teamRule.Team.Id, new SortedSet<string>());
 
                 divisionCounts[teamRule.Division].Add(teamRule.Team.Name);
 
@@ -170,6 +171,34 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
             });
 
             GameCounts = gameCounts;
+        }
+
+        public bool IsSeasonTeamRuleActive(SeasonTeamRule seasonTeamRule, int year)
+        {
+            return seasonTeamRule.IsActive(year);
+        }
+
+        public bool IsTeamActive(SeasonTeamRule seasonTeamRule, int year)
+        {
+            return seasonTeamRule.Team.IsActive(year);
+        }
+
+        public bool DoesTeamExist(SeasonTeamRule seasonTeamRule, int year)
+        {
+            return seasonTeamRule.IsActive(year) && seasonTeamRule.Team != null && seasonTeamRule.Team.Active && seasonTeamRule.Team.IsActive(year);        
+        }
+
+        public bool IsSeasonDivisionRuleActive(SeasonDivisionRule rule, int year)
+        {
+            return rule.IsActive(year);
+        }
+        public bool DoesDivisionConfigExist(IList<SeasonDivisionRule> currentDivisionRules, SeasonTeamRule seasonTeamRule)
+        {
+            var found = false;
+
+            found = currentDivisionRules.Where(dr => dr.DivisionName.Equals(seasonTeamRule.Division)).Count() > 0;
+            
+            return false;
         }
     }
 }

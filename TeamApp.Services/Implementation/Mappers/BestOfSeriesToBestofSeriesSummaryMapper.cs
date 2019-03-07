@@ -12,8 +12,10 @@ namespace TeamApp.Services.Implementation.Mappers
         {
             var model = new BestOfSeriesSummaryViewModel();
             model.Id = obj.Id;
-            model.AwayTeamName = obj.AwayTeam == null ? "None" : obj.AwayTeam.Name + " " + obj.AwayTeam.NickName;
-            model.HomeTeamName = obj.HomeTeam == null ? "None" : obj.HomeTeam.Name + " " + obj.HomeTeam.NickName;
+            model.AwayTeamName = obj.AwayTeam == null ? "None" : obj.AwayTeam.Name;
+            model.AwayTeamNickName = obj.AwayTeam == null ? "None" : obj.AwayTeam.NickName;
+            model.HomeTeamName = obj.HomeTeam == null ? "None" : obj.HomeTeam.Name;
+            model.HomeTeamNickName = obj.HomeTeam == null ? "None" : obj.HomeTeam.NickName;
             model.HomeWins = obj.HomeWins;
             model.AwayWins = obj.AwayWins;
             model.PlayoffName = obj.Playoff.Name;

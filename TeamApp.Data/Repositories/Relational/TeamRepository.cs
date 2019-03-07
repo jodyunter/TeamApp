@@ -9,9 +9,9 @@ namespace TeamApp.Data.Relational.Repositories
     public class TeamRepository:DataRepository<Team>, ITeamRepository
     {
         public TeamRepository(IRelationalRepository<Team> baseRepo) : base(baseRepo) { }
-        public Team GetByName(string name)
+        public IEnumerable<Team> GetByName(string name)
         {
-            return baseRepo.Where(t => t.Name.Equals(name)).FirstOrDefault();
+            return baseRepo.Where(t => t.Name.Equals(name));
         }
     }
 }

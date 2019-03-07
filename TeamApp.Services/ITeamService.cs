@@ -8,7 +8,6 @@ namespace TeamApp.Services
     public interface ITeamService
     {
 
-        TeamViewModel GetTeamByName(string name);
         TeamViewModel GetTeamById(int id);        
         IEnumerable<TeamViewModel> GetAllTeams();
         IEnumerable<TeamViewModel> SaveTeams(IEnumerable<TeamViewModel> models);        

@@ -19,13 +19,6 @@ namespace TeamApp.Services.Implementation
             mapper = new BaseDomainModelMapper<Team, TeamViewModel>();
         }
 
-        public TeamViewModel GetTeamByName(string name)
-        {            
-            var team = repository.GetByName(name);
-
-            return mapper.MapDomainToModel(team);
-        }
-
         public TeamViewModel GetTeamById(int id)
         {
             var team = repository.Get(id);

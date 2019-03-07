@@ -6,6 +6,6 @@ namespace TeamApp.Domain.Repositories
 {
     public interface ITeamRepository:IRepository<Team>
     {
-        Team GetByName(string name);        
+        IEnumerable<Team> GetByName(string name);        
     }
 }

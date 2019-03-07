@@ -36,12 +36,12 @@ namespace TeamApp.Domain.Competitions.Playoffs.Series
                 throw new ApplicationException("No winner in game for a best of series!");
             }
 
-            if (winner.Name.Equals(HomeTeam.Name))
-            {
+            if (winner.Id == HomeTeam.Parent.Id)
                 HomeWins++;
-            }
-            else
+            else if (winner.Id == AwayTeam.Parent.Id)
                 AwayWins++;
+            else
+                throw new Exception("Can't find the team!");
 
             game.Processed = true;
         }
