@@ -18,6 +18,11 @@
         public virtual int? FirstYear { get; set; }
         public virtual int? LastYear { get; set; }
 
+        public virtual Team HomeTeam { get; set; } 
+        public virtual SeasonDivisionRule HomeDivision { get; set; }
+        public virtual Team AwayTeam { get; set; }
+        public virtual SeasonDivisionRule AwayDivision { get; set; }
+
         public SeasonScheduleRule() { }
         public SeasonScheduleRule(SeasonCompetitionConfig competition, int homeTeamType, string homeTeamValue, int awayTeamType, string awayTeamValue, int iterations, bool homeAndAway, int? firstYear, int? lastYear)
         {
