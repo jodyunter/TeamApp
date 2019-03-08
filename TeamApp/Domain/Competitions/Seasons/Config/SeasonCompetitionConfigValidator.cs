@@ -44,7 +44,7 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
 
             return valid;
         }
-        
+                
         public bool ValidateActiveTeams(List<SeasonTeamRule> teamRules, int year)
         {
             bool valid = true;
@@ -97,33 +97,28 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
             found = currentDivisionRules.Where(dr => dr.DivisionName.Equals(seasonTeamRule.Division)).Count() > 0;
             
             return found;
-        }        
+        }
 
-        /*todo after re-working the SeasonScheduleRule to contain references instead of strings
         public bool ValidateScheduleRule(SeasonScheduleRule rule, IList<SeasonTeamRule> teamRules, IList<SeasonDivisionRule> divisionRules)
         {
             bool valid = true;
 
-            switch(rule.HomeTeamType)
+            //are the teams active?
+            //are the divisions active?
+            //are the teams the same?
+            if (rule.HomeTeam != null && rule.AwayTeam != null && rule.HomeTeam.Id == rule.AwayTeam.Id)
             {
-                case DIVISION_TYPE:
-                    var found = divisionRules.Where(dr => dr.DivisionName.Equals(rule.HomeTeamValue)).ToList().Count > 0;
-                    if (!found)
-                    {
-                        var type = "SeasonScheduleRule";
-                        var message = "Division not found.";
-                        var data = string.Format("Division:{0} ScheduleRule:{1}", rule.HomeTeamValue, rule.Id);
-                        var result = string.Format(messageFormat, type, message, data);
-                        Messages.Add(result);
-                    }
-                    break;
-                case TEAM_TYPE:
-                    var found = teamRules.Where(tr => tr.Team.)
-                    break;
+                var type = "SeasonScheduleRule";
+                var message = "Cannot have the same team play itself.";
+                var data = string.Format("HomeTeam:{0} AwayTeam:{1}", rule.HomeTeam.Id, rule.AwayTeam.Id);
+                var result = string.Format(messageFormat, type, message, data);
+                Messages.Add(result);
             }
+            
+            //are the divisions the same?
             return valid;
         }
-        */
+        
         
     }
 }
