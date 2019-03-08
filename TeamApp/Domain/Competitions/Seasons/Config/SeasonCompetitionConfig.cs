@@ -133,8 +133,8 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
             ScheduleRules.Where(sr => sr.IsActive(season.Year)).ToList().ForEach(rule =>
             {                
                 //rule about duplicating teams and divisions?
-                var homeTeams = GetTeams(season, rule.HomeTeam, rule.HomeDivision);
-                var awayTeams = GetTeams(season, rule.AwayTeam, rule.AwayDivision);
+                var homeTeams = GetTeams(season, rule.HomeTeam, rule.HomeDivisionRule);
+                var awayTeams = GetTeams(season, rule.AwayTeam, rule.AwayDivisionRule);
 
                 var nextSchedule = Scheduler.CreateGames(
                     season,
