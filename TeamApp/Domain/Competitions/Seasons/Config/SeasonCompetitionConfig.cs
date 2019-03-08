@@ -165,6 +165,7 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
                     teams.AddRange(season.GetAllTeamsInDivision(season.GetDivisionByName(teamValue)));
                     break;
                 case SeasonScheduleRule.TEAM_TYPE:
+                    //this is BAD
                     teams.Add(season.Teams.Where(t => t.Name.Equals(teamValue)).First());
                     break;
                 case SeasonScheduleRule.NONE:

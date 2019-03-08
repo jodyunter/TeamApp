@@ -15,20 +15,28 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
 {
     public class PlayoffConfigTests
     {
+        private static Team CreateTeamForTests(long id, string name, string nickName, string shortName, int skill, string owner, int? start, int? end, bool active)
+        {
+            var team = new Team(name, nickName, shortName, skill, owner, start, end, active);
+
+            team.Id = id;
+
+            return team;
+        }
         private List<Team> teams = new List<Team>()
         {
-            new Team("Team 1", "T1", "T1", 5, "Me", 1, null, true),
-            new Team("Team 2", "T1", "T1", 5, "Me", 1, null, true),
-            new Team("Team 3", "T1", "T1", 5, "Me", 1, null, true),
-            new Team("Team 4", "T1", "T1", 5, "Me", 1, null, true),
-            new Team("Team 5", "T1", "T1", 5, "Me", 1, null, true),
-            new Team("Team 6", "T1", "T1", 5, "Me", 1, null, true),
-            new Team("Team 7", "T1", "T1", 5, "Me", 1, null, true),
-            new Team("Team 8", "T1", "T1", 5, "Me", 1, null, true),
-            new Team("Team 9", "T1", "T1", 5, "Me", 1, null, true),
-            new Team("Team 10", "T1", "T1", 5, "Me", 1, null, true),
-            new Team("Team 11", "T1", "T1", 5, "Me", 1, null, true),
-            new Team("Team 12", "T1", "T1", 5, "Me", 1, null, true),
+            CreateTeamForTests(1, "Team 1", "T1", "T1", 5, "Me", 1, null, true),
+            CreateTeamForTests(2, "Team 2", "T1", "T1", 5, "Me", 1, null, true),
+            CreateTeamForTests(3, "Team 3", "T1", "T1", 5, "Me", 1, null, true),
+            CreateTeamForTests(4, "Team 4", "T1", "T1", 5, "Me", 1, null, true),
+            CreateTeamForTests(5, "Team 5", "T1", "T1", 5, "Me", 1, null, true),
+            CreateTeamForTests(6, "Team 6", "T1", "T1", 5, "Me", 1, null, true),
+            CreateTeamForTests(7, "Team 7", "T1", "T1", 5, "Me", 1, null, true),
+            CreateTeamForTests(8, "Team 8", "T1", "T1", 5, "Me", 1, null, true),
+            CreateTeamForTests(9, "Team 9", "T1", "T1", 5, "Me", 1, null, true),
+            CreateTeamForTests(10, "Team 10", "T1", "T1", 5, "Me", 1, null, true),
+            CreateTeamForTests(11, "Team 11", "T1", "T1", 5, "Me", 1, null, true),
+            CreateTeamForTests(12, "Team 12", "T1", "T1", 5, "Me", 1, null, true),
         };
 
         private void CreateSeasonDivisions(Season season)
@@ -118,6 +126,27 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
             };
         }
         [Fact]
+        public void ShouldCopyTeamsFromSeason()
+        {
+            var season = new Season(null, "My Season", 1, null, null, null, null, true, false, 1, null);
+
+            CreateSeasonDivisions(season);
+            CreateSeasonTeams(season);
+            CreateSeasonRankings(season);
+
+            var playoffConfig = new PlayoffCompetitionConfig();
+            var playoff = new Playoff() { Year = 15 };
+            playoffConfig.CopyTeamsFromCompetition(playoff, season);
+
+            StrictEqual(12, playoff.Teams.Count());
+        }
+
+        [Fact]
+        public void ShouldCopyTeamsFromPlayoff()
+        {
+            True(false);
+        }
+        [Fact]
         public void ShouldCreateTeamRankingsFromSeason()
         {
             var season = new Season(null, "My Season", 1, null, null, null, null, true, false, 1, null);
@@ -128,6 +157,7 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
 
             var playoffConfig = new PlayoffCompetitionConfig();
             var playoff = new Playoff() { Year = 15 };
+            playoffConfig.CopyTeamsFromCompetition(playoff, season);
             playoffConfig.CopyRankingsFromCompetition(playoff, season);
             var newRankings = playoff.Rankings;
 
@@ -159,7 +189,8 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
             CreateSeasonTeams(season);            
             CreateSeasonRankings(season);
             CreateRankingRules(playoffConfig);
-                        
+
+            playoffConfig.CopyTeamsFromCompetition(playoff, season);
             playoffConfig.CopyRankingsFromCompetition(playoff, season);
 
             playoffConfig.RankingRules.ToList().ForEach(rule =>

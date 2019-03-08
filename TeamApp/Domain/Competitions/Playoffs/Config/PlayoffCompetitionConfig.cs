@@ -63,23 +63,35 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
             });
         }
 
+        //todo put this in the parent?
+        public virtual void CopyTeamsFromCompetition(Playoff playoff, Competition competition)
+        {
+            if (playoff.Teams == null) playoff.Teams = new List<SingleYearTeam>();
+
+            competition.Teams.ToList().ForEach(sourceTeam =>
+            {
+                //does the team already exist?
+                var team = playoff.Teams.Where(t => t.Parent.Id == sourceTeam.Parent.Id).FirstOrDefault();                                        
+                if (team == null) team = CreateCompetitionTeam(playoff, sourceTeam);
+                playoff.Teams.Add(team);
+            });
+        }
+        //put this is in the parent?
         //what if we have two parent competitions, and therefore end up copying this twice?
         public virtual void CopyRankingsFromCompetition(Playoff playoff, Competition competition)
         {
             if (playoff.Rankings == null) playoff.Rankings = new List<TeamRanking>();
-            if (playoff.Teams == null) playoff.Teams = new List<SingleYearTeam>();
 
             competition.Rankings.ToList().ForEach(sourceRanking =>
             {
-                var team = playoff.Teams.Where(t => t.Parent.Id == sourceRanking.Team.Parent.Id).FirstOrDefault();
-                if (team == null) team = CreatePlayoffTeam(playoff, sourceRanking.Team);
-
+                var team = playoff.Teams.Where(t => t.Parent.Id == sourceRanking.Team.Parent.Id).First(); //if null we messed up
                 playoff.Rankings.Add(new TeamRanking(sourceRanking.Rank, sourceRanking.GroupName, team, sourceRanking.GroupLevel));
             });
             
         }
 
-        private PlayoffTeam CreatePlayoffTeam(Playoff playoff, SingleYearTeam sourceTeam)
+        //todo have this as an implementation of an abstracat method
+        private PlayoffTeam CreateCompetitionTeam(Playoff playoff, SingleYearTeam sourceTeam)
         {
             return new PlayoffTeam(playoff, sourceTeam.Parent, sourceTeam.Name, sourceTeam.NickName, sourceTeam.ShortName,
                         sourceTeam.Skill, sourceTeam.Owner, playoff.Year);
@@ -107,7 +119,7 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
             sourceTeamRankings.ForEach(sourceRanking =>
             {
                 var team = playoff.Teams.Where(t => t.Parent.Id == sourceRanking.Team.Parent.Id).FirstOrDefault();
-                if (team == null) team = CreatePlayoffTeam(playoff, sourceRanking.Team);
+                if (team == null) team = CreateCompetitionTeam(playoff, sourceRanking.Team);
                 var rank = playoff.Rankings.Where(r => r.GroupName.Equals(groupToGetRankFrom) && r.Team.Parent.Id == team.Parent.Id).First().Rank;
 
                 playoff.Rankings.Add(new TeamRanking(rank, groupToPutTeamIn, team, 1));
@@ -118,14 +130,12 @@ namespace TeamApp.Domain.Competitions.Playoffs.Config
         //need to  test out the time period
         public virtual void ProcessRankingRulesAndAddTeams(Playoff playoff, IList<Competition> parents)
         {
-            playoff.Teams = new List<SingleYearTeam>();
-            playoff.Rankings = new List<TeamRanking>();
-
             //setup rankings based on each competition to use later on in the series
             if (parents != null)
             {
                 parents.ToList().ForEach(comp =>
                 {
+                    CopyTeamsFromCompetition(playoff, comp);
                     CopyRankingsFromCompetition(playoff, comp);
                 });
             }

@@ -19,8 +19,8 @@ namespace TeamApp.Domain.Competitions.Seasons
         {            
             if (game.Complete)
             {
-                var home = (SeasonTeam)Teams.Where(t => t.Id == game.HomeTeam.Id).First();
-                var away = (SeasonTeam)Teams.Where(t => t.Id == game.AwayTeam.Id).First();
+                var home = (SeasonTeam)Teams.Where(t => t.Parent.Id == game.HomeTeam.Id).First();
+                var away = (SeasonTeam)Teams.Where(t => t.Parent.Id == game.AwayTeam.Id).First();
 
                 if (game.HomeScore == game.AwayScore)
                 {
@@ -29,8 +29,8 @@ namespace TeamApp.Domain.Competitions.Seasons
                 }
                 else
                 {
-                    ((SeasonTeam)Teams.Where(t => t.Id == game.GetWinner().Id).First()).Stats.Wins++;
-                    ((SeasonTeam)Teams.Where(t => t.Id == game.GetLoser().Id).First()).Stats.Loses++;
+                    ((SeasonTeam)Teams.Where(t => t.Parent.Id == game.GetWinner().Id).First()).Stats.Wins++;
+                    ((SeasonTeam)Teams.Where(t => t.Parent.Id == game.GetLoser().Id).First()).Stats.Loses++;
                 }
 
                 home.Stats.GoalsFor += game.HomeScore;
