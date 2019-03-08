@@ -131,13 +131,10 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
             season.Schedule = new Schedule();
 
             ScheduleRules.Where(sr => sr.IsActive(season.Year)).ToList().ForEach(rule =>
-            {
-                if (rule.HomeTeamType == rule.AwayTeamType && rule.HomeTeamValue == rule.AwayTeamValue)
-                {
-                    throw new ApplicationException("Can't have the same home and away types and values");
-                }
-                var homeTeams = GetTeams(season, rule.HomeTeamType, rule.HomeTeamValue);
-                var awayTeams = GetTeams(season, rule.AwayTeamType, rule.AwayTeamValue);
+            {                
+                //rule about duplicating teams and divisions?
+                var homeTeams = GetTeams(season, rule.HomeTeam, rule.HomeDivision);
+                var awayTeams = GetTeams(season, rule.AwayTeam, rule.AwayDivision);
 
                 var nextSchedule = Scheduler.CreateGames(
                     season,
@@ -155,24 +152,25 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
 
         }
 
-        public virtual List<SingleYearTeam> GetTeams(Season season, int teamType, string teamValue)
+        public virtual List<SingleYearTeam> GetTeams(Season season, Team team, SeasonDivisionRule divisionRule)
         {
             var teams = new List<SingleYearTeam>();
 
-            switch (teamType)
+            if (team != null)
             {
-                case SeasonScheduleRule.DIVISION_TYPE:
-                    teams.AddRange(season.GetAllTeamsInDivision(season.GetDivisionByName(teamValue)));
-                    break;
-                case SeasonScheduleRule.TEAM_TYPE:
-                    //this is BAD
-                    teams.Add(season.Teams.Where(t => t.Name.Equals(teamValue)).First());
-                    break;
-                case SeasonScheduleRule.NONE:
-                    return null;
+                teams.Add(season.Teams.Where(t => t.Parent.Id == team.Id).First());
+            }
+            else if (divisionRule != null)
+            {
+                teams.AddRange(season.GetAllTeamsInDivision(season.GetDivisionByName(divisionRule.DivisionName)));
+            }
+            else
+            {
+                return null;
             }
 
             return teams;
         }
+
     }
 }

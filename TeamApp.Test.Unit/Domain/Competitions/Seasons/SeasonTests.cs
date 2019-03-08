@@ -75,46 +75,67 @@ namespace TeamApp.Test.Domain.Competitions.Seasons
         [Fact]
         public void ShouldPlaySome()
         {
-            var data = Data1.CreateBasicSeasonConfiguration();
-            
-            var seasonCompetition = ((List<SeasonCompetitionConfig>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
-
-            var season = (Season)seasonCompetition.CreateCompetition(1, 1, null);
-
-            var schedule = Scheduler.CreateGames(season, season.Year, 1, 1, 
-               season.GetAllTeamsInDivision(season.GetDivisionByName("NHL")).Select(t => t.Parent).ToList(),
-                1, true, season.CompetitionConfig.GameRules);
-            
-            season.Schedule = schedule;
-
-            var scheduleValidator = new ScheduleValidator(season.Schedule);
-
-            True(scheduleValidator.IsValid);
-
-            while (!season.Schedule.IsComplete())
-            {
-                var games = ((Competition)season).PlayNextDay(new Random());
-                games.ForEach(g => { ((Competition)season).ProcessGame(g); });
-            }
-
-            StrictEqual(42, ((SeasonTeam)season.Teams.Where(t => t.Name.Equals("Boston")).First()).Stats.Games);
+            True(false);
         }
 
         [Fact]
         public void ShouldGetAllTeamsInDivision()
         {
-            var data = Data1.CreateBasicSeasonConfiguration();
+
+
+            var season = new Season();
+            var nhl = new SeasonDivision() { Season = season, Name = "NHL", Level = 1 };
+            var eastern = new SeasonDivision() { Season = season, Name = "Eastern", ParentDivision = nhl, Level = 2 };
+            var western = new SeasonDivision() { Season = season, Name = "Western", ParentDivision = nhl, Level = 2 };
+            var central = new SeasonDivision() { Season = season, Name = "Central", ParentDivision = nhl, Level = 2 };
+            var east = new SeasonDivision() { Season = season, Name = "East", ParentDivision = eastern, Level = 3 };
+            var atlantic = new SeasonDivision() { Season = season, Name = "Atlantic", ParentDivision = eastern, Level = 3 };
+            var west = new SeasonDivision() { Season = season, Name = "West", ParentDivision = western, Level = 3 };
+            var northwest = new SeasonDivision() { Season = season, Name = "NorthWest", ParentDivision = west, Level = 4 };
+            var southwest = new SeasonDivision() { Season = season, Name = "Northeast", ParentDivision = west, Level = 4 };
+
+            season.Divisions = new List<SeasonDivision>() { nhl, eastern, western, central, east, atlantic, west, northwest, southwest };
+            var teamList = new List<SeasonTeam>()
+            {
+                CreateSeasonTeam(season, 1, "Team 1", nhl),
+                CreateSeasonTeam(season, 2, "Team 2", eastern),
+                CreateSeasonTeam(season, 3, "Team 3", east),
+                CreateSeasonTeam(season, 4, "Team 4", east),
+                CreateSeasonTeam(season, 5, "Team 5", east),
+                CreateSeasonTeam(season, 6, "Team 6", northwest),
+                CreateSeasonTeam(season, 7, "Team 7", northwest),
+                CreateSeasonTeam(season, 8, "Team 8", central),
+                CreateSeasonTeam(season, 9, "Team 9", central),
+                CreateSeasonTeam(season, 10, "Team 10", atlantic),
+                CreateSeasonTeam(season, 11, "Team 11", atlantic),
+                CreateSeasonTeam(season, 12, "Team 12", atlantic),
+                CreateSeasonTeam(season, 13, "Team 13", atlantic),
+                CreateSeasonTeam(season, 14, "Team 14", northwest),
+                CreateSeasonTeam(season, 15, "Team 15", southwest),
+                CreateSeasonTeam(season, 16, "Team 16", southwest)
+            };
             
-            var seasonCompetition = ((List<SeasonCompetitionConfig>)data[Data1.BASIC_SEASON_COMPETITION_LSIT])[0];
+            StrictEqual(16, season.GetAllTeamsInDivision(nhl).Count);
+            StrictEqual(8, season.GetAllTeamsInDivision(eastern).Count);
+            StrictEqual(5, season.GetAllTeamsInDivision(western).Count);
+            StrictEqual(2, season.GetAllTeamsInDivision(central).Count);
+            StrictEqual(4, season.GetAllTeamsInDivision(atlantic).Count);
+            StrictEqual(3, season.GetAllTeamsInDivision(east).Count);
+            StrictEqual(5, season.GetAllTeamsInDivision(west).Count);
+            StrictEqual(3, season.GetAllTeamsInDivision(northwest).Count);
+            StrictEqual(2, season.GetAllTeamsInDivision(southwest).Count);
+        }
 
-            var season = (Season)seasonCompetition.CreateCompetition(1, 1, null);
 
-            StrictEqual(22, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("NHL")).First()).Count);
-            StrictEqual(10, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("East")).First()).Count);
-            StrictEqual(6, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("West")).First()).Count);
-            StrictEqual(6, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("Central")).First()).Count);
-            StrictEqual(5, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("NorthEast")).First()).Count);
-            StrictEqual(5, season.GetAllTeamsInDivision(season.Divisions.Where(d => d.Name.Equals("Atlantic")).First()).Count);
+        private SeasonTeam CreateSeasonTeam(Competition competition, int id, string name, SeasonDivision division)
+        {
+            var team = new SeasonTeam(competition, new Team() { Id = id, Name = name }, 1, null, division);
+            if (division.Teams == null) division.Teams = new List<SeasonTeam>();
+            division.Teams.Add(team);
+
+            return team;
+
+
         }
     }
 }

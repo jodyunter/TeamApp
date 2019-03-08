@@ -69,8 +69,10 @@ namespace TeamApp.Test.Helpers
 
             seasonConfig.DivisionRules = divisionRules;
 
+            var nhlDivRule = divisionRules.Where(dr => dr.DivisionName.Equals("NHL")).First();
+
             var scheduleRules = new List<SeasonScheduleRule>() {                
-                new SeasonScheduleRule(seasonConfig, SeasonScheduleRule.DIVISION_TYPE, "NHL", SeasonScheduleRule.NONE, null, 1, false, 1, null),                
+                new SeasonScheduleRule(seasonConfig, null, nhlDivRule, null, null, 1, false, 1, null),                
             };
 
             seasonConfig.ScheduleRules = scheduleRules;
