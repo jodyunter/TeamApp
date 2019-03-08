@@ -46,6 +46,7 @@ namespace TeamApp.Test.Domain.SchedulerTests
             bool result = counts.IsValid;
             StrictEqual(expected, result);
         }
+        
 
         public static Schedule CreateBalancedScheduleNoHomeAndAway()
         {         
@@ -72,5 +73,7 @@ namespace TeamApp.Test.Domain.SchedulerTests
 
             return schedule;
         }
+
+        
     }
 }

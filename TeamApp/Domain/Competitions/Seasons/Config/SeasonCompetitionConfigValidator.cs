@@ -5,14 +5,19 @@ using static TeamApp.Domain.Competitions.Seasons.Config.SeasonScheduleRule;
 namespace TeamApp.Domain.Competitions.Seasons.Config
 {
     //todo must stop relying on team name
-    public class SeasonConfigScheduleValidator
+    public class SeasonCompetitionConfigValidator
     {   
         public Dictionary<string, int> GameCounts { get; set; }
+        public List<string> Messages { get; set; }
 
-        public SeasonConfigScheduleValidator(SeasonCompetitionConfig config)
+        private string messageFormat = "{0}\t{1}\t{2}";
+
+        public SeasonCompetitionConfigValidator() { Messages = new List<string>(); }
+        public SeasonCompetitionConfigValidator(SeasonCompetitionConfig config)
         {
             var divisionCounts = new Dictionary<string, SortedSet<string>>();
             var teamCounts = new Dictionary<long, SortedSet<string>>();
+            Messages = new List<string>() { "Setting up validator" };
 
             //"TeamA:TeamB", 0
             //"TeamA:Home", 0
@@ -171,6 +176,71 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
             });
 
             GameCounts = gameCounts;
+        }        
+        
+        public bool ValidateActiveTeams(List<SeasonTeamRule> teamRules, int year)
+        {
+            bool valid = true;
+
+            teamRules.ForEach(rule =>
+            {
+                var active = IsTeamActive(rule, year);
+                if (!active)
+                {
+                    var type = "SeasonTeamRule";
+                    var message = "Team is not active";
+                    var data = string.Format("{0} - {1}", rule.Id, rule.Team.Name);
+                    var result = string.Format(messageFormat, type, message, data);
+                    Messages.Add(result);
+                }
+
+                valid = valid && active;
+            });
+            
+            return valid;
+        }
+
+        public bool ValidateActiveTeamRules(List<SeasonTeamRule> teamRules, int year)
+        {
+            bool valid = true;
+
+            teamRules.ForEach(rule =>
+            {
+                var active = IsSeasonTeamRuleActive(rule, year);                
+                if (!active)
+                {
+                    var type = "SeasonTeamRule";
+                    var message = "Rule is not active";
+                    var data = string.Format("{0}", rule.Id);
+                    var result = string.Format(messageFormat, type, message, data);
+                    Messages.Add(result);
+                }
+
+                valid = valid && active;
+            });
+
+            return valid;
+        }
+        public bool ValidateActiveDivisionRules(List<SeasonDivisionRule> divisionRules, int year)
+        {
+            bool valid = true;
+
+            divisionRules.ForEach(rule =>
+            {
+                var active = IsSeasonDivisionRuleActive(rule, year);
+                if (!active)
+                {
+                    var type = "SeasonDivisionRule";
+                    var message = "Rule is not active";
+                    var data = string.Format("{0}", rule.Id);
+                    var result = string.Format(messageFormat, type, message, data);
+                    Messages.Add(result);
+                }
+
+                valid = valid && active;
+            });
+
+            return valid;
         }
 
         public bool IsSeasonTeamRuleActive(SeasonTeamRule seasonTeamRule, int year)
@@ -180,25 +250,45 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
 
         public bool IsTeamActive(SeasonTeamRule seasonTeamRule, int year)
         {
-            return seasonTeamRule.Team.IsActive(year);
-        }
 
-        public bool DoesTeamExist(SeasonTeamRule seasonTeamRule, int year)
-        {
-            return seasonTeamRule.IsActive(year) && seasonTeamRule.Team != null && seasonTeamRule.Team.Active && seasonTeamRule.Team.IsActive(year);        
+            return seasonTeamRule.Team.IsActive(year) && seasonTeamRule.Team.Active;
         }
 
         public bool IsSeasonDivisionRuleActive(SeasonDivisionRule rule, int year)
         {
             return rule.IsActive(year);
         }
-        public bool DoesDivisionConfigExist(IList<SeasonDivisionRule> currentDivisionRules, SeasonTeamRule seasonTeamRule)
+
+        public bool ValidateDivisionRuleExistsForTeamRules(List<SeasonDivisionRule> divisionRules, List<SeasonTeamRule> teamRules)
+        {
+            bool valid = true;
+
+            teamRules.ForEach(rule =>
+            {
+                var active = DoesSeasonDivisionRuleExistForSeasonTeamRule(divisionRules, rule);
+                if (!active)
+                {
+                    var type = "SeasonDivisionRule";
+                    var message = "Rule Does Not Exist For Division";
+                    var data = string.Format("Division:{0} TeamRule:{1}", rule.Division, rule.Id);
+                    var result = string.Format(messageFormat, type, message, data);
+                    Messages.Add(result);
+                }
+
+                valid = valid && active;
+            });
+
+            return valid;
+        }
+
+        //does not check for active divisions
+        public bool DoesSeasonDivisionRuleExistForSeasonTeamRule(IList<SeasonDivisionRule> currentDivisionRules, SeasonTeamRule seasonTeamRule)
         {
             var found = false;
 
             found = currentDivisionRules.Where(dr => dr.DivisionName.Equals(seasonTeamRule.Division)).Count() > 0;
             
-            return false;
-        }
+            return found;
+        }        
     }
 }
