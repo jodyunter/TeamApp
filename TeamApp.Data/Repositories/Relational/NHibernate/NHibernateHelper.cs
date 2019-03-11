@@ -9,6 +9,7 @@ using NHibernate.Event;
 using System.IO;
 using TeamApp.Domain;
 using TeamApp.Domain.Competitions;
+using TeamApp.Domain.Competitions.Config;
 using TeamApp.Domain.Competitions.Playoffs;
 
 namespace TeamApp.Data.Repositories.Relational.NHibernate

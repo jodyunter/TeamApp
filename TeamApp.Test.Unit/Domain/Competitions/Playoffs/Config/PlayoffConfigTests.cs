@@ -120,6 +120,8 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
                 new PlayoffRankingRule(config, "RemainingTeams", "East", "NHL", 2, null, 1, 1, 1, null),
                 new PlayoffRankingRule(config, "RemainingTeams", "West", "NHL", 2, null, 1, 1, 1, null),
                 new PlayoffRankingRule(config, "RemainingTeams", "Central", "NHL", 2, null, 1, 1, 1, null),
+                new PlayoffRankingRule(config, "Combined", "Top Seeds", "NHL", 1, 2, 5, 2, 1, null),
+                new PlayoffRankingRule(config, "Combined", "Rest of Teams", "NHL", 4, 8, 15, 2, 1, null)
             };
         }
         [Fact]
@@ -198,8 +200,11 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
 
             var topSeeds = playoff.Rankings.Where(r => r.GroupName.Equals("Top Seeds"));
             var restOfTeams = playoff.Rankings.Where(r => r.GroupName.Equals("RemainingTeams"));
+            var combined = playoff.Rankings.Where(r => r.GroupName.Equals("Combined"));
+
             StrictEqual(3, topSeeds.Count());
             StrictEqual(9, restOfTeams.Count());
+            StrictEqual(6, combined.Count());
 
             var seedName = topSeeds.Select(r => r.Team.Name).ToList();
             var restNames = restOfTeams.Select(r => r.Team.Name).ToList();
@@ -224,7 +229,17 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
             Equal("Team 4", restOfTeams.Where(r => r.Rank == 8).First().Team.Name);
             Equal("Team 3", restOfTeams.Where(r => r.Rank == 9).First().Team.Name);
 
+            Equal("Team 6", combined.Where(r => r.Rank == 1).First().Team.Name);
+            Equal("Team 10", combined.Where(r => r.Rank == 2).First().Team.Name);
+            Equal("Team 9", restOfTeams.Where(r => r.Rank == 3).First().Team.Name);
+            Equal("Team 8", restOfTeams.Where(r => r.Rank == 4).First().Team.Name);
+            Equal("Team 12", restOfTeams.Where(r => r.Rank == 5).First().Team.Name);
+            Equal("Team 5", restOfTeams.Where(r => r.Rank == 6).First().Team.Name);
+            Equal("Team 4", restOfTeams.Where(r => r.Rank == 7).First().Team.Name);
+
+
+
         }
-     
+
     }
 }
