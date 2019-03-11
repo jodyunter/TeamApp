@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TeamApp.Domain.Competitions.Playoffs;
 using TeamApp.Domain.Competitions.Playoffs.Series;
-using TeamApp.Domain.Schedules;
 
-namespace TeamApp.Domain.Competitions.Playoffs.Config
+namespace TeamApp.Domain.Competitions.Config.Playoffs
 {
     public class PlayoffCompetitionConfig:CompetitionConfig
     {

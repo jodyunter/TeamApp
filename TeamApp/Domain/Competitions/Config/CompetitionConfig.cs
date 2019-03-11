@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 
-namespace TeamApp.Domain.Competitions
+namespace TeamApp.Domain.Competitions.Config
 {
     public abstract class CompetitionConfig:BaseDataObject, ITimePeriod
     {

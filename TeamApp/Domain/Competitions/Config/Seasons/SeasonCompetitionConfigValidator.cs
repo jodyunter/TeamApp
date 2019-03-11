@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using static TeamApp.Domain.Competitions.Seasons.Config.SeasonScheduleRule;
 
-namespace TeamApp.Domain.Competitions.Seasons.Config
+namespace TeamApp.Domain.Competitions.Config.Seasons
 {
     //todo must stop relying on team name
     public class SeasonCompetitionConfigValidator
@@ -42,9 +41,26 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
             bool valid = true;
             //are all teams active?
 
+            valid = valid && ConfigIsActive(config, year);
             valid = valid && ValidateActiveTeams(activeTeamRules, year);
             valid = valid && ValidateDivisionRuleExistsForTeamRules(activeDivisionRules, activeTeamRules);
             valid = valid && ValidateScheduleRules(activeScheduleRules, activeTeamRules, activeDivisionRules, year);
+
+            return valid;
+        }
+
+        public bool ConfigIsActive(SeasonCompetitionConfig config, int year)
+        {
+            bool valid = true;
+
+            if (!config.IsActive(year))
+            {
+                var type = "SeasonCompetitionConfig";
+                var message = "Competition Configuration is not active for year.";
+                var data = string.Format("Id:{0} Name:{1} Year:{2}", config.Id, config.Name, year);
+                var result = string.Format(messageFormat, type, message, data);
+                Messages.Add(result);
+            }
 
             return valid;
         }

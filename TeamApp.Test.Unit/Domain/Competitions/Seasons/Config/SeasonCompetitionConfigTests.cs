@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using TeamApp.Domain;
-using TeamApp.Domain.Competitions.Seasons.Config;
 using System.Linq;
 using Xunit;
 using static Xunit.Assert;
+using TeamApp.Domain.Competitions.Config.Seasons;
 
 namespace TeamApp.Test.Domain.Competitions.Seasons.Config
 {

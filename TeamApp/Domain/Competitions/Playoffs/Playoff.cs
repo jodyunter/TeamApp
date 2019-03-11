@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using TeamApp.Domain.Schedules;
 using System.Linq;
-using TeamApp.Domain.Competitions.Playoffs.Config;
-using TeamApp.Domain.Competitions.Playoffs.Series;
 using TeamApp.Domain.Extensions;
+using TeamApp.Domain.Competitions.Config;
+using TeamApp.Domain.Competitions.Config.Playoffs;
 
 namespace TeamApp.Domain.Competitions.Playoffs
 {

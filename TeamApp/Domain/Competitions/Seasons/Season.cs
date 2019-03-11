@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TeamApp.Domain.Competitions.Config;
 using TeamApp.Domain.Schedules;
 
 namespace TeamApp.Domain.Competitions.Seasons

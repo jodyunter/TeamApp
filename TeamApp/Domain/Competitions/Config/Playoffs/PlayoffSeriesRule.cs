@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TeamApp.Domain.Competitions.Playoffs.Config
+﻿namespace TeamApp.Domain.Competitions.Config.Playoffs
 {
     public class PlayoffSeriesRule:BaseDataObject,ITimePeriod
     {

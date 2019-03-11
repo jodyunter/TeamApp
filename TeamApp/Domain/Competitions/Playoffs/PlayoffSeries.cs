@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TeamApp.Domain.Competitions.Playoffs.Config;
 
 namespace TeamApp.Domain.Competitions.Playoffs
 {

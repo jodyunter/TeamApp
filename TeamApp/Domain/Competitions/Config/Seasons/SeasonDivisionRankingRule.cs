@@ -1,5 +1,4 @@
-﻿
-namespace TeamApp.Domain.Competitions.Seasons.Config
+﻿namespace TeamApp.Domain.Competitions.Config.Seasons
 {
     public class SeasonDivisionRankingRule :ITimePeriod
     {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TeamApp.Domain.Competitions;
+using TeamApp.Domain.Competitions.Config;
 
 namespace TeamApp.Domain.Repositories
 {

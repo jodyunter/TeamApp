@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using TeamApp.Domain.Competitions.Seasons;
 using TeamApp.Domain.Schedules;
 
-namespace TeamApp.Domain.Competitions.Seasons.Config
+namespace TeamApp.Domain.Competitions.Config.Seasons
 {
     //this is the configuration setup for seasons
     public class SeasonCompetitionConfig:CompetitionConfig

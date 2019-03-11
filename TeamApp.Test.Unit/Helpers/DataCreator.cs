@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using TeamApp.Domain;
-using TeamApp.Domain.Competitions;
-using TeamApp.Domain.Competitions.Playoffs.Config;
-using TeamApp.Domain.Competitions.Seasons.Config;
-using static TeamApp.Domain.Competitions.Playoffs.Config.PlayoffSeriesRule;
+using TeamApp.Domain.Competitions.Config;
+using TeamApp.Domain.Competitions.Config.Playoffs;
+using TeamApp.Domain.Competitions.Config.Seasons;
+using static TeamApp.Domain.Competitions.Config.Playoffs.PlayoffSeriesRule;
 
 namespace TeamApp.Test.Helpers
 {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TeamApp.Domain.Competitions;
+using TeamApp.Domain.Competitions.Config;
 
 namespace TeamApp.Domain
 {

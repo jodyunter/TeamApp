@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TeamApp.Domain.Schedules;
 using System.Linq;
+using TeamApp.Domain.Competitions.Config;
 
 namespace TeamApp.Domain.Competitions
 {

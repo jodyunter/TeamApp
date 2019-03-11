@@ -1,4 +1,4 @@
-﻿namespace TeamApp.Domain.Competitions.Seasons.Config
+﻿namespace TeamApp.Domain.Competitions.Config.Seasons
 {
     public class SeasonScheduleRule:BaseDataObject,ITimePeriod
     {
