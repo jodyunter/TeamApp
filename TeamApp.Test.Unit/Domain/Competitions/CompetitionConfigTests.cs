@@ -5,6 +5,7 @@ using static Xunit.Assert;
 using Xunit;
 using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Schedules;
+using TeamApp.Domain.Competitions.Config;
 
 namespace TeamApp.Test.Domain.Competitions
 {

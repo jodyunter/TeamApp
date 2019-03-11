@@ -30,7 +30,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
 
         //this method will sort all rankings groups starting at 1.  
         public virtual void SeedRankingsGroups()
-        {
+        {            
             var rankingsDictionary = new Dictionary<string, List<TeamRanking>>();
 
             Rankings.ToList().ForEach(ranking =>
@@ -70,6 +70,8 @@ namespace TeamApp.Domain.Competitions.Playoffs
 
             var rankingsDictionary = new Dictionary<string, List<TeamRanking>>();
 
+            //most groups are seeded to start with
+            //this will seed any new groups
             SeedRankingsGroups();
 
             //add any missing teams, and setup the games for each series

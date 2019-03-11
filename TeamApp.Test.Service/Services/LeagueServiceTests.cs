@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using static Xunit.Assert;
 using Xunit;
 using TeamApp.Domain.Repositories;
@@ -8,9 +6,9 @@ using TeamApp.Domain;
 using Moq;
 using TeamApp.Services.Implementation;
 using TeamApp.Services.ViewModels.Views;
-using TeamApp.Domain.Competitions;
-using TeamApp.Domain.Competitions.Seasons.Config;
-using TeamApp.Domain.Competitions.Playoffs.Config;
+using TeamApp.Domain.Competitions.Config;
+using TeamApp.Domain.Competitions.Config.Seasons;
+using TeamApp.Domain.Competitions.Config.Playoffs;
 
 namespace TeamApp.Test.Services
 {

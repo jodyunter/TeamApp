@@ -109,6 +109,8 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
             int firstRankToGet = rule.SourceFirstRank;
             int? lastRankToGet = rule.SourceLastRank;
 
+            var newRankings = new List<TeamRanking>();
+
             var groupToGetRankFrom = rule.RankingGroupName;
 
             var groupOfTeams = playoff.Rankings.Where(rank => rank.GroupName.Equals(groupToGetTeamFrom)).ToList();
@@ -122,9 +124,23 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
                 if (team == null) team = CreateCompetitionTeam(playoff, sourceRanking.Team);
                 var rank = playoff.Rankings.Where(r => r.GroupName.Equals(groupToGetRankFrom) && r.Team.Parent.Id == team.Parent.Id).First().Rank;
 
-                playoff.Rankings.Add(new TeamRanking(rank, groupToPutTeamIn, team, 1));
+                newRankings.Add(new TeamRanking(rank, groupToPutTeamIn, team, 1));
             });
-            
+
+            var startingRank = rule.DestinationFirstRank;
+
+            newRankings = newRankings.OrderBy(a => a.Rank).ToList();
+
+            int start = startingRank;
+
+            newRankings.ForEach(newRank =>
+            {
+                newRank.Rank = start;
+                start++;
+            });
+
+            playoff.Rankings.ToList().AddRange(newRankings);
+
         }
         
         //need to  test out the time period
@@ -140,10 +156,17 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
                 });
             }
 
-            GetActiveRankingRules(playoff.Year).ToList().ForEach(rule =>
+            var activeRankingRules = GetActiveRankingRules(playoff.Year);
+            var levels = activeRankingRules.Select(a => a.GroupSetupLevel).Distinct().ToList();
+
+            //check each level, and create the rules
+            for (int i = 1; i <= levels.Count; i++)
             {
-                CreateRankingsFromRule(playoff, rule);
-            });
+                activeRankingRules.Where(rr => rr.GroupSetupLevel == i).ToList().ForEach(rule =>
+                {
+                    CreateRankingsFromRule(playoff, rule);
+                });
+            }
 
             playoff.SeedRankingsGroups();
         }

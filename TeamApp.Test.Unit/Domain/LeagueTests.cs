@@ -1,7 +1,7 @@
 ﻿using static Xunit.Assert;
 using Xunit;
-using TeamApp.Domain.Competitions.Seasons.Config;
 using TeamApp.Domain;
+using TeamApp.Domain.Competitions.Config.Seasons;
 
 namespace TeamApp.Test.Domain
 {

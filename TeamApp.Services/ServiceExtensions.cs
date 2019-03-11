@@ -4,6 +4,7 @@ using TeamApp.Data.Repositories.Relational;
 using TeamApp.Data.Repositories.Relational.NHibernate;
 using TeamApp.Domain;
 using TeamApp.Domain.Competitions;
+using TeamApp.Domain.Competitions.Config;
 using TeamApp.Domain.Competitions.Seasons;
 using TeamApp.Domain.Repositories;
 using TeamApp.Domain.Schedules;

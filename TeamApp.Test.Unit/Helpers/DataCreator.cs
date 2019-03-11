@@ -134,16 +134,16 @@ namespace TeamApp.Test.Helpers
             var playoffRankingRules = new List<PlayoffRankingRule>()
             {
                 //we do not need division rankings because they will come automatically
-                new PlayoffRankingRule(playoffConfig, "Top Seeds", "East", "NHL", 1, 1, 1, null),
-                new PlayoffRankingRule(playoffConfig, "Top Seeds", "West", "NHL", 1, 1, 1, null),
-                new PlayoffRankingRule(playoffConfig, "Top Seeds", "Central", "NHL", 1, 1, 1, null),
-                new PlayoffRankingRule(playoffConfig, "Top Seeds", "Atlantic", "NHL", 1, 1, 1, null),
-                new PlayoffRankingRule(playoffConfig, "Top Seeds", "Pacific", "NHL", 1, 1, 1, null),
-                new PlayoffRankingRule(playoffConfig, "Rest of Teams", "East", "NHL", 2, null, 1, null),
-                new PlayoffRankingRule(playoffConfig, "Rest of Teams", "West", "NHL", 2, null, 1, null),                
-                new PlayoffRankingRule(playoffConfig, "Rest of Teams", "Central", "NHL", 2, null, 1, null),
-                new PlayoffRankingRule(playoffConfig, "Rest of Teams", "Atlantic", "NHL", 2, null, 1, null),
-                new PlayoffRankingRule(playoffConfig, "Rest of Teams", "Pacific", "NHL", 2, null, 1, null)
+                new PlayoffRankingRule(playoffConfig, "Top Seeds", "East", "NHL", 1, 1, 1, 1, 1, null),
+                new PlayoffRankingRule(playoffConfig, "Top Seeds", "West", "NHL", 1, 1, 1, 1, 1, null),
+                new PlayoffRankingRule(playoffConfig, "Top Seeds", "Central", "NHL", 1, 1, 1, 1, 1, null),
+                new PlayoffRankingRule(playoffConfig, "Top Seeds", "Atlantic", "NHL", 1, 1, 1, 1, 1, null),
+                new PlayoffRankingRule(playoffConfig, "Top Seeds", "Pacific", "NHL", 1, 1, 1, 1, 1, null),
+                new PlayoffRankingRule(playoffConfig, "Rest of Teams", "East", "NHL", 2, null, 1, 1, 1, null),
+                new PlayoffRankingRule(playoffConfig, "Rest of Teams", "West", "NHL", 2, null, 1, 1, 1, null),                
+                new PlayoffRankingRule(playoffConfig, "Rest of Teams", "Central", "NHL", 2, null, 1, 1, 1, null),
+                new PlayoffRankingRule(playoffConfig, "Rest of Teams", "Atlantic", "NHL", 2, null, 1, 1, 1, null),
+                new PlayoffRankingRule(playoffConfig, "Rest of Teams", "Pacific", "NHL", 2, null, 1, 1, 1, null)
             };
 
             playoffConfig.RankingRules = playoffRankingRules;

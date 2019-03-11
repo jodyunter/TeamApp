@@ -14,9 +14,10 @@ using TeamApp.Data.Relational.Repositories;
 using TeamApp.Domain.Competitions.Seasons;
 using System.Threading;
 using TeamApp.Domain.Competitions.Playoffs;
-using TeamApp.Domain.Competitions.Seasons.Config;
 using TeamApp.Data.Repositories.Relational;
-using TeamApp.Domain.Competitions.Playoffs.Config;
+using TeamApp.Domain.Competitions.Config.Seasons;
+using TeamApp.Domain.Competitions.Config.Playoffs;
+using TeamApp.Domain.Competitions.Config;
 
 namespace TeamApp.Test.Data
 {

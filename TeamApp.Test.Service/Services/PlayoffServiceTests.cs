@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TeamApp.Domain;
+using TeamApp.Domain.Competitions.Config.Playoffs;
 using TeamApp.Domain.Competitions.Playoffs;
-using TeamApp.Domain.Competitions.Playoffs.Config;
 using TeamApp.Domain.Competitions.Playoffs.Series;
 using TeamApp.Services.Implementation.Mappers;
 using TeamApp.ViewModels.Views.Competition;

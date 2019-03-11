@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using TeamApp.Data.Repositories.Relational;
-using TeamApp.Domain;
 using TeamApp.Domain.Competitions;
+using TeamApp.Domain.Competitions.Config;
 using TeamApp.Domain.Repositories;
 
 namespace TeamApp.Data.Relational.Repositories

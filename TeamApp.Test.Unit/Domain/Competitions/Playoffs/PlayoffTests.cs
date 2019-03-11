@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Competitions.Playoffs;
-using TeamApp.Domain.Competitions.Playoffs.Config;
 using Xunit;
 using static Xunit.Assert;
 using static TeamApp.Test.Domain.Competitions.Playoffs.PlayoffSeriesTests;
-using static TeamApp.Domain.Competitions.Playoffs.Config.PlayoffSeriesRule;
+using static TeamApp.Domain.Competitions.Config.Playoffs.PlayoffSeriesRule;
 using TeamApp.Domain;
 using TeamApp.Domain.Competitions.Playoffs.Series;
+using TeamApp.Domain.Competitions.Config.Playoffs;
 
 namespace TeamApp.Test.Domain.Competitions.Playoffs
 {

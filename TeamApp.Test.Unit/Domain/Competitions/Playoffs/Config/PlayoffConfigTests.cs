@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using TeamApp.Domain.Competitions;
-using TeamApp.Domain.Competitions.Playoffs.Config;
 using TeamApp.Domain.Competitions.Seasons;
-using TeamApp.Domain.Competitions.Seasons.Config;
-using TeamApp.Test.Helpers;
 using TeamApp.Domain;
 using Xunit;
 using static Xunit.Assert;
 using TeamApp.Domain.Competitions.Playoffs;
+using TeamApp.Domain.Competitions.Config.Playoffs;
 
 namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
 {
@@ -117,12 +114,12 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
         {
             config.RankingRules = new List<PlayoffRankingRule>()
             {
-                new PlayoffRankingRule(config, "Top Seeds", "East", "NHL", 1, 1, 1, null),
-                new PlayoffRankingRule(config, "Top Seeds", "West", "NHL", 1, 1, 1, null),
-                new PlayoffRankingRule(config, "Top Seeds", "Central", "NHL", 1, 1, 1, null),
-                new PlayoffRankingRule(config, "RemainingTeams", "East", "NHL", 2, null, 1, null),
-                new PlayoffRankingRule(config, "RemainingTeams", "West", "NHL", 2, null, 1, null),
-                new PlayoffRankingRule(config, "RemainingTeams", "Central", "NHL", 2, null, 1, null),
+                new PlayoffRankingRule(config, "Top Seeds", "East", "NHL", 1, 1, 1, 1, 1, null),
+                new PlayoffRankingRule(config, "Top Seeds", "West", "NHL", 1, 1, 1, 1, 1, null),
+                new PlayoffRankingRule(config, "Top Seeds", "Central", "NHL", 1, 1, 1, 1, 1, null),
+                new PlayoffRankingRule(config, "RemainingTeams", "East", "NHL", 2, null, 1, 1, 1, null),
+                new PlayoffRankingRule(config, "RemainingTeams", "West", "NHL", 2, null, 1, 1, 1, null),
+                new PlayoffRankingRule(config, "RemainingTeams", "Central", "NHL", 2, null, 1, 1, 1, null),
             };
         }
         [Fact]
@@ -178,6 +175,7 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
         {
             True(false);
         }
+        //todo, have we test levels or destinationFirstrank yet?
         [Fact]
         public void ShouldCreateTeamRankingsFromRule()
         {

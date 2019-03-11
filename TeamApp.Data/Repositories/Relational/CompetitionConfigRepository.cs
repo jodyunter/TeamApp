@@ -5,6 +5,7 @@ using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Repositories;
 using System.Linq;
 using TeamApp.Domain;
+using TeamApp.Domain.Competitions.Config;
 
 namespace TeamApp.Data.Repositories.Relational
 {
