@@ -42,7 +42,8 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
 
             valid = valid && ValidateActiveTeams(activeTeamRules, year);
             valid = valid && ValidateDivisionRuleExistsForTeamRules(activeDivisionRules, activeTeamRules);
-            
+            valid = valid && ValidateScheduleRules(activeScheduleRules, activeTeamRules, activeDivisionRules, year);
+
             return valid;
         }
                 
@@ -101,6 +102,18 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
             return found;
         }
 
+        public bool ValidateScheduleRules(List<SeasonScheduleRule> scheduleRules, IList<SeasonTeamRule> teamRules, IList<SeasonDivisionRule> divisionRules, int year)
+        {
+            bool valid = true;
+
+            scheduleRules.ForEach(rule =>
+            {
+                valid = valid && ValidateScheduleRule(rule, teamRules, divisionRules, year);
+            });
+
+            return valid;
+        }
+
         public bool ValidateScheduleRule(SeasonScheduleRule rule, IList<SeasonTeamRule> teamRules, IList<SeasonDivisionRule> divisionRules, int year)
         {
             bool valid = true;
@@ -157,7 +170,60 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
                 Messages.Add(result);
             }
             //are hometeam and division populated?
+            if (rule.HomeTeam != null && rule.HomeDivisionRule != null)
+            {
+                valid = false;
+                var message = "Cannot have home and away teams populated";
+                var data = string.Format("HomeTeam:{0} HomeDivision:{1} Rule:{2}", rule.HomeTeam.Id, rule.HomeDivisionRule.Id, rule.Id);
+                var result = string.Format(messageFormat, type, message, data);
+                Messages.Add(result);
+            }
             //are awayteam and division populated?
+            if (rule.AwayTeam != null && rule.AwayDivisionRule != null)
+            {
+                valid = false;
+                var message = "Cannot have home and away teams populated";
+                var data = string.Format("AwayTeam:{0} AwayDivision:{1} Rule:{2}", rule.AwayTeam.Id, rule.AwayDivisionRule.Id, rule.Id);
+                var result = string.Format(messageFormat, type, message, data);
+                Messages.Add(result);
+            }
+            //are home team and at least away div or away team populated?
+            if (rule.HomeTeam != null && (rule.AwayDivisionRule == null && rule.AwayTeam == null))
+            {
+                valid = false;
+                var message = "If home team is populated, either away team or away division must be";
+                var data = string.Format("HomeTeam:{0}  Rule:{1}", rule.HomeTeam.Id, rule.Id);
+                var result = string.Format(messageFormat, type, message, data);
+                Messages.Add(result);
+            }
+            //does the team exist for home?
+            if (rule.HomeTeam != null)
+            {
+                var teamRule = teamRules.Where(tr => tr.Team.Id == rule.HomeTeam.Id).FirstOrDefault();
+
+                if (teamRule == null)
+                {
+                    valid = false;
+                    var message = "No home team rule for home team.";
+                    var data = string.Format("HomeTeam:{0}  Rule:{1}", rule.HomeTeam.Id, rule.Id);
+                    var result = string.Format(messageFormat, type, message, data);
+                    Messages.Add(result);
+                }
+            }
+            //does the team exist for away?
+            if (rule.AwayTeam != null)
+            {
+                var teamRule = teamRules.Where(tr => tr.Team.Id == rule.AwayTeam.Id).FirstOrDefault();
+
+                if (teamRule == null)
+                {
+                    valid = false;
+                    var message = "No away team rule for home team.";
+                    var data = string.Format("AwayTeam:{0}  Rule:{1}", rule.HomeTeam.Id, rule.Id);
+                    var result = string.Format(messageFormat, type, message, data);
+                    Messages.Add(result);
+                }
+            }
             return valid;
         }
                
