@@ -29,20 +29,19 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
 
             list.AddRange(GetTeamsAssignedToDivision(divisionName));
 
-            var parent = GetParentDivisionName(divisionName);
+            var children = GetChildDivisionNames(divisionName);
 
-            while (parent != null)
+            children.ToList().ForEach(childDivisionName =>
             {
-                list.AddRange(GetTeamsAssignedToDivision(parent));
-                parent = GetParentDivisionName(parent);
-            }            
+                list.AddRange(GetTeamsInDivision(childDivisionName));
+            });
 
             return list;
         }
         
-        private string GetParentDivisionName(string childDivisionName)
+        private IEnumerable<string> GetChildDivisionNames(string parentDivision)
         {
-            return DivisionRules.Where(r => r.DivisionName.Equals(childDivisionName)).Select(r => r.ParentName).FirstOrDefault();
+            return DivisionRules.Where(r => r.ParentName != null && r.ParentName.Equals(parentDivision)).Select(r => r.DivisionName);
         }
 
         private List<string> GetTeamsAssignedToDivision(string divisionName)

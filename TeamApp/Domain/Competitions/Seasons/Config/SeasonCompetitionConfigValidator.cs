@@ -15,24 +15,26 @@ namespace TeamApp.Domain.Competitions.Seasons.Config
         public SeasonCompetitionConfigValidator() { Messages = new List<string>(); }
         public SeasonCompetitionConfigValidator(SeasonCompetitionConfig config)
         {
-            var divisionCounts = new Dictionary<string, SortedSet<string>>();
-            var teamCounts = new Dictionary<long, SortedSet<string>>();
-            Messages = new List<string>() { "Setting up validator" };
+            //var divisionCounts = new Dictionary<string, SortedSet<string>>();
+            //var teamCounts = new Dictionary<long, SortedSet<string>>();
+            //Messages = new List<string>() { "Setting up validator" };
 
             //"TeamA:TeamB", 0
             //"TeamA:Home", 0
             //"TeamA:Away", 0
             //"TeamA:Home:DIVISION", 0
-            var gameCounts = new Dictionary<string, int>();
+            //var gameCounts = new Dictionary<string, int>();
 
-            var teamNames = config.TeamRules.Select(tr => tr.Team.Name).ToList();
-            var divisionNames = config.DivisionRules.Select(dr => dr.DivisionName).ToList();
+            //var teamNames = config.TeamRules.Select(tr => tr.Team.Name).ToList();
+            //var divisionNames = config.DivisionRules.Select(dr => dr.DivisionName).ToList();
 
      
         }        
 
         public bool Validate(SeasonCompetitionConfig config, int year)
         {
+            Messages = new List<string>();
+
             var activeTeamRules = config.TeamRules.Where(t => t.IsActive(year)).ToList();
             var activeDivisionRules = config.DivisionRules.Where(d => d.IsActive(year)).ToList();
             var activeScheduleRules = config.ScheduleRules.Where(s => s.IsActive(year)).ToList();
