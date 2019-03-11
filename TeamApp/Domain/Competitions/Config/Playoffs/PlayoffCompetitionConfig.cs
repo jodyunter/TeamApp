@@ -126,20 +126,26 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
 
                 newRankings.Add(new TeamRanking(rank, groupToPutTeamIn, team, 1));
             });
+            
+            if (rule.DestinationFirstRank != null)
+            {
+                var startingRank = rule.DestinationFirstRank;
 
-            var startingRank = rule.DestinationFirstRank;
+                newRankings = newRankings.OrderBy(a => a.Rank).ToList();
 
-            newRankings = newRankings.OrderBy(a => a.Rank).ToList();
+                int start = (int)startingRank;
 
-            int start = startingRank;
+                newRankings.ForEach(newRank =>
+                {
+                    newRank.Rank = start;
+                    start++;                    
+                });
+            }
 
             newRankings.ForEach(newRank =>
             {
-                newRank.Rank = start;
-                start++;
+                playoff.Rankings.Add(newRank);
             });
-
-            playoff.Rankings.ToList().AddRange(newRankings);
 
         }
         
@@ -156,19 +162,25 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
                 });
             }
 
+            ProcessRankingRules(playoff);
+       
+        }
+
+        public virtual void ProcessRankingRules(Playoff playoff)
+        {
             var activeRankingRules = GetActiveRankingRules(playoff.Year);
             var levels = activeRankingRules.Select(a => a.GroupSetupLevel).Distinct().ToList();
+            levels.Sort();
 
-            //check each level, and create the rules
-            for (int i = 1; i <= levels.Count; i++)
+            levels.ForEach(level =>
             {
-                activeRankingRules.Where(rr => rr.GroupSetupLevel == i).ToList().ForEach(rule =>
+                activeRankingRules.Where(arr => arr.GroupSetupLevel == level).ToList().ForEach(rule =>
                 {
                     CreateRankingsFromRule(playoff, rule);
                 });
-            }
 
-            playoff.SeedRankingsGroups();
+                playoff.SeedRankingsGroups();
+            });
         }
 
         public virtual PlayoffSeries SetupSeriesFromRule(Playoff playoff, PlayoffSeriesRule rule)

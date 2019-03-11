@@ -114,14 +114,14 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
         {
             config.RankingRules = new List<PlayoffRankingRule>()
             {
-                new PlayoffRankingRule(config, "Top Seeds", "East", "NHL", 1, 1, 1, 1, 1, null),
-                new PlayoffRankingRule(config, "Top Seeds", "West", "NHL", 1, 1, 1, 1, 1, null),
-                new PlayoffRankingRule(config, "Top Seeds", "Central", "NHL", 1, 1, 1, 1, 1, null),
-                new PlayoffRankingRule(config, "RemainingTeams", "East", "NHL", 2, null, 1, 1, 1, null),
-                new PlayoffRankingRule(config, "RemainingTeams", "West", "NHL", 2, null, 1, 1, 1, null),
-                new PlayoffRankingRule(config, "RemainingTeams", "Central", "NHL", 2, null, 1, 1, 1, null),
+                new PlayoffRankingRule(config, "Top Seeds", "East", "NHL", 1, 1, null, 1, 1, null),
+                new PlayoffRankingRule(config, "Top Seeds", "West", "NHL", 1, 1, null, 1, 1, null),
+                new PlayoffRankingRule(config, "Top Seeds", "Central", "NHL", 1, 1, null, 1, 1, null),
+                new PlayoffRankingRule(config, "RemainingTeams", "East", "NHL", 2, null, null, 1, 1, null),
+                new PlayoffRankingRule(config, "RemainingTeams", "West", "NHL", 2, null, null, 1, 1, null),
+                new PlayoffRankingRule(config, "RemainingTeams", "Central", "NHL", 2, null, null, 1, 1, null),
                 new PlayoffRankingRule(config, "Combined", "Top Seeds", "NHL", 1, 2, 5, 2, 1, null),
-                new PlayoffRankingRule(config, "Combined", "Rest of Teams", "NHL", 4, 8, 15, 2, 1, null)
+                new PlayoffRankingRule(config, "Combined", "RemainingTeams", "NHL", 4, 8, 15, 2, 1, null)
             };
         }
         [Fact]
@@ -177,7 +177,59 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
         {
             True(false);
         }
-        //todo, have we test levels or destinationFirstrank yet?
+        [Fact]
+        public void ShouldCreateTeamRankingsFromAllRules()
+        {
+            var season = new Season(null, "My Season", 1, null, null, null, null, true, false, 1, null);
+            var playoffConfig = new PlayoffCompetitionConfig();
+            var playoff = new Playoff() { Year = 15 };
+
+            CreateSeasonDivisions(season);
+            CreateSeasonTeams(season);            
+            CreateSeasonRankings(season);
+            CreateRankingRules(playoffConfig);
+
+            playoffConfig.CopyTeamsFromCompetition(playoff, season);
+            playoffConfig.CopyRankingsFromCompetition(playoff, season);        
+            playoffConfig.ProcessRankingRules(playoff);
+
+            var topSeeds = playoff.Rankings.Where(r => r.GroupName.Equals("Top Seeds"));
+            var restOfTeams = playoff.Rankings.Where(r => r.GroupName.Equals("RemainingTeams"));
+            var combined = playoff.Rankings.Where(r => r.GroupName.Equals("Combined"));
+
+            StrictEqual(3, topSeeds.Count());
+            StrictEqual(9, restOfTeams.Count());
+            StrictEqual(7, combined.Count());
+
+            var seedName = topSeeds.Select(r => r.Team.Name).ToList();
+            var restNames = restOfTeams.Select(r => r.Team.Name).ToList();            
+
+            StrictEqual(0, seedName.Where(r => restNames.Contains(r)).ToList().Count());
+            StrictEqual(9, restNames.Count);
+                        
+            Equal("Team 6", topSeeds.Where(r => r.Rank == 1).First().Team.Name);
+            Equal("Team 10", topSeeds.Where(r => r.Rank == 2).First().Team.Name);
+            Equal("Team 2", topSeeds.Where(r => r.Rank == 3).First().Team.Name);
+
+            Equal("Team 7", restOfTeams.Where(r => r.Rank == 1).First().Team.Name);
+            Equal("Team 1", restOfTeams.Where(r => r.Rank == 2).First().Team.Name);
+            Equal("Team 11", restOfTeams.Where(r => r.Rank == 3).First().Team.Name);
+            Equal("Team 9", restOfTeams.Where(r => r.Rank == 4).First().Team.Name);
+            Equal("Team 8", restOfTeams.Where(r => r.Rank == 5).First().Team.Name);
+            Equal("Team 12", restOfTeams.Where(r => r.Rank == 6).First().Team.Name);
+            Equal("Team 5", restOfTeams.Where(r => r.Rank == 7).First().Team.Name);
+            Equal("Team 4", restOfTeams.Where(r => r.Rank == 8).First().Team.Name);
+            Equal("Team 3", restOfTeams.Where(r => r.Rank == 9).First().Team.Name);
+
+            Equal("Team 6", combined.Where(r => r.Rank == 1).First().Team.Name);
+            Equal("Team 10", combined.Where(r => r.Rank == 2).First().Team.Name);
+            Equal("Team 9", combined.Where(r => r.Rank == 3).First().Team.Name);
+            Equal("Team 8", combined.Where(r => r.Rank == 4).First().Team.Name);
+            Equal("Team 12", combined.Where(r => r.Rank == 5).First().Team.Name);
+            Equal("Team 5", combined.Where(r => r.Rank == 6).First().Team.Name);
+            Equal("Team 4", combined.Where(r => r.Rank == 7).First().Team.Name);            
+        }
+        //this only tests a single level group, to test mulitple elvels need to use the higher method
         [Fact]
         public void ShouldCreateTeamRankingsFromRule()
         {
@@ -193,18 +245,16 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
             playoffConfig.CopyTeamsFromCompetition(playoff, season);
             playoffConfig.CopyRankingsFromCompetition(playoff, season);
 
-            playoffConfig.RankingRules.ToList().ForEach(rule =>
+            playoffConfig.RankingRules.OrderBy(rr => rr.GroupSetupLevel).ToList().ForEach(rule =>
             {
                 playoffConfig.CreateRankingsFromRule(playoff, rule);
             });
 
             var topSeeds = playoff.Rankings.Where(r => r.GroupName.Equals("Top Seeds"));
-            var restOfTeams = playoff.Rankings.Where(r => r.GroupName.Equals("RemainingTeams"));
-            var combined = playoff.Rankings.Where(r => r.GroupName.Equals("Combined"));
+            var restOfTeams = playoff.Rankings.Where(r => r.GroupName.Equals("RemainingTeams"));            
 
             StrictEqual(3, topSeeds.Count());
-            StrictEqual(9, restOfTeams.Count());
-            StrictEqual(6, combined.Count());
+            StrictEqual(9, restOfTeams.Count());            
 
             var seedName = topSeeds.Select(r => r.Team.Name).ToList();
             var restNames = restOfTeams.Select(r => r.Team.Name).ToList();
@@ -228,14 +278,6 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
             Equal("Team 5", restOfTeams.Where(r => r.Rank == 7).First().Team.Name);
             Equal("Team 4", restOfTeams.Where(r => r.Rank == 8).First().Team.Name);
             Equal("Team 3", restOfTeams.Where(r => r.Rank == 9).First().Team.Name);
-
-            Equal("Team 6", combined.Where(r => r.Rank == 1).First().Team.Name);
-            Equal("Team 10", combined.Where(r => r.Rank == 2).First().Team.Name);
-            Equal("Team 9", restOfTeams.Where(r => r.Rank == 3).First().Team.Name);
-            Equal("Team 8", restOfTeams.Where(r => r.Rank == 4).First().Team.Name);
-            Equal("Team 12", restOfTeams.Where(r => r.Rank == 5).First().Team.Name);
-            Equal("Team 5", restOfTeams.Where(r => r.Rank == 6).First().Team.Name);
-            Equal("Team 4", restOfTeams.Where(r => r.Rank == 7).First().Team.Name);
 
 
 
