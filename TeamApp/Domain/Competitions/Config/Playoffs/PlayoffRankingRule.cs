@@ -8,6 +8,8 @@
         public virtual string SourceGroupName { get; set; } //this is where the team(s) is coming from       
         public virtual int SourceFirstRank { get; set; } //this is the first rank you take
         public virtual int? SourceLastRank { get; set; } //this is the last rank you take, if it's null take them all
+        public virtual int? DestinationFirstRank { get; set; }
+        public virtual int? DestinationLastRank { get; set; }
         public virtual int? FirstYear { get; set; } //this is the first effective year
         public virtual int? LastYear { get; set; }  //this is the lats effective year
 
