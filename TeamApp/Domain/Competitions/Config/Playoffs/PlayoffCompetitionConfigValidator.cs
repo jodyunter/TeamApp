@@ -36,5 +36,10 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
             return valid;
         }
 
+        public bool ValidateTeamsAreInGroupLevelOnlyOnce(PlayoffCompetitionConfig config, int year)
+        {
+            return false;
+        }
+
     }
 }

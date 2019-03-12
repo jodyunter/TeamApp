@@ -18,7 +18,7 @@ namespace TeamApp.Domain.Competitions
         public virtual bool Finished { get; set; }
         public virtual int? StartDay { get; set; }
         public virtual int? EndDay { get; set; }
-        public abstract IEnumerable<ScheduleGame> ProcessGame(ScheduleGame game); //this might add new games that need to be saved
+        public abstract IEnumerable<ScheduleGame> ProcessGame(ScheduleGame game, int currentDay); //this might add new games that need to be saved
         public abstract bool AreGamesComplete();
         public abstract void ProcessEndOfCompetitionDetails(int endingDay);
         public virtual IEnumerable<ScheduleGame> Games { get; set; }

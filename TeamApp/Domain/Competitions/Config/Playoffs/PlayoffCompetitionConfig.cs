@@ -45,7 +45,7 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
             if (parents != null) //assume shared schedule
                 playoff.Schedule = parents[0].Schedule;
 
-            playoff.BeginRound();
+            playoff.BeginRound(day);
 
             playoff.StartDay = day;
 

@@ -52,7 +52,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
                 });
             });
         }
-        public virtual IEnumerable<ScheduleGame> BeginRound()
+        public virtual IEnumerable<ScheduleGame> BeginRound(int currentDay)
         {
             Started = true;
             var newGames = new List<ScheduleGame>();
@@ -62,7 +62,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
 
             var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
 
-            int roundStartDay = Schedule.Days.Max(m => m.Value.DayNumber) + 1;
+            int roundStartDay = currentDay;
 
             //most groups are seeded to start with
             //this will seed any new groups
@@ -85,7 +85,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
                     s.AwayTeam = playoffConfig.GetTeamByRule(this, rule.AwayFromType, rule.AwayFromName, rule.AwayFromValue);
                 }
 
-                newGames.AddRange(SetupSeriesGames(s).ToList());
+                newGames.AddRange(SetupSeriesGames(s, roundStartDay).ToList());
             });
 
             return newGames;
@@ -93,30 +93,11 @@ namespace TeamApp.Domain.Competitions.Playoffs
         }
 
         //currently we assume we want to just add them to next unstarted day
-        public virtual IEnumerable<ScheduleGame> SetupSeriesGames(PlayoffSeries series)
+        public virtual IEnumerable<ScheduleGame> SetupSeriesGames(PlayoffSeries series, int startingDay)
         {
-            var newGames = series.CreateNeededGamesForSeries();
+            var newGames = series.CreateNeededGamesForSeries();           
 
-            if (StartDay == null) throw new Exception("Start day cannot be null when we create series games.");
-            var day = Schedule.GetNextNotStartedDay();
-            int dayToAddOnTo = day.DayNumber;
-
-            if (day == null)
-            {
-                day = Schedule.GetNextInCompleteDay();
-                dayToAddOnTo = day.DayNumber + 1;
-            }
-            if (day == null)
-            {
-                day = Schedule.Days[Schedule.Days.Keys.Max()];
-                dayToAddOnTo = day.DayNumber + 1;
-            }
-            else
-            {
-                dayToAddOnTo = (int)StartDay;
-            }
-
-            Scheduler.AddGamesToSchedule(Schedule, newGames.ToList<ScheduleGame>(), dayToAddOnTo);
+            Scheduler.AddGamesToSchedule(Schedule, newGames.ToList<ScheduleGame>(), startingDay);
 
             return newGames;
         }
@@ -128,7 +109,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
             Series.Add(series);
         }
 
-        public override IEnumerable<ScheduleGame> ProcessGame(ScheduleGame game)
+        public override IEnumerable<ScheduleGame> ProcessGame(ScheduleGame game, int currentDay)
         {
             var gameCompetition = game.Competition;
             var newGames = new List<ScheduleGame>();
@@ -148,9 +129,9 @@ namespace TeamApp.Domain.Competitions.Playoffs
             }
 
             if (IsRoundComplete(CurrentRound))
-                newGames = BeginRound().ToList();
+                newGames = BeginRound(currentDay).ToList();
 
-            newGames.AddRange(SetupSeriesGames(playoffGame.Series));
+            newGames.AddRange(SetupSeriesGames(playoffGame.Series, currentDay));
 
             return newGames;
             

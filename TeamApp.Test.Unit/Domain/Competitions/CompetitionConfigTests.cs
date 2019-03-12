@@ -6,6 +6,7 @@ using Xunit;
 using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Schedules;
 using TeamApp.Domain.Competitions.Config;
+using TeamApp.Domain;
 
 namespace TeamApp.Test.Domain.Competitions
 {
@@ -90,7 +91,7 @@ namespace TeamApp.Test.Domain.Competitions
             return;
         }
 
-        public override IEnumerable<ScheduleGame> ProcessGame(ScheduleGame game)
+        public override IEnumerable<ScheduleGame> ProcessGame(ScheduleGame game, int currentDay)
         {
             return new List<ScheduleGame>();
         }

@@ -16,7 +16,7 @@ namespace TeamApp.Domain.Competitions.Seasons
             Divisions = divisions;
         }
 
-        public override IEnumerable<ScheduleGame> ProcessGame(ScheduleGame game)
+        public override IEnumerable<ScheduleGame> ProcessGame(ScheduleGame game, int currentDay)
         {            
             if (game.Complete)
             {
@@ -38,9 +38,6 @@ namespace TeamApp.Domain.Competitions.Seasons
                 home.Stats.GoalsAgainst += game.AwayScore;
                 away.Stats.GoalsFor += game.AwayScore;
                 away.Stats.GoalsAgainst += game.HomeScore;
-
-                //removed because it shouldnt' be done by default
-                //SortAllTeams();
 
                 game.Processed = true;
             }

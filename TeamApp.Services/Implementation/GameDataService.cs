@@ -92,7 +92,7 @@ namespace TeamApp.Services.Implementation
             gamesToProcess.ForEach(game =>
             {
                 var competition = competitionList[game.Competition.Id];
-                var newGames = competition.ProcessGame(game);
+                var newGames = competition.ProcessGame(game, gameData.CurrentDay);
                 if (competition.GetType() == typeof(Season)) ((Season)competition).SortAllTeams();
                 scheduleGameRepo.Update(game);
                 scheduleGameRepo.UpdateAll(newGames);

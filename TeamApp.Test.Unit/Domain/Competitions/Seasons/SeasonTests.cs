@@ -33,7 +33,7 @@ namespace TeamApp.Test.Domain.Competitions.Seasons
             
             season.Teams = new List<SingleYearTeam>() { team1, team2, team3, team4 };
 
-            games.ForEach(g => { season.ProcessGame(g); });            
+            games.ForEach(g => { season.ProcessGame(g, 1); });            
 
             StrictEqual(3, team1.Stats.Games);
             StrictEqual(3, team1.Stats.Points);

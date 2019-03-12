@@ -227,10 +227,10 @@ namespace TeamApp.Domain.Schedules
             
             if (dayToStartOn < 1)
             {
-                var nextInCompleteDay = schedule.GetNextInCompleteDay();
+                var nextInCompleteDay = schedule.GetNextNotStartedDay();
                 if (nextInCompleteDay == null) dayToStartOn = schedule.Days.Keys.Max() + 1;
                 else
-                    dayToStartOn = schedule.GetNextInCompleteDay().DayNumber;
+                    dayToStartOn = schedule.GetNextNotStartedDay().DayNumber;
             }
             games.ForEach(g => { result = AddGameToSchedule(schedule, g, dayToStartOn); });
 
