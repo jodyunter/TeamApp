@@ -33,6 +33,11 @@ namespace TeamApp.Domain.Schedules
             return result;
         }
 
+        public bool IsStarted()
+        {
+            return Games.TrueForAll(g => !g.Complete && !g.Processed);
+        }
+
         public bool DoesAnyTeamPlayInDay(ScheduleDay other)
         {
             var result = false;

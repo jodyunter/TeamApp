@@ -64,12 +64,6 @@ namespace TeamApp.Domain.Competitions.Playoffs
 
             int roundStartDay = Schedule.Days.Max(m => m.Value.DayNumber) + 1;
 
-            //sort all rankings starting at one.  At the end of each round, each group is assigned a ranking based on other criteria.
-            //we need to sort based on that and assign the values accordingly.
-
-
-            var rankingsDictionary = new Dictionary<string, List<TeamRanking>>();
-
             //most groups are seeded to start with
             //this will seed any new groups
             SeedRankingsGroups();
@@ -90,60 +84,43 @@ namespace TeamApp.Domain.Competitions.Playoffs
                     var rule = activeSeriesList.Where(sr => sr.Name.Equals(s.Name)).FirstOrDefault();
                     s.AwayTeam = playoffConfig.GetTeamByRule(this, rule.AwayFromType, rule.AwayFromName, rule.AwayFromValue);
                 }
-                newGames = SetupSeriesGames(s).ToList();
+
+                newGames.AddRange(SetupSeriesGames(s).ToList());
             });
 
             return newGames;
 
         }
 
+        //currently we assume we want to just add them to next unstarted day
         public virtual IEnumerable<ScheduleGame> SetupSeriesGames(PlayoffSeries series)
         {
             var newGames = series.CreateNeededGamesForSeries();
 
             if (StartDay == null) throw new Exception("Start day cannot be null when we create series games.");
-            var start = (int)StartDay;
-            if (start < 1 && series.Round > 1) 
-            //if there is no specific start day, we need to find a suitable day.  If round 1, then put the game wherever it fits
+            var day = Schedule.GetNextNotStartedDay();
+            int dayToAddOnTo = day.DayNumber;
+
+            if (day == null)
             {
-                start = GetLastScheduleDayOfRound(series.Round - 1);
+                day = Schedule.GetNextInCompleteDay();
+                dayToAddOnTo = day.DayNumber + 1;
+            }
+            if (day == null)
+            {
+                day = Schedule.Days[Schedule.Days.Keys.Max()];
+                dayToAddOnTo = day.DayNumber + 1;
             }
             else
             {
-                start = series.StartingDay;
+                dayToAddOnTo = (int)StartDay;
             }
-            //we need to add it to the schedule, on a day that is incomplete, but has no games from the previous round
 
-            Scheduler.AddGamesToSchedule(Schedule, newGames.ToList<ScheduleGame>(), start);
+            Scheduler.AddGamesToSchedule(Schedule, newGames.ToList<ScheduleGame>(), dayToAddOnTo);
 
             return newGames;
         }
-        public virtual IEnumerable<ScheduleGame> GetGamesForRound(int round)
-        {
-            var result = new List<ScheduleGame>();
-            var startingDay = Schedule.GetNextInCompleteDay().DayNumber;
-            var lastDay = Schedule.Days.Keys.Max();
 
-            Schedule.Days.ForEach((key, value) =>
-            {
-                result.AddRange(value.Games.Where(g =>
-                    g.Day >= startingDay && g.Day <= lastDay
-                    && ((g.GetType() == typeof(PlayoffGame)) && ((PlayoffGame)g).Series.Round == round)
-                    ));
-            });
-
-            return result;
-
-        }
-
-        public virtual int GetLastScheduleDayOfRound(int round)
-        {
-            int? lastDayForRound = GetGamesForRound(round).Max(g => g.Day as int?);
-
-            if (lastDayForRound == null) return 1;
-            else
-                return (int)lastDayForRound;                       
-        }
         public virtual void AddSeries(PlayoffSeries series)
         {
             if (Series == null) Series = new List<PlayoffSeries>();
