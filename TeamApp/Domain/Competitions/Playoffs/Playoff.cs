@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using TeamApp.Domain.Schedules;
 using System.Linq;
-using TeamApp.Domain.Extensions;
 using TeamApp.Domain.Competitions.Config;
 using TeamApp.Domain.Competitions.Config.Playoffs;
+using TeamApp.Domain.Schedules;
 
 namespace TeamApp.Domain.Competitions.Playoffs
 {
     public class Playoff : Competition
-    {        
+    {
         public virtual int CurrentRound { get; set; }
         public virtual IList<PlayoffSeries> Series { get; set; }
 
-        public Playoff() : base() { }
+        public Playoff() : base()
+        {
+        }
 
         public Playoff(CompetitionConfig competitionConfig, string name, int year, int currentRound, List<PlayoffSeries> series, List<SingleYearTeam> teams, Schedule schedule, IList<TeamRanking> rankings, bool started, bool finished, int? startDay, int? endDay)
-            :base(competitionConfig, name, year, schedule, rankings, teams, started, finished, startDay, endDay)
-        {                        
+            : base(competitionConfig, name, year, schedule, rankings, teams, started, finished, startDay, endDay)
+        {
             Series = series;
             Teams = teams;
             CurrentRound = currentRound;
@@ -28,9 +29,9 @@ namespace TeamApp.Domain.Competitions.Playoffs
             //nothing to do for end of series at this point in time
         }
 
-        //this method will sort all rankings groups starting at 1.  
+        //this method will sort all rankings groups starting at 1.
         public virtual void SeedRankingsGroups()
-        {            
+        {
             var rankingsDictionary = new Dictionary<string, List<TeamRanking>>();
 
             Rankings.ToList().ForEach(ranking =>
@@ -52,6 +53,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
                 });
             });
         }
+
         public virtual IEnumerable<ScheduleGame> BeginRound(int currentDay)
         {
             Started = true;
@@ -89,13 +91,12 @@ namespace TeamApp.Domain.Competitions.Playoffs
             });
 
             return newGames;
-
         }
 
         //currently we assume we want to just add them to next unstarted day
         public virtual IEnumerable<ScheduleGame> SetupSeriesGames(PlayoffSeries series, int startingDay)
         {
-            var newGames = series.CreateNeededGamesForSeries();           
+            var newGames = series.CreateNeededGamesForSeries();
 
             Scheduler.AddGamesToSchedule(Schedule, newGames.ToList<ScheduleGame>(), startingDay);
 
@@ -134,7 +135,6 @@ namespace TeamApp.Domain.Competitions.Playoffs
             newGames.AddRange(SetupSeriesGames(playoffGame.Series, currentDay));
 
             return newGames;
-            
         }
 
         public virtual void ProcessEndOfSeries(PlayoffSeries series)
@@ -142,7 +142,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
             var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
 
             var seriesRule = playoffConfig.GetActiveSeriesRules(Year).Where(s => s.Name.Equals(series.Name)).First();
-            
+
             ProcessEndOfSeriesTeam(seriesRule.WinnerGroupName, seriesRule.WinnerRankFrom, series.GetWinner());
             ProcessEndOfSeriesTeam(seriesRule.LoserGroupName, seriesRule.LoserRankFrom, series.GetLoser());
         }
@@ -150,14 +150,15 @@ namespace TeamApp.Domain.Competitions.Playoffs
         public virtual void ProcessEndOfSeriesTeam(string newGroupName, string rankSourceGroupName, PlayoffTeam team)
         {
             if (newGroupName != null)
-            {                
+            {
                 if (rankSourceGroupName == null) throw new ApplicationException("Can't have a null winner rank from.");
 
-                var rank = Rankings.Where(r => r.GroupName == rankSourceGroupName && r.Team.Id == team.Id).First().Rank;                
+                var rank = Rankings.Where(r => r.GroupName == rankSourceGroupName && r.Team.Id == team.Id).First().Rank;
 
-                Rankings.Add(new TeamRanking(rank, newGroupName, team, 1));
+                Rankings.Add(new TeamRanking(rank, newGroupName, team, -1));
             }
         }
+
         public virtual bool IsRoundComplete(int round)
         {
             var complete = true;
@@ -174,7 +175,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
             seriesRulesList.ForEach(sr =>
             {
                 var series = Series.Where(s => s.Name == sr.Name).FirstOrDefault();
-                
+
                 complete = complete && series.IsComplete();
             });
 
@@ -189,7 +190,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
             var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
 
             var activeSeries = playoffConfig.GetActiveSeriesRules(Year).ToList();
-            
+
             for (int i = 0; i < activeSeries.Count; i++)
             {
                 complete = complete && IsRoundComplete(activeSeries[i].Round);
@@ -197,6 +198,5 @@ namespace TeamApp.Domain.Competitions.Playoffs
 
             return complete;
         }
-        
     }
 }

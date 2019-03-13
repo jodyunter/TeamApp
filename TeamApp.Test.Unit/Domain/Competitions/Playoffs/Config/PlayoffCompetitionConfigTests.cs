@@ -10,7 +10,7 @@ using TeamApp.Domain.Competitions.Config.Playoffs;
 
 namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
 {
-    public class PlayoffConfigTests
+    public class PlayoffCompetitionConfigTests
     {
         private static Team CreateTeamForTests(long id, string name, string nickName, string shortName, int skill, string owner, int? start, int? end, bool active)
         {

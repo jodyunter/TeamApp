@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TeamApp.Domain.Competitions.Config.Seasons;
 
 namespace TeamApp.Domain.Competitions.Config.Playoffs
 {
@@ -14,10 +15,17 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
             Messages = new List<string>();
         }
 
-        public void SetupMockRankings()
+        public List<MockRanking> SetupMockRankings(PlayoffCompetitionConfig config, int year)
         {
             //make sure to go through all the winner and loser go to groups
-            //make sure to check winner rank comes from...
+            //make sure to check winner rank comes from.            
+
+            
+        }
+
+        private void SetupMockSeasonRankings()
+        {
+
         }
         public bool Validate(PlayoffCompetitionConfig config, int year)
         {
@@ -32,6 +40,8 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
 
             if (!config.IsActive(year))
             {
+                valid = false;
+
                 var type = "PlayoffCompetitionConfig";
                 var message = "Competition Configuration is not active for year.";
                 var data = string.Format("Id:{0} Name:{1} Year:{2}", config.Id, config.Name, year);
