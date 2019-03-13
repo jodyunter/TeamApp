@@ -55,7 +55,7 @@ namespace TeamApp.Test.Domain.SchedulerTests
 
             schedule = Scheduler.CreateGames(null, 1, 5, 1,
                 new List<Team>()
-                    { CreateTeam("Team 1"), CreateTeam("Team 2"), CreateTeam("Team 3"), CreateTeam("Team 4"), CreateTeam("Team 5"), CreateTeam("Team 6") },
+                    { CreateTeam("Team 1",1), CreateTeam("Team 2",2), CreateTeam("Team 3",3), CreateTeam("Team 4",4), CreateTeam("Team 5",5), CreateTeam("Team 6",6) },
                 2, false, rules);
 
             return schedule;
@@ -68,7 +68,7 @@ namespace TeamApp.Test.Domain.SchedulerTests
 
             schedule = Scheduler.CreateGames(null, 1, 5, 1,
                 new List<Team>()
-                    { CreateTeam("Team 1"), CreateTeam("Team 2"), CreateTeam("Team 3"), CreateTeam("Team 4"), CreateTeam("Team 5"), CreateTeam("Team 6") },
+                    { CreateTeam("Team 1",1), CreateTeam("Team 2",2), CreateTeam("Team 3",3), CreateTeam("Team 4",4), CreateTeam("Team 5",5), CreateTeam("Team 6",6) },
                 2, true, rules);
 
             return schedule;

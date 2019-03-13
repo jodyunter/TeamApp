@@ -77,8 +77,8 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs
 
         public static IEnumerable<object[]> SeriesForInCompleteGames()
         {
-            var team1 = CreateTeam("Team 1");
-            var team2 = CreateTeam("Team 2");
+            var team1 = CreateTeam("Team 1", 1, 1);
+            var team2 = CreateTeam("Team 2", 2, 2);
             List<PlayoffGame> inCompleteGamesNull = null;
             var inCompleteGames0 = new List<PlayoffGame>();
             var inCompleteGames1 = new List<PlayoffGame> { CreateGameWithCompleteStatus(false, team1, team2) };
@@ -104,9 +104,9 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs
         {
             return new PlayoffGame(null, null, -1, -1, -1, team1.Parent, team2.Parent, homeScore, awayScore, complete, 1, null, false);
         }
-        public static PlayoffTeam CreateTeam(string name)
+        public static PlayoffTeam CreateTeam(string name, int id, int parentId)
         {
-            return new PlayoffTeam(null, new Team(name, null, null, 5, null, 1, null, true), name, null, null, 5, null, 1);
+            return new PlayoffTeam(null, new Team(name, null, null, 5, null, 1, null, true) { Id = parentId }, name, null, null, 5, null, 1) { Id = id };
         }
         [Theory]
         [MemberData(nameof(SeriesForInCompleteGames))]
@@ -120,8 +120,8 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs
         [Fact]
         public void ProcessGamesForBestofSeries()
         {
-            var teamA = CreateTeam("Team A");
-            var teamB = CreateTeam("Team B");
+            var teamA = CreateTeam("Team A", 1, 1);
+            var teamB = CreateTeam("Team B", 2, 2);
 
             var series = new BestOfSeries(null, "Test", 1, 1, teamA, teamB, 0, 0, 4, new List<PlayoffGame>(), new int[] { 0, 0, 1, 1, 0, 1, 0 });
 
@@ -151,7 +151,7 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs
             game2.AwayScore = 3;
             game2.Complete = true;
             series.ProcessGame(game2);
-
+            //should be home 1 away 1
             StrictEqual(1, series.NumberOfGamesNeeded());
             game3.HomeScore = 5;
             game3.Complete = true;
@@ -220,8 +220,8 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs
             playoff.CompetitionConfig = playoffConfig;
             playoffConfig.GameRules = gameRules;
 
-            var homeTeam = CreateTeam("A Team");
-            var awayTeam = CreateTeam("B Team");
+            var homeTeam = CreateTeam("A Team", 1, 1);
+            var awayTeam = CreateTeam("B Team", 1, 1);
 
             var series = new BestOfSeries(playoff, "Test", 1, 1, homeTeam, awayTeam, 0, 0, 0, null, homeTeamProgression);
 
@@ -243,8 +243,8 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs
         public void ShouldProcessSeriesGameBestOf()
         {
 
-            var homeTeam = CreateTeam("A Team");
-            var awayTeam = CreateTeam("B Team");
+            var homeTeam = CreateTeam("A Team", 1, 1);
+            var awayTeam = CreateTeam("B Team", 2, 2);
 
             var series = new BestOfSeries(null, "Test", 1, 1, homeTeam, awayTeam, 0, 0, 2, null, null);
 
@@ -277,11 +277,11 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs
         public void ShouldGetWinnerAndLoserForBestOf()
         {
 
-            var homeTeam = CreateTeam("A Team");
-            var awayTeam = CreateTeam("B Team");
+            var homeTeam = CreateTeam("A Team", 1, 1);
+            var awayTeam = CreateTeam("B Team", 2, 2);
 
-            var series1 = new BestOfSeries(null, "Test", 1, 2, homeTeam, awayTeam, 0, 0, 2, null, null);
-            var series2 = new BestOfSeries(null, "Test", 1, 1, homeTeam, awayTeam, 0, 0, 2, null, null);
+            var series1 = new BestOfSeries(null, "Test", 1, 2, homeTeam, awayTeam, 2, 1, 2, null, null);
+            var series2 = new BestOfSeries(null, "Test", 1, 1, homeTeam, awayTeam, 0, 2, 2, null, null);
             var series3 = new BestOfSeries(null, "Test", 1, 1, homeTeam, awayTeam, 0, 0, 2, null, null);
 
             Equal("A Team", series1.GetWinner().Name);
@@ -299,8 +299,8 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs
         public void ShouldGetWinnerAndLoserForTotalGoals()
         {
 
-            var homeTeam = CreateTeam("A Team");
-            var awayTeam = CreateTeam("B Team");
+            var homeTeam = CreateTeam("A Team", 1, 1);
+            var awayTeam = CreateTeam("B Team", 2, 2);
 
             var series1 = new TotalGoalsSeries(null, "Test", 1, 1, homeTeam, awayTeam, 3, 0, 2, 2, null, null);
             var series2 = new TotalGoalsSeries(null, "Test", 1, 1, homeTeam, awayTeam, 2, 5, 2, 2, null, null);

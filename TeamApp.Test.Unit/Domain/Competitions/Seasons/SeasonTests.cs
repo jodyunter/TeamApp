@@ -17,7 +17,7 @@ namespace TeamApp.Test.Domain.Competitions.Seasons
         {
             var seasonConfig = new SeasonCompetitionConfig("Test", null, 1, null, null, 1, null, null, null, null, null);
             var season = new Season(seasonConfig, seasonConfig.Name, 1, null, null, null, null, true, false, 1, null);
-            var teams = new List<Team>() { CreateTeam("Team 1"), CreateTeam("Team 2"), CreateTeam("Team 3"), CreateTeam("Team 4") };
+            var teams = new List<Team>() { CreateTeam("Team 1", 1), CreateTeam("Team 2", 2), CreateTeam("Team 3", 3), CreateTeam("Team 4", 4) };
             var rules = new GameRules(null, true, 1, 0, 7, 6);
             var games = new List<ScheduleGame>()
             {
@@ -66,13 +66,6 @@ namespace TeamApp.Test.Domain.Competitions.Seasons
             StrictEqual(0, team4.Stats.Ties);
             StrictEqual(4, team4.Stats.GoalsFor);
             StrictEqual(1, team4.Stats.GoalsAgainst);
-        }
-
-
-        [Fact]
-        public void ShouldPlaySome()
-        {
-            True(false);
         }
 
         [Fact]

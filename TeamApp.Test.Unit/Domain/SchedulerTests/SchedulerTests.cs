@@ -25,20 +25,20 @@ namespace TeamApp.Test.Domain.SchedulerTests
         {
             var rules = new GameRules(null, true, 1, 5, 7, 6);
 
-            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3") },
-                                       new List<Team> { CreateTeam("Team 4"), CreateTeam("Team 5"),CreateTeam("Team 6") },
+            yield return new object[] { new List<Team> { CreateTeam("Team 1",1), CreateTeam("Team 2",2),CreateTeam("Team 3",3) },
+                                       new List<Team> { CreateTeam("Team 4",4), CreateTeam("Team 5",5),CreateTeam("Team 6",6) },
                                        3, 1, false, rules };
 
-            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3") },
-                                       new List<Team> { CreateTeam("Team 4"), CreateTeam("Team 5"),CreateTeam("Team 6") },
+            yield return new object[] { new List<Team> { CreateTeam("Team 1",1), CreateTeam("Team 2",2),CreateTeam("Team 3",3) },
+                                       new List<Team> { CreateTeam("Team 4",4), CreateTeam("Team 5",5),CreateTeam("Team 6",6) },
                                        6, 1, true, rules };
 
-            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3"), CreateTeam("Team 7")},
-                                       new List<Team> { CreateTeam("Team 4"), CreateTeam("Team 5"),CreateTeam("Team 6") },
+            yield return new object[] { new List<Team> { CreateTeam("Team 1",1), CreateTeam("Team 2",2),CreateTeam("Team 3",3), CreateTeam("Team 7", 7) },
+                                       new List<Team> { CreateTeam("Team 4",4), CreateTeam("Team 5",5),CreateTeam("Team 6",6) },
                                        8, 1, true, rules };
 
-            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3") },
-                                       new List<Team> { CreateTeam("Team 4"), CreateTeam("Team 5"),CreateTeam("Team 6"), CreateTeam("Team 7") },
+            yield return new object[] { new List<Team> { CreateTeam("Team 1",1), CreateTeam("Team 2",2),CreateTeam("Team 3",3) },
+                                       new List<Team> { CreateTeam("Team 4",4), CreateTeam("Team 5",5),CreateTeam("Team 6",6), CreateTeam("Team 7", 7) },
                                        8, 1, true, rules };
         }
 
@@ -68,25 +68,25 @@ namespace TeamApp.Test.Domain.SchedulerTests
         {
             var rules = new GameRules(null, true, 1, 5, 7, 6);
 
-            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3") },
+            yield return new object[] { new List<Team> { CreateTeam("Team 1",1), CreateTeam("Team 2",2),CreateTeam("Team 3",3) },
                                        3, 1, false, rules };
-            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3"),CreateTeam("Team 4") },
+            yield return new object[] { new List<Team> { CreateTeam("Team 1",1), CreateTeam("Team 2",2),CreateTeam("Team 3",3),CreateTeam("Team 4",4) },
                                        3, 1, false, rules };
-            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3"),CreateTeam("Team 4"),
-                                                        CreateTeam("Team 5"), CreateTeam("Team 6"),CreateTeam("Team 7"),CreateTeam("Team 8")},
+            yield return new object[] { new List<Team> { CreateTeam("Team 1",1), CreateTeam("Team 2",2),CreateTeam("Team 3",3),CreateTeam("Team 4",4) ,
+                                                        CreateTeam("Team 5",5), CreateTeam("Team 6",6),CreateTeam("Team 7",7),CreateTeam("Team 8",8)},
                                        7, 1, false, rules };
-            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3"),CreateTeam("Team 4"),
-                                                        CreateTeam("Team 5"), CreateTeam("Team 6"),CreateTeam("Team 7"),CreateTeam("Team 8"), CreateTeam("Team 9")},
+            yield return new object[] { new List<Team> { CreateTeam("Team 1",1), CreateTeam("Team 2",2),CreateTeam("Team 3",3),CreateTeam("Team 4",4) ,
+                                                        CreateTeam("Team 5",5), CreateTeam("Team 6",6),CreateTeam("Team 7",7),CreateTeam("Team 8",8), CreateTeam("Team 9", 9)},
                                        9, 1, false, rules };
-            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3") },
+            yield return new object[] { new List<Team> { CreateTeam("Team 1",1), CreateTeam("Team 2",2),CreateTeam("Team 3",3) },
                                        6, 1, true, rules };
-            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3"),CreateTeam("Team 4") },
+            yield return new object[] { new List<Team> { CreateTeam("Team 1",1), CreateTeam("Team 2",2),CreateTeam("Team 3",3),CreateTeam("Team 4",4) },
                                        6, 1, true, rules };
-            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3"),CreateTeam("Team 4"),
-                                                        CreateTeam("Team 5"), CreateTeam("Team 6"),CreateTeam("Team 7"),CreateTeam("Team 8")},
+            yield return new object[] { new List<Team> { CreateTeam("Team 1",1), CreateTeam("Team 2",2),CreateTeam("Team 3",3),CreateTeam("Team 4",4) ,
+                                                        CreateTeam("Team 5",5), CreateTeam("Team 6",6),CreateTeam("Team 7",7),CreateTeam("Team 8",8)},
                                        14, 1, true, rules };
-            yield return new object[] { new List<Team> { CreateTeam("Team 1"), CreateTeam("Team 2"),CreateTeam("Team 3"),CreateTeam("Team 4"),
-                                                        CreateTeam("Team 5"), CreateTeam("Team 6"),CreateTeam("Team 7"),CreateTeam("Team 8"), CreateTeam("Team 9")},
+            yield return new object[] { new List<Team> { CreateTeam("Team 1",1), CreateTeam("Team 2",2),CreateTeam("Team 3",3),CreateTeam("Team 4",4) ,
+                                                        CreateTeam("Team 5",5), CreateTeam("Team 6",6),CreateTeam("Team 7",7),CreateTeam("Team 8",8), CreateTeam("Team 9", 9)},
                                        18, 1, true, rules };
         }
 
@@ -116,18 +116,18 @@ namespace TeamApp.Test.Domain.SchedulerTests
         //validate no bad days
         //validate total games are equal per team
 
-        public static Team CreateTeam(string name)
+        public static Team CreateTeam(string name, int id)
         {
-            return new Team(name, null, null, 5, null, 1, null, true);
+            return new Team(name, null, null, 5, null, 1, null, true) { Id = id };
         }            
         public static ScheduleDay CreateDay(int dayNumber, params ScheduleGame[] games)
         {
             return new ScheduleDay(dayNumber) { Games = new List<ScheduleGame>(games) };
         }
                         
-        public static ScheduleGame CreateGame(string homeTeamName, string awayTeamName)
+        public static ScheduleGame CreateGame(string homeTeamName, int homeId, string awayTeamName, int awayId)
         {
-            return new ScheduleGame(null, -1, -1, -1, CreateTeam(homeTeamName), CreateTeam(awayTeamName), 0, 0, false, 1, null,false);
+            return new ScheduleGame(null, -1, -1, -1, CreateTeam(homeTeamName, homeId), CreateTeam(awayTeamName, awayId), 0, 0, false, 1, null,false);
         }
 
     }

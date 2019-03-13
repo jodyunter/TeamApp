@@ -134,24 +134,25 @@ namespace TeamApp.Test.Helpers
             var playoffRankingRules = new List<PlayoffRankingRule>()
             {
                 //we do not need division rankings because they will come automatically
-                new PlayoffRankingRule(playoffConfig, "Top Seeds", "East", "NHL", 1, 1, null, 1, 5, null),
-                new PlayoffRankingRule(playoffConfig, "Top Seeds", "West", "NHL", 1, 1, null, 1, 5, null),
-                new PlayoffRankingRule(playoffConfig, "Top Seeds", "Central", "NHL", 1, 1, 1, 1, 5, null),
-                new PlayoffRankingRule(playoffConfig, "Top Seeds", "Atlantic", "NHL", 1, 1, null, 1, 5, null),
-                new PlayoffRankingRule(playoffConfig, "Top Seeds", "Pacific", "NHL", 1, 1, null, 1, 5, null),
-                new PlayoffRankingRule(playoffConfig, "Rest of Teams", "East", "NHL", 2, null, null, 1, 5, null),
-                new PlayoffRankingRule(playoffConfig, "Rest of Teams", "West", "NHL", 2, null, null, 1, 5, null),
-                new PlayoffRankingRule(playoffConfig, "Rest of Teams", "Central", "NHL", 2, null, null, 1, 5, null),
-                new PlayoffRankingRule(playoffConfig, "Rest of Teams", "Atlantic", "NHL", 2, null, null, 1, 5, null),
-                new PlayoffRankingRule(playoffConfig, "Rest of Teams", "Pacific", "NHL", 2, null, null, 1, 5, null),
-                new PlayoffRankingRule(playoffConfig, "Combined", "Top Seeds", "NHL", 1, 5, 1, 2, 6, null),
-                new PlayoffRankingRule(playoffConfig, "Combined", "Rest of Teams", "NHL", 1, 3, 6, 2, 6, null)
+                new PlayoffRankingRule(playoffConfig, "Top Seeds", "East", "NHL", 1, 1, null, 5, 1, null),
+                new PlayoffRankingRule(playoffConfig, "Top Seeds", "West", "NHL", 1, 1, null, 5, 1, null),
+                new PlayoffRankingRule(playoffConfig, "Top Seeds", "Central", "NHL", 1, 1, 1, 5, 1, null),
+                new PlayoffRankingRule(playoffConfig, "Top Seeds", "Atlantic", "NHL", 1, 1, null, 5, 1, null),
+                new PlayoffRankingRule(playoffConfig, "Top Seeds", "Pacific", "NHL", 1, 1, null, 5, 1, null),
+                new PlayoffRankingRule(playoffConfig, "Rest of Teams", "East", "NHL", 2, null, null, 5, 1, null),
+                new PlayoffRankingRule(playoffConfig, "Rest of Teams", "West", "NHL", 2, null, null, 5, 1, null),
+                new PlayoffRankingRule(playoffConfig, "Rest of Teams", "Central", "NHL", 2, null, null, 5, 1, null),
+                new PlayoffRankingRule(playoffConfig, "Rest of Teams", "Atlantic", "NHL", 2, null, null, 5, 1, null),
+                new PlayoffRankingRule(playoffConfig, "Rest of Teams", "Pacific", "NHL", 2, null, null, 5, 1, null),
+                new PlayoffRankingRule(playoffConfig, "Combined", "Top Seeds", "NHL", 1, 5, 1, 6, 1, null),
+                new PlayoffRankingRule(playoffConfig, "Combined", "Rest of Teams", "NHL", 1, 3, 6, 6, 1, null)
             };
 
             playoffConfig.RankingRules = playoffRankingRules;
 
             var playoffSeriesRules = new List<PlayoffSeriesRule>()
-            {                            
+            {
+//				CreateBestOfSeries(playoffConfig, "R1 A", 1, 4, gameRules, 1, null).SetHomeFromRanking("Top Seeds", 1).SetAwayFromRanking("Rest of Teams", 11).SetWinnerData("QUARTERFINALISTS", "NHL").SetLoserData(null, null).SetGameProgression(new int[]  { 0,0,1,1,0,1,0 }),
                 new PlayoffSeriesRule(playoffConfig, "R1 A", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "Top Seeds", 1, FROM_RANKING, "Rest of Teams", 11, 1, null, new int[]  { 0,0,1,1,0,1,0 }, "QUARTERFINALISTS", "NHL", null, null),
                 new PlayoffSeriesRule(playoffConfig, "R1 B", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "Top Seeds", 2, FROM_RANKING, "Rest of Teams", 10, 1, null, new int[]  { 0,0,1,1,0,1,0 }, "QUARTERFINALISTS", "NHL", null, null),
                 new PlayoffSeriesRule(playoffConfig, "R1 C", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "Top Seeds", 3, FROM_RANKING, "Rest of Teams", 9, 1, null, new int[]  { 0,0,1,1,0,1,0 }, "QUARTERFINALISTS", "NHL", null, null),
@@ -169,7 +170,7 @@ namespace TeamApp.Test.Helpers
                 new PlayoffSeriesRule(playoffConfig, "Semi Final A", 3, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "SEMIFINALISTS", 1, FROM_RANKING, "SEMIFINALISTS", 4, 1, null, new int[]  { 0,0,1,1,0,1,0 }, "FINALISTS", "NHL", null, null),
                 new PlayoffSeriesRule(playoffConfig, "Semi Final B", 3, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "SEMIFINALISTS", 2, FROM_RANKING, "SEMIFINALISTS", 3, 1, null, new int[] { 0, 0, 1, 1, 0, 1, 0 }, "FINALISTS", "NHL", null, null),
 
-                new PlayoffSeriesRule(playoffConfig, "Final", 4, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "FINALISTS", 1, FROM_RANKING, "FINALISTS", 2, 1, null, new int[] { 0,0,1,1,0,1,0 }, null, null, null, null),                
+                new PlayoffSeriesRule(playoffConfig, "Final", 4, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "FINALISTS", 1, FROM_RANKING, "FINALISTS", 2, 1, null, new int[] { 0,0,1,1,0,1,0 }, null, null, null, null),
             };
 
             playoffConfig.SeriesRules = playoffSeriesRules;

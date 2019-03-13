@@ -13,12 +13,12 @@ namespace TeamApp.Test.Domain.SchedulerTests
     {
         public static IEnumerable<object[]> GetDays()
         {
-            yield return new object[] { CreateDay(1, new ScheduleGame[] { CreateGame("Team 1", "Team 2"), CreateGame("Team 3", "Team 4"), CreateGame("Team 5", "Team 6") }), true };
-            yield return new object[] { CreateDay(1, new ScheduleGame[] { CreateGame("Team 1", "Team 2"), CreateGame("Team 1", "Team 3"), CreateGame("Team 5", "Team 6") }), false }; //duplicate home team
-            yield return new object[] { CreateDay(1, new ScheduleGame[] { CreateGame("Team 1", "Team 2"), CreateGame("Team 3", "Team 2"), CreateGame("Team 5", "Team 6") }), false }; //duplicate away team
-            yield return new object[] { CreateDay(1, new ScheduleGame[] { CreateGame("Team 1", "Team 2"), CreateGame("Team 2", "Team 4"), CreateGame("Team 5", "Team 6") }), false }; //duplicate home and away
-            yield return new object[] { CreateDay(1, new ScheduleGame[] { CreateGame("Team 1", "Team 2"), CreateGame("Team 3", "Team 5"), CreateGame("Team 5", "Team 6") }), false }; //duplicate away and home
-            yield return new object[] { CreateDay(1, new ScheduleGame[] { CreateGame("Team 2", "Team 2"), CreateGame("Team 3", "Team 5"), CreateGame("Team 5", "Team 6") }), false }; //duplicate same team per game
+            yield return new object[] { CreateDay(1, new ScheduleGame[] { CreateGame("Team 1",1, "Team 2",2), CreateGame("Team 3", 3, "Team 4",4), CreateGame("Team 5", 5, "Team 6", 6) }), true };
+            yield return new object[] { CreateDay(1, new ScheduleGame[] { CreateGame("Team 1", 1, "Team 2", 2), CreateGame("Team 1", 1, "Team 4", 4), CreateGame("Team 5", 5, "Team 6", 6) }), false }; //duplicate home
+            yield return new object[] { CreateDay(1, new ScheduleGame[] { CreateGame("Team 1", 1, "Team 2", 2), CreateGame("Team 3", 3, "Team 2", 2), CreateGame("Team 5", 5, "Team 6", 6) }), false }; //dupcliate away
+            yield return new object[] { CreateDay(1, new ScheduleGame[] { CreateGame("Team 1", 1, "Team 2", 2), CreateGame("Team 2", 2, "Team 4", 4), CreateGame("Team 5", 5, "Team 6", 6) }), false }; //duplicate home and away
+            yield return new object[] { CreateDay(1, new ScheduleGame[] { CreateGame("Team 1", 1, "Team 2", 2), CreateGame("Team 3", 3, "Team 5", 5), CreateGame("Team 5", 5, "Team 6", 6) }), false }; //duplicate away and home
+            yield return new object[] { CreateDay(1, new ScheduleGame[] { CreateGame("Team 2", 2, "Team 2", 2), CreateGame("Team 3", 3, "Team 5", 5), CreateGame("Team 5", 5, "Team 6", 6) }), false }; //duplicate same team per game
 
         }
 
@@ -36,7 +36,7 @@ namespace TeamApp.Test.Domain.SchedulerTests
         [Fact]
         public void ShouldCountTeamsInDayCorrectly()
         {
-            var day = CreateDay(1, new ScheduleGame[] { CreateGame("Team 1", "Team 2"), CreateGame("Team 3", "Team 4"), CreateGame("Team 5", "Team 6"), CreateGame("Team 6", "Team 5"), CreateGame("Team 6", "Team 2") });
+            var day = CreateDay(1, new ScheduleGame[] { CreateGame("Team 1", 1, "Team 2", 2), CreateGame("Team 3", 3, "Team 4",4), CreateGame("Team 5", 5, "Team 6",6), CreateGame("Team 6", 6,"Team 5",5), CreateGame("Team 6", 6, "Team 2", 2) });
 
             var counts = new ScheduleDayValidator(day);
 

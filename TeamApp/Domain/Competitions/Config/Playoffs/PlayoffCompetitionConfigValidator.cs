@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace TeamApp.Domain.Competitions.Config.Playoffs
 {
@@ -13,6 +14,11 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
             Messages = new List<string>();
         }
 
+        public void SetupMockRankings()
+        {
+            //make sure to go through all the winner and loser go to groups
+            //make sure to check winner rank comes from...
+        }
         public bool Validate(PlayoffCompetitionConfig config, int year)
         {
             bool valid = true;
@@ -32,7 +38,7 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
                 var result = string.Format(messageFormat, type, message, data);
                 Messages.Add(result);
             }
-
+            
             return valid;
         }
 
@@ -41,5 +47,62 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
             return false;
         }
 
+        public bool DoesRankingExistForValue(string ruleName, List<MockRanking> rankingReps,string group, int value)
+        {
+            bool valid = false;
+
+            var rank = rankingReps.Where(rankingRep => rankingRep.Rank == value).FirstOrDefault();
+
+            if (rank == null)
+            {
+                var type = "PlayoffSeriesRule";
+                var message = "Series Rule has a bad ranking value.";
+                var data = string.Format("Series:{0} Group:{1} Rank:{2}", ruleName, group, value);
+                var result = string.Format(messageFormat, type, message, data);
+                Messages.Add(result);
+            }
+            else
+            {
+                valid = true;
+            }
+
+            return valid;
+        }
+
+        public bool DoesRankingExistForName(string ruleName, List<MockRanking> rankingReps, string group, int value)
+        {
+            bool valid = false;
+
+            var rank = rankingReps.Where(rankingRep => rankingRep.GroupName.Equals(group)).FirstOrDefault();
+
+            if (rank == null)
+            {
+                var type = "PlayoffSeriesRule";
+                var message = "Series Rule has a bad ranking group.";
+                var data = string.Format("Series:{0} Group:{1} Rank:{2}", ruleName, group, value);
+                var result = string.Format(messageFormat, type, message, data);
+                Messages.Add(result);
+            }
+            else
+            {
+                valid = true;
+            }
+
+            return valid;
+        }
+
+        public class MockRanking
+        {
+            public string GroupName { get; set; }
+            public int Rank { get; set; }
+
+            public MockRanking(string groupName, int rank)
+            {
+                GroupName = groupName;
+                Rank = rank;
+            }
+        }
     }
+
+
 }

@@ -124,6 +124,37 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
                 new PlayoffRankingRule(config, "Combined", "RemainingTeams", "NHL", 4, 8, 15, 2, 1, null)
             };
         }
+
+        private void CreatePlayoffTeams(Playoff playoff)
+        {
+            playoff.Teams = new List<SingleYearTeam>()
+            {
+                new PlayoffTeam(playoff, teams[0], 1),
+                new PlayoffTeam(playoff, teams[1], 1),
+                new PlayoffTeam(playoff, teams[2], 1),
+                new PlayoffTeam(playoff, teams[3], 1),
+                new PlayoffTeam(playoff, teams[4], 1),
+                new PlayoffTeam(playoff, teams[5], 1),
+                new PlayoffTeam(playoff, teams[6], 1),
+                new PlayoffTeam(playoff, teams[7], 1),
+                new PlayoffTeam(playoff, teams[8], 1),
+                new PlayoffTeam(playoff, teams[9], 1),
+                new PlayoffTeam(playoff, teams[10], 1),
+                new PlayoffTeam(playoff, teams[11], 1)
+            };
+        }
+
+        private void CreatePlayoffRankings(Playoff playoffs)
+        {
+            playoffs.Rankings = new List<TeamRanking>()
+            {
+                new TeamRanking(1, "Top Seeds", (PlayoffTeam)playoffs.Teams[0], 1),
+                new TeamRanking(2, "Top Seeds", (PlayoffTeam)playoffs.Teams[1], 1),
+                new TeamRanking(3, "Top Seeds", (PlayoffTeam)playoffs.Teams[2], 1),
+                new TeamRanking(6, "NHL", (PlayoffTeam)playoffs.Teams[5], 1),
+            };
+        }
+        
         [Fact]
         public void ShouldCopyTeamsFromSeason()
         {
@@ -143,7 +174,15 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
         [Fact]
         public void ShouldCopyTeamsFromPlayoff()
         {
-            True(false);
+            var oldPlayoff = new Playoff();
+            CreatePlayoffTeams(oldPlayoff);
+
+            var playoffConfig = new PlayoffCompetitionConfig();
+            var newPlayoff = new Playoff() { Year = 15 };
+            playoffConfig.CopyTeamsFromCompetition(newPlayoff, oldPlayoff);
+
+            StrictEqual(12, newPlayoff.Teams.Count());
+
         }
         [Fact]
         public void ShouldCreateTeamRankingsFromSeason()
@@ -175,7 +214,17 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
         [Fact]
         public void ShouldCreateTeamRankingsFromPlayoff()
         {
-            True(false);
+            var oldPlayoff = new Playoff();
+            CreatePlayoffTeams(oldPlayoff);
+            CreatePlayoffRankings(oldPlayoff);
+
+            var playoffConfig = new PlayoffCompetitionConfig();
+            var newPlayoff = new Playoff() { Year = 15 };
+            playoffConfig.CopyTeamsFromCompetition(newPlayoff, oldPlayoff);
+            playoffConfig.CopyRankingsFromCompetition(newPlayoff, oldPlayoff);
+
+            StrictEqual(4, newPlayoff.Rankings.Count());
+            Single(newPlayoff.Rankings.Where(r => r.GroupName.Equals("NHL") && r.Rank == 6 && r.Team.Name.Equals("Team 6")));
         }
         [Fact]
         public void ShouldCreateTeamRankingsFromAllRules()

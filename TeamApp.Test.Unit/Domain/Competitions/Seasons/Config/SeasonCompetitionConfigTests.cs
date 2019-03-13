@@ -95,23 +95,6 @@ namespace TeamApp.Test.Domain.Competitions.Seasons.Config
             StrictEqual(expected, seasonConfig.GetTeamsInDivision(divisionName).Count);
         }
 
-        [Theory]
-        [InlineData("New York Rangers", "NorthEast", true)]
-        [InlineData("New York Rangers", "Atlantic", true)]
-        [InlineData("New York Rangers", "West", false)]
-        [InlineData("New York Rangers", "NHL", true)]
-        [InlineData("Winnipeg Jets", "NHL", true)]
-        [InlineData("Edmonton Oilers", "West", true)]
-        [InlineData("Edmonton Oilers", "East", false)]
-        public void IsTeamInDivision(string teamName, string divisionName, bool expected)
-        {
-            var data = CreateConfig();            
-
-            StrictEqual(expected, data.IsTeamInDivision(teamName, divisionName));
-
-
-        }
-
         [Fact]
         public void ShouldValidateConfig()
         {

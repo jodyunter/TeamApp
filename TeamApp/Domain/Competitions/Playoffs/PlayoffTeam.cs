@@ -13,5 +13,11 @@ namespace TeamApp.Domain.Competitions.Playoffs
         {
         }
 
+        public PlayoffTeam(Competition competition, Team parent, int year)
+            :base(competition, parent, parent.Name, parent.NickName, parent.ShortName, parent.Skill, parent.Owner, year)
+        {
+
+        }
+
     }
 }
