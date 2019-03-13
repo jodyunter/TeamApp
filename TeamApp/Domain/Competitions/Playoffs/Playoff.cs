@@ -131,7 +131,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
 
             if (IsRoundComplete(CurrentRound))
                 newGames = BeginRound(currentDay).ToList();
-
+            
             newGames.AddRange(SetupSeriesGames(playoffGame.Series, currentDay));
 
             return newGames;

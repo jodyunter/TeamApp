@@ -20,13 +20,44 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
             //make sure to go through all the winner and loser go to groups
             //make sure to check winner rank comes from.            
 
-            
+            var teams = new List<MockTeam>();
+
+            config.Parents.ToList().ForEach(parentConfig =>
+            {
+                teams.AddRange(SetupMockTeams(parentConfig));
+            });
+
+            return null;
+
         }
 
-        private void SetupMockSeasonRankings()
+        public List<MockTeam> SetupMockTeams(CompetitionConfig config)
         {
-
+            if (config.GetType() == typeof(PlayoffCompetitionConfig))
+                return SetupMockTeams((PlayoffCompetitionConfig)config);
+            else if (config.GetType() == typeof(SeasonCompetitionConfig))
+                return SetupMockTeams((SeasonCompetitionConfig)config);
+            else
+                return new List<MockTeam>();
         }
+        public List<MockTeam> SetupMockTeams(PlayoffCompetitionConfig config)
+        {
+            //playoffs can't have team lists that aren't from other competitions
+
+            return new List<MockTeam>();
+        }
+        public List<MockTeam> SetupMockTeams(SeasonCompetitionConfig config)
+        {
+            var list = new List<MockTeam>();
+
+            config.TeamRules.ToList().ForEach(t =>
+            {
+                list.Add(new MockTeam(t.Team.Id, t.Team.Name));
+            });
+
+            return list;
+        }
+        
         public bool Validate(PlayoffCompetitionConfig config, int year)
         {
             bool valid = true;
@@ -110,6 +141,18 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
             {
                 GroupName = groupName;
                 Rank = rank;
+            }
+        }
+
+        public class MockTeam
+        {
+            public long Id { get; set; }
+            public string Name { get; set; }
+
+            public MockTeam(long id, string name)
+            {
+                Id = id;
+                Name = name;
             }
         }
     }
