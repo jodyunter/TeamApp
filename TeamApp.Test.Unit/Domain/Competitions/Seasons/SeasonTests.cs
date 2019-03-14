@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using TeamApp.Domain.Competitions.Seasons;
-using TeamApp.Domain.Schedules;
-using Xunit;
-using static Xunit.Assert;
-using static TeamApp.Test.Domain.SchedulerTests.SchedulerTests;
 using TeamApp.Domain;
 using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Competitions.Config.Seasons;
+using TeamApp.Domain.Competitions.Seasons;
+using TeamApp.Domain.Schedules;
+using Xunit;
+using static TeamApp.Test.Domain.SchedulerTests.SchedulerTests;
+using static Xunit.Assert;
 
 namespace TeamApp.Test.Domain.Competitions.Seasons
 {
@@ -23,17 +23,17 @@ namespace TeamApp.Test.Domain.Competitions.Seasons
             {
                 new ScheduleGame(null, 1, 1, 1, teams[0], teams[1], 1, 1, true, 1, rules, false),
                 new ScheduleGame(null, 1, 1, 1, teams[0], teams[2], 3, 1, true, 1, rules, false),
-                new ScheduleGame(null, 1, 1, 1, teams[0], teams[3], 1, 4, true, 1, rules, false)  
+                new ScheduleGame(null, 1, 1, 1, teams[0], teams[3], 1, 4, true, 1, rules, false)
             };
 
             var team1 = new SeasonTeam(null, teams[0], "Team 1", null, null, 5, null, 1, null, null);
             var team2 = new SeasonTeam(null, teams[1], "Team 2", null, null, 5, null, 1, null, null);
             var team3 = new SeasonTeam(null, teams[2], "Team 3", null, null, 5, null, 1, null, null);
             var team4 = new SeasonTeam(null, teams[3], "Team 4", null, null, 5, null, 1, null, null);
-            
+
             season.Teams = new List<SingleYearTeam>() { team1, team2, team3, team4 };
 
-            games.ForEach(g => { season.ProcessGame(g, 1); });            
+            games.ForEach(g => { season.ProcessGame(g, 1); });
 
             StrictEqual(3, team1.Stats.Games);
             StrictEqual(3, team1.Stats.Points);
@@ -71,8 +71,6 @@ namespace TeamApp.Test.Domain.Competitions.Seasons
         [Fact]
         public void ShouldGetAllTeamsInDivision()
         {
-
-
             var season = new Season();
             var nhl = new SeasonDivision() { Season = season, Name = "NHL", Level = 1 };
             var eastern = new SeasonDivision() { Season = season, Name = "Eastern", ParentDivision = nhl, Level = 2 };
@@ -104,7 +102,7 @@ namespace TeamApp.Test.Domain.Competitions.Seasons
                 CreateSeasonTeam(season, 15, "Team 15", southwest),
                 CreateSeasonTeam(season, 16, "Team 16", southwest)
             };
-            
+
             StrictEqual(16, season.GetAllTeamsInDivision(nhl).Count);
             StrictEqual(8, season.GetAllTeamsInDivision(eastern).Count);
             StrictEqual(5, season.GetAllTeamsInDivision(western).Count);
@@ -116,7 +114,32 @@ namespace TeamApp.Test.Domain.Competitions.Seasons
             StrictEqual(2, season.GetAllTeamsInDivision(southwest).Count);
         }
 
+        [Fact]
+        public void ShouldProcessEndOfCompetitionDetails()
+        {
+            True(false);
+        }
 
+        [Fact]
+        public void ShouldGetDivisionByName()
+        {
+            True(false);
+        }
+        [Fact]
+        public void ShouldSortAllTeams()
+        {
+            True(false);
+        }
+        [Fact]
+        public void ShouldTeamsByDivision()
+        {
+            True(false);
+        }
+        [Fact]
+        public void ShouldTestAreGamesComplete()
+        {
+            True(false0;)
+        }
         private SeasonTeam CreateSeasonTeam(Competition competition, int id, string name, SeasonDivision division)
         {
             var team = new SeasonTeam(competition, new Team() { Id = id, Name = name }, 1, null, division);
@@ -124,8 +147,6 @@ namespace TeamApp.Test.Domain.Competitions.Seasons
             division.Teams.Add(team);
 
             return team;
-
-
         }
     }
 }

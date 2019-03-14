@@ -57,5 +57,65 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs
             Equal(expectedAwayName, awayTeam.Name);
             
         }
+
+        [Fact]
+        public void ShouldGetLastDayOfRound()
+        {
+            True(false);
+        }
+
+        [Fact]
+        public void ShouldSeedRankingGroups()
+        {
+            True(false);
+        }
+
+        [Fact]
+        public void ShouldBeginRound()
+        {
+            True(false);
+        }
+
+        [Fact]
+        public void ShouldProcessGame()
+        {
+            True(false);
+        }
+
+        [Fact]
+        public void ShouldSetupSeriesGames()
+        {
+            True(false);
+        }
+
+        [Fact]
+        public void ShouldAddSeries()
+        {
+            True(false);
+        }
+
+        [Fact]
+        public void ShouldTestIsRoundComplete()
+        {
+            True(false);
+        }
+
+        [Fact]
+        public void ShouldProcessEndOfSeries()
+        {
+            True(false);
+        }
+
+        [Fact]
+        public void ShouldProcessEndOfSeriesTeam()
+        {
+            True(false);
+        }
+
+        [Fact]
+        public void ShouldTestAreGamesComplete()
+        {
+            True(false);
+        }
     }
 }

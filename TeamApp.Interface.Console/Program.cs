@@ -55,7 +55,7 @@ namespace TeamApp.Console
                 }
                 else
                 {
-                    WriteLine("Game: " + currentData.CurrentDay);
+                    WriteLine("Day: " + currentData.CurrentDay);
                     teamApp.ScheduleGameService.GetGamesForDay(currentData.CurrentDay, currentData.CurrentYear).ToList().ForEach(game =>
                     {
                         WriteLine(game.ToString());

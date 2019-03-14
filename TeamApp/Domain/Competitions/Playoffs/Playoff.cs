@@ -64,7 +64,18 @@ namespace TeamApp.Domain.Competitions.Playoffs
 
             var playoffConfig = (PlayoffCompetitionConfig)CompetitionConfig;
 
-            int roundStartDay = currentDay;
+            int previousRoundEnd = GetLastDayOfRound(CurrentRound - 1); //will be -1 if no playoffs yet
+            var firstNotStartedDay = Schedule.GetNextNotStartedDay(); //this will be null if all days done!
+            int roundStartDay = -1;
+
+            if (firstNotStartedDay == null)
+            {
+                roundStartDay = previousRoundEnd > -1 ? previousRoundEnd + 1 : currentDay;
+            }
+            else
+            {
+                roundStartDay = firstNotStartedDay == null || firstNotStartedDay.DayNumber < previousRoundEnd ? previousRoundEnd + 1 : firstNotStartedDay.DayNumber;
+            }
 
             //most groups are seeded to start with
             //this will seed any new groups
@@ -135,6 +146,26 @@ namespace TeamApp.Domain.Competitions.Playoffs
             newGames.AddRange(SetupSeriesGames(playoffGame.Series, currentDay));
 
             return newGames;
+        }
+
+        public virtual int GetLastDayOfRound(int roundNumber)
+        {
+            int lastDay = -1;
+
+            Schedule.Days.Values.ToList().ForEach(day =>
+            {
+                day.Games.ForEach(g =>
+                {
+                    if (g.GetType() == typeof(PlayoffGame))
+                    {
+                        var pg = (PlayoffGame)g;
+                        if (pg.Series.Round == roundNumber && pg.Day > lastDay) lastDay = pg.Day;
+                    }
+
+                });
+            });
+
+            return lastDay;
         }
 
         public virtual void ProcessEndOfSeries(PlayoffSeries series)

@@ -2,11 +2,10 @@
 
 namespace TeamApp.Domain.Competitions.Seasons
 {
-    public class SeasonTeamStats:BaseDataObject, IComparable<SeasonTeamStats>
+    public class SeasonTeamStats : BaseDataObject, IComparable<SeasonTeamStats>
     {
-        
         public SeasonTeamStats()
-        {            
+        {
             Wins = 0;
             Ties = 0;
             Loses = 0;
@@ -15,8 +14,9 @@ namespace TeamApp.Domain.Competitions.Seasons
             PointsPerWin = 2;
             PointsPerTie = 1;
         }
+
         public SeasonTeamStats(int wins, int loses, int ties, int goalsFor, int goalsAgainst, int pointsPerWin, int pointsPerTie)
-        {            
+        {
             Wins = wins;
             Loses = loses;
             Ties = ties;
@@ -41,34 +41,34 @@ namespace TeamApp.Domain.Competitions.Seasons
 
         public virtual int CompareTo(SeasonTeamStats other)
         {
-            if (this.Points == other.Points)
+            if (Points == other.Points)
             {
-                if (this.Games == other.Games)
+                if (Games == other.Games)
                 {
-                    if (this.Wins == other.Wins)
+                    if (Wins == other.Wins)
                     {
-                        if (this.GoalDifference == other.GoalDifference)
+                        if (GoalDifference == other.GoalDifference)
                         {
-                            if (this.GoalsFor == other.GoalsFor)
+                            if (GoalsFor == other.GoalsFor)
                             {
                                 return 0;
                             }
                             else
-                                return this.GoalsFor - other.GoalsFor;
+                                return GoalsFor - other.GoalsFor;
                         }
                         else
-                            return this.GoalDifference - other.GoalDifference;
+                            return GoalDifference - other.GoalDifference;
                     }
                     else
-                        return this.Wins - other.Wins;
+                        return Wins - other.Wins;
                 }
                 else
                 {
-                    return (this.Games - other.Games) * -1; // we want less games to be better
+                    return (Games - other.Games) * -1; // we want less games to be better
                 }
             }
             else
-                return this.Points - other.Points;
+                return Points - other.Points;
         }
     }
 }
