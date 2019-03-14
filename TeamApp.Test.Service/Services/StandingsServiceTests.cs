@@ -4,7 +4,7 @@ using System.Text;
 using Xunit;
 using static Xunit.Assert;
 
-namespace TeamApp.Test.Service.Services
+namespace TeamApp.Test.Services
 {
     public class StandingsServiceTests
     {

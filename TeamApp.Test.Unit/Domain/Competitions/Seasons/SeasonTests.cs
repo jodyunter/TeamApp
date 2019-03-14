@@ -138,7 +138,7 @@ namespace TeamApp.Test.Domain.Competitions.Seasons
         [Fact]
         public void ShouldTestAreGamesComplete()
         {
-            True(false0;)
+            True(false);
         }
         private SeasonTeam CreateSeasonTeam(Competition competition, int id, string name, SeasonDivision division)
         {

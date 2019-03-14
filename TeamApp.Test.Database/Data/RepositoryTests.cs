@@ -64,7 +64,8 @@ namespace TeamApp.Test.Data
 
         private void DropDatabase()
         {
-            schemaExport.Drop(false, true);
+            var query = session.CreateSQLQuery("exec DropAllTables");
+            query.ExecuteUpdate();
         }
 
 
