@@ -57,22 +57,19 @@ namespace TeamApp.Test.Helpers
 
             seasonConfig.Parents = parents;
 
-            var divisionRules = new List<SeasonDivisionRule>()
-            {
-                new SeasonDivisionRule(seasonConfig, "NHL", null, 1, 1, 1, null),
-                new SeasonDivisionRule(seasonConfig, "West", "NHL", 2, 1,1, null),
-                new SeasonDivisionRule(seasonConfig, "East", "NHL", 2, 2, 1, null),
-                new SeasonDivisionRule(seasonConfig, "Central", "NHL", 2, 3, 1, null),
-                new SeasonDivisionRule(seasonConfig, "Atlantic", "NHL", 2, 3, 1, null),
-                new SeasonDivisionRule(seasonConfig, "Pacific", "NHL", 2, 3, 1, null)
-            };
+            var drNhl = new SeasonDivisionRule(seasonConfig, "NHL", null, 1, 1, null, 1, null);
+            var drWest = new SeasonDivisionRule(seasonConfig, "West", drNhl, 2, 1, null, 1, null);
+            var drEast = new SeasonDivisionRule(seasonConfig, "East", drNhl, 2, 2, null, 1, null);
+            var drCentral = new SeasonDivisionRule(seasonConfig, "Central", drNhl, 2, 3, null, 1, null);
+            var drAtlantic = new SeasonDivisionRule(seasonConfig, "Atlantic", drNhl, 2, 3, null, 1, null);
+            var drPacific = new SeasonDivisionRule(seasonConfig, "Pacific", drNhl, 2, 3, null, 1, null);
 
-            seasonConfig.DivisionRules = divisionRules;
 
-            var nhlDivRule = divisionRules.Where(dr => dr.DivisionName.Equals("NHL")).First();
+            seasonConfig.DivisionRules = new List<SeasonDivisionRule>() { drNhl, drWest, drEast, drCentral, drAtlantic, drPacific };
+            
 
             var scheduleRules = new List<SeasonScheduleRule>() {                
-                new SeasonScheduleRule(seasonConfig, null, nhlDivRule, null, null, 1, false, 1, null),                
+                new SeasonScheduleRule(seasonConfig, null, drNhl, null, null, 1, false, 1, null),                
             };
 
             seasonConfig.ScheduleRules = scheduleRules;
@@ -80,37 +77,43 @@ namespace TeamApp.Test.Helpers
             var seasonTeamRules = new List<SeasonTeamRule>()
             {
 
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Ottawa").First(), "East", 1, null),
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Toronto").First(), "East", 1, null),
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Buffalo").First(), "East", 1, null),
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.NickName == "Penguins").First(), "East", 1, null),
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.NickName == "Flyers").First(), "East", 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Ottawa").First(), drEast, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Toronto").First(), drEast, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Buffalo").First(), drEast, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.NickName == "Penguins").First(), drEast, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.NickName == "Flyers").First(), drEast, 1, null),
 
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Montreal").First(), "Atlantic", 1, null),
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Quebec").First(), "Atlantic", 1, null),
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "New Jersey").First(), "Atlantic", 1, null),                
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.NickName == "Rangers").First(), "Atlantic", 1, null),
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.NickName == "Islanders").First(), "Atlantic", 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Montreal").First(), drAtlantic, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Quebec").First(), drAtlantic, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "New Jersey").First(), drAtlantic, 1, null),                
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.NickName == "Rangers").First(), drAtlantic, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.NickName == "Islanders").First(), drAtlantic, 1, null),
 
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Detroit").First(), "Central", 1, null),
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Nashville").First(), "Central", 1, null),
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Winnipeg").First(), "Central", 1, null),
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Minnesota").First(), "Central", 1, null),
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Chicago").First(), "Central", 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Detroit").First(), drCentral, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Nashville").First(), drCentral, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Winnipeg").First(), drCentral, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Minnesota").First(), drCentral, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Chicago").First(), drCentral, 1, null),
 
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Colorado").First(), "West", 1, null),
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Calgary").First(), "West", 1, null),                
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Edmonton").First(), "West", 1, null),
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Las Vegas").First(), "West", 1, null),
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Saskatoon").First(), "West", 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Colorado").First(), drWest, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Calgary").First(), drWest, 1, null),                
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Edmonton").First(), drWest, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Las Vegas").First(), drWest, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Saskatoon").First(), drWest, 1, null),
 
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Vancouver").First(), "Pacific", 1, null),
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Victoria").First(), "Pacific", 1, null),
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Seattle").First(), "Pacific", 1, null),
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "San Jose").First(), "Pacific", 1, null),
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Los Angelas").First(), "Pacific", 1, null)
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Vancouver").First(), drPacific, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Victoria").First(), drPacific, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Seattle").First(), drPacific, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "San Jose").First(), drPacific, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Los Angelas").First(), drPacific, 1, null)
 
             };
+
+            drEast.Teams = seasonConfig.GetTeamsInDivision("East").ToList();
+            drAtlantic.Teams = seasonConfig.GetTeamsInDivision("Atlantic").ToList();
+            drCentral.Teams = seasonConfig.GetTeamsInDivision("Central").ToList();
+            drWest.Teams = seasonConfig.GetTeamsInDivision("West").ToList();
+            drPacific.Teams = seasonConfig.GetTeamsInDivision("Pacific").ToList();
 
             seasonConfig.TeamRules = seasonTeamRules;
 

@@ -23,41 +23,40 @@ namespace TeamApp.Domain.Competitions.Config.Seasons
         }
 
 
-        public virtual List<string> GetTeamsInDivision(string divisionName)
+        public virtual List<SeasonTeamRule> GetTeamsInDivision(string divisionName)
         {
-            var list = new List<string>();
+            var list = new List<SeasonTeamRule>();
 
-            list.AddRange(GetTeamsAssignedToDivision(divisionName));
+            var divisionRule = DivisionRules.Where(dr => dr.DivisionName.Equals(divisionName)).FirstOrDefault();
+            var parent = divisionRule;
 
-            var children = GetChildDivisionNames(divisionName);
-
-            children.ToList().ForEach(childDivisionName =>
+            while (parent != null)
             {
-                list.AddRange(GetTeamsInDivision(childDivisionName));
+                list.AddRange(parent.Teams);
+                parent = parent.Parent;
+            }
+           
+            list.AddRange(parent.Teams);
+
+            GetChildDivisions(divisionRule).ForEach(dr =>
+            {
+                list.AddRange(dr.Teams);
             });
 
             return list;
-        }
+        }         
         
-        private IEnumerable<string> GetChildDivisionNames(string parentDivision)
+        private List<SeasonDivisionRule> GetChildDivisions(SeasonDivisionRule parentRule)
         {
-            return DivisionRules.Where(r => r.ParentName != null && r.ParentName.Equals(parentDivision)).Select(r => r.DivisionName);
-        }
+            var result = new List<SeasonDivisionRule>();
 
-        private List<string> GetTeamsAssignedToDivision(string divisionName)
-        {
-
-            var teams = new List<string>();
-
-            TeamRules.ToList().Where(tr => tr.Division.Equals(divisionName)).ToList().ForEach(rule =>
+            DivisionRules.Where(dr => dr.Parent.Id == parentRule.Id).ToList().ForEach(division =>
             {
-                if (rule.Division.Equals(divisionName))
-                {
-                    teams.Add(rule.Team.Name + " " + rule.Team.NickName);
-                }
+                result.Add(division);
+                result.AddRange(GetChildDivisions(division));
             });
 
-            return teams;
+            return result;
         }
 
         public virtual bool IsTeamInDivision(string teamName, string divisionName)
@@ -99,9 +98,9 @@ namespace TeamApp.Domain.Competitions.Config.Seasons
             //now setup parent divisions relationships
             DivisionRules.Where(dr => dr.IsActive(season.Year)).ToList().ForEach(rule =>
             {
-                if (rule.ParentName != null)
+                if (rule.Parent != null)
                 {
-                    seasonDivisions[rule.DivisionName].ParentDivision = seasonDivisions[rule.ParentName];
+                    seasonDivisions[rule.DivisionName].ParentDivision = seasonDivisions[rule.Parent.DivisionName];
                 }
             });
 
@@ -113,7 +112,7 @@ namespace TeamApp.Domain.Competitions.Config.Seasons
             TeamRules.Where(tr => tr.IsActive(season.Year)).ToList().ForEach(rule =>
             {                
                 var team = rule.Team;
-                var seasonDivision = seasonDivisions[rule.Division];
+                var seasonDivision = seasonDivisions[rule.Division.DivisionName];
                 var newTeam = new SeasonTeam(season, team, team.Name, team.NickName, team.ShortName, team.Skill, team.Owner, season.Year, null, seasonDivision);                
 
                 seasonDivision.AddTeam(newTeam);

@@ -87,7 +87,7 @@ namespace TeamApp.Domain.Competitions.Config.Seasons
             return valid;
         }
         //todo maybe get rid of the string and change it to a divisionrule?
-
+        //much of these aren't useful anymore since we aren't matching strings!
         public bool ValidateDivisionRuleExistsForTeamRules(List<SeasonDivisionRule> divisionRules, List<SeasonTeamRule> teamRules)
         {
             bool valid = true;

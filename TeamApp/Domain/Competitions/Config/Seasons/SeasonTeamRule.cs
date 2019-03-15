@@ -6,12 +6,12 @@
 
         public virtual SeasonCompetitionConfig Competition { get; set; }
         public virtual Team Team { get; set; }
-        public virtual string Division { get; set; }
+        public virtual SeasonDivisionRule Division { get; set; }
         public virtual int? FirstYear { get; set; }
         public virtual int? LastYear { get; set; }
 
         public SeasonTeamRule() { }
-        public SeasonTeamRule(SeasonCompetitionConfig competition, Team team, string division, int? firstYear, int? lastYear)
+        public SeasonTeamRule(SeasonCompetitionConfig competition, Team team, SeasonDivisionRule division, int? firstYear, int? lastYear)
         {
             Competition = competition;
             Team = team;
