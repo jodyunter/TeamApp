@@ -1,9 +1,4 @@
-﻿using Moq;
-using TeamApp.Domain;
-using TeamApp.Domain.Repositories;
-using TeamApp.Services.Implementation;
-using TeamApp.Services.ViewModels.Views;
-using Xunit;
+﻿using Xunit;
 using static Xunit.Assert;
 
 namespace TeamApp.Test.Services
@@ -32,6 +27,11 @@ namespace TeamApp.Test.Services
         }
         [Fact]
         public void SaveTeam()
+        {
+            True(false);
+        }
+        [Fact]
+        public void ShouldRandomlyChangeSkillLevels()
         {
             True(false);
         }

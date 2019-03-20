@@ -44,35 +44,104 @@ namespace TeamApp.Test.Helpers
                 new Team("Los Angelas", "Kings", "LAK", 1, null, 1, null, true),
                 new Team("Las Vegas", "Knights", "LVK", 1, null, 1, null, true),
                 new Team("Saskatoon", "Blades", "SKB", 1, null, 1, null, true),
-                new Team("New Jersey", "Devils", "NJD", 1, null, 1, null, true)                
+                new Team("New Jersey", "Devils", "NJD", 1, null, 1, null, true),
+                new Team("Tampa Bay", "Lightning", "TBL", 1, null, 1, null, true),
+                new Team("Washington", "Capitals", "WSH", 1, null, 1, null, true),
+                new Team("Atlanta", "Thrashers", "ATL", 1, null, 1, null, true),
+                new Team("Florida", "Panthers", "FLA", 1, null, 1, null, true),
+                new Team("Anaheim", "Ducks", "AND", 1, null, 1, null, true)
+
             };
         }
-        public static SeasonCompetitionConfig CreateSeasonConfiguration(League league, List<Team> teamList, List<CompetitionConfig> parents, int? startingDay, int order)
+        public static SeasonCompetitionConfig CreateSmallSeasonConfiguration(League league, List<Team> teamList, List<CompetitionConfig> parents, int? startingDay, int order)
         {
             var seasonConfig = new SeasonCompetitionConfig("Regular Season", league, startingDay, order, null, 1, null, null, null, null, null);
 
-            var gameRules = new GameRules("Season Rules", true, 3, 1, 7, 6);
-
-            seasonConfig.GameRules = gameRules;
+            seasonConfig.GameRules = new GameRules("Season Rules", true, 3, 1, 7, 6);
 
             seasonConfig.Parents = parents;
 
             var drNhl = new SeasonDivisionRule(seasonConfig, "NHL", null, 1, 1, null, 1, null);
-            var drWest = new SeasonDivisionRule(seasonConfig, "West", drNhl, 2, 1, null, 1, null);
-            var drEast = new SeasonDivisionRule(seasonConfig, "East", drNhl, 2, 2, null, 1, null);
-            var drCentral = new SeasonDivisionRule(seasonConfig, "Central", drNhl, 2, 3, null, 1, null);
-            var drAtlantic = new SeasonDivisionRule(seasonConfig, "Atlantic", drNhl, 2, 3, null, 1, null);
-            var drPacific = new SeasonDivisionRule(seasonConfig, "Pacific", drNhl, 2, 3, null, 1, null);
 
+            seasonConfig.DivisionRules = new List<SeasonDivisionRule>() { drNhl };
 
-            seasonConfig.DivisionRules = new List<SeasonDivisionRule>() { drNhl, drWest, drEast, drCentral, drAtlantic, drPacific };
-            
-
-            var scheduleRules = new List<SeasonScheduleRule>() {                
-                new SeasonScheduleRule(seasonConfig, null, drNhl, null, null, 1, false, 1, null),                
+            seasonConfig.ScheduleRules = new List<SeasonScheduleRule>() {
+                new SeasonScheduleRule(seasonConfig, null, drNhl, null, null, 3, true, 1, null),
             };
 
-            seasonConfig.ScheduleRules = scheduleRules;
+            var seasonTeamRules = new List<SeasonTeamRule>()
+            {
+
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Ottawa").First(), drNhl, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Toronto").First(), drNhl, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Calgary").First(), drNhl, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Montreal").First(), drNhl, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Edmonton").First(), drNhl, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Vancouver").First(), drNhl, 1, null),         
+
+            };
+
+            drNhl.Teams = seasonConfig.GetTeamsInDivision("NHL").ToList();
+
+            seasonConfig.TeamRules = seasonTeamRules;
+
+            league.CompetitionConfigs.Add(seasonConfig);
+
+            return seasonConfig;
+        }
+
+
+        public static PlayoffCompetitionConfig CreateSmallPlayoffConfiguration(League league, List<CompetitionConfig> parents, int order, int? startingDay, int? firstYear, int? lastYear)
+        {
+            var playoffConfig = new PlayoffCompetitionConfig("My Playoff", league, order, startingDay, null, firstYear, lastYear, null, null, parents);
+
+            var gameRules = new GameRules("Playoff Rules", false, 3, 1, 7, 6);
+
+            playoffConfig.GameRules = gameRules;
+
+            playoffConfig.Parents = parents;
+
+            var regularSeasonConfig = parents.Where(c => c.Name == "Regular Season").First();
+
+            playoffConfig.RankingRules = new List<PlayoffRankingRule>();
+
+            playoffConfig.SeriesRules = new List<PlayoffSeriesRule>()
+            {
+                new PlayoffSeriesRule(playoffConfig, "Semi Final A", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "NHL", 1, FROM_RANKING, "NHL", 4, 1, null, new int[]  { 0,0,1,1,0,1,0 }, "FINALISTS", "NHL", null, null),
+                new PlayoffSeriesRule(playoffConfig, "Semi Final B", 1, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "NHL", 2, FROM_RANKING, "NHL", 3, 1, null, new int[] { 0, 0, 1, 1, 0, 1, 0 }, "FINALISTS", "NHL", null, null),
+
+                new PlayoffSeriesRule(playoffConfig, "Final", 2, BEST_OF_SERIES, 4, gameRules, FROM_RANKING, "FINALISTS", 1, FROM_RANKING, "FINALISTS", 2, 1, null, new int[] { 0,0,1,1,0,1,0 }, null, null, null, null),
+            };
+            
+            league.CompetitionConfigs.Add(playoffConfig);
+
+            return playoffConfig;
+        }
+
+        public static SeasonCompetitionConfig CreateLargeSeasonConfiguration(League league, List<Team> teamList, List<CompetitionConfig> parents, int? startingDay, int order)
+        {
+            var seasonConfig = new SeasonCompetitionConfig("Regular Season", league, startingDay, order, null, 1, null, null, null, null, null);            
+
+            seasonConfig.GameRules = new GameRules("Season Rules", true, 3, 1, 7, 6);
+
+            seasonConfig.Parents = parents;
+
+            var drNhl = new SeasonDivisionRule(seasonConfig, "NHL", null, 1, 1, null, 1, null);
+            var drWestern = new SeasonDivisionRule(seasonConfig, "Western", drNhl, 2, 1, null, 1, null);
+            var drEastern = new SeasonDivisionRule(seasonConfig, "Eastern", drNhl, 2, 1, null, 1, null);
+            var drWest = new SeasonDivisionRule(seasonConfig, "West", drWestern, 3, 1, null, 1, null);
+            var drEast = new SeasonDivisionRule(seasonConfig, "East", drEastern, 3, 2, null, 1, null);
+            var drCentral = new SeasonDivisionRule(seasonConfig, "Central", drWestern, 3, 3, null, 1, null);
+            var drAtlantic = new SeasonDivisionRule(seasonConfig, "Atlantic", drEastern, 3, 4, null, 1, null);
+            var drPacific = new SeasonDivisionRule(seasonConfig, "Pacific", drWestern, 3, 5, null, 1, null);
+            var drSouth = new SeasonDivisionRule(seasonConfig, "South", drEastern, 3, 6, null, 1, null);
+
+
+            seasonConfig.DivisionRules = new List<SeasonDivisionRule>() { drNhl, drWestern, drEastern, drWest, drEast, drCentral, drAtlantic, drPacific, drSouth };
+            
+            seasonConfig.ScheduleRules = new List<SeasonScheduleRule>() {
+                new SeasonScheduleRule(seasonConfig, null, drNhl, null, null, 1, false, 1, null),
+            };
 
             var seasonTeamRules = new List<SeasonTeamRule>()
             {
@@ -105,7 +174,14 @@ namespace TeamApp.Test.Helpers
                 new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Victoria").First(), drPacific, 1, null),
                 new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Seattle").First(), drPacific, 1, null),
                 new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "San Jose").First(), drPacific, 1, null),
-                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Los Angelas").First(), drPacific, 1, null)
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Los Angelas").First(), drPacific, 1, null),
+
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Anaheim").First(), drSouth, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Tampa Bay").First(), drSouth, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Washington").First(), drSouth, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Florida").First(), drSouth, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Atlanta").First(), drSouth, 1, null)
+
 
             };
 
@@ -114,6 +190,7 @@ namespace TeamApp.Test.Helpers
             drCentral.Teams = seasonConfig.GetTeamsInDivision("Central").ToList();
             drWest.Teams = seasonConfig.GetTeamsInDivision("West").ToList();
             drPacific.Teams = seasonConfig.GetTeamsInDivision("Pacific").ToList();
+            drSouth.Teams = seasonConfig.GetTeamsInDivision("South").ToList();
 
             seasonConfig.TeamRules = seasonTeamRules;
 
@@ -122,7 +199,7 @@ namespace TeamApp.Test.Helpers
             return seasonConfig;
         }
 
-        public static PlayoffCompetitionConfig CreatePlayoffConfiguration(League league, List<CompetitionConfig> parents, int order, int? startingDay, int? firstYear, int? lastYear)
+        public static PlayoffCompetitionConfig CreateLargePlayoffConfiguration(League league, List<CompetitionConfig> parents, int order, int? startingDay, int? firstYear, int? lastYear)
         {
             var playoffConfig = new PlayoffCompetitionConfig("My Playoff", league, order, startingDay, null, firstYear, lastYear, null, null, parents);
 
@@ -142,11 +219,13 @@ namespace TeamApp.Test.Helpers
                 new PlayoffRankingRule(playoffConfig, "Top Seeds", "Central", "NHL", 1, 1, 1, 5, 1, null),
                 new PlayoffRankingRule(playoffConfig, "Top Seeds", "Atlantic", "NHL", 1, 1, null, 5, 1, null),
                 new PlayoffRankingRule(playoffConfig, "Top Seeds", "Pacific", "NHL", 1, 1, null, 5, 1, null),
+                new PlayoffRankingRule(playoffConfig, "Top Seeds", "South", "NHL", 1, 1, null, 5, 1, null),
                 new PlayoffRankingRule(playoffConfig, "Rest of Teams", "East", "NHL", 2, null, null, 5, 1, null),
                 new PlayoffRankingRule(playoffConfig, "Rest of Teams", "West", "NHL", 2, null, null, 5, 1, null),
                 new PlayoffRankingRule(playoffConfig, "Rest of Teams", "Central", "NHL", 2, null, null, 5, 1, null),
                 new PlayoffRankingRule(playoffConfig, "Rest of Teams", "Atlantic", "NHL", 2, null, null, 5, 1, null),
                 new PlayoffRankingRule(playoffConfig, "Rest of Teams", "Pacific", "NHL", 2, null, null, 5, 1, null),
+                new PlayoffRankingRule(playoffConfig, "Rest of Teams", "South", "NHL", 2, null, null, 5, 1, null),
                 new PlayoffRankingRule(playoffConfig, "Combined", "Top Seeds", "NHL", 1, 5, 1, 6, 1, null),
                 new PlayoffRankingRule(playoffConfig, "Combined", "Rest of Teams", "NHL", 1, 3, 6, 6, 1, null)
             };

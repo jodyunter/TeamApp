@@ -19,6 +19,7 @@ namespace TeamApp.ViewModels.Views.Standings
         public int GoalsAgainst { get; set; }
         public int GoalDifference { get; set; }
         public int Points { get; set; }
+        public int Skill { get; set; }
         public IList<StandingsRankingViewModel> Rankings { get; set; }
     }
 }

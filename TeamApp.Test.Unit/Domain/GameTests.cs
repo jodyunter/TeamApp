@@ -121,19 +121,19 @@ namespace TeamApp.Test.Domain
 
             var random = new GameTestRandom(new int[] { 5, 5, 10, 2, 0, 3, 3, 0 });
 
-            g.PlayRegulationPeriod(random);
+            g.PlayRegulationPeriod(random, g.HomeTeam.Skill, g.AwayTeam.Skill);
             StrictEqual(5, g.HomeScore);
             StrictEqual(5, g.AwayScore);
 
-            g.PlayRegulationPeriod(random);
+            g.PlayRegulationPeriod(random, g.HomeTeam.Skill, g.AwayTeam.Skill);
             StrictEqual(15, g.HomeScore);
             StrictEqual(7, g.AwayScore);
 
-            g.PlayRegulationPeriod(random);
+            g.PlayRegulationPeriod(random, g.HomeTeam.Skill, g.AwayTeam.Skill);
             StrictEqual(15, g.HomeScore);
             StrictEqual(10, g.AwayScore);
 
-            g.PlayRegulationPeriod(random);
+            g.PlayRegulationPeriod(random, g.HomeTeam.Skill, g.AwayTeam.Skill);
             StrictEqual(18, g.HomeScore);
             StrictEqual(10, g.AwayScore);
 

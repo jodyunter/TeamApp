@@ -15,15 +15,18 @@ namespace TeamApp.Services.Implementation
         private ILeagueRepository leagueRepo;
         private IScheduleGameRepository scheduleGameRepo;
         private ICompetitionRepository competitionRepo;
-        private ICompetitionConfigRepository competitionConfigRepo;        
+        private ICompetitionConfigRepository competitionConfigRepo;
+        private ITeamService teamService;
+
         public string DebugError { get; set; }
-        public GameDataService(IGameDataRepository gameDataRepository, ILeagueRepository leagueRepository, IScheduleGameRepository scheduleGameRepository, ICompetitionRepository competitionRepository, ICompetitionConfigRepository competitionConfigRepository)
+        public GameDataService(IGameDataRepository gameDataRepository, ILeagueRepository leagueRepository, IScheduleGameRepository scheduleGameRepository, ICompetitionRepository competitionRepository, ICompetitionConfigRepository competitionConfigRepository, ITeamService teamServ)
         {
             gameDataRepo = gameDataRepository;
             leagueRepo = leagueRepository;
             scheduleGameRepo = scheduleGameRepository;
             competitionRepo = competitionRepository;
-            competitionConfigRepo = competitionConfigRepository;            
+            competitionConfigRepo = competitionConfigRepository;
+            teamService = teamServ;
         }
 
         public bool IsYearComplete(int year)
@@ -112,8 +115,8 @@ namespace TeamApp.Services.Implementation
 
             leagueRepo.Flush();
         }
-       
-        //should probably NOT have parameters here
+               
+        //todo:  what happens if we try to increment the day when there are no active competitions
         public bool IncrementDay()
         {
             var gameData = gameDataRepo.GetCurrentData();
@@ -180,6 +183,13 @@ namespace TeamApp.Services.Implementation
         {
             gameDataRepo.Update(data);
             gameDataRepo.Flush();
+        }
+
+        public void RandomlyChangeSkillLevels(Random random)
+        {
+            var currentData = GetCurrentData();
+
+            teamService.RandomlyChangeSkillLevels(currentData.CurrentYear, random);
         }
     }
 }

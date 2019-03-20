@@ -48,9 +48,15 @@ namespace TeamApp.Domain.Competitions
         }
 
         //does not process game!
+        //this needs to take into account the skill of the competition team, not the skill of the parent team
         public virtual void PlayGame(ScheduleGame game, Random random)
-        {            
-            if (!game.IsComplete()) game.Play(random);            
+        {
+            if (!game.IsComplete())
+            {
+                var homeCompetitionTeam = Teams.Where(t => t.Name.Equals(game.HomeTeam.Name) && t.NickName.Equals(game.HomeTeam.NickName)).First();
+                var awayCompetitionTeam = Teams.Where(t => t.Name.Equals(game.AwayTeam.Name) && t.NickName.Equals(game.AwayTeam.NickName)).First();
+                game.Play(random, homeCompetitionTeam.Skill, awayCompetitionTeam.Skill);
+            }
         }
 
         public virtual List<ScheduleGame> PlayGames(List<ScheduleGame> games, Random random)

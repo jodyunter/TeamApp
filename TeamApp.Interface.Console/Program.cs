@@ -19,18 +19,19 @@ namespace TeamApp.Console
             Thread.CurrentPrincipal = user;
 
             var teamApp = new TeamApplication();
-            teamApp.SetupConfig(true, true, true);
+            //teamApp.SetupConfig(true, true, true);
             var stop = false;
 
             //track this so we can repeat a year if needed
-            var seed = 156;// DateTime.Now.Millisecond;
-            var random = new Random(seed);
-            WriteLine("Seed: " + seed);
+            //var seed = 156;// DateTime.Now.Millisecond;
+            //var random = new Random(seed);
+            //WriteLine("Seed: " + seed);
+            var random = new Random();
+            
 
             while (!stop)
             {
-                teamApp.ClearScreen();
-                WriteLine("Seed: " + seed);
+                teamApp.ClearScreen();                
                 var leagueView = teamApp.LeagueService.GetByName("NHL");
 
                 WriteLine("League: " + leagueView.Name + " loaded.");
@@ -63,18 +64,19 @@ namespace TeamApp.Console
                 }
                 
                 
-                var activeComps = teamApp.CompetitionService.GetActiveCompetitions(currentData.CurrentYear).ToList();                
+                var displayComps = teamApp.CompetitionService.GetCompetitionsByYear(currentData.CurrentYear).ToList();
+                var activeComps = teamApp.CompetitionService.GetActiveCompetitions(currentData.CurrentYear).ToList();
 
                 if (activeComps.Count > 0)
                 {
-                    activeComps.ToList().ForEach(m =>
+                    displayComps.ToList().ForEach(m =>
                     {
                         if (m.Type == "Season")
                         {
                             var standings = teamApp.StandingsService.GetStandings(m.Id);
                             var view = new StandingsView(standings);
 
-                            WriteLine(view.GetView(StandingsView.CONFERENCE));
+                            WriteLine(view.GetView(StandingsView.LEAGUE));
                         }
                         else if (m.Type == "Playoff")
                         {
@@ -118,6 +120,7 @@ namespace TeamApp.Console
                     });
 
                     teamApp.GameDataService.IncrementYear();
+                    teamApp.GameDataService.RandomlyChangeSkillLevels(random);
                     
                 }
                 WriteLine("Press Enter to continue or type 'quit'");

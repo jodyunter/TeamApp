@@ -40,7 +40,7 @@ namespace TeamApp.Domain
             else return null;
         }
 
-        public virtual bool Play(Random r)
+        public virtual bool Play(Random r, int homeSkill, int awaySkill)
         {
             if (!Complete)
             {
@@ -48,7 +48,7 @@ namespace TeamApp.Domain
                 while (!IsComplete())
                 {
 
-                    if (IsCurrentPeriodRegulationPeriod()) PlayRegulationPeriod(r);
+                    if (IsCurrentPeriodRegulationPeriod()) PlayRegulationPeriod(r, homeSkill, awaySkill);
                     else PlayOverTimePeriod(r);
 
                     CurrentPeriod++;
@@ -62,10 +62,15 @@ namespace TeamApp.Domain
             return false;
         }
 
-        public virtual void PlayRegulationPeriod(Random r)
+        public virtual bool Play(Random r)
         {
-            HomeScore += r.Next(Rules.HomeRange);
-            AwayScore += r.Next(Rules.AwayRange);
+            return Play(r, HomeTeam.Skill, AwayTeam.Skill);
+        }
+
+        public virtual void PlayRegulationPeriod(Random r, int homeSkill, int awaySkill)
+        {
+            HomeScore += r.Next(Rules.HomeRange + homeSkill);
+            AwayScore += r.Next(Rules.AwayRange + awaySkill);
         }
 
         public virtual void PlayOverTimePeriod(Random r)

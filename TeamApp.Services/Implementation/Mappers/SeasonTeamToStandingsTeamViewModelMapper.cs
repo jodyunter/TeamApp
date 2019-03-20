@@ -14,7 +14,7 @@ namespace TeamApp.Services.Implementation.Mappers
             {
                 SeasonTeamId = obj.Id,
                 TeamName = obj.Name,
-                TeamNickName = obj.NickName,                
+                TeamNickName = obj.NickName,
                 Division = obj.Division.Name,
                 Wins = obj.Stats.Wins,
                 Ties = obj.Stats.Ties,
@@ -23,7 +23,8 @@ namespace TeamApp.Services.Implementation.Mappers
                 GoalsAgainst = obj.Stats.GoalsAgainst,
                 GamesPlayed = obj.Stats.Games,
                 GoalDifference = obj.Stats.GoalDifference,
-                Points = obj.Stats.Points
+                Points = obj.Stats.Points,
+                Skill = obj.Skill
             };
 
             return model;

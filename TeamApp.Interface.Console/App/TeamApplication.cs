@@ -33,6 +33,7 @@ namespace TeamApp.Console.App
         public IScheduleGameService ScheduleGameService { get; set; }
         public ICompetitionService CompetitionService { get; set; }
         public IPlayoffService PlayoffService { get; set; }
+        public ITeamService TeamService { get; set; }
         private ConsoleHelper consoleHelper = new ConsoleHelper();
         
         public TeamApplication()
@@ -49,7 +50,8 @@ namespace TeamApp.Console.App
 
             LeagueService = new LeagueService(leagueRepository);
             StandingsService = new StandingsService(standingsRepository, teamRankingRepository);
-            GameDataService = new GameDataService(gameDataRepository, leagueRepository, scheduleGameRepository, competitionRepository, competitionConfigRepository);
+            TeamService = new TeamService(teamRepository);
+            GameDataService = new GameDataService(gameDataRepository, leagueRepository, scheduleGameRepository, competitionRepository, competitionConfigRepository, TeamService);
             ScheduleGameService = new ScheduleGameService(scheduleGameRepository);
             CompetitionService = new CompetitionService(competitionRepository);
             PlayoffService = new PlayoffService(competitionRepository);
@@ -85,8 +87,11 @@ namespace TeamApp.Console.App
                 
                 var league = DataCreator.CreateLeague("nhl");
                 var teams = DataCreator.CreateTeams();
-                var seasonConfig = DataCreator.CreateSeasonConfiguration(league, teams, null, 1, 1);
-                var playoffConfig = DataCreator.CreatePlayoffConfiguration(league, new List<CompetitionConfig>() { seasonConfig }, 2, null, 1, null);
+                //var seasonConfig = DataCreator.CreateLargeSeasonConfiguration(league, teams, null, 1, 1);
+                //var playoffConfig = DataCreator.CreateLargePlayoffConfiguration(league, new List<CompetitionConfig>() { seasonConfig }, 2, null, 1, null);
+
+                var seasonConfig = DataCreator.CreateSmallSeasonConfiguration(league, teams, null, 1, 1);
+                var playoffConfig = DataCreator.CreateSmallPlayoffConfiguration(league, new List<CompetitionConfig>() { seasonConfig }, 2, null, 1, null);
 
                 //var league = Data2.CreateBasicLeague("NHL");
                 //var seasonCompetition = Data2.CreateBasicSeasonConfiguration(league);
