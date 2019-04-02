@@ -1,0 +1,1 @@
+1.  Setup rankings based on parent competitions.  Be sure to use the proper singleyear team so that the year can be referenced.  
