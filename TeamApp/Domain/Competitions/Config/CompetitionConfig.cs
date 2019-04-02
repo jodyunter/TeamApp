@@ -14,6 +14,8 @@ namespace TeamApp.Domain.Competitions.Config
         public virtual int? FirstYear { get; set; }
         public virtual int? LastYear { get; set; }
         public virtual int? CompetitionStartingDay { get; set; }
+        public abstract SingleYearTeam CreateCompetitionTeam(Competition competition, Team parent);
+        public abstract Competition CreateCompetitionDetails(int day, int year, IList<Competition> parents);
 
         protected CompetitionConfig() { }
         protected CompetitionConfig(string name, League league, int order, int? competitionStartingDay, GameRules gameRules, List<CompetitionConfig> parents, int? firstYear, int? lastYear)
@@ -57,8 +59,30 @@ namespace TeamApp.Domain.Competitions.Config
                     
         }
 
-        public abstract Competition CreateCompetitionDetails(int day, int year, IList<Competition> parents);       
+        public virtual void CopyTeamsFromCompetition(Competition destinationCompetition, Competition sourceCompetition)
+        {
+            if (destinationCompetition.Teams == null) destinationCompetition.Teams = new List<SingleYearTeam>();
+
+            sourceCompetition.Teams.ToList().ForEach(sourceTeam =>
+            {
+                //does the team already exist?
+                var team = destinationCompetition.Teams.Where(t => t.Parent.Id == sourceTeam.Parent.Id).FirstOrDefault();
+                if (team == null) team = CreateCompetitionTeam(destinationCompetition, sourceTeam.Parent);
+                destinationCompetition.Teams.Add(team);
+            });
+        }
         
-                
+        //what if we have two parent competitions, and therefore end up copying this twice?
+        public virtual void CopyRankingsFromCompetition(Competition destinationCompetition, Competition sourceCompetition)
+        {
+            if (destinationCompetition.Rankings == null) destinationCompetition.Rankings = new List<TeamRanking>();
+
+            sourceCompetition.Rankings.ToList().ForEach(sourceRanking =>
+            {
+                var team = destinationCompetition.Teams.Where(t => t.Parent.Id == sourceRanking.Team.Parent.Id).First(); //if null we messed up
+                destinationCompetition.Rankings.Add(new TeamRanking(sourceRanking.Rank, sourceRanking.GroupName, team, sourceRanking.GroupLevel));
+            });
+
+        }
     }
 }

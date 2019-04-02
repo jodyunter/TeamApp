@@ -119,6 +119,11 @@ namespace TeamApp.Test.Domain.Competitions.Seasons.Config
 
             True(result);
         }
-        
+
+        [Fact]
+        public void ShouldTestCreateCompetitionTeam()
+        {
+            True(false);
+        }
     }
 }

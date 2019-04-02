@@ -68,6 +68,26 @@ namespace TeamApp.Test.Domain.Competitions
 
 
         }
+
+        [Fact]
+        public void ShouldCopyCompetitionTeams()
+        {
+            True(false);
+            //this is currently in playoff config, should move it here
+        }
+        [Fact]
+        public void ShouldCopyCompetitionRankings()
+        {
+            True(false);
+            //this is currently in playoff config, should mvoe it here
+        }
+        [Fact]
+        public void ShouldCopyCompetitionRankingsFromMulitpleCompetitions()
+        {
+            True(false);
+            //not sure what to do here but want a red mark until I figure it out.
+        }
+
     }
 
     public class MockCompetitionConfig : CompetitionConfig
@@ -75,6 +95,11 @@ namespace TeamApp.Test.Domain.Competitions
         public override Competition CreateCompetitionDetails(int day, int year, IList<Competition> parents)
         {
             return new MockCompetition();
+        }
+
+        public override SingleYearTeam CreateCompetitionTeam(Competition competition, Team parent)
+        {
+            throw new NotImplementedException();
         }
     }
     public class MockCompetition : Competition

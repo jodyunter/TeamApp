@@ -328,8 +328,12 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
             Equal("Team 4", restOfTeams.Where(r => r.Rank == 8).First().Team.Name);
             Equal("Team 3", restOfTeams.Where(r => r.Rank == 9).First().Team.Name);
 
+        }
 
-
+        [Fact]
+        public void ShouldTestCreateCompetitionTeam()
+        {
+            True(false);
         }
 
     }

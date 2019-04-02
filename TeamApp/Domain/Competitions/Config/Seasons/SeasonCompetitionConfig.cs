@@ -115,8 +115,9 @@ namespace TeamApp.Domain.Competitions.Config.Seasons
             {                
                 var team = rule.Team;
                 var seasonDivision = seasonDivisions[rule.Division.DivisionName];
-                var newTeam = new SeasonTeam(season, team, team.Name, team.NickName, team.ShortName, team.Skill, team.Owner, season.Year, null, seasonDivision);                
+                var newTeam = (SeasonTeam)CreateCompetitionTeam(season, team);
 
+                newTeam.Division = seasonDivision;
                 seasonDivision.AddTeam(newTeam);
                 teams.Add(newTeam);
 
@@ -170,6 +171,11 @@ namespace TeamApp.Domain.Competitions.Config.Seasons
             }
 
             return teams;
+        }
+
+        public override SingleYearTeam CreateCompetitionTeam(Competition season, Team parent)
+        {
+            return new SeasonTeam(season, parent, season.Year, new SeasonTeamStats(), null);
         }
 
     }
