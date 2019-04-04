@@ -2,6 +2,7 @@
 {
     public class PlayoffSeriesRule : BaseDataObject, ITimePeriod
     {
+        //convert these into seperate eums!
         public const int FROM_SERIES = 0;
         public const int FROM_RANKING = 1;
 

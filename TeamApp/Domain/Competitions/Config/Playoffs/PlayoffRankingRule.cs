@@ -1,7 +1,7 @@
 ﻿namespace TeamApp.Domain.Competitions.Config.Playoffs
 {
     public class PlayoffRankingRule:BaseDataObject,ITimePeriod
-    {
+    {       
         public virtual PlayoffCompetitionConfig PlayoffConfig { get; set; }        
         public virtual string GroupName { get; set; } //this is the name of the group we are creating
         public virtual string RankingGroupName { get; set; } //this is the name of the group you want the rank from
