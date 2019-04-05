@@ -3,6 +3,7 @@
     public class PlayoffSeriesRule : BaseDataObject, ITimePeriod
     {
         //convert these into seperate eums!
+        //remove the "FROM SERIES" and force all series winners/losers to get a rank and group
         public const int FROM_SERIES = 0;
         public const int FROM_RANKING = 1;
 
