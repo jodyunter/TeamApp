@@ -1,18 +1,14 @@
 ﻿namespace TeamApp.Domain.Competitions.Config.Playoffs
 {
     public class PlayoffSeriesRule : BaseDataObject, ITimePeriod
-    {
-        //convert these into seperate eums!      
-        public const int BEST_OF_SERIES = 0;
-        public const int TOTAL_GOALS = 1;
-
-        public const int GET_WINNER = 0;
-        public const int GET_LOSER = 1;
+    {        
+        public enum Type { BestOf, TotalGoals };
+        public enum Result { Winner, Loser };        
 
         public virtual PlayoffCompetitionConfig PlayoffConfig { get; set; }
         public virtual string Name { get; set; }
         public virtual int Round { get; set; }
-        public virtual int SeriesType { get; set; }
+        public virtual Type SeriesType { get; set; }
         public virtual int SeriesNumber { get; set; } //total games for total goals, or required wins
         public virtual GameRules GameRules { get; set; } //can be different!
         
@@ -32,7 +28,7 @@
         {
         }
 
-        public PlayoffSeriesRule(PlayoffCompetitionConfig config, string name, int round, int seriesType, int seriesNumber, GameRules gameRules, string homeFromName, int homeFromValue, string awayFromName, int awayFromValue, int? firstYear, int? lastYear, int[] homeGameProgression, string winnerGroupName, string winnerRankFrom, string loserGroupName, string loserRankFrom)
+        public PlayoffSeriesRule(PlayoffCompetitionConfig config, string name, int round, Type seriesType, int seriesNumber, GameRules gameRules, string homeFromName, int homeFromValue, string awayFromName, int awayFromValue, int? firstYear, int? lastYear, int[] homeGameProgression, string winnerGroupName, string winnerRankFrom, string loserGroupName, string loserRankFrom)
         {
             PlayoffConfig = config;
             Name = name;
@@ -60,7 +56,7 @@
                 PlayoffConfig = config,
                 Name = name,
                 Round = round,
-                SeriesType = BEST_OF_SERIES,
+                SeriesType = Type.BestOf,
                 SeriesNumber = seriesNumber,
                 GameRules = gameRules,
                 FirstYear = firstYear,
@@ -75,7 +71,7 @@
                 PlayoffConfig = config,
                 Name = name,
                 Round = round,
-                SeriesType = TOTAL_GOALS,
+                SeriesType = Type.TotalGoals,
                 SeriesNumber = seriesNumber,
                 GameRules = gameRules,
                 FirstYear = firstYear,

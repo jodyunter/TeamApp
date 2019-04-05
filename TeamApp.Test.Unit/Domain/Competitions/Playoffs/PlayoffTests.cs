@@ -35,8 +35,8 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs
             playoff.Series.Add(seriesA);
 
             //need to add series to get teams from
-            yield return new object[] { 1, playoff, new PlayoffSeriesRule(config, "Series 1", 1, BEST_OF_SERIES, 4, gameRules, "R1", 1, "R1", 10, 1, null, new int[] { 0, 0, 0, 1, 1, 1 }, null, null, null, null), "Team 0", "Team 9" };
-            yield return new object[] { 1, playoff, new PlayoffSeriesRule(config, "Series 1", 1, BEST_OF_SERIES, 4, gameRules, "R1", 4, "R1", 2, 1, null, new int[] { 0, 0, 0, 1, 1, 1 }, null, null, null, null), "Team 3", "Team 1" };            
+            yield return new object[] { 1, playoff, new PlayoffSeriesRule(config, "Series 1", 1, PlayoffSeriesRule.Type.BestOf, 4, gameRules, "R1", 1, "R1", 10, 1, null, new int[] { 0, 0, 0, 1, 1, 1 }, null, null, null, null), "Team 0", "Team 9" };
+            yield return new object[] { 1, playoff, new PlayoffSeriesRule(config, "Series 1", 1, PlayoffSeriesRule.Type.BestOf, 4, gameRules, "R1", 4, "R1", 2, 1, null, new int[] { 0, 0, 0, 1, 1, 1 }, null, null, null, null), "Team 3", "Team 1" };            
             //todo add get from ranking rule
         }
     

@@ -8,7 +8,7 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
     public class PlayoffCompetitionConfigFinalRankingRule : CompetitionConfigFinalRankingRule
     {
         public PlayoffSeriesRule FromSeries { get; set; }
-        public int TeamStatus { get; set; } //winner or loser
+        public PlayoffSeriesRule.Result TeamStatus { get; set; } //winner or loser
 
         public override List<TeamRanking> GetTeamsForRule(Competition competition)
         {
@@ -16,11 +16,11 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
 
             var series = playoff.Series.Where(s => s.Name.Equals(FromSeries.Name)).First();
 
-            if (TeamStatus == PlayoffSeriesRule.GET_WINNER)
+            if (TeamStatus == PlayoffSeriesRule.Result.Winner)
             {
                 return new List<TeamRanking>() { new TeamRanking((int)StaringRank, FINAL_GROUP_NAME, series.GetWinner(), 1) };
             }
-            else if (TeamStatus == PlayoffSeriesRule.GET_LOSER)
+            else if (TeamStatus == PlayoffSeriesRule.Result.Loser)
             {
                 return new List<TeamRanking>() { new TeamRanking((int)StaringRank, FINAL_GROUP_NAME, series.GetLoser(), 1) };
             }

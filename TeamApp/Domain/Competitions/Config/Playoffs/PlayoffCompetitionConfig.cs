@@ -166,14 +166,14 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
             return series;
         }
 
-        public virtual PlayoffSeries SetupSeries(Playoff playoff, int seriesType, string name, int round, int startingDay, PlayoffTeam homeTeam, PlayoffTeam awayTeam,
+        public virtual PlayoffSeries SetupSeries(Playoff playoff, PlayoffSeriesRule.Type seriesType, string name, int round, int startingDay, PlayoffTeam homeTeam, PlayoffTeam awayTeam,
             int seriesNumber, int[] homeGameProgression)
         {       //if it is not setup, create it
             switch (seriesType)
             {
-                case PlayoffSeriesRule.BEST_OF_SERIES:
+                case PlayoffSeriesRule.Type.BestOf:
                     return new BestOfSeries(playoff, name, round, startingDay, homeTeam, awayTeam, 0, 0, seriesNumber, new List<PlayoffGame>(), homeGameProgression);
-                case PlayoffSeriesRule.TOTAL_GOALS:
+                case PlayoffSeriesRule.Type.TotalGoals:
                     return new TotalGoalsSeries(playoff, name, round, startingDay, homeTeam, awayTeam, 0, 0, seriesNumber, 0, new List<PlayoffGame>(), homeGameProgression);                    
                 default:
                     throw new ApplicationException("Bad series type from Playoff Series rule: " + seriesType);
