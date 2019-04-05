@@ -29,48 +29,16 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
             return rule;
         }
 
-        public static PlayoffSeriesRule SetHomeFromRanking(this PlayoffSeriesRule rule, string fromGroup, int fromGroupRank)
-        {
-            return SetHomeFromRules(rule, FROM_RANKING, fromGroup, fromGroupRank);
-        }
-
-        public static PlayoffSeriesRule SetHomeFromSeriesWinner(this PlayoffSeriesRule rule, string winnerComesFrom)
-        {
-            return SetHomeFromRules(rule, FROM_SERIES, winnerComesFrom, GET_WINNER);
-        }
-
-        public static PlayoffSeriesRule SetHomeFromSeriesLoser(this PlayoffSeriesRule rule, string winnerComesFrom)
-        {
-            return SetHomeFromRules(rule, FROM_SERIES, winnerComesFrom, GET_LOSER);
-        }
-
-        public static PlayoffSeriesRule SetAwayFromRanking(this PlayoffSeriesRule rule, string fromGroup, int fromGroupRank)
-        {
-            return SetAwayFromRules(rule, FROM_RANKING, fromGroup, fromGroupRank);
-        }
-
-        public static PlayoffSeriesRule SetAwayFromSeriesWinner(this PlayoffSeriesRule rule, string winnerComesFrom)
-        {
-            return SetAwayFromRules(rule, FROM_SERIES, winnerComesFrom, GET_WINNER);
-        }
-
-        public static PlayoffSeriesRule SetAwayFromSeriesLoser(this PlayoffSeriesRule rule, string winnerComesFrom)
-        {
-            return SetAwayFromRules(rule, FROM_SERIES, winnerComesFrom, GET_LOSER);
-        }
-
-        public static PlayoffSeriesRule SetHomeFromRules(this PlayoffSeriesRule rule, int fromType, string fromName, int fromValue)
-        {
-            rule.HomeFromType = fromType;
+        public static PlayoffSeriesRule SetHomeFromRules(this PlayoffSeriesRule rule, string fromName, int fromValue)
+        {            
             rule.HomeFromName = fromName;
             rule.HomeFromValue = fromValue;
 
             return rule;
         }
 
-        public static PlayoffSeriesRule SetAwayFromRules(this PlayoffSeriesRule rule, int fromType, string fromName, int fromValue)
-        {
-            rule.AwayFromType = fromType;
+        public static PlayoffSeriesRule SetAwayFromRules(this PlayoffSeriesRule rule, string fromName, int fromValue)
+        {            
             rule.AwayFromName = fromName;
             rule.AwayFromValue = fromValue;
 

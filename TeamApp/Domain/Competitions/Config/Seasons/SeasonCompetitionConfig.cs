@@ -29,26 +29,20 @@ namespace TeamApp.Domain.Competitions.Config.Seasons
 
             var divisionRule = DivisionRules.Where(dr => dr.DivisionName.Equals(divisionName)).FirstOrDefault();
             var parent = divisionRule;
-
-            while (parent != null)
-            {
-                if (parent.Teams != null)
-                    list.AddRange(parent.Teams);
-                parent = parent.Parent;
-            }
             
             if (divisionRule.Teams != null)
                 list.AddRange(divisionRule.Teams);
 
             GetChildDivisions(divisionRule).ForEach(dr =>
             {
-                list.AddRange(dr.Teams);
+                if (dr.Teams != null)
+                    list.AddRange(dr.Teams);
             });
 
             return list;
         }         
         
-        private List<SeasonDivisionRule> GetChildDivisions(SeasonDivisionRule parentRule)
+        public virtual List<SeasonDivisionRule> GetChildDivisions(SeasonDivisionRule parentRule)
         {
             var result = new List<SeasonDivisionRule>();
 

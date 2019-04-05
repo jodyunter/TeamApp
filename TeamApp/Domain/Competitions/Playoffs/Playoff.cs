@@ -89,13 +89,13 @@ namespace TeamApp.Domain.Competitions.Playoffs
                 if (s.HomeTeam == null)
                 {
                     var rule = activeSeriesList.Where(sr => sr.Name.Equals(s.Name)).FirstOrDefault();
-                    s.HomeTeam = playoffConfig.GetTeamByRule(this, rule.HomeFromType, rule.HomeFromName, rule.HomeFromValue);
+                    s.HomeTeam = playoffConfig.GetTeamByRule(this, rule.HomeFromName, rule.HomeFromValue);
                 }
 
                 if (s.AwayTeam == null)
                 {
                     var rule = activeSeriesList.Where(sr => sr.Name.Equals(s.Name)).FirstOrDefault();
-                    s.AwayTeam = playoffConfig.GetTeamByRule(this, rule.AwayFromType, rule.AwayFromName, rule.AwayFromValue);
+                    s.AwayTeam = playoffConfig.GetTeamByRule(this, rule.AwayFromName, rule.AwayFromValue);
                 }
 
                 newGames.AddRange(SetupSeriesGames(s, roundStartDay).ToList());

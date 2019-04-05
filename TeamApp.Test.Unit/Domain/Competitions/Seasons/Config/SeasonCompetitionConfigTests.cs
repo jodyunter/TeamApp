@@ -63,13 +63,6 @@ namespace TeamApp.Test.Domain.Competitions.Seasons.Config
                 new SeasonScheduleRule(seasonConfig, null, sdrNHL, null, null, 1, true, 1, null) {Id = 1 }
             };
 
-            sdrEast.Teams = seasonConfig.GetTeamsInDivision("East").ToList();
-            sdrAtlantic.Teams = seasonConfig.GetTeamsInDivision("sdrAtlantic").ToList();
-            sdrNorthEast.Teams = seasonConfig.GetTeamsInDivision("sdrNorthEast").ToList();
-            sdrWest.Teams = seasonConfig.GetTeamsInDivision("West").ToList();
-            sdrCentralA.Teams = seasonConfig.GetTeamsInDivision("CentralA").ToList();
-            sdrCentralB.Teams = seasonConfig.GetTeamsInDivision("CentralB").ToList();
-
             var divisionRules = new List<SeasonDivisionRule>()
             {
                 sdrNHL,
@@ -87,6 +80,13 @@ namespace TeamApp.Test.Domain.Competitions.Seasons.Config
             seasonConfig.DivisionRules = divisionRules;
             seasonConfig.TeamRules = seasonTeamRules;
             seasonConfig.ScheduleRules = scheduleRules;
+
+            sdrEast.Teams = seasonTeamRules.Where(str => str.Division.DivisionName.Equals("East"));
+            sdrAtlantic.Teams = seasonTeamRules.Where(str => str.Division.DivisionName.Equals("Atlantic"));
+            sdrNorthEast.Teams = seasonTeamRules.Where(str => str.Division.DivisionName.Equals("NorthEast"));
+            sdrWest.Teams = seasonTeamRules.Where(str => str.Division.DivisionName.Equals("West"));
+            sdrCentralA.Teams = seasonTeamRules.Where(str => str.Division.DivisionName.Equals("Central A"));
+            sdrCentralB.Teams = seasonTeamRules.Where(str => str.Division.DivisionName.Equals("Central B"));
 
             return seasonConfig;
 
@@ -124,6 +124,25 @@ namespace TeamApp.Test.Domain.Competitions.Seasons.Config
         public void ShouldTestCreateCompetitionTeam()
         {
             True(false);
+        }
+
+        [Theory]
+        [InlineData("NHL", 9)]
+        [InlineData("Eastern", 3)]
+        [InlineData("Western", 4)]
+        [InlineData("East", 0)]
+        [InlineData("NorthEast", 0)]
+        [InlineData("Atlantic", 0)]
+        [InlineData("West", 0)]
+        [InlineData("Central", 2)]
+        [InlineData("Central A", 0)]
+        [InlineData("Central B", 0)]
+        public void ShouldGetChildDivisions(string divisionName, int expected)
+        {
+            var seasonConfig = CreateConfig();
+            var rule = seasonConfig.DivisionRules.Where(dr => dr.DivisionName.Equals(divisionName)).First();
+
+            StrictEqual(expected, seasonConfig.GetChildDivisions(rule).Count);
         }
     }
 }

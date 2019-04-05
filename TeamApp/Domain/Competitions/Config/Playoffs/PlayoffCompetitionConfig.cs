@@ -158,8 +158,8 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
 
         public virtual PlayoffSeries SetupSeriesFromRule(Playoff playoff, PlayoffSeriesRule rule)
         {
-            var homeTeam = GetTeamByRule(playoff, rule.HomeFromType, rule.HomeFromName, rule.HomeFromValue);
-            var awayTeam = GetTeamByRule(playoff, rule.AwayFromType, rule.AwayFromName, rule.AwayFromValue);
+            var homeTeam = GetTeamByRule(playoff, rule.HomeFromName, rule.HomeFromValue);
+            var awayTeam = GetTeamByRule(playoff, rule.AwayFromName, rule.AwayFromValue);
 
             var series = SetupSeries(playoff, rule.SeriesType, rule.Name, rule.Round, -1, homeTeam, awayTeam, rule.SeriesNumber, rule.HomeGameProgression);
 
@@ -180,33 +180,15 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
             }
         }
 
-        public virtual PlayoffTeam GetTeamByRule(Playoff playoff, int fromType, string fromName, int fromValue)
+        public virtual PlayoffTeam GetTeamByRule(Playoff playoff, string fromName, int fromValue)
         {
-            switch (fromType)
-            {                
-                case PlayoffSeriesRule.FROM_RANKING:
-                    var rankingsForGroup = playoff.Rankings.Where(r => r.GroupName == fromName).ToList();                    
-                    if (rankingsForGroup.Count > 0)
-                    {
-                        var ranking = rankingsForGroup.Where(r => r.Rank == fromValue).ToList().First();
-                        return (PlayoffTeam)ranking.Team;                        
-                    }
-                    return null;
-                case PlayoffSeriesRule.FROM_SERIES:
-                    var series = playoff.Series.Where(s => s.Name.Equals(fromName)).FirstOrDefault();
-                    switch (fromValue)
-                    {
-                        case PlayoffSeriesRule.GET_WINNER:
-                            return series == null ? null : series.GetWinner();
-                        case PlayoffSeriesRule.GET_LOSER:
-                            return series == null ? null : series.GetLoser();
-                        default:
-                            throw new ApplicationException("Bad From value in Playoff series rule: " + fromValue);
-
-                    }
-                default:
-                    throw new ApplicationException("Bad From Team Type in Playoff Series Rule: " + fromType);
+            var rankingsForGroup = playoff.Rankings.Where(r => r.GroupName == fromName).ToList();
+            if (rankingsForGroup.Count > 0)
+            {
+                var ranking = rankingsForGroup.Where(r => r.Rank == fromValue).ToList().First();
+                return (PlayoffTeam)ranking.Team;
             }
+            return null;
         }
 
     }
