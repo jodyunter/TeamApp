@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TeamApp.Domain.Competitions.Config;
 using TeamApp.Domain.Schedules;
@@ -47,7 +48,7 @@ namespace TeamApp.Domain.Competitions.Seasons
 
         public override void ProcessEndOfCompetitionDetails(int endingDay)
         {
-            SortAllTeams();
+            SortAllTeams();            
             EndDay = endingDay;
         }
         public virtual SeasonDivision GetDivisionByName(string divisionName)
@@ -108,6 +109,11 @@ namespace TeamApp.Domain.Competitions.Seasons
                 SetupSchedule();
             }
             return Schedule.IsComplete();            
+        }
+
+        public override List<TeamRanking> GetFinalRankings()
+        {
+            throw new NotImplementedException();
         }
     }
 }

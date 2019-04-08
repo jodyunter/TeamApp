@@ -120,5 +120,10 @@ namespace TeamApp.Test.Domain.Competitions
         {
             return new List<ScheduleGame>();
         }
+
+        public override List<TeamRanking> GetFinalRankings()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

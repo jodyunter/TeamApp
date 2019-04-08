@@ -13,7 +13,7 @@ namespace TeamApp.Domain.Competitions
         public virtual int Year { get; set; }
         public virtual Schedule Schedule { get; set; }
         public virtual IList<TeamRanking> Rankings { get; set; }
-        public virtual IList<SingleYearTeam> Teams { get; set; }
+        public virtual IList<SingleYearTeam> Teams { get; set; }        
         public virtual bool Started { get; set; }
         public virtual bool Finished { get; set; }
         public virtual int? StartDay { get; set; }
@@ -21,6 +21,7 @@ namespace TeamApp.Domain.Competitions
         public abstract IEnumerable<ScheduleGame> ProcessGame(ScheduleGame game, int currentDay); //this might add new games that need to be saved
         public abstract bool AreGamesComplete();
         public abstract void ProcessEndOfCompetitionDetails(int endingDay);
+        public abstract List<TeamRanking> GetFinalRankings();
         public virtual IEnumerable<ScheduleGame> Games { get; set; }
 
         public virtual void ProcessEndOfCompetition(int endingDay)
@@ -28,6 +29,7 @@ namespace TeamApp.Domain.Competitions
             EndDay = endingDay;
             Finished = true;
             ProcessEndOfCompetitionDetails(endingDay);
+            Rankings.ToList().AddRange(GetFinalRankings());
         }
 
         public Competition() : base() { }

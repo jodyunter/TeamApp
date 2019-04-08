@@ -14,8 +14,8 @@ namespace TeamApp.Domain.Competitions.Config.Seasons
         public virtual IList<SeasonScheduleRule> ScheduleRules { get; set; }
 
         public SeasonCompetitionConfig() { }
-        public SeasonCompetitionConfig(string name, League league, int? startingDay, int? firstYear, int? lastYear, int order, List<SeasonTeamRule> teamRules, List<SeasonDivisionRule> divisionRules, GameRules gameRules, List<SeasonScheduleRule> scheduleRules, List<CompetitionConfig> parents)
-            : base(name, league, order, startingDay, gameRules, parents, firstYear, lastYear)
+        public SeasonCompetitionConfig(string name, League league, int? startingDay, int? firstYear, int? lastYear, int order, List<SeasonTeamRule> teamRules, List<SeasonDivisionRule> divisionRules, GameRules gameRules, List<SeasonScheduleRule> scheduleRules, List<CompetitionConfig> parents, List<CompetitionConfigFinalRankingRule> finalRankingRules)
+            : base(name, league, order, startingDay, gameRules, parents, finalRankingRules, firstYear, lastYear)
         {            
             TeamRules = teamRules;
             DivisionRules = divisionRules;
@@ -171,6 +171,6 @@ namespace TeamApp.Domain.Competitions.Config.Seasons
         {
             return new SeasonTeam(season, parent, season.Year, new SeasonTeamStats(), null);
         }
-
+        
     }
 }

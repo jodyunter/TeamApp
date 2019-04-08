@@ -11,6 +11,7 @@ namespace TeamApp.Domain.Competitions.Config
         public virtual GameRules GameRules { get; set; }
         //how do we setup generic rules?
         public virtual IList<CompetitionConfig> Parents { get; set; } //this would be the list of competitions where they could get thier teams from
+        public virtual IList<CompetitionConfigFinalRankingRule> FinalRankingRules { get; set; }
         public virtual int? FirstYear { get; set; }
         public virtual int? LastYear { get; set; }
         public virtual int? CompetitionStartingDay { get; set; }
@@ -18,7 +19,7 @@ namespace TeamApp.Domain.Competitions.Config
         public abstract Competition CreateCompetitionDetails(int day, int year, IList<Competition> parents);
 
         protected CompetitionConfig() { }
-        protected CompetitionConfig(string name, League league, int order, int? competitionStartingDay, GameRules gameRules, List<CompetitionConfig> parents, int? firstYear, int? lastYear)
+        protected CompetitionConfig(string name, League league, int order, int? competitionStartingDay, GameRules gameRules, List<CompetitionConfig> parents, List<CompetitionConfigFinalRankingRule> finalRankingRules, int? firstYear, int? lastYear)
         {
             Name = name;
             League = league;
@@ -32,6 +33,11 @@ namespace TeamApp.Domain.Competitions.Config
                 Parents = new List<CompetitionConfig>();
             else
                 Parents = parents;
+
+            if (finalRankingRules == null)
+                FinalRankingRules = new List<CompetitionConfigFinalRankingRule>();
+            else
+                FinalRankingRules = finalRankingRules;
         }
                 
         public virtual Competition CreateCompetition(int day, int year, IList<Competition> parents)

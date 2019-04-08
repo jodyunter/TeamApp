@@ -229,5 +229,10 @@ namespace TeamApp.Domain.Competitions.Playoffs
 
             return complete;
         }
+
+        public override List<TeamRanking> GetFinalRankings()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

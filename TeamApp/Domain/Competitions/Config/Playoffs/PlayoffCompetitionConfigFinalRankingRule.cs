@@ -9,6 +9,7 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
     {
         public PlayoffSeriesRule FromSeries { get; set; }
         public PlayoffSeriesRule.Result TeamStatus { get; set; } //winner or loser
+        public string TieBreakingRankGroupName { get; set; }
 
         public override List<TeamRanking> GetTeamsForRule(Competition competition)
         {
