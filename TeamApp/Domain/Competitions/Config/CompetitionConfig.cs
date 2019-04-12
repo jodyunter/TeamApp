@@ -65,6 +65,8 @@ namespace TeamApp.Domain.Competitions.Config
                     
         }
 
+        //we should remove these.
+        //rules should be in place to setup all the rankings we need
         public virtual void CopyTeamsFromCompetition(Competition destinationCompetition, Competition sourceCompetition)
         {
             if (destinationCompetition.Teams == null) destinationCompetition.Teams = new List<SingleYearTeam>();
@@ -79,6 +81,7 @@ namespace TeamApp.Domain.Competitions.Config
         }
         
         //what if we have two parent competitions, and therefore end up copying this twice?
+        //when we copy the rankings, maybe we should only copy the final rankings to help break ties
         public virtual void CopyRankingsFromCompetition(Competition destinationCompetition, Competition sourceCompetition)
         {
             if (destinationCompetition.Rankings == null) destinationCompetition.Rankings = new List<TeamRanking>();
