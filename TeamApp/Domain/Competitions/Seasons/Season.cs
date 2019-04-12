@@ -113,7 +113,32 @@ namespace TeamApp.Domain.Competitions.Seasons
 
         public override List<TeamRanking> GetFinalRankings()
         {
-            throw new NotImplementedException();
+            var finalGroupName = CompetitionConfig.FinalRankingGroupName;
+
+            var currentFinalRankings = Rankings.Where(r => r.GroupName.Equals(finalGroupName)).ToList();
+
+            if (currentFinalRankings.Count > 0) return currentFinalRankings;
+            else
+            {
+                var finalRankings = new List<TeamRanking>();
+
+                CompetitionConfig.FinalRankingRules.ToList().ForEach(rule =>
+                {
+                    var teams = rule.GetTeamsForRule(this);
+
+                    var rank = rule.Rank;
+
+                    teams.OrderBy(t => t.Rank).ToList().ForEach(t =>
+                    {
+                        var ranking = new TeamRanking((int)rank, finalGroupName, t.Team, 0);
+                        finalRankings.Add(ranking);
+                        rank++;
+                    });
+
+                });
+
+                return finalRankings;
+            }
         }
     }
 }

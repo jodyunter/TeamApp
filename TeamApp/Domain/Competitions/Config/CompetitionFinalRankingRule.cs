@@ -10,8 +10,7 @@ namespace TeamApp.Domain.Competitions.Config
         public string Name { get; set; }
         public int? FirstYear { get; set; }
         public int? LastYear { get; set; }        
-        public int? StaringRank { get; set; }  //either assign a rank or get it from a group
-        public int? EndingRank { get; set; }
+        public int? Rank { get; set; }  //either assign a rank or get it from a group        
         public abstract List<TeamRanking> GetTeamsForRule(Competition competition);
     }
 }

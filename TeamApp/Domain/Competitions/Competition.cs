@@ -103,6 +103,6 @@ namespace TeamApp.Domain.Competitions
 
                 Schedule.Days[game.Day].AddGame(game);
             });
-        }
+        }        
     }
 }

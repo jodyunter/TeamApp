@@ -140,6 +140,11 @@ namespace TeamApp.Test.Domain.Competitions.Seasons
         {
             True(false);
         }
+        [Fact]
+        public void ShouldGetFinalRanking()
+        {
+            True(false);
+        }
         private SeasonTeam CreateSeasonTeam(Competition competition, int id, string name, SeasonDivision division)
         {
             var team = new SeasonTeam(competition, new Team() { Id = id, Name = name }, 1, null, division);

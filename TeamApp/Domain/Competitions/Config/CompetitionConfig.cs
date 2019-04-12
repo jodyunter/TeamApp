@@ -15,11 +15,12 @@ namespace TeamApp.Domain.Competitions.Config
         public virtual int? FirstYear { get; set; }
         public virtual int? LastYear { get; set; }
         public virtual int? CompetitionStartingDay { get; set; }
+        public virtual string FinalRankingGroupName { get; set; }
         public abstract SingleYearTeam CreateCompetitionTeam(Competition competition, Team parent);
         public abstract Competition CreateCompetitionDetails(int day, int year, IList<Competition> parents);
 
         protected CompetitionConfig() { }
-        protected CompetitionConfig(string name, League league, int order, int? competitionStartingDay, GameRules gameRules, List<CompetitionConfig> parents, List<CompetitionConfigFinalRankingRule> finalRankingRules, int? firstYear, int? lastYear)
+        protected CompetitionConfig(string name, League league, int order, int? competitionStartingDay, GameRules gameRules, List<CompetitionConfig> parents, List<CompetitionConfigFinalRankingRule> finalRankingRules, string finalRankingGroupName, int? firstYear, int? lastYear)
         {
             Name = name;
             League = league;
@@ -29,6 +30,7 @@ namespace TeamApp.Domain.Competitions.Config
             FirstYear = firstYear;
             LastYear = lastYear;
             CompetitionStartingDay = competitionStartingDay;
+            FinalRankingGroupName = finalRankingGroupName;
             if (parents == null)
                 Parents = new List<CompetitionConfig>();
             else

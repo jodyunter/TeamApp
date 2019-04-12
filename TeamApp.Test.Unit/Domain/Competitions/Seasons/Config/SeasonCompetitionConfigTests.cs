@@ -144,5 +144,11 @@ namespace TeamApp.Test.Domain.Competitions.Seasons.Config
 
             StrictEqual(expected, seasonConfig.GetChildDivisions(rule).Count);
         }
+
+        [Fact]
+        public void ShouldGetFinalRankings()
+        {
+            True(false);
+        }
     }
 }

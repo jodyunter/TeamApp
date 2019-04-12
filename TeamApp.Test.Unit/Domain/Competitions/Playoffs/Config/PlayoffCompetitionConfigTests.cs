@@ -336,5 +336,11 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
             True(false);
         }
 
+        [Fact]
+        public void ShouldGetFinalRankings()
+        {
+            True(false);
+        }
+
     }
 }
