@@ -11,7 +11,7 @@ namespace TeamApp.Domain.Competitions.Config.Seasons
         public virtual int? EndingRank { get; set; }
 
         //we assume there is a division that is used as the final rankings
-        public override List<TeamRanking> GetTeamsForRule(Competition competition)
+        public override IList<TeamRanking> GetTeamsForRule(Competition competition)
         {
             var season = (Season)competition;
 
@@ -22,6 +22,14 @@ namespace TeamApp.Domain.Competitions.Config.Seasons
 
             return sourceRankings;
 
+        }
+
+        public SeasonCompetitionConfigFinalRankingRule(string name, int? rank, string teamsComeFromGroupName, int? startingRank, int? endingRank, int? firstYear, int? lastYear)
+            :base(name, rank, firstYear, lastYear)
+        {
+            TeamsComeFromGroup = teamsComeFromGroupName;
+            StartingRank = startingRank;
+            EndingRank = endingRank;
         }
     }
 }

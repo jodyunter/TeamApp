@@ -5,12 +5,19 @@ using System.Text;
 namespace TeamApp.Domain.Competitions.Config
 {
     public abstract class CompetitionConfigFinalRankingRule: BaseDataObject, ITimePeriod
-    {
-        public const string FINAL_GROUP_NAME = "FINAL STANDINGS";
-        public string Name { get; set; }
-        public int? FirstYear { get; set; }
-        public int? LastYear { get; set; }        
-        public int? Rank { get; set; }  //either assign a rank or get it from a group        
-        public abstract List<TeamRanking> GetTeamsForRule(Competition competition);
+    {        
+        public virtual string Name { get; set; }
+        public virtual int? FirstYear { get; set; }
+        public virtual int? LastYear { get; set; }        
+        public virtual int? Rank { get; set; }  //either assign a rank or get it from a group        
+        public abstract IList<TeamRanking> GetTeamsForRule(Competition competition);
+
+        public CompetitionConfigFinalRankingRule(string name, int? rank, int? firstYear, int? lastYear)
+        {
+            Name = name;
+            FirstYear = firstYear;
+            LastYear = lastYear;
+            Rank = rank;
+        }
     }
 }
