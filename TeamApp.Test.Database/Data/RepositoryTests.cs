@@ -291,7 +291,7 @@ namespace TeamApp.Test.Data
         {
             var repo = new TeamRepository(new RepositoryNHibernate<Team>());
 
-            var newTeamId = (long)repo.Add(new Team("Add Team", "AddNick", "AddShort", 5, "Me", 1, null, true));
+            var newTeamId = (long)repo.Add(new Team("Add Team", "AddNick", "AddShort", 5, "Me", 1, null, true, null));
             var newTeam = repo.Get(newTeamId);
             NotEqual(0L, newTeam.Id);
 
@@ -312,7 +312,7 @@ namespace TeamApp.Test.Data
 
             for (int i = 0; i < 10; i++)
             {
-                repo.Add(new Team("Team " + i, "AddNick" + i, "AddShort" + i, 5, "Me" + i, 1, i, true));
+                repo.Add(new Team("Team " + i, "AddNick" + i, "AddShort" + i, 5, "Me" + i, 1, i, true, null));
             }
 
             Equal(11, repo.GetAll().ToList().Count);

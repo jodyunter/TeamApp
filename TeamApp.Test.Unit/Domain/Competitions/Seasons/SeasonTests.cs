@@ -4,6 +4,7 @@ using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Competitions.Config.Seasons;
 using TeamApp.Domain.Competitions.Seasons;
 using TeamApp.Domain.Schedules;
+using TeamApp.Domain.Games;
 using Xunit;
 using static TeamApp.Test.Domain.SchedulerTests.SchedulerTests;
 using static Xunit.Assert;

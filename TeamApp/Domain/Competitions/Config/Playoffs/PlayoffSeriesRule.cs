@@ -1,4 +1,6 @@
-﻿namespace TeamApp.Domain.Competitions.Config.Playoffs
+﻿using TeamApp.Domain.Games;
+
+namespace TeamApp.Domain.Competitions.Config.Playoffs
 {
     public class PlayoffSeriesRule : BaseDataObject, ITimePeriod
     {        

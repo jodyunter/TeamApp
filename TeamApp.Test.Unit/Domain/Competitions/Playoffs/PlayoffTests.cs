@@ -4,7 +4,7 @@ using TeamApp.Domain.Competitions.Playoffs;
 using Xunit;
 using static Xunit.Assert;
 using static TeamApp.Test.Domain.Competitions.Playoffs.PlayoffSeriesTests;
-using static TeamApp.Domain.Competitions.Config.Playoffs.PlayoffSeriesRule;
+using TeamApp.Domain.Games;
 using TeamApp.Domain;
 using TeamApp.Domain.Competitions.Playoffs.Series;
 using TeamApp.Domain.Competitions.Config.Playoffs;

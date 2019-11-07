@@ -14,7 +14,7 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
     {
         private static Team CreateTeamForTests(long id, string name, string nickName, string shortName, int skill, string owner, int? start, int? end, bool active)
         {
-            var team = new Team(name, nickName, shortName, skill, owner, start, end, active);
+            var team = new Team(name, nickName, shortName, skill, owner, start, end, active, null);
 
             team.Id = id;
 

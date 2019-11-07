@@ -17,6 +17,7 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
+IF OBJECT_ID (N'Player', N'U') IS NOT NULL drop table Player
 IF OBJECT_ID (N'BestOfSeries', N'U') IS NOT NULL drop table BestOfSeries
 IF OBJECT_ID (N'TotalGoalsSeries', N'U') IS NOT NULL drop table TotalGoalsSeries
 IF OBJECT_ID (N'GameData', N'U') IS NOT NULL drop table GameData

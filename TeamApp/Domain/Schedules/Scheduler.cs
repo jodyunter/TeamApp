@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TeamApp.Domain.Competitions.Seasons;
+using TeamApp.Domain.Games;
 using System.Linq;
 using TeamApp.Domain.Competitions.Playoffs;
 using TeamApp.Domain.Competitions;

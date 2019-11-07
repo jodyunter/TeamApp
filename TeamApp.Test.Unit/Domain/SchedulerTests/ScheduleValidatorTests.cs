@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
+using TeamApp.Domain.Schedules;
+using TeamApp.Domain;
+using TeamApp.Domain.Games;
+using static TeamApp.Test.Domain.SchedulerTests.SchedulerTests;
+
 using static Xunit.Assert;
 using Xunit;
-using TeamApp.Domain.Schedules;
-using static TeamApp.Test.Domain.SchedulerTests.SchedulerTests;
-using TeamApp.Domain;
+
 
 namespace TeamApp.Test.Domain.SchedulerTests
 {

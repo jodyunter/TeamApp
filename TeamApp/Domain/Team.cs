@@ -5,7 +5,7 @@ using System.Text;
 namespace TeamApp.Domain
 {
    
-    public class Team:BaseDataObject, ITeam, ITimePeriod
+    public class Team:BaseDataObject, ITeam
     {
         public virtual string Name { get; set; }
         public virtual string NickName { get; set; }
@@ -15,9 +15,10 @@ namespace TeamApp.Domain
         public virtual int? FirstYear { get; set; }
         public virtual int? LastYear { get; set; }
         public virtual bool Active { get; set; }
+        public virtual IList<Player> Players { get; set; }
 
         public Team():base() { }
-        public Team(string name, string nickName, string shortName, int skill, string owner, int? firstYear, int? lastYear, bool active):base()
+        public Team(string name, string nickName, string shortName, int skill, string owner, int? firstYear, int? lastYear, bool active, IList<Player> players):base()
         {
             Name = name;
             NickName = nickName;
@@ -27,6 +28,7 @@ namespace TeamApp.Domain
             FirstYear = firstYear;
             LastYear = lastYear;
             Active = active;
+            Players = players;
         }
 
         public override string ToString()

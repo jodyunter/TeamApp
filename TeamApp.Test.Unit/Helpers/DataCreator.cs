@@ -1,11 +1,10 @@
-﻿using System;
+﻿using TeamApp.Domain.Games;
 using System.Collections.Generic;
 using System.Linq;
 using TeamApp.Domain;
 using TeamApp.Domain.Competitions.Config;
 using TeamApp.Domain.Competitions.Config.Playoffs;
 using TeamApp.Domain.Competitions.Config.Seasons;
-using static TeamApp.Domain.Competitions.Config.Playoffs.PlayoffSeriesRule;
 
 namespace TeamApp.Test.Helpers
 {
@@ -20,36 +19,36 @@ namespace TeamApp.Test.Helpers
         {
             return new List<Team>()
             {
-                new Team("Toronto", "Maple Leafs", "TML", 1, null, 1, null, true),
-                new Team("Montreal", "Canadiens", "MTL", 1, null, 1, null, true),
-                new Team("Quebec", "Nordiques", "QCN", 1, null, 1, null, true),
-                new Team("Ottawa", "Senators", "OTS", 1, null, 1, null, true),
-                new Team("Calgary", "Flames", "CGF", 1, null, 1, null, true),
-                new Team("Winnipeg", "Jets", "WPJ", 1, null, 1, null, true),
-                new Team("Edmonton", "Oilers", "EDO", 1, null, 1, null, true),
-                new Team("Vancouver", "Canucks", "VCC", 1, null, 1, null, true),
-                new Team("Detroit", "Red Wings", "DRW", 1, null, 1, null, true),
-                new Team("Minnesota", "Wild", "MNW", 1, null, 1, null, true),
-                new Team("Chicago", "Blackhawks", "CBH", 1, null, 1, null, true),
-                new Team("Victoria", "Cougars", "VCC", 1, null, 1, null, true),
-                new Team("Seattle", "Metros", "STM", 1, null, 1, null, true),
-                new Team("San Jose", "Sharks", "SJS", 1, null, 1, null, true),
-                new Team("Colorado", "Avalance", "COL", 1, null, 1, null, true),
-                new Team("Nashville", "Predators", "NSH", 1, null, 1, null, true),
-                new Team("Pittsburgh", "Penguins", "PBP", 1, null, 1, null, true),
-                new Team("Philadelphia", "Flyers", "PHF", 1, null, 1, null, true),
-                new Team("New York", "Rangers", "NYR", 1, null, 1, null, true),
-                new Team("New York", "Islanders", "NYI", 1, null, 1, null, true),
-                new Team("Buffalo", "Sabres", "BUF", 1, null, 1, null, true),
-                new Team("Los Angelas", "Kings", "LAK", 1, null, 1, null, true),
-                new Team("Las Vegas", "Knights", "LVK", 1, null, 1, null, true),
-                new Team("Saskatoon", "Blades", "SKB", 1, null, 1, null, true),
-                new Team("New Jersey", "Devils", "NJD", 1, null, 1, null, true),
-                new Team("Tampa Bay", "Lightning", "TBL", 1, null, 1, null, true),
-                new Team("Washington", "Capitals", "WSH", 1, null, 1, null, true),
-                new Team("Atlanta", "Thrashers", "ATL", 1, null, 1, null, true),
-                new Team("Florida", "Panthers", "FLA", 1, null, 1, null, true),
-                new Team("Anaheim", "Ducks", "AND", 1, null, 1, null, true)
+                new Team("Toronto", "Maple Leafs", "TML", 1, null, 1, null, true, null),
+                new Team("Montreal", "Canadiens", "MTL", 1, null, 1, null, true, null),
+                new Team("Quebec", "Nordiques", "QCN", 1, null, 1, null, true, null),
+                new Team("Ottawa", "Senators", "OTS", 1, null, 1, null, true, null),
+                new Team("Calgary", "Flames", "CGF", 1, null, 1, null, true, null),
+                new Team("Winnipeg", "Jets", "WPJ", 1, null, 1, null, true, null),
+                new Team("Edmonton", "Oilers", "EDO", 1, null, 1, null, true, null),
+                new Team("Vancouver", "Canucks", "VCC", 1, null, 1, null, true, null),
+                new Team("Detroit", "Red Wings", "DRW", 1, null, 1, null, true, null),
+                new Team("Minnesota", "Wild", "MNW", 1, null, 1, null, true, null),
+                new Team("Chicago", "Blackhawks", "CBH", 1, null, 1, null, true, null),
+                new Team("Victoria", "Cougars", "VCC", 1, null, 1, null, true, null),
+                new Team("Seattle", "Metros", "STM", 1, null, 1, null, true, null),
+                new Team("San Jose", "Sharks", "SJS", 1, null, 1, null, true, null),
+                new Team("Colorado", "Avalance", "COL", 1, null, 1, null, true, null),
+                new Team("Nashville", "Predators", "NSH", 1, null, 1, null, true, null),
+                new Team("Pittsburgh", "Penguins", "PBP", 1, null, 1, null, true, null),
+                new Team("Philadelphia", "Flyers", "PHF", 1, null, 1, null, true, null),
+                new Team("New York", "Rangers", "NYR", 1, null, 1, null, true, null),
+                new Team("New York", "Islanders", "NYI", 1, null, 1, null, true, null),
+                new Team("Buffalo", "Sabres", "BUF", 1, null, 1, null, true, null),
+                new Team("Los Angelas", "Kings", "LAK", 1, null, 1, null, true, null),
+                new Team("Las Vegas", "Knights", "LVK", 1, null, 1, null, true, null),
+                new Team("Saskatoon", "Blades", "SKB", 1, null, 1, null, true, null),
+                new Team("New Jersey", "Devils", "NJD", 1, null, 1, null, true, null),
+                new Team("Tampa Bay", "Lightning", "TBL", 1, null, 1, null, true, null),
+                new Team("Washington", "Capitals", "WSH", 1, null, 1, null, true, null),
+                new Team("Atlanta", "Thrashers", "ATL", 1, null, 1, null, true, null),
+                new Team("Florida", "Panthers", "FLA", 1, null, 1, null, true, null),
+                new Team("Anaheim", "Ducks", "AND", 1, null, 1, null, true, null)
 
             };
         }

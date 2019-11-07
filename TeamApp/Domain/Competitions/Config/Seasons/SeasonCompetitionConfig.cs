@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using TeamApp.Domain.Games;
+using System.Collections.Generic;
 using System.Linq;
 using TeamApp.Domain.Competitions.Seasons;
 using TeamApp.Domain.Schedules;

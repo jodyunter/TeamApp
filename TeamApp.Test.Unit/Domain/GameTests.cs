@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Xunit;
 using static Xunit.Assert;
-using TeamApp.Domain;
+using TeamApp.Domain.Games;
 using static TeamApp.Test.Domain.SchedulerTests.SchedulerTests;
 using TeamApp.Test.Helpers;
 

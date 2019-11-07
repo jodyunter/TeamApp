@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using TeamApp.Domain.Schedules;
 using TeamApp.Domain;
+using TeamApp.Domain.Games;
 using Xunit;
 using static Xunit.Assert;
 using System.Linq;
@@ -118,7 +119,7 @@ namespace TeamApp.Test.Domain.SchedulerTests
 
         public static Team CreateTeam(string name, int id)
         {
-            return new Team(name, null, null, 5, null, 1, null, true) { Id = id };
+            return new Team(name, null, null, 5, null, 1, null, true, null) { Id = id };
         }            
         public static ScheduleDay CreateDay(int dayNumber, params ScheduleGame[] games)
         {

@@ -1,4 +1,5 @@
-﻿using TeamApp.Domain.Competitions;
+﻿using TeamApp.Domain.Games;
+using TeamApp.Domain.Competitions;
 
 namespace TeamApp.Domain.Schedules
 {

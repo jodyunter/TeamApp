@@ -1,4 +1,5 @@
 ﻿using TeamApp.Domain.Schedules;
+using TeamApp.Domain.Games;
 
 namespace TeamApp.Domain.Competitions.Playoffs
 {

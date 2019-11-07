@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace TeamApp.Domain
+namespace TeamApp.Domain.Games
 {
     public class Game:BaseDataObject
     {

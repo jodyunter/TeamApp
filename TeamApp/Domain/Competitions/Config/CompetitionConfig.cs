@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
+using TeamApp.Domain.Games;
 
 namespace TeamApp.Domain.Competitions.Config
 {
