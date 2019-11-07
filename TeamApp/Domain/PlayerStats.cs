@@ -35,8 +35,6 @@ namespace TeamApp.Domain
         public virtual int GamesPlayed { get; set; } = 0;
         public virtual int Wins { get; set; } = 0;
         public virtual int Loses { get; set; } = 0;
-        public virtual int Ties { get; set; } = 0;
-
-        public int Points { get { return Goals + Assists; } }
+        public virtual int Ties { get; set; } = 0;        
     }
 }
