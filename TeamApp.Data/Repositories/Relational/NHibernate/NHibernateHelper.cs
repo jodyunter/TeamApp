@@ -7,6 +7,7 @@ using NHibernate;
 using NHibernate.Context;
 using NHibernate.Event;
 using System.IO;
+using TeamApp.Data.Repositories.Relational.NHibernate.Mappers;
 using TeamApp.Domain;
 using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Competitions.Config;
@@ -29,7 +30,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
         }
 
         private static FluentConfiguration FluentConfig()
-        {            
+        {
             var settings = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("settings.json")
@@ -39,11 +40,11 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
             var context = settings["SessionContext"];
             var connectionStringFormatter = "ConnectionStrings:{0}:ConnectionString";
             var providerFormatter = "ConnectionStrings:{0}:Provider";
-            var driverFormatter = "ConnectionStrings:{0}:Driver";            
+            var driverFormatter = "ConnectionStrings:{0}:Driver";
             var connectionString = settings[string.Format(connectionStringFormatter, settingsToUse)];
             var providerString = settings[string.Format(providerFormatter, settingsToUse)];
-            var driverString = settings[string.Format(driverFormatter, settingsToUse)];            
-            
+            var driverString = settings[string.Format(driverFormatter, settingsToUse)];
+
             var storeConfig = new StoreConfiguration();
 
             //we need to remap all of the classes explicitly.
@@ -56,16 +57,23 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
                      //.ShowSql()
                      )
                    .CurrentSessionContext("thread_static")
-                   .Mappings(m =>                   
-                   m.AutoMappings.Add(
-                       AutoMap.AssemblyOf<Team>(storeConfig)
-                       .IgnoreBase<BaseDataObject>()                                  
-                       .IncludeBase<CompetitionConfig>()
-                       .IncludeBase<PlayoffSeries>()                       
-                       .IncludeBase<Competition>()
-                       .IncludeBase<CompetitionConfigFinalRankingRule>()                                 
-                       .Conventions.Add(DefaultCascade.All())
-                       ))
+                   .Mappings(m =>
+                   {
+                       m.FluentMappings.Add<TeamMap>();
+                       m.FluentMappings.Add<PlayerMap>();
+                       m.FluentMappings.Add<LeagueMap>();
+
+
+                       m.AutoMappings.Add(
+                           AutoMap.AssemblyOf<Team>(storeConfig)
+                           .IgnoreBase<BaseDataObject>()
+                           .IncludeBase<CompetitionConfig>()
+                           .IncludeBase<PlayoffSeries>()
+                           .IncludeBase<Competition>()
+                           .IncludeBase<CompetitionConfigFinalRankingRule>()                           
+                           .Conventions.Add(DefaultCascade.All())
+                           );
+                   })
                        .ExposeConfiguration(c => c.EventListeners.PreUpdateEventListeners
                                   = new IPreUpdateEventListener[] { new AuditEventListener() })
                        .ExposeConfiguration(c => c.EventListeners.PreInsertEventListeners

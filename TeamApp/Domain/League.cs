@@ -7,7 +7,11 @@ using TeamApp.Domain.Competitions.Config;
 namespace TeamApp.Domain
 {
     public class League:BaseDataObject,ITimePeriod
-    {        
+    {
+        public virtual string Name { get; set; }
+
+        public virtual IList<CompetitionConfig> CompetitionConfigs { get; set; }
+
         public virtual int? FirstYear { get; set; }
         public virtual int? LastYear { get; set; }
         public League() { }
@@ -19,10 +23,6 @@ namespace TeamApp.Domain
             CompetitionConfigs = new List<CompetitionConfig>();
         }
 
-        public virtual string Name { get; set; }
-
-        public virtual IList<CompetitionConfig> CompetitionConfigs { get; set; }
-        
         public virtual CompetitionConfig GetNextCompetitionConfig(CompetitionConfig current, int currentYear)
         {
             if (CompetitionConfigs == null || CompetitionConfigs.Count() == 0) throw new Exception("Competition Configs are null");

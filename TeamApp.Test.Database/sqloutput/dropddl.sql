@@ -17,7 +17,6 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-IF OBJECT_ID (N'Player', N'U') IS NOT NULL drop table Player
 IF OBJECT_ID (N'BestOfSeries', N'U') IS NOT NULL drop table BestOfSeries
 IF OBJECT_ID (N'TotalGoalsSeries', N'U') IS NOT NULL drop table TotalGoalsSeries
 IF OBJECT_ID (N'GameData', N'U') IS NOT NULL drop table GameData
@@ -38,7 +37,8 @@ IF OBJECT_ID (N'PlayoffRankingRule', N'U') IS NOT NULL drop table PlayoffRanking
 IF OBJECT_ID (N'PlayoffCompetitionConfig', N'U') IS NOT NULL drop table PlayoffCompetitionConfig
 IF OBJECT_ID (N'GamePlayer', N'U') IS NOT NULL drop table GamePlayer
 IF OBJECT_ID (N'ScheduleGame', N'U') IS NOT NULL drop table ScheduleGame
-IF OBJECT_ID (N'GamePlayer', N'U') IS NOT NULL drop table PlayerStats
+IF OBJECT_ID (N'PlayerStats', N'U') IS NOT NULL drop table PlayerStats
+IF OBJECT_ID (N'Player', N'U') IS NOT NULL drop table Player
 IF OBJECT_ID (N'Game', N'U') IS NOT NULL  drop table Game
 IF OBJECT_ID (N'Team', N'U') IS NOT NULL drop table Team
 IF OBJECT_ID (N'Competition', N'U') IS NOT NULL drop table Competition
