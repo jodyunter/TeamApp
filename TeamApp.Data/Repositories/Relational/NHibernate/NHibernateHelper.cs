@@ -42,7 +42,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
             var driverFormatter = "ConnectionStrings:{0}:Driver";            
             var connectionString = settings[string.Format(connectionStringFormatter, settingsToUse)];
             var providerString = settings[string.Format(providerFormatter, settingsToUse)];
-            var driverString = settings[string.Format(driverFormatter, settingsToUse)];
+            var driverString = settings[string.Format(driverFormatter, settingsToUse)];            
             
             var storeConfig = new StoreConfiguration();
 
@@ -61,6 +61,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
                        .IncludeBase<CompetitionConfig>()
                        .IncludeBase<PlayoffSeries>()                       
                        .IncludeBase<Competition>()
+                       .IncludeBase<CompetitionConfigFinalRankingRule>()
                        .Conventions.Add(DefaultCascade.All())
                        ))
                        .ExposeConfiguration(c => c.EventListeners.PreUpdateEventListeners

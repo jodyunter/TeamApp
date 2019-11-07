@@ -15,7 +15,7 @@ namespace TeamApp.Test.Domain.Competitions.Seasons
         [Fact]
         public void ShouldProcessGame()
         {
-            var seasonConfig = new SeasonCompetitionConfig("Test", null, 1, null, null, 1, null, null, null, null, null);
+            var seasonConfig = new SeasonCompetitionConfig("Test", null, 1, null, null, 1, null, null, null, null, null, null);
             var season = new Season(seasonConfig, seasonConfig.Name, 1, null, null, null, null, true, false, 1, null);
             var teams = new List<Team>() { CreateTeam("Team 1", 1), CreateTeam("Team 2", 2), CreateTeam("Team 3", 3), CreateTeam("Team 4", 4) };
             var rules = new GameRules(null, true, 1, 0, 7, 6);

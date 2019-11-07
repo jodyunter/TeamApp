@@ -14,7 +14,7 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
         public PlayoffCompetitionConfig():base() { }
 
         public PlayoffCompetitionConfig(string name, League league, int order, int? startingDay, GameRules gameRules, int? firstYear, int? lastYear, List<PlayoffRankingRule> rankingRules, List<PlayoffSeriesRule> seriesRules, List<CompetitionConfig> parents, List<CompetitionConfigFinalRankingRule> finalRankingRules)
-            :base(name, league, order, startingDay, gameRules, parents, finalRankingRules, firstYear, lastYear)
+            :base(name, league, order, startingDay, gameRules, parents, finalRankingRules, "Final Standings", firstYear, lastYear)            
         {
             RankingRules = rankingRules;
             if (RankingRules != null)

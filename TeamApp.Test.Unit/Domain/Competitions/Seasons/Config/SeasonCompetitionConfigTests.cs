@@ -11,7 +11,7 @@ namespace TeamApp.Test.Domain.Competitions.Seasons.Config
     {
         private SeasonCompetitionConfig CreateConfig()
         {
-            var seasonConfig = new SeasonCompetitionConfig("My Season", null, 1, 1, null, 1, null, null, null, null, null);
+            var seasonConfig = new SeasonCompetitionConfig("My Season", null, 1, 1, null, 1, null, null, null, null, null, null);
             var sdrNHL = new SeasonDivisionRule(seasonConfig, "NHL", null, 1, 1, null, 1, null) { Id = 1 };
             var sdrEastern = new SeasonDivisionRule(seasonConfig, "Eastern", sdrNHL, 2, 1, null, 1, null) { Id = 2 };
             var sdrWestern = new SeasonDivisionRule(seasonConfig, "Western", sdrNHL, 2, 2, null, 1, null) { Id = 3 };

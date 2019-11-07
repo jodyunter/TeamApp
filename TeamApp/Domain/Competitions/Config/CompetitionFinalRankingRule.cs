@@ -12,6 +12,7 @@ namespace TeamApp.Domain.Competitions.Config
         public virtual int? Rank { get; set; }  //either assign a rank or get it from a group        
         public abstract IList<TeamRanking> GetTeamsForRule(Competition competition);
 
+        public CompetitionConfigFinalRankingRule() { }
         public CompetitionConfigFinalRankingRule(string name, int? rank, int? firstYear, int? lastYear)
         {
             Name = name;

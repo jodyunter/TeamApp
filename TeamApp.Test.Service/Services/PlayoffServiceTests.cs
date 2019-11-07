@@ -41,7 +41,7 @@ namespace TeamApp.Test.Services
             var mapper = new PlayoffToPlayoffSummaryMapper();
 
             var league = new League("League 1", 1, null);
-            var competitionConfig = new PlayoffCompetitionConfig("P Config", league, 1, 1, null, 1, null, null, null, null);
+            var competitionConfig = new PlayoffCompetitionConfig("P Config", league, 1, 1, null, 1, null, null, null, null, null);
             var playoff = new Playoff(competitionConfig, "Playoff 1", 1, 5, null, null, null, null, true, false, 1, 15);
             var series = new List<PlayoffSeries>()
             {

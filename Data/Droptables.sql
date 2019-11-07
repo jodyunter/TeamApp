@@ -1,6 +1,6 @@
 USE [JodyTest]
 GO
-/****** Object:  StoredProcedure [dbo].[DropAllTables]    Script Date: 11/7/2019 10:44:21 AM ******/
+/****** Object:  StoredProcedure [dbo].[DropAllTables]    Script Date: 3/11/2019 2:41:16 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -17,6 +17,7 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
+IF OBJECT_ID (N'CompetitionConfigFinalRankingRule', N'U') IS NOT NULL drop table CompetitionConfigFinalRankingRule
 IF OBJECT_ID (N'BestOfSeries', N'U') IS NOT NULL drop table BestOfSeries
 IF OBJECT_ID (N'TotalGoalsSeries', N'U') IS NOT NULL drop table TotalGoalsSeries
 IF OBJECT_ID (N'GameData', N'U') IS NOT NULL drop table GameData
@@ -41,11 +42,8 @@ IF OBJECT_ID (N'Team', N'U') IS NOT NULL drop table Team
 IF OBJECT_ID (N'Competition', N'U') IS NOT NULL drop table Competition
 IF OBJECT_ID (N'SeasonDivisionRule', N'U') IS NOT NULL drop table SeasonDivisionRule
 IF OBJECT_ID (N'SeasonCompetitionConfig', N'U') IS NOT NULL drop table SeasonCompetitionConfig
-IF OBJECT_ID (N'SeasonCompetitionConfigFinalRankingRule', N'U') IS NOT NULL drop table SeasonCompetitionConfigFinalRankingRule
-IF OBJECT_ID (N'CompetitionConfigFinalRankingRule', N'U') IS NOT NULL drop table CompetitionConfigFinalRankingRule
 IF OBJECT_ID (N'CompetitionConfig', N'U') IS NOT NULL drop table CompetitionConfig
 IF OBJECT_ID (N'GameRules', N'U') IS NOT NULL drop table League
 IF OBJECT_ID (N'GameRules', N'U') IS NOT NULL drop table GameRules
 END
 
---exec DropAllTables

@@ -24,6 +24,8 @@ namespace TeamApp.Domain.Competitions.Config.Seasons
 
         }
 
+        public SeasonCompetitionConfigFinalRankingRule() { }
+
         public SeasonCompetitionConfigFinalRankingRule(string name, int? rank, string teamsComeFromGroupName, int? startingRank, int? endingRank, int? firstYear, int? lastYear)
             :base(name, rank, firstYear, lastYear)
         {

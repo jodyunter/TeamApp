@@ -15,7 +15,7 @@ namespace TeamApp.Domain.Competitions.Config.Seasons
 
         public SeasonCompetitionConfig() { }
         public SeasonCompetitionConfig(string name, League league, int? startingDay, int? firstYear, int? lastYear, int order, List<SeasonTeamRule> teamRules, List<SeasonDivisionRule> divisionRules, GameRules gameRules, List<SeasonScheduleRule> scheduleRules, List<CompetitionConfig> parents, List<CompetitionConfigFinalRankingRule> finalRankingRules)
-            : base(name, league, order, startingDay, gameRules, parents, finalRankingRules, firstYear, lastYear)
+            : base(name, league, order, startingDay, gameRules, parents, finalRankingRules, "Final Standings", firstYear, lastYear)
         {            
             TeamRules = teamRules;
             DivisionRules = divisionRules;

@@ -79,11 +79,11 @@ namespace TeamApp.Test.Data
             var leagueRepo = new LeagueRepository(new RepositoryNHibernate<League>());
 
             var repo = new CompetitionRepository(new RepositoryNHibernate<Competition>());
-            var configRepo = new CompetitionConfigRepository(new RepositoryNHibernate<CompetitionConfig>());            
-            var cc0 = new SeasonCompetitionConfig("Test B", league1, 1, 1, null, 1, null, null, null, null, null);
-            var cc1 = new SeasonCompetitionConfig("Test 1", league1, 1, 1, null, 1, null, null, null, null, null);
+            var configRepo = new CompetitionConfigRepository(new RepositoryNHibernate<CompetitionConfig>());
+            var cc0 = new SeasonCompetitionConfig("Test B", league1, 1, 1, null, 1, null, null, null, null, null, null);
+            var cc1 = new SeasonCompetitionConfig("Test 1", league1, 1, 1, null, 1, null, null, null, null, null, null);
             var c1 = new Season(cc1, "Test 1", 5, null, null, null, null, true, false, 5, 55);
-            var cc2 = new PlayoffCompetitionConfig("P3", league1, 2, 25, null, 1, null, null, null, new List<CompetitionConfig> { cc1, cc0 });
+            var cc2 = new PlayoffCompetitionConfig("P3", league1, 2, 25, null, 1, null, null, null, new List<CompetitionConfig> { cc1, cc0 }, null);
             var c8 = new Playoff(cc2, "P3", 5, 5, null, null, null, null, false, false, 5, 12);
             var c2 = new Season(null, "Test 2", 6, null, null, null, null, true, true, 5, 55);
             var c3 = new Season(null, "Test 3", 7, null, null, null, null, true, false, 5, 55);
@@ -164,11 +164,11 @@ namespace TeamApp.Test.Data
         {
             var repo = new CompetitionConfigRepository(new RepositoryNHibernate<CompetitionConfig>());
 
-            var config1 = new SeasonCompetitionConfig("Season 1", null, 1, 1, 12, 1, null, null, null, null, null);
-            var config2 = new SeasonCompetitionConfig("Season 2", null, 1, 1, 12, 1, null, null, null, null, null);
-            var config3 = new SeasonCompetitionConfig("Season 3", null, 1, 3, 12, 1, null, null, null, null, null);
-            var config4 = new SeasonCompetitionConfig("Season 4", null, 5, 1, 12, 1, null, null, null, null, null);
-            var config5 = new SeasonCompetitionConfig("Season 5", null, 5, 2, 12, 1, null, null, null, null, null);
+            var config1 = new SeasonCompetitionConfig("Season 1", null, 1, 1, 12, 1, null, null, null, null, null, null);
+            var config2 = new SeasonCompetitionConfig("Season 2", null, 1, 1, 12, 1, null, null, null, null, null, null);
+            var config3 = new SeasonCompetitionConfig("Season 3", null, 1, 3, 12, 1, null, null, null, null, null, null);
+            var config4 = new SeasonCompetitionConfig("Season 4", null, 5, 1, 12, 1, null, null, null, null, null, null);
+            var config5 = new SeasonCompetitionConfig("Season 5", null, 5, 2, 12, 1, null, null, null, null, null, null);
 
             repo.Update(config1);
             repo.Update(config2);

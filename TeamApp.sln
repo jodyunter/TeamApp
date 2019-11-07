@@ -1,15 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2003
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29418.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp", "TeamApp\TeamApp.csproj", "{E89C0BF5-E560-489A-A26E-97542A87575E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Test.Unit", "TeamApp.Test.Unit\TeamApp.Test.Unit.csproj", "{47954BD3-2EFC-43FE-8F11-2447514A21E2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Interface.Console", "TeamApp.Interface.Console\TeamApp.Interface.Console.csproj", "{D718A11F-A1A5-4676-8290-95CB863B4CFB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Interface.Web", "TeamApp.Interface.Web\TeamApp.Interface.Web.csproj", "{9310BE48-DD1C-445B-A838-6C15996F851F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Data", "TeamApp.Data\TeamApp.Data.csproj", "{2F68BE96-14D7-4A10-BA17-D41B5321BF7C}"
 EndProject
@@ -37,10 +35,6 @@ Global
 		{D718A11F-A1A5-4676-8290-95CB863B4CFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D718A11F-A1A5-4676-8290-95CB863B4CFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D718A11F-A1A5-4676-8290-95CB863B4CFB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9310BE48-DD1C-445B-A838-6C15996F851F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9310BE48-DD1C-445B-A838-6C15996F851F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9310BE48-DD1C-445B-A838-6C15996F851F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9310BE48-DD1C-445B-A838-6C15996F851F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2F68BE96-14D7-4A10-BA17-D41B5321BF7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2F68BE96-14D7-4A10-BA17-D41B5321BF7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F68BE96-14D7-4A10-BA17-D41B5321BF7C}.Release|Any CPU.ActiveCfg = Release|Any CPU

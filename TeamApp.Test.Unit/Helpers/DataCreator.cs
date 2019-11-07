@@ -55,7 +55,7 @@ namespace TeamApp.Test.Helpers
         }
         public static SeasonCompetitionConfig CreateSmallSeasonConfiguration(League league, List<Team> teamList, List<CompetitionConfig> parents, int? startingDay, int order)
         {
-            var seasonConfig = new SeasonCompetitionConfig("Regular Season", league, startingDay, order, null, 1, null, null, null, null, null);
+            var seasonConfig = new SeasonCompetitionConfig("Regular Season", league, startingDay, order, null, 1, null, null, null, null, null, null);
 
             seasonConfig.GameRules = new GameRules("Season Rules", true, 3, 1, 7, 6);
 
@@ -93,7 +93,7 @@ namespace TeamApp.Test.Helpers
 
         public static PlayoffCompetitionConfig CreateSmallPlayoffConfiguration(League league, List<CompetitionConfig> parents, int order, int? startingDay, int? firstYear, int? lastYear)
         {
-            var playoffConfig = new PlayoffCompetitionConfig("My Playoff", league, order, startingDay, null, firstYear, lastYear, null, null, parents);
+            var playoffConfig = new PlayoffCompetitionConfig("My Playoff", league, order, startingDay, null, firstYear, lastYear, null, null, parents, null);
 
             var gameRules = new GameRules("Playoff Rules", false, 3, 1, 7, 6);
 
@@ -120,7 +120,7 @@ namespace TeamApp.Test.Helpers
 
         public static SeasonCompetitionConfig CreateLargeSeasonConfiguration(League league, List<Team> teamList, List<CompetitionConfig> parents, int? startingDay, int order)
         {
-            var seasonConfig = new SeasonCompetitionConfig("Regular Season", league, startingDay, order, null, 1, null, null, null, null, null);            
+            var seasonConfig = new SeasonCompetitionConfig("Regular Season", league, startingDay, order, null, 1, null, null, null, null, null, null);            
 
             seasonConfig.GameRules = new GameRules("Season Rules", true, 3, 1, 7, 6);
 
@@ -201,7 +201,7 @@ namespace TeamApp.Test.Helpers
 
         public static PlayoffCompetitionConfig CreateLargePlayoffConfiguration(League league, List<CompetitionConfig> parents, int order, int? startingDay, int? firstYear, int? lastYear)
         {
-            var playoffConfig = new PlayoffCompetitionConfig("My Playoff", league, order, startingDay, null, firstYear, lastYear, null, null, parents);
+            var playoffConfig = new PlayoffCompetitionConfig("My Playoff", league, order, startingDay, null, firstYear, lastYear, null, null, parents, null);
 
             var gameRules = new GameRules("Playoff Rules", false, 3, 1, 7, 6);
 

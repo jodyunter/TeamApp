@@ -5,13 +5,15 @@ using TeamApp.Domain.Competitions.Playoffs;
 
 namespace TeamApp.Domain.Competitions.Config.Playoffs
 {
+    /*
     public class PlayoffCompetitionConfigFinalRankingRule : CompetitionConfigFinalRankingRule
     {
+        
         public PlayoffSeriesRule FromSeries { get; set; }
         public PlayoffSeriesRule.Result TeamStatus { get; set; } //winner or loser
         public string TieBreakingRankGroupName { get; set; }
 
-        public override List<TeamRanking> GetTeamsForRule(Competition competition)
+        public override IList<TeamRanking> GetTeamsForRule(Competition competition)
         {
             var playoff = (Playoff)competition;
 
@@ -29,6 +31,9 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
             {
                 throw new Exception("Bad value in Team Status.");
             }
+            
         }
+        
     }
+    */
 }
