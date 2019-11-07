@@ -61,7 +61,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
                        .IncludeBase<CompetitionConfig>()
                        .IncludeBase<PlayoffSeries>()                       
                        .IncludeBase<Competition>()
-                       .IncludeBase<CompetitionConfigFinalRankingRule>()
+                       .IncludeBase<CompetitionConfigFinalRankingRule>()                                 
                        .Conventions.Add(DefaultCascade.All())
                        ))
                        .ExposeConfiguration(c => c.EventListeners.PreUpdateEventListeners
