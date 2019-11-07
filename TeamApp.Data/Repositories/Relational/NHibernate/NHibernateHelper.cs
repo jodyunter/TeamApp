@@ -46,6 +46,8 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
             
             var storeConfig = new StoreConfiguration();
 
+            //we need to remap all of the classes explicitly.
+            //https://github.com/FluentNHibernate/fluent-nhibernate/wiki
             return Fluently.Configure()
                    .Database(MsSqlConfiguration.MsSql2012
                      .ConnectionString(connectionString)
