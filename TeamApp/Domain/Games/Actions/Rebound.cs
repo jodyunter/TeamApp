@@ -37,7 +37,7 @@ namespace TeamApp.Domain.Games.Actions
         public override void ProcessStat()
         {
             player = Game.PickPlayer(new List<GamePlayer>() { Game.OffenseLine.Centre, Game.OffenseLine.LeftWing, Game.OffenseLine.RightWing, Game.OffenseLine.LeftDefense, Game.OffenseLine.RightDefense });
-            player.Rebounds++;
+            player.Stats.Rebounds++;
             //this relies on the offense switching            
             Game.WriteToLog(player.Name + " gets the rebound!");            
         }

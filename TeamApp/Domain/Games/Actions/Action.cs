@@ -4,7 +4,7 @@ namespace TeamApp.Domain.Games.Actions
 {
     public abstract class Action
     {
-        public Game Game { get; set; }
+        public NewGame Game { get; set; }
         public bool Result { get; set; }
         public abstract void PreProcess();
         public abstract bool Process();
@@ -15,7 +15,7 @@ namespace TeamApp.Domain.Games.Actions
         public abstract Action NextAction();
         public abstract ActionType ActionType { get; }
 
-        public static Action GetAction(ActionType actionType, Game game)
+        public static Action GetAction(ActionType actionType, NewGame game)
         {
             switch (actionType)
             {

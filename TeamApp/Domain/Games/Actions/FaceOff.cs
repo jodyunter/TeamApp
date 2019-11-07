@@ -43,13 +43,13 @@ namespace TeamApp.Domain.Games.Actions
         {
             if (Result)
             {
-                attacker.FaceOffsWon++;
-                defender.FaceOffsLoses++;
+                attacker.Stats.FaceOffsWon++;
+                defender.Stats.FaceOffsLoses++;
             }
             else
             {
-                attacker.FaceOffsLoses++;
-                defender.FaceOffsWon++;
+                attacker.Stats.FaceOffsLoses++;
+                defender.Stats.FaceOffsWon++;
             }
         }
 

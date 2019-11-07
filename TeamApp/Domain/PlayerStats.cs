@@ -4,8 +4,8 @@ using System.Text;
 
 namespace TeamApp.Domain
 {
-    public class PlayerStats
-    {
+    public class PlayerStats : BaseDataObject
+    {        
         public virtual int FaceOffsWon { get; set; } = 0;
         public virtual int FaceOffsLoses { get; set; } = 0;
 
@@ -19,7 +19,7 @@ namespace TeamApp.Domain
         public virtual int BlockingFail { get; set; } = 0;
         public virtual int Goals { get; set; } = 0;
         public virtual int Assists { get; set; } = 0;
-        public virtual int Save { get; set; } = 0;
+        public virtual int Saves { get; set; } = 0;
         public virtual int GoalsAgainst { get; set; } = 0;
         public virtual int PassSuccess { get; set; } = 0;
         public virtual int PassFail { get; set; } = 0;

@@ -9,5 +9,6 @@ namespace TeamApp.Domain.Games
         public virtual Game Game { get; set; }
         public virtual Player Parent { get; set; }
         public virtual PlayerStats Stats { get; set; }        
+        public virtual Team Team { get { return CurrentTeam; } set { CurrentTeam = value; } }
     }
 }

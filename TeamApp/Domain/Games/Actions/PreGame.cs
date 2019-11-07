@@ -43,19 +43,19 @@ namespace TeamApp.Domain.Games.Actions
             var HomeLine = Game.HomeLine;
             var AwayLine = Game.AwayLine;
 
-            HomeLine.Centre.GamesPlayed++;
-            HomeLine.LeftWing.GamesPlayed++;
-            HomeLine.RightWing.GamesPlayed++;
-            HomeLine.LeftDefense.GamesPlayed++;
-            HomeLine.RightDefense.GamesPlayed++;
-            HomeLine.Goalie.GamesPlayed++;
+            HomeLine.Centre.Stats.GamesPlayed++;
+            HomeLine.LeftWing.Stats.GamesPlayed++;
+            HomeLine.RightWing.Stats.GamesPlayed++;
+            HomeLine.LeftDefense.Stats.GamesPlayed++;
+            HomeLine.RightDefense.Stats.GamesPlayed++;
+            HomeLine.Goalie.Stats.GamesPlayed++;
 
-            AwayLine.Centre.GamesPlayed++;
-            AwayLine.LeftWing.GamesPlayed++;
-            AwayLine.RightWing.GamesPlayed++;
-            AwayLine.LeftDefense.GamesPlayed++;
-            AwayLine.RightDefense.GamesPlayed++;
-            AwayLine.Goalie.GamesPlayed++;
+            AwayLine.Centre.Stats.GamesPlayed++;
+            AwayLine.LeftWing.Stats.GamesPlayed++;
+            AwayLine.RightWing.Stats.GamesPlayed++;
+            AwayLine.LeftDefense.Stats.GamesPlayed++;
+            AwayLine.RightDefense.Stats.GamesPlayed++;
+            AwayLine.Goalie.Stats.GamesPlayed++;
 
         }
 

@@ -47,11 +47,11 @@ namespace TeamApp.Domain.Games.Actions
         {
             if (Result)
             {
-                defender.CoverSuccess++;
+                defender.Stats.CoverSuccess++;
             }
             else
             {
-                defender.CoverFail++;
+                defender.Stats.CoverFail++;
             }
         }
 

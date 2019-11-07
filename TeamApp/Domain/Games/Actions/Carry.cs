@@ -46,13 +46,13 @@ namespace TeamApp.Domain.Games.Actions
         {
             if (Result)
             {
-                attacker.CarrySuccess++;
-                defender.CheckingFail++;
+                attacker.Stats.CarrySuccess++;
+                defender.Stats.CheckingFail++;
             }
             else
             {
-                attacker.CarryFail++;
-                defender.CheckingSuccess++;
+                attacker.Stats.CarryFail++;
+                defender.Stats.CheckingSuccess++;
             }
         }
 

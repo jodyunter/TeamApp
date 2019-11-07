@@ -36,7 +36,9 @@ IF OBJECT_ID (N'Playoff', N'U') IS NOT NULL drop table Playoff
 IF OBJECT_ID (N'Season', N'U') IS NOT NULL drop table Season
 IF OBJECT_ID (N'PlayoffRankingRule', N'U') IS NOT NULL drop table PlayoffRankingRule
 IF OBJECT_ID (N'PlayoffCompetitionConfig', N'U') IS NOT NULL drop table PlayoffCompetitionConfig
+IF OBJECT_ID (N'GamePlayer', N'U') IS NOT NULL drop table GamePlayer
 IF OBJECT_ID (N'ScheduleGame', N'U') IS NOT NULL drop table ScheduleGame
+IF OBJECT_ID (N'GamePlayer', N'U') IS NOT NULL drop table PlayerStats
 IF OBJECT_ID (N'Game', N'U') IS NOT NULL  drop table Game
 IF OBJECT_ID (N'Team', N'U') IS NOT NULL drop table Team
 IF OBJECT_ID (N'Competition', N'U') IS NOT NULL drop table Competition

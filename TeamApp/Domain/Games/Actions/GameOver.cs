@@ -37,22 +37,22 @@ namespace TeamApp.Domain.Games.Actions
         {
             if (Game.HomeScore > Game.AwayScore)
             {
-                Game.HomeLine.Goalie.Wins++;
-                Game.AwayLine.Goalie.Loses++;
+                Game.HomeLine.Goalie.Stats.Wins++;
+                Game.AwayLine.Goalie.Stats.Loses++;
                 Game.Home.Wins++;
                 Game.Away.Loses++;
             }
             else if (Game.HomeScore < Game.AwayScore)
             {
-                Game.HomeLine.Goalie.Loses++;
-                Game.AwayLine.Goalie.Wins++;
+                Game.HomeLine.Goalie.Stats.Loses++;
+                Game.AwayLine.Goalie.Stats.Wins++;
                 Game.Home.Loses++;
                 Game.Away.Wins++;
             }
             else
             {
-                Game.HomeLine.Goalie.Ties++;
-                Game.AwayLine.Goalie.Ties++;
+                Game.HomeLine.Goalie.Stats.Ties++;
+                Game.AwayLine.Goalie.Stats.Ties++;
                 Game.Home.Ties++;
                 Game.Away.Ties++;
             }

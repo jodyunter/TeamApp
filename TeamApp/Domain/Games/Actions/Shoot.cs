@@ -50,13 +50,13 @@ namespace TeamApp.Domain.Games.Actions
         {
             if (Result)
             {
-                attacker.ShotsOnGoal++;
-                defender.BlockingFail++;
+                attacker.Stats.ShotsOnGoal++;
+                defender.Stats.BlockingFail++;
             }
             else
             {
-                attacker.ShotsBlocked++;
-                defender.BlockingSuccess++;
+                attacker.Stats.ShotsBlocked++;
+                defender.Stats.BlockingSuccess++;
             }
         }
 

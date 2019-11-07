@@ -50,10 +50,10 @@ namespace TeamApp.Domain.Games.Actions
         {
             if (Result)
             {
-                attacker.Goals++;
-                if (Game.Assist1 != null) Game.Assist1.Assists++;
-                if (Game.Assist2 != null) Game.Assist2.Assists++;
-                defender.GoalsAgainst++;
+                attacker.Stats.Goals++;
+                if (Game.Assist1 != null) Game.Assist1.Stats.Assists++;
+                if (Game.Assist2 != null) Game.Assist2.Stats.Assists++;
+                defender.Stats.GoalsAgainst++;
                 //change to methods like Game.HomeGoal
                 if (attacker.Team.Name.Equals(Game.Home.Name))
                 {
@@ -66,7 +66,7 @@ namespace TeamApp.Domain.Games.Actions
             }
             else
             {
-                defender.Save++;
+                defender.Stats.Saves++;
             }
         }
 

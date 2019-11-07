@@ -58,16 +58,16 @@ namespace TeamApp.Domain.Games.Actions
         {
             if (Result)
             {
-                attacker.PassSuccess++;
-                target.PassReceived++;
-                defender.InterceptionFail++;
+                attacker.Stats.PassSuccess++;
+                target.Stats.PassReceived++;
+                defender.Stats.InterceptionFail++;
                 Game.AddAssist(target);
             }
             else
             {
-                attacker.PassFail++;
-                target.PassMissed++;
-                defender.InterceptionSuccess++;
+                attacker.Stats.PassFail++;
+                target.Stats.PassMissed++;
+                defender.Stats.InterceptionSuccess++;
             }
         }
 

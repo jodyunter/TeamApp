@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
-using System.Text;
+using TeamApp.Domain.Games.Actions;
 
 namespace TeamApp.Domain.Games
 {
@@ -9,15 +10,15 @@ namespace TeamApp.Domain.Games
         public int GameNumber { get; set; } = 1;
         public int Day { get; set; } = 1;
 
-        public GameTeam Home { get; set; }
-        public GameTeam Away { get; set; }
+        public Team Home { get; set; }
+        public Team Away { get; set; }
         public int HomeScore { get; set; } = 0;
         public int AwayScore { get; set; } = 0;
         public bool Complete { get; set; } = false;
 
 
-        public GameTeam Offense { get; set; }
-        public GameTeam Defense { get; set; }
+        public Team Offense { get; set; }
+        public Team Defense { get; set; }
 
         public Line OffenseLine { get; set; } = new Line();
         public Line DefenseLine { get; set; } = new Line();
@@ -197,7 +198,7 @@ namespace TeamApp.Domain.Games
             return Success(Offense, Defense, offenseSkill, defenseSkill, Random);
 
         }
-        public bool Success(GameTeam offense, GameTeam defense, int offenseSkill, int defenseSkill, Random random)
+        public bool Success(Team offense, Team defense, int offenseSkill, int defenseSkill, Random random)
         {
             int teamDifferential = offense.Skill - defense.Skill;
             int playerDifferential = offenseSkill - defenseSkill;

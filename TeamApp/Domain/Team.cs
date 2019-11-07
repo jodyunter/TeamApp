@@ -55,5 +55,13 @@ namespace TeamApp.Domain
             return HashCode.Combine(Name, NickName, ShortName, Skill, Owner, FirstYear, LastYear, Active);
         }
 
+        //this should get moved somehow
+        public virtual Games.Line SetDefaultLine() { return null; }
+        public virtual int Wins { get; set; }
+        public virtual int Loses { get; set; }
+        public virtual int Ties { get; set; }
+        public virtual int GoalsFor { get; set; }
+        public virtual int GoalsAgainst { get; set; }
+
     }
 }
