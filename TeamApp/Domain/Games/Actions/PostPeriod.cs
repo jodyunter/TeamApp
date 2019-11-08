@@ -24,6 +24,7 @@ namespace TeamApp.Domain.Games.Actions
         {
             //do nothing
             Game.CurrentPeriod++;
+            Game.CurrentTime = 0;
         }
 
         public override void PreProcess()

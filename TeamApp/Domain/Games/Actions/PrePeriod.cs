@@ -20,8 +20,7 @@ namespace TeamApp.Domain.Games.Actions
 
         public override void PreProcess()
         {
-            Game.WriteToLog("Period " + Game.CurrentPeriod + " is starting.");
-            Game.CurrentTime = 0;
+            Game.WriteToLog("Period " + Game.CurrentPeriod + " is starting.");            
         }
 
         public override bool Process()
