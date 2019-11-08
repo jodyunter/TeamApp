@@ -48,7 +48,9 @@ namespace TeamApp.Test.Helpers
                 new Team("Washington", "Capitals", "WSH", 1, null, 1, null, true, null),
                 new Team("Atlanta", "Thrashers", "ATL", 1, null, 1, null, true, null),
                 new Team("Florida", "Panthers", "FLA", 1, null, 1, null, true, null),
-                new Team("Anaheim", "Ducks", "AND", 1, null, 1, null, true, null)
+                new Team("Anaheim", "Ducks", "AND", 1, null, 1, null, true, null),
+                new Team("Halifax", "Wanderers", "HFX", 1, null, 1, null, true, null),
+                new Team("Hamilton", "Forge", "HAF", 1, null, 1, null, true, null),
 
             };
         }
@@ -77,6 +79,48 @@ namespace TeamApp.Test.Helpers
                 new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Montreal").First(), drNhl, 1, null),
                 new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Edmonton").First(), drNhl, 1, null),
                 new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Vancouver").First(), drNhl, 1, null),         
+
+            };
+
+            drNhl.Teams = seasonConfig.GetTeamsInDivision("NHL").ToList();
+
+            seasonConfig.TeamRules = seasonTeamRules;
+
+            league.CompetitionConfigs.Add(seasonConfig);
+
+            return seasonConfig;
+        }
+
+        public static SeasonCompetitionConfig CreateMediumSeasonConfig(League league, List<Team> teamList, List<CompetitionConfig> parents, int? startingDay, int order)
+        {
+            var seasonConfig = new SeasonCompetitionConfig("Regular Season", league, startingDay, order, null, 1, null, null, null, null, null, null);
+
+            seasonConfig.GameRules = new GameRules("Season Rules", true, 3, 1, 7, 6);
+
+            seasonConfig.Parents = parents;
+
+            var drNhl = new SeasonDivisionRule(seasonConfig, "NHL", null, 1, 1, null, 1, null);
+
+            seasonConfig.DivisionRules = new List<SeasonDivisionRule>() { drNhl };
+
+            seasonConfig.ScheduleRules = new List<SeasonScheduleRule>() {
+                new SeasonScheduleRule(seasonConfig, null, drNhl, null, null, 3, false, 1, null),
+            };
+
+            var seasonTeamRules = new List<SeasonTeamRule>()
+            {
+
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Ottawa").First(), drNhl, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Toronto").First(), drNhl, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Calgary").First(), drNhl, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Montreal").First(), drNhl, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Edmonton").First(), drNhl, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Vancouver").First(), drNhl, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Winnipeg").First(), drNhl, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Quebec").First(), drNhl, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Hamilton").First(), drNhl, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Halifax").First(), drNhl, 1, null),
+                new SeasonTeamRule(seasonConfig, teamList.Where(t => t.Name == "Victoria").First(), drNhl, 1, null),
 
             };
 

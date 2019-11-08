@@ -93,7 +93,8 @@ namespace TeamApp.Console.App
                 //var seasonConfig = DataCreator.CreateLargeSeasonConfiguration(league, teams, null, 1, 1);
                 //var playoffConfig = DataCreator.CreateLargePlayoffConfiguration(league, new List<CompetitionConfig>() { seasonConfig }, 2, null, 1, null);
 
-                var seasonConfig = DataCreator.CreateSmallSeasonConfiguration(league, teams, null, 1, 1);
+                //var seasonConfig = DataCreator.CreateSmallSeasonConfiguration(league, teams, null, 1, 1);
+                var seasonConfig = DataCreator.CreateMediumSeasonConfig(league, teams, null, 1, 1);
                 var playoffConfig = DataCreator.CreateSmallPlayoffConfiguration(league, new List<CompetitionConfig>() { seasonConfig }, 2, null, 1, null);
 
                 //var league = Data2.CreateBasicLeague("NHL");
