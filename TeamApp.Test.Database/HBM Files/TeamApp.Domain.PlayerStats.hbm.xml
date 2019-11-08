@@ -1,0 +1,101 @@
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" default-cascade="all">
+  <class xmlns="urn:nhibernate-mapping-2.2" name="TeamApp.Domain.PlayerStats, TeamApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" table="`PlayerStats`">
+    <id name="Id" type="System.Int64, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="Id" />
+      <generator class="identity" />
+    </id>
+    <property name="FaceOffsWon" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="FaceOffsWon" />
+    </property>
+    <property name="FaceOffsLoses" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="FaceOffsLoses" />
+    </property>
+    <property name="CarrySuccess" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="CarrySuccess" />
+    </property>
+    <property name="CarryFail" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="CarryFail" />
+    </property>
+    <property name="CheckingSuccess" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="CheckingSuccess" />
+    </property>
+    <property name="CheckingFail" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="CheckingFail" />
+    </property>
+    <property name="ShotsOnGoal" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="ShotsOnGoal" />
+    </property>
+    <property name="ShotsBlocked" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="ShotsBlocked" />
+    </property>
+    <property name="BlockingSuccess" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="BlockingSuccess" />
+    </property>
+    <property name="BlockingFail" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="BlockingFail" />
+    </property>
+    <property name="Goals" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="Goals" />
+    </property>
+    <property name="Assists" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="Assists" />
+    </property>
+    <property name="Saves" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="Saves" />
+    </property>
+    <property name="GoalsAgainst" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="GoalsAgainst" />
+    </property>
+    <property name="PassSuccess" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="PassSuccess" />
+    </property>
+    <property name="PassFail" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="PassFail" />
+    </property>
+    <property name="PassReceived" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="PassReceived" />
+    </property>
+    <property name="PassMissed" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="PassMissed" />
+    </property>
+    <property name="InterceptionSuccess" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="InterceptionSuccess" />
+    </property>
+    <property name="InterceptionFail" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="InterceptionFail" />
+    </property>
+    <property name="CoverSuccess" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="CoverSuccess" />
+    </property>
+    <property name="CoverFail" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="CoverFail" />
+    </property>
+    <property name="Rebounds" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="Rebounds" />
+    </property>
+    <property name="GamesPlayed" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="GamesPlayed" />
+    </property>
+    <property name="Wins" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="Wins" />
+    </property>
+    <property name="Loses" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="Loses" />
+    </property>
+    <property name="Ties" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="Ties" />
+    </property>
+    <property name="CreatedBy" type="System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="CreatedBy" />
+    </property>
+    <property name="CreatedOn" type="System.DateTime, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="CreatedOn" />
+    </property>
+    <property name="LastModifiedBy" type="System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="LastModifiedBy" />
+    </property>
+    <property name="LastModifiedOn" type="System.DateTime, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="LastModifiedOn" />
+    </property>
+  </class>
+</hibernate-mapping>

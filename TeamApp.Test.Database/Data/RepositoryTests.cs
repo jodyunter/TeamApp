@@ -353,7 +353,42 @@ namespace TeamApp.Test.Data
         }
 
         #endregion
-        
+        #region Single Year Team Repo tests
+        [Fact]
+        public void ShouldExerciseSingleYearTeamRepositoryNHibernate()
+        {
+            var repo = new SingleYearTeamRepository(new RepositoryNHibernate<SingleYearTeam>());
+            var compRepo = new CompetitionRepository(new RepositoryNHibernate<Competition>());
+            
+            var comp1 = new Season(null, "Season 1", 1, null, null, null, null, false, false, 1, null);
+            var comp2 = new Playoff(null, "Playoff 1", 1, 1, null, null, null, null, false, false, 1, null);
+
+            compRepo.Update(comp1);
+            compRepo.Update(comp2);
+
+            for (int i = 0; i < 10; i++)
+            {
+                var syt = new SingleYearTeam(comp1, null, "Team " + i, null, null, 5, null, 1);
+                repo.Update(syt);
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                var syt = new SingleYearTeam(comp2, null, "Team " + (i*100), null, null, 5, null, 1);
+                repo.Update(syt);
+            }
+
+            //can we get them all?
+            var teams = repo.GetAll().ToList();
+            var test = teams.Where(t => t.Competition.Id == comp1.Id).ToList();
+            StrictEqual(15, teams.Count);
+            teams = repo.GetByCompetition(comp1).ToList();
+            StrictEqual(10, teams.Count());
+            teams = repo.GetByCompetition(comp2).ToList();
+            StrictEqual(5, teams.Count());
+            
+        }
+        #endregion
         [Fact]
         public void ShouldExportSchema()
         {

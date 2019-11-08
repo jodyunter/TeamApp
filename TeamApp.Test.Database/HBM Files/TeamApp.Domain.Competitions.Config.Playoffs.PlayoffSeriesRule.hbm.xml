@@ -1,0 +1,71 @@
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" default-cascade="all">
+  <class xmlns="urn:nhibernate-mapping-2.2" name="TeamApp.Domain.Competitions.Config.Playoffs.PlayoffSeriesRule, TeamApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" table="`PlayoffSeriesRule`">
+    <id name="Id" type="System.Int64, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="Id" />
+      <generator class="identity" />
+    </id>
+    <property name="Name" type="System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="Name" />
+    </property>
+    <property name="Round" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="Round" />
+    </property>
+    <property name="SeriesType" type="FluentNHibernate.Mapping.GenericEnumMapper`1[[TeamApp.Domain.Competitions.Config.Playoffs.PlayoffSeriesRule+Type, TeamApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], FluentNHibernate, Version=2.1.2.0, Culture=neutral, PublicKeyToken=null">
+      <column name="SeriesType" />
+    </property>
+    <property name="SeriesNumber" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="SeriesNumber" />
+    </property>
+    <property name="HomeFromName" type="System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="HomeFromName" />
+    </property>
+    <property name="HomeFromValue" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="HomeFromValue" />
+    </property>
+    <property name="AwayFromName" type="System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="AwayFromName" />
+    </property>
+    <property name="AwayFromValue" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="AwayFromValue" />
+    </property>
+    <property name="FirstYear" type="System.Nullable`1[[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="FirstYear" />
+    </property>
+    <property name="LastYear" type="System.Nullable`1[[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="LastYear" />
+    </property>
+    <property name="HomeGameProgression" type="System.Int32[], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="HomeGameProgression" />
+    </property>
+    <property name="WinnerGroupName" type="System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="WinnerGroupName" />
+    </property>
+    <property name="WinnerRankFrom" type="System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="WinnerRankFrom" />
+    </property>
+    <property name="LoserGroupName" type="System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="LoserGroupName" />
+    </property>
+    <property name="LoserRankFrom" type="System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="LoserRankFrom" />
+    </property>
+    <property name="CreatedBy" type="System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="CreatedBy" />
+    </property>
+    <property name="CreatedOn" type="System.DateTime, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="CreatedOn" />
+    </property>
+    <property name="LastModifiedBy" type="System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="LastModifiedBy" />
+    </property>
+    <property name="LastModifiedOn" type="System.DateTime, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="LastModifiedOn" />
+    </property>
+    <many-to-one class="TeamApp.Domain.Competitions.Config.Playoffs.PlayoffCompetitionConfig, TeamApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="PlayoffConfig">
+      <column name="PlayoffConfig_id" />
+    </many-to-one>
+    <many-to-one class="TeamApp.Domain.Games.GameRules, TeamApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="GameRules">
+      <column name="GameRules_id" />
+    </many-to-one>
+  </class>
+</hibernate-mapping>

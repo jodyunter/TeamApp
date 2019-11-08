@@ -18,6 +18,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
             Map(x => x.ShortName);
             Map(x => x.Skill);
             Map(x => x.Owner);
+            
 
             DiscriminateSubClassesOnColumn<string>("Type").AlwaysSelectWithValue();
         }

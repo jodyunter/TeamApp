@@ -1,0 +1,32 @@
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" default-cascade="all">
+  <class xmlns="urn:nhibernate-mapping-2.2" name="TeamApp.Domain.Competitions.TeamRanking, TeamApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" table="`TeamRanking`">
+    <id name="Id" type="System.Int64, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="Id" />
+      <generator class="identity" />
+    </id>
+    <property name="Rank" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="Rank" />
+    </property>
+    <property name="GroupName" type="System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="GroupName" />
+    </property>
+    <property name="GroupLevel" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="GroupLevel" />
+    </property>
+    <property name="CreatedBy" type="System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="CreatedBy" />
+    </property>
+    <property name="CreatedOn" type="System.DateTime, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="CreatedOn" />
+    </property>
+    <property name="LastModifiedBy" type="System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="LastModifiedBy" />
+    </property>
+    <property name="LastModifiedOn" type="System.DateTime, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="LastModifiedOn" />
+    </property>
+    <many-to-one class="TeamApp.Domain.SingleYearTeam, TeamApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="SingleYearTeam">
+      <column name="SingleYearTeam_id" />
+    </many-to-one>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,35 @@
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" default-cascade="all">
+  <class xmlns="urn:nhibernate-mapping-2.2" name="TeamApp.Domain.League, TeamApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" table="`League`">
+    <id name="Id" type="System.Int64, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="Id" />
+      <generator class="identity" />
+    </id>
+    <bag name="CompetitionConfigs">
+      <key>
+        <column name="League_id" />
+      </key>
+      <one-to-many class="TeamApp.Domain.Competitions.Config.CompetitionConfig, TeamApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    </bag>
+    <property name="Name" type="System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="Name" />
+    </property>
+    <property name="FirstYear" type="System.Nullable`1[[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="FirstYear" />
+    </property>
+    <property name="LastYear" type="System.Nullable`1[[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="LastYear" />
+    </property>
+    <property name="CreatedBy" type="System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="CreatedBy" />
+    </property>
+    <property name="CreatedOn" type="System.DateTime, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="CreatedOn" />
+    </property>
+    <property name="LastModifiedBy" type="System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="LastModifiedBy" />
+    </property>
+    <property name="LastModifiedOn" type="System.DateTime, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="LastModifiedOn" />
+    </property>
+  </class>
+</hibernate-mapping>

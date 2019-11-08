@@ -27,6 +27,8 @@ namespace TeamApp.Console.App
         private ICompetitionConfigRepository competitionConfigRepository;
         private IGameDataRepository gameDataRepository;
         private ISeasonRepository seasonRepository;
+        private ISingleYearTeamRepository singleYearTeamRepository;
+
         public ILeagueService LeagueService { get; set; }
         public IStandingsService StandingsService { get; set; }
         public IGameDataService GameDataService { get; set; }
@@ -47,9 +49,10 @@ namespace TeamApp.Console.App
             gameDataRepository = new GameDataRepository(new RepositoryNHibernate<GameData>());
             competitionConfigRepository = new CompetitionConfigRepository(new RepositoryNHibernate<CompetitionConfig>());
             seasonRepository = new SeasonRepository(new RepositoryNHibernate<Season>());
+            singleYearTeamRepository = new SingleYearTeamRepository(new RepositoryNHibernate<SingleYearTeam>());
 
             LeagueService = new LeagueService(leagueRepository);
-            StandingsService = new StandingsService(standingsRepository, teamRankingRepository);
+            StandingsService = new StandingsService(standingsRepository, teamRankingRepository, singleYearTeamRepository);
             TeamService = new TeamService(teamRepository);
             GameDataService = new GameDataService(gameDataRepository, leagueRepository, scheduleGameRepository, competitionRepository, competitionConfigRepository, TeamService);
             ScheduleGameService = new ScheduleGameService(scheduleGameRepository);

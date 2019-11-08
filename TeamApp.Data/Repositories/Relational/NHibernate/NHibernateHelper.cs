@@ -35,6 +35,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("settings.json")
                 .AddEnvironmentVariables().Build();
+            
 
             var settingsToUse = settings["DatabaseToUse"];
             var context = settings["SessionContext"];
@@ -47,6 +48,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
 
             var storeConfig = new StoreConfiguration();
 
+            var hbmExport = @"C:\Users\jody_unterschutz\source\repos\TeamApp\TeamApp.Test.Database\HBM Files\";
             //we need to remap all of the classes explicitly.
             //https://github.com/FluentNHibernate/fluent-nhibernate/wiki
             return Fluently.Configure()
@@ -59,12 +61,13 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
                    .CurrentSessionContext("thread_static")
                    .Mappings(m =>
                    {
-                       m.FluentMappings.Add<TeamMap>();
-                       m.FluentMappings.Add<PlayerMap>();
-                       m.FluentMappings.Add<LeagueMap>();
-                       m.FluentMappings.Add<SingleYearTeamMap>();
-                       m.FluentMappings.Add<SeasonTeamMap>();
-                       m.FluentMappings.Add<PlayoffTeamMap>();
+                       m.FluentMappings.Add<TeamMap>().ExportTo(hbmExport);
+                       m.FluentMappings.Add<PlayerMap>().ExportTo(hbmExport);
+                       m.FluentMappings.Add<LeagueMap>().ExportTo(hbmExport);
+                       m.FluentMappings.Add<SingleYearTeamMap>().ExportTo(hbmExport);
+                       m.FluentMappings.Add<SeasonTeamMap>().ExportTo(hbmExport);
+                       m.FluentMappings.Add<PlayoffTeamMap>().ExportTo(hbmExport);
+                       m.FluentMappings.Add<GameDataMap>().ExportTo(hbmExport);
 
 
                        m.AutoMappings.Add(
@@ -73,14 +76,14 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
                            .IncludeBase<CompetitionConfig>()
                            .IncludeBase<PlayoffSeries>()
                            .IncludeBase<Competition>()
-                           .IncludeBase<CompetitionConfigFinalRankingRule>()                           
+                           .IncludeBase<CompetitionConfigFinalRankingRule>()
                            .Conventions.Add(DefaultCascade.All())
-                           );
+                           ).ExportTo(hbmExport);
                    })
                        .ExposeConfiguration(c => c.EventListeners.PreUpdateEventListeners
                                   = new IPreUpdateEventListener[] { new AuditEventListener() })
                        .ExposeConfiguration(c => c.EventListeners.PreInsertEventListeners
-                                  = new IPreInsertEventListener[] { new AuditEventListener() });
+                                  = new IPreInsertEventListener[] { new AuditEventListener() });                       
                     
         }
 

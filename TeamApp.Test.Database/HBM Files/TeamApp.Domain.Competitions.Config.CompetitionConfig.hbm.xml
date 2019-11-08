@@ -1,0 +1,96 @@
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" default-cascade="all">
+  <class xmlns="urn:nhibernate-mapping-2.2" name="TeamApp.Domain.Competitions.Config.CompetitionConfig, TeamApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" table="`CompetitionConfig`">
+    <id name="Id" type="System.Int64, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="Id" />
+      <generator class="identity" />
+    </id>
+    <bag name="Parents">
+      <key>
+        <column name="CompetitionConfig_id" />
+      </key>
+      <one-to-many class="TeamApp.Domain.Competitions.Config.CompetitionConfig, TeamApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    </bag>
+    <bag name="FinalRankingRules">
+      <key>
+        <column name="CompetitionConfig_id" />
+      </key>
+      <one-to-many class="TeamApp.Domain.Competitions.Config.CompetitionConfigFinalRankingRule, TeamApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    </bag>
+    <property name="Name" type="System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="Name" />
+    </property>
+    <property name="Ordering" type="System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="Ordering" />
+    </property>
+    <property name="FirstYear" type="System.Nullable`1[[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="FirstYear" />
+    </property>
+    <property name="LastYear" type="System.Nullable`1[[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="LastYear" />
+    </property>
+    <property name="CompetitionStartingDay" type="System.Nullable`1[[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="CompetitionStartingDay" />
+    </property>
+    <property name="FinalRankingGroupName" type="System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="FinalRankingGroupName" />
+    </property>
+    <property name="CreatedBy" type="System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="CreatedBy" />
+    </property>
+    <property name="CreatedOn" type="System.DateTime, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="CreatedOn" />
+    </property>
+    <property name="LastModifiedBy" type="System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="LastModifiedBy" />
+    </property>
+    <property name="LastModifiedOn" type="System.DateTime, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
+      <column name="LastModifiedOn" />
+    </property>
+    <many-to-one class="TeamApp.Domain.League, TeamApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="League">
+      <column name="League_id" />
+    </many-to-one>
+    <many-to-one class="TeamApp.Domain.Games.GameRules, TeamApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="GameRules">
+      <column name="GameRules_id" />
+    </many-to-one>
+    <joined-subclass name="TeamApp.Domain.Competitions.Config.Playoffs.PlayoffCompetitionConfig, TeamApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <key>
+        <column name="CompetitionConfig_id" />
+      </key>
+      <bag name="SeriesRules">
+        <key>
+          <column name="PlayoffConfig_id" />
+        </key>
+        <one-to-many class="TeamApp.Domain.Competitions.Config.Playoffs.PlayoffSeriesRule, TeamApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+      </bag>
+      <bag name="RankingRules">
+        <key>
+          <column name="PlayoffConfig_id" />
+        </key>
+        <one-to-many class="TeamApp.Domain.Competitions.Config.Playoffs.PlayoffRankingRule, TeamApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+      </bag>
+    </joined-subclass>
+    <joined-subclass name="TeamApp.Domain.Competitions.Config.Seasons.SeasonCompetitionConfig, TeamApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <key>
+        <column name="CompetitionConfig_id" />
+      </key>
+      <bag name="TeamRules">
+        <key>
+          <column name="Competition_id" />
+        </key>
+        <one-to-many class="TeamApp.Domain.Competitions.Config.Seasons.SeasonTeamRule, TeamApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+      </bag>
+      <bag name="DivisionRules">
+        <key>
+          <column name="Competition_id" />
+        </key>
+        <one-to-many class="TeamApp.Domain.Competitions.Config.Seasons.SeasonDivisionRule, TeamApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+      </bag>
+      <bag name="ScheduleRules">
+        <key>
+          <column name="Competition_id" />
+        </key>
+        <one-to-many class="TeamApp.Domain.Competitions.Config.Seasons.SeasonScheduleRule, TeamApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
+      </bag>
+    </joined-subclass>
+  </class>
+</hibernate-mapping>

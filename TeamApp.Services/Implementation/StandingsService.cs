@@ -11,12 +11,14 @@ namespace TeamApp.Services.Implementation
     {
         private IStandingsRepository standingsRepository;
         private ITeamRankingRepository teamRankingRepository;
+        private ISingleYearTeamRepository singleYearTeamRepository;
         private SeasonTeamToStandingsTeamViewModelMapper mapper;
 
-        public StandingsService(IStandingsRepository StandingsRepository, ITeamRankingRepository TeamRankingRepository)
+        public StandingsService(IStandingsRepository StandingsRepository, ITeamRankingRepository TeamRankingRepository, ISingleYearTeamRepository SingleYearTeamRepository)
         {
             standingsRepository = StandingsRepository;
             teamRankingRepository = TeamRankingRepository;
+            singleYearTeamRepository = SingleYearTeamRepository;
             mapper = new SeasonTeamToStandingsTeamViewModelMapper();
         }
 
