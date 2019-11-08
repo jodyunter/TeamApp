@@ -24,8 +24,24 @@ namespace TeamApp.Domain.Games.Actions
             Game.Offense = Home;
             Game.Defense = Away;
 
-            Game.HomeLine = Home.SetDefaultLine();
-            Game.AwayLine = Away.SetDefaultLine();
+            Game.HomeLine = new Line()
+            {
+                Centre = new GamePlayer(Game, Home.Players[0], Home, Home.Players[0].FirstYear),
+                LeftWing = new GamePlayer(Game, Home.Players[1], Home, Home.Players[1].FirstYear),
+                RightWing = new GamePlayer(Game, Home.Players[2], Home, Home.Players[2].FirstYear),
+                LeftDefense = new GamePlayer(Game, Home.Players[3], Home, Home.Players[3].FirstYear),
+                RightDefense = new GamePlayer(Game, Home.Players[4], Home, Home.Players[4].FirstYear),
+                Goalie = new GamePlayer(Game, Home.Players[5], Home, Home.Players[5].FirstYear),
+            };
+            Game.AwayLine = new Line()
+            {
+                Centre = new GamePlayer(Game, Away.Players[0], Away, Away.Players[0].FirstYear),
+                LeftWing = new GamePlayer(Game, Away.Players[1], Away, Away.Players[1].FirstYear),
+                RightWing = new GamePlayer(Game, Away.Players[2], Away, Away.Players[2].FirstYear),
+                LeftDefense = new GamePlayer(Game, Away.Players[3], Away, Away.Players[3].FirstYear),
+                RightDefense = new GamePlayer(Game, Away.Players[4], Away, Away.Players[4].FirstYear),
+                Goalie = new GamePlayer(Game, Away.Players[5], Away, Away.Players[5].FirstYear),
+            };
         }
 
         public override bool Process()

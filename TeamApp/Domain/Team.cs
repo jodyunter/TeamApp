@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TeamApp.Domain.Games;
 
 namespace TeamApp.Domain
 {
@@ -56,7 +57,6 @@ namespace TeamApp.Domain
         }
 
         //this should get moved somehow
-        public virtual Games.Line SetDefaultLine() { return null; }
         public virtual int Wins { get; set; }
         public virtual int Loses { get; set; }
         public virtual int Ties { get; set; }

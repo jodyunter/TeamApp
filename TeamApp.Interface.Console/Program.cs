@@ -6,134 +6,41 @@ using System.Linq;
 using TeamApp.Console.Views.Season;
 using TeamApp.Domain.Competitions;
 using System.Collections.Generic;
+using TeamApp.Domain.Games;
+using TeamApp.Domain;
 
 namespace TeamApp.Console
 {
     class Program
     {
 
+        
         static void Main(string[] args)
-        {            
-                        
-            var user = new User("Jody_Program_User");
-            Thread.CurrentPrincipal = user;
+        {
 
-            var teamApp = new TeamApplication();
-            teamApp.SetupConfig(true, true, true);
-            var stop = false;
+            var teamList = new List<Team>();
 
-            //track this so we can repeat a year if needed
-            //var seed = 156;// DateTime.Now.Millisecond;
-            //var random = new Random(seed);
-            //WriteLine("Seed: " + seed);
-            var random = new Random();
-            
-
-            while (!stop)
+            for (int i = 0; i < 10; i++)
             {
-                teamApp.ClearScreen();                
-                var leagueView = teamApp.LeagueService.GetByName("NHL");
+                var team = new Team("Team " + i, "The " + i + "'s", "T" + i, 5, "Me", 1, null, true, new List<Player>());
 
-                WriteLine("League: " + leagueView.Name + " loaded.");
-
-                var currentData = teamApp.GameDataService.GetCurrentData();
-                teamApp.GameDataService.SetupComeptitionsForDay(currentData.CurrentDay, currentData.CurrentYear);
-                teamApp.GameDataService.ProcessDay();
-                teamApp.GameDataService.PlayDay(random);
-                teamApp.GameDataService.ProcessDay();
-
-                WriteLine("Year: " + currentData.CurrentYear);
-                WriteLine("Day: " + currentData.CurrentDay);
-
-                teamApp.ScheduleGameService.GetGamesForDay(currentData.CurrentDay, currentData.CurrentYear).ToList().ForEach(game =>
+                for (int j = 0; j < 6; j++)
                 {
-                    WriteLine(game.ToString());
-                });
-
-                if (!teamApp.GameDataService.IncrementDay())
-                {
-                    WriteLine("Could not increment day.");
+                    var p = new Player("Player " + j + "_" + team.Name, 20, 1, null, team);
+                    team.Players.Add(p);
                 }
-                else
-                {
-                    WriteLine("Day: " + currentData.CurrentDay);
-                    teamApp.ScheduleGameService.GetGamesForDay(currentData.CurrentDay, currentData.CurrentYear).ToList().ForEach(game =>
-                    {
-                        WriteLine(game.ToString());
-                    });
-                }
-                
-                
-                var displayComps = teamApp.CompetitionService.GetCompetitionsByYear(currentData.CurrentYear).ToList();
-                var activeComps = teamApp.CompetitionService.GetActiveCompetitions(currentData.CurrentYear).ToList();
 
-                if (activeComps.Count > 0)
-                {
-                    displayComps.ToList().ForEach(m =>
-                    {
-                        if (m.Type == "Season")
-                        {
-                            var standings = teamApp.StandingsService.GetStandings(m.Id);
-                            var view = new StandingsView(standings);
-
-                            WriteLine(view.GetView(StandingsView.LEAGUE));
-                        }
-                        else if (m.Type == "Playoff")
-                        {
-                            var playoffs = teamApp.PlayoffService.GetPlayoffSummary(m.Id);
-
-                            var format = "{0,2} {1,5}{2,12}: {3,2}{4,3}{5,2} :{6,-12}";
-                            playoffs.Series.ToList().ForEach(series =>
-                            {
-                                var output = string.Format(format, series.Round, series.Name, series.HomeTeamName, series.HomeWins, "-", series.AwayWins, series.AwayTeamName);
-                                WriteLine(output);
-                            });
-                        }
-                        else WriteLine("No type defined");
-
-                    });
-                }
-                else
-                {
-                    teamApp.CompetitionService.GetCompetitionsByYear(currentData.CurrentYear).ToList().ForEach(m =>
-                    {
-                        if (
-                        m.Type == "Season")
-                        {
-                            var standings = teamApp.StandingsService.GetStandings(m.Id);
-                            var view = new StandingsView(standings);
-
-                            WriteLine(view.GetView(StandingsView.LEAGUE));
-                        }
-                        else if (m.Type == "Playoff")
-                        {
-                            var playoffs = teamApp.PlayoffService.GetPlayoffSummary(m.Id);
-
-                            var format = "{0,2} {1,5}{2,12}: {3,2}{4,3}{5,2} :{6,-12}";
-                            playoffs.Series.ToList().ForEach(series =>
-                            {
-                                var output = string.Format(format, series.Round, series.Name, series.HomeTeamName, series.HomeWins, "-", series.AwayWins, series.AwayTeamName);
-                                WriteLine(output);
-                            });
-                        }
-                        else WriteLine("No type defined");
-                    });
-
-                    teamApp.GameDataService.IncrementYear();
-                    teamApp.GameDataService.RandomlyChangeSkillLevels(random);
-                    
-                }
-                WriteLine("Press Enter to continue or type 'quit'");
-                var input = ReadLine();
-                if (input.Equals("quit"))
-                {
-                    stop = true;
-                }
+                teamList.Add(team);
             }
-            
+
+            var g = new NewGame() { Home = teamList[1], Away = teamList[2] };
+
+            g.Play(new Random());
+
             WriteLine("Press Enter to Close the app");
             ReadLine();
 
         }
+        
     }
 }
