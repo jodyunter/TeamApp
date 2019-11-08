@@ -13,7 +13,7 @@ namespace TeamApp.Domain.Competitions
         public virtual int Year { get; set; }
         public virtual Schedule Schedule { get; set; }
         public virtual IList<TeamRanking> Rankings { get; set; }
-        public virtual IList<SingleYearTeam> Teams { get; set; }        
+        public virtual IList<CompetitionTeam> Teams { get; set; }        
         public virtual bool Started { get; set; }
         public virtual bool Finished { get; set; }
         public virtual int? StartDay { get; set; }
@@ -33,7 +33,7 @@ namespace TeamApp.Domain.Competitions
         }
 
         public Competition() : base() { }
-        protected Competition(CompetitionConfig competitionConfig, string name, int year, Schedule schedule, IList<TeamRanking> rankings, List<SingleYearTeam> teams, bool started, bool finished, int? startDay, int? endDay)
+        protected Competition(CompetitionConfig competitionConfig, string name, int year, Schedule schedule, IList<TeamRanking> rankings, List<CompetitionTeam> teams, bool started, bool finished, int? startDay, int? endDay)
         {
             CompetitionConfig = competitionConfig;
             Name = name;
@@ -42,7 +42,7 @@ namespace TeamApp.Domain.Competitions
             Rankings = rankings;
             if (Rankings == null) Rankings = new List<TeamRanking>();
             Teams = teams;
-            if (Teams == null) Teams = new List<SingleYearTeam>();
+            if (Teams == null) Teams = new List<CompetitionTeam>();
             StartDay = startDay;
             EndDay = endDay;
             Started = started;

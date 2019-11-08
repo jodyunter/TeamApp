@@ -11,14 +11,14 @@ namespace TeamApp.Services.Implementation
     {
         private IStandingsRepository standingsRepository;
         private ITeamRankingRepository teamRankingRepository;
-        private ISingleYearTeamRepository singleYearTeamRepository;
+        private ICompetitionTeamRepository competitionTeamRepository;
         private SeasonTeamToStandingsTeamViewModelMapper mapper;
 
-        public StandingsService(IStandingsRepository StandingsRepository, ITeamRankingRepository TeamRankingRepository, ISingleYearTeamRepository SingleYearTeamRepository)
+        public StandingsService(IStandingsRepository StandingsRepository, ITeamRankingRepository TeamRankingRepository, ICompetitionTeamRepository SingleYearTeamRepository)
         {
             standingsRepository = StandingsRepository;
             teamRankingRepository = TeamRankingRepository;
-            singleYearTeamRepository = SingleYearTeamRepository;
+            competitionTeamRepository = SingleYearTeamRepository;
             mapper = new SeasonTeamToStandingsTeamViewModelMapper();
         }
 
@@ -37,7 +37,7 @@ namespace TeamApp.Services.Implementation
 
             models.ForEach(model =>
             {
-                ranks.Where(r => r.SingleYearTeam.Id == model.SeasonTeamId).ToList().ForEach(rank =>
+                ranks.Where(r => r.CompetitionTeam.Id == model.SeasonTeamId).ToList().ForEach(rank =>
                 {
                     AddRankToModel(rank.GroupName, rank.Rank, rank.GroupLevel, model);
                 });

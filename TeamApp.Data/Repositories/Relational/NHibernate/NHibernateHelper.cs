@@ -64,12 +64,16 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
                        m.FluentMappings.Add<TeamMap>().ExportTo(hbmExport);
                        m.FluentMappings.Add<PlayerMap>().ExportTo(hbmExport);
                        m.FluentMappings.Add<LeagueMap>().ExportTo(hbmExport);
-                       m.FluentMappings.Add<SingleYearTeamMap>().ExportTo(hbmExport);
+                       m.FluentMappings.Add<CompetitionConfigMap>().ExportTo(hbmExport);
+                       m.FluentMappings.Add<CompetitionConfigFinalRankingRuleMap>().ExportTo(hbmExport);
+                       m.FluentMappings.Add<CompetitionTeamMap>().ExportTo(hbmExport);
                        m.FluentMappings.Add<SeasonTeamMap>().ExportTo(hbmExport);
                        m.FluentMappings.Add<PlayoffTeamMap>().ExportTo(hbmExport);
                        m.FluentMappings.Add<GameDataMap>().ExportTo(hbmExport);
+                       m.FluentMappings.Add<PlayerMap>().ExportTo(hbmExport);
+                       m.FluentMappings.Add<GameRulesMap>().ExportTo(hbmExport);
 
-
+                       /*
                        m.AutoMappings.Add(
                            AutoMap.AssemblyOf<Team>(storeConfig)
                            .IgnoreBase<BaseDataObject>()
@@ -79,6 +83,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
                            .IncludeBase<CompetitionConfigFinalRankingRule>()
                            .Conventions.Add(DefaultCascade.All())
                            ).ExportTo(hbmExport);
+                           */
                    })
                        .ExposeConfiguration(c => c.EventListeners.PreUpdateEventListeners
                                   = new IPreUpdateEventListener[] { new AuditEventListener() })

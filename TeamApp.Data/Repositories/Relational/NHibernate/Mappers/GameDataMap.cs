@@ -14,5 +14,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
             Map(x => x.CurrentDay);
             Map(x => x.CurrentYear);
         }
+        
     }
+
 }

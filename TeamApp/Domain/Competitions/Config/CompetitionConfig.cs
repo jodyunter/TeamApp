@@ -17,7 +17,7 @@ namespace TeamApp.Domain.Competitions.Config
         public virtual int? LastYear { get; set; }
         public virtual int? CompetitionStartingDay { get; set; }
         public virtual string FinalRankingGroupName { get; set; }
-        public abstract SingleYearTeam CreateCompetitionTeam(Competition competition, Team parent);
+        public abstract CompetitionTeam CreateCompetitionTeam(Competition competition, Team parent);
         public abstract Competition CreateCompetitionDetails(int day, int year, IList<Competition> parents);
 
         protected CompetitionConfig() { }
@@ -72,7 +72,7 @@ namespace TeamApp.Domain.Competitions.Config
         //rules should be in place to setup all the rankings we need
         public virtual void CopyTeamsFromCompetition(Competition destinationCompetition, Competition sourceCompetition)
         {
-            if (destinationCompetition.Teams == null) destinationCompetition.Teams = new List<SingleYearTeam>();
+            if (destinationCompetition.Teams == null) destinationCompetition.Teams = new List<CompetitionTeam>();
 
             sourceCompetition.Teams.ToList().ForEach(sourceTeam =>
             {
@@ -91,7 +91,7 @@ namespace TeamApp.Domain.Competitions.Config
 
             sourceCompetition.Rankings.ToList().ForEach(sourceRanking =>
             {
-                var team = destinationCompetition.Teams.Where(t => t.Parent.Id == sourceRanking.SingleYearTeam.Parent.Id).First(); //if null we messed up
+                var team = destinationCompetition.Teams.Where(t => t.Parent.Id == sourceRanking.CompetitionTeam.Parent.Id).First(); //if null we messed up
                 destinationCompetition.Rankings.Add(new TeamRanking(sourceRanking.Rank, sourceRanking.GroupName, team, sourceRanking.GroupLevel));
             });
 

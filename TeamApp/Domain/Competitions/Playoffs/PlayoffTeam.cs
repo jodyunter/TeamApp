@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TeamApp.Domain.Competitions.Playoffs
 {
-    public class PlayoffTeam : SingleYearTeam
+    public class PlayoffTeam : CompetitionTeam
     {
         public PlayoffTeam() { }
 

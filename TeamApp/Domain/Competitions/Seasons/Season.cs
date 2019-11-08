@@ -11,7 +11,7 @@ namespace TeamApp.Domain.Competitions.Seasons
         public virtual IList<SeasonDivision> Divisions { get; set; }
 
         public Season() : base() { }
-        public Season(CompetitionConfig competitionConfig, string name, int year, List<SeasonDivision> divisions, List<SingleYearTeam> teams, Schedule schedule, List<TeamRanking> rankings, bool started, bool finished, int? startDay, int? endDay)
+        public Season(CompetitionConfig competitionConfig, string name, int year, List<SeasonDivision> divisions, List<CompetitionTeam> teams, Schedule schedule, List<TeamRanking> rankings, bool started, bool finished, int? startDay, int? endDay)
             :base(competitionConfig, name, year, schedule, rankings, teams, started, finished, startDay, endDay)
         {
             Divisions = divisions;
@@ -90,7 +90,7 @@ namespace TeamApp.Domain.Competitions.Seasons
 
             listOfTeams.ForEach(team =>
             {
-                var ranking = Rankings.Where(r => r.GroupName == division.Name && (r.SingleYearTeam.Id == team.Id) && division.Level == r.GroupLevel).FirstOrDefault();
+                var ranking = Rankings.Where(r => r.GroupName == division.Name && (r.CompetitionTeam.Id == team.Id) && division.Level == r.GroupLevel).FirstOrDefault();
                 if (ranking == null)
                 {
                     Rankings.Add(new TeamRanking(rank, division.Name, team, division.Level));
@@ -130,7 +130,7 @@ namespace TeamApp.Domain.Competitions.Seasons
 
                     teams.OrderBy(t => t.Rank).ToList().ForEach(t =>
                     {
-                        var ranking = new TeamRanking((int)rank, finalGroupName, t.SingleYearTeam, 0);
+                        var ranking = new TeamRanking((int)rank, finalGroupName, t.CompetitionTeam, 0);
                         finalRankings.Add(ranking);
                         rank++;
                     });

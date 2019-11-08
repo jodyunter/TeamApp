@@ -5,8 +5,8 @@ using TeamApp.Domain.Competitions;
 
 namespace TeamApp.Domain.Repositories
 {
-    public interface ISingleYearTeamRepository:IRepository<SingleYearTeam>
+    public interface ICompetitionTeamRepository:IRepository<CompetitionTeam>
     {
-        IEnumerable<SingleYearTeam> GetByCompetition(Competition competition);
+        IEnumerable<CompetitionTeam> GetByCompetition(Competition competition);
     }
 }

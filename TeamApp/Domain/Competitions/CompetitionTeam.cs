@@ -1,8 +1,8 @@
 ﻿using TeamApp.Domain.Competitions;
 
-namespace TeamApp.Domain
+namespace TeamApp.Domain.Competitions
 {
-    public class SingleYearTeam : BaseDataObject, ITeam
+    public class CompetitionTeam : BaseDataObject, ITeam
     {
         public virtual Competition Competition { get; set; }
         public virtual Team Parent { get; set; }
@@ -14,8 +14,8 @@ namespace TeamApp.Domain
         public virtual int? FirstYear { get; set; }
         public virtual int? LastYear { get { return FirstYear; } set { } }
 
-        public SingleYearTeam() { }
-        public SingleYearTeam(Competition competition, Team parent, string name, string nickName, string shortName, int skill, string owner, int? year)
+        public CompetitionTeam() { }
+        public CompetitionTeam(Competition competition, Team parent, string name, string nickName, string shortName, int skill, string owner, int? year)
         {
             Competition = competition;
             Parent = parent;

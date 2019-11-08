@@ -65,7 +65,7 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
         }
       
         
-        public override SingleYearTeam CreateCompetitionTeam(Competition playoff, Team parent)
+        public override CompetitionTeam CreateCompetitionTeam(Competition playoff, Team parent)
         {
             return new PlayoffTeam(playoff, parent, parent.Name, parent.NickName, parent.ShortName,
                         parent.Skill, parent.Owner, playoff.Year);
@@ -76,7 +76,7 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
             if (!rule.IsActive(playoff.Year)) throw new Exception("Trying to use an inactive rule in CreatRankings From rule: " + rule.FirstYear + " : " + rule.LastYear);
 
             if (playoff.Rankings == null) playoff.Rankings = new List<TeamRanking>();
-            if (playoff.Teams == null) playoff.Teams = new List<SingleYearTeam>();
+            if (playoff.Teams == null) playoff.Teams = new List<CompetitionTeam>();
 
             var groupToPutTeamIn = rule.GroupName;
             var groupToGetTeamFrom = rule.SourceGroupName;
@@ -94,9 +94,9 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
 
             sourceTeamRankings.ForEach(sourceRanking =>
             {
-                var team = playoff.Teams.Where(t => t.Parent.Id == sourceRanking.SingleYearTeam.Parent.Id).FirstOrDefault();
-                if (team == null) team = CreateCompetitionTeam(playoff, sourceRanking.SingleYearTeam.Parent);
-                var rank = playoff.Rankings.Where(r => r.GroupName.Equals(groupToGetRankFrom) && r.SingleYearTeam.Parent.Id == team.Parent.Id).First().Rank;
+                var team = playoff.Teams.Where(t => t.Parent.Id == sourceRanking.CompetitionTeam.Parent.Id).FirstOrDefault();
+                if (team == null) team = CreateCompetitionTeam(playoff, sourceRanking.CompetitionTeam.Parent);
+                var rank = playoff.Rankings.Where(r => r.GroupName.Equals(groupToGetRankFrom) && r.CompetitionTeam.Parent.Id == team.Parent.Id).First().Rank;
 
                 newRankings.Add(new TeamRanking(rank, groupToPutTeamIn, team, 1));
             });
@@ -187,7 +187,7 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
             if (rankingsForGroup.Count > 0)
             {
                 var ranking = rankingsForGroup.Where(r => r.Rank == fromValue).ToList().First();
-                return (PlayoffTeam)ranking.SingleYearTeam;
+                return (PlayoffTeam)ranking.CompetitionTeam;
             }
             return null;
         }

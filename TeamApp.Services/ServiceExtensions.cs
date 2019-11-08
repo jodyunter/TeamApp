@@ -23,7 +23,7 @@ namespace TeamApp.Services
             services.AddSingleton<IScheduleGameRepository, ScheduleGameRepository>();
             services.AddSingleton<ICompetitionConfigRepository, CompetitionConfigRepository>();
             services.AddSingleton<IGameDataRepository, GameDataRepository>();
-            services.AddSingleton<ISingleYearTeamRepository, SingleYearTeamRepository>();
+            services.AddSingleton<ICompetitionTeamRepository, CompetitionTeamRepository>();
 
             services.AddSingleton(typeof(IRelationalRepository<League>), typeof(RepositoryNHibernate<League>));
             services.AddSingleton(typeof(IRelationalRepository<Team>), typeof(RepositoryNHibernate<Team>));

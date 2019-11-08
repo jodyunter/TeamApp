@@ -2,7 +2,7 @@
 
 namespace TeamApp.Domain.Competitions.Seasons
 {
-    public class SeasonTeam:SingleYearTeam,IComparable<SeasonTeam>
+    public class SeasonTeam:CompetitionTeam,IComparable<SeasonTeam>
     {
         public virtual SeasonDivision Division { get; set; }
         public virtual SeasonTeamStats Stats { get; set; }

@@ -8,5 +8,6 @@ namespace TeamApp.Domain
     {
         string Name { get; set; }
         int Age { get; set; }
+        ITeam Team { get; set; }
     }
 }

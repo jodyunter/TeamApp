@@ -267,7 +267,7 @@ namespace TeamApp.Test.Data
 
 
             var season = new Season(null, "Season 1", 1, null, null, null, null, true, false, 1, null);
-            var seasonTeams = new List<SingleYearTeam>()
+            var seasonTeams = new List<CompetitionTeam>()
             {
                 new SeasonTeam(season, null, "Team 1", null, null, 5, null, 1, null, null),
                 new SeasonTeam(season, null, "Team 2", null, null, 5, null, 1, null, null),
@@ -336,13 +336,13 @@ namespace TeamApp.Test.Data
 
             for (int i = 0; i < 10; i++)
             {
-                var ranking = new TeamRanking(1, "Group 1", new SingleYearTeam(comp1, null, "Team " + (i * 10), null, null, 5, null, 1), 1);
+                var ranking = new TeamRanking(1, "Group 1", new CompetitionTeam(comp1, null, "Team " + (i * 10), null, null, 5, null, 1), 1);
                 repo.Update(ranking);
             }
 
             for (int i = 0; i < 5; i++)
             {
-                var ranking = new TeamRanking(1, "Group 5", new SingleYearTeam(comp2, null, "Team " + (i * 100), null, null, 5, null, 1), 1);
+                var ranking = new TeamRanking(1, "Group 5", new CompetitionTeam(comp2, null, "Team " + (i * 100), null, null, 5, null, 1), 1);
                 repo.Update(ranking);
             }
 
@@ -355,9 +355,9 @@ namespace TeamApp.Test.Data
         #endregion
         #region Single Year Team Repo tests
         [Fact]
-        public void ShouldExerciseSingleYearTeamRepositoryNHibernate()
+        public void ShouldExerciseCompetitionTeamRepositoryNHibernate()
         {
-            var repo = new SingleYearTeamRepository(new RepositoryNHibernate<SingleYearTeam>());
+            var repo = new CompetitionTeamRepository(new RepositoryNHibernate<CompetitionTeam>());
             var compRepo = new CompetitionRepository(new RepositoryNHibernate<Competition>());
             
             var comp1 = new Season(null, "Season 1", 1, null, null, null, null, false, false, 1, null);
@@ -368,13 +368,13 @@ namespace TeamApp.Test.Data
 
             for (int i = 0; i < 10; i++)
             {
-                var syt = new SingleYearTeam(comp1, null, "Team " + i, null, null, 5, null, 1);
+                var syt = new CompetitionTeam(comp1, null, "Team " + i, null, null, 5, null, 1);
                 repo.Update(syt);
             }
 
             for (int i = 0; i < 5; i++)
             {
-                var syt = new SingleYearTeam(comp2, null, "Team " + (i*100), null, null, 5, null, 1);
+                var syt = new CompetitionTeam(comp2, null, "Team " + (i*100), null, null, 5, null, 1);
                 repo.Update(syt);
             }
 

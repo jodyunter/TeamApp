@@ -7,11 +7,11 @@ using TeamApp.Domain.Repositories;
 
 namespace TeamApp.Data.Repositories.Relational
 {
-    public class SingleYearTeamRepository : DataRepository<SingleYearTeam>, ISingleYearTeamRepository
+    public class CompetitionTeamRepository : DataRepository<CompetitionTeam>, ICompetitionTeamRepository
     {
-        public SingleYearTeamRepository(IRelationalRepository<SingleYearTeam> repo) : base(repo) { }
+        public CompetitionTeamRepository(IRelationalRepository<CompetitionTeam> repo) : base(repo) { }
 
-        public IEnumerable<SingleYearTeam> GetByCompetition(Competition competition)
+        public IEnumerable<CompetitionTeam> GetByCompetition(Competition competition)
         {
             return baseRepo.Where(t => t.Competition == competition).ToList();
         }

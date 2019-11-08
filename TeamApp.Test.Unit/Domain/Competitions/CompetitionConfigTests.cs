@@ -97,7 +97,7 @@ namespace TeamApp.Test.Domain.Competitions
             return new MockCompetition();
         }
 
-        public override SingleYearTeam CreateCompetitionTeam(Competition competition, Team parent)
+        public override CompetitionTeam CreateCompetitionTeam(Competition competition, Team parent)
         {
             throw new NotImplementedException();
         }

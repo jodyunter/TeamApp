@@ -17,7 +17,7 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs
         public static IEnumerable<object[]> PlayoffDataForGetTeamByRuleTests()
         {
             var config = new PlayoffCompetitionConfig("My Playoff", null, 1, 12, null, 1, null, null, null, null, null);
-            var playoff = new Playoff(null, null, 1, 1, new List<PlayoffSeries>(), new List<SingleYearTeam>(), null, new List<TeamRanking>(), true, false, 1, null);
+            var playoff = new Playoff(null, null, 1, 1, new List<PlayoffSeries>(), new List<CompetitionTeam>(), null, new List<TeamRanking>(), true, false, 1, null);
 
             playoff.CompetitionConfig = config;            
 

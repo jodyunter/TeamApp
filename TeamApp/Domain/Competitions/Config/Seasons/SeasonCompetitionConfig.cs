@@ -67,7 +67,7 @@ namespace TeamApp.Domain.Competitions.Config.Seasons
 
             //setup divisions
             var divisions = new Dictionary<string, SeasonDivision>();
-            var teams = new List<SingleYearTeam>();
+            var teams = new List<CompetitionTeam>();
 
             ProcessDivisionRules(season, divisions);
             ProcessTeamRules(season, divisions, teams);
@@ -104,7 +104,7 @@ namespace TeamApp.Domain.Competitions.Config.Seasons
         }
 
         //todo properly test these with years
-        public virtual void ProcessTeamRules(Season season, Dictionary<string, SeasonDivision> seasonDivisions, List<SingleYearTeam> teams)
+        public virtual void ProcessTeamRules(Season season, Dictionary<string, SeasonDivision> seasonDivisions, List<CompetitionTeam> teams)
         {
             TeamRules.Where(tr => tr.IsActive(season.Year)).ToList().ForEach(rule =>
             {                
@@ -148,9 +148,9 @@ namespace TeamApp.Domain.Competitions.Config.Seasons
 
         }
 
-        public virtual List<SingleYearTeam> GetTeams(Season season, Team team, SeasonDivisionRule divisionRule)
+        public virtual List<CompetitionTeam> GetTeams(Season season, Team team, SeasonDivisionRule divisionRule)
         {
-            var teams = new List<SingleYearTeam>();
+            var teams = new List<CompetitionTeam>();
 
             if (team != null)
             {
@@ -168,7 +168,7 @@ namespace TeamApp.Domain.Competitions.Config.Seasons
             return teams;
         }
 
-        public override SingleYearTeam CreateCompetitionTeam(Competition season, Team parent)
+        public override CompetitionTeam CreateCompetitionTeam(Competition season, Team parent)
         {
             return new SeasonTeam(season, parent, season.Year, new SeasonTeamStats(), null);
         }
