@@ -7,6 +7,7 @@
         public virtual bool CanTie { get; set; }
         public virtual int MaxOverTimePeriods { get; set; }
         public virtual int MinimumPeriods { get; set; }
+        //these should change
         public virtual int HomeRange { get; set; }
         public virtual int AwayRange { get; set; }
 

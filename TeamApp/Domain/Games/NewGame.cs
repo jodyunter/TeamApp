@@ -7,15 +7,17 @@ namespace TeamApp.Domain.Games
 {
     public class NewGame
     {
-        public int GameNumber { get; set; } = 1;
-        public int Day { get; set; } = 1;
 
-        public Team Home { get; set; }
-        public Team Away { get; set; }
-        public int HomeScore { get; set; } = 0;
-        public int AwayScore { get; set; } = 0;
-        public bool Complete { get; set; } = false;
+        public virtual Team Home { get; set; }
+        public virtual Team Away { get; set; }
+        public virtual int HomeScore { get; set; } = 0;
+        public virtual int AwayScore { get; set; } = 0;
+        public virtual bool Complete { get; set; } = false;
+        
+        public virtual int CurrentPeriod { get; set; }
+        public virtual int CurrentTime { get; set; }
 
+        public virtual GameRules Rules { get; set; }
 
         public Team Offense { get; set; }
         public Team Defense { get; set; }
@@ -40,7 +42,9 @@ namespace TeamApp.Domain.Games
         public int DefenseBonus { get; set; } = 0;
         public int GoalieBonus { get; set; } = 20;
 
-        public const int GAME_LENGTH = 360;
+        //replace with rules
+        public const int GAME_PERIOD_LENGTH = 120;
+        public const int GAME_PERIODS = 3;
 
         public bool OutputPlayByPlay { get; set; } = true;
 
@@ -56,15 +60,11 @@ namespace TeamApp.Domain.Games
             Random = random;
 
             var action = Actions.Action.GetAction(ActionType.PreGame, this);
-
-            for (int i = -1; i < GAME_LENGTH; i++)
-            {
+            while (!Complete) 
                 action = ProcessAction(action);
-            }
 
-            action = Actions.Action.GetAction(ActionType.GameOver, this);
-            ProcessAction(action);
-
+            
+            
             //need to copy the game stats to the player's main stats?
 
         }

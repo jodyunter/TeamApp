@@ -7,7 +7,7 @@
 
         public override ActionType ActionType { get { return ActionType.ScoreAttempt; } }
 
-        public override Action NextAction()
+        public override Action GetNextAction()
         {
             if (Result)
             {

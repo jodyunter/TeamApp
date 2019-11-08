@@ -10,7 +10,7 @@ namespace TeamApp.Domain.Games.Actions
         public override ActionType ActionType { get { return ActionType.FaceOff; } }
         
         public override void PreProcess()
-        {
+        {            
             Game.ClearAssists();
             Game.ClearControlPoints();
             attacker = Game.OffenseLine.Centre;
@@ -58,7 +58,7 @@ namespace TeamApp.Domain.Games.Actions
             Game.PuckCarrier = Game.PickPlayer(new List<GamePlayer>() { Game.OffenseLine.LeftWing, Game.OffenseLine.RightWing, Game.OffenseLine.RightDefense, Game.OffenseLine.LeftDefense });
         }
 
-        public override Action NextAction()
+        public override Action GetNextAction()
         {
             return Game.PassCarryShoot();
         }

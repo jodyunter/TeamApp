@@ -5,15 +5,16 @@ namespace TeamApp.Domain.Games.Actions
     {
         public override ActionType ActionType { get { return ActionType.PreGame; } }
 
-        public override Action NextAction()
+        public override Action GetNextAction()
         {
-            return GetAction(ActionType.FaceOff, Game);
+            return GetAction(ActionType.PrePeriod, Game);
         }
 
         public override void PostProcess()
         {
             Game.OffenseLine = Game.HomeLine;
             Game.DefenseLine = Game.AwayLine;
+            Game.CurrentPeriod = 1;
         }
 
         public override void PreProcess()

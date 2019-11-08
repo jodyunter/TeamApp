@@ -8,7 +8,7 @@ namespace TeamApp.Domain.Games.Actions
         public override ActionType ActionType { get { return ActionType.Shoot; } }
         GamePlayer attacker = null;
         GamePlayer defender = null;        
-        public override Action NextAction()
+        public override Action GetNextAction()
         {
             if (Result)
             {

@@ -7,7 +7,7 @@ namespace TeamApp.Domain.Games.Actions
         GamePlayer player = null;
         public override ActionType ActionType { get { return ActionType.Rebound; } }
 
-        public override Action NextAction()
+        public override Action GetNextAction()
         {
             return Game.PassCarryShoot();
         }

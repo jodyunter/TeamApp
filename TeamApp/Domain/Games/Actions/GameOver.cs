@@ -8,14 +8,18 @@ namespace TeamApp.Domain.Games.Actions
     {
         public override ActionType ActionType { get { return ActionType.GameOver; } } 
 
-        public override Action NextAction()
+        public override Action GetNextAction()
         {
             return null;
         }
 
         public override void PostProcess()
         {
-            //do nothing
+            Game.WriteToLog("Game is over!");
+            Game.WriteToLog("Final score is:");
+            Game.WriteToLog(Game.Home.Name + " - " + Game.HomeScore);
+            Game.WriteToLog(Game.Away.Name + " - " + Game.AwayScore);
+            Game.Complete = true;
         }
 
         public override void PreProcess()

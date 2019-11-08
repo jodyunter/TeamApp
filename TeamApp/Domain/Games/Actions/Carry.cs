@@ -11,7 +11,7 @@ namespace TeamApp.Domain.Games.Actions
         GamePlayer attacker = null;
         GamePlayer defender = null;        
 
-        public override Action NextAction()
+        public override Action GetNextAction()
         {
             return Game.PassCarryShoot();
         }

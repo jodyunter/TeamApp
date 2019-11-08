@@ -12,7 +12,7 @@ namespace TeamApp.Domain.Games.Actions
 
         public override ActionType ActionType { get { return ActionType.Pass; } }
 
-        public override Action NextAction()
+        public override Action GetNextAction()
         {
             return Game.PassCarryShoot();
         }
