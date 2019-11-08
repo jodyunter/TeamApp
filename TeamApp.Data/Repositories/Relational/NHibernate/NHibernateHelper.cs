@@ -62,6 +62,9 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
                        m.FluentMappings.Add<TeamMap>();
                        m.FluentMappings.Add<PlayerMap>();
                        m.FluentMappings.Add<LeagueMap>();
+                       m.FluentMappings.Add<SingleYearTeamMap>();
+                       m.FluentMappings.Add<SeasonTeamMap>();
+                       m.FluentMappings.Add<PlayoffTeamMap>();
 
 
                        m.AutoMappings.Add(

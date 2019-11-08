@@ -91,7 +91,7 @@ namespace TeamApp.Domain.Competitions.Config
 
             sourceCompetition.Rankings.ToList().ForEach(sourceRanking =>
             {
-                var team = destinationCompetition.Teams.Where(t => t.Parent.Id == sourceRanking.Team.Parent.Id).First(); //if null we messed up
+                var team = destinationCompetition.Teams.Where(t => t.Parent.Id == sourceRanking.SingleYearTeam.Parent.Id).First(); //if null we messed up
                 destinationCompetition.Rankings.Add(new TeamRanking(sourceRanking.Rank, sourceRanking.GroupName, team, sourceRanking.GroupLevel));
             });
 

@@ -90,7 +90,7 @@ namespace TeamApp.Domain.Competitions.Seasons
 
             listOfTeams.ForEach(team =>
             {
-                var ranking = Rankings.Where(r => r.GroupName == division.Name && (r.Team.Id == team.Id) && division.Level == r.GroupLevel).FirstOrDefault();
+                var ranking = Rankings.Where(r => r.GroupName == division.Name && (r.SingleYearTeam.Id == team.Id) && division.Level == r.GroupLevel).FirstOrDefault();
                 if (ranking == null)
                 {
                     Rankings.Add(new TeamRanking(rank, division.Name, team, division.Level));
@@ -130,7 +130,7 @@ namespace TeamApp.Domain.Competitions.Seasons
 
                     teams.OrderBy(t => t.Rank).ToList().ForEach(t =>
                     {
-                        var ranking = new TeamRanking((int)rank, finalGroupName, t.Team, 0);
+                        var ranking = new TeamRanking((int)rank, finalGroupName, t.SingleYearTeam, 0);
                         finalRankings.Add(ranking);
                         rank++;
                     });

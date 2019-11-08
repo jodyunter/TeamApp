@@ -4,7 +4,7 @@
     {
         public virtual int Rank { get; set; }
         public virtual string GroupName { get; set; }
-        public virtual SingleYearTeam Team { get; set; }
+        public virtual SingleYearTeam SingleYearTeam { get; set; }
         public virtual int GroupLevel { get; set; }
 
         public TeamRanking() : base() { }
@@ -12,7 +12,7 @@
         {
             Rank = rank;
             GroupName = group;
-            Team = team;
+            SingleYearTeam = team;
             GroupLevel = groupLevel;
         }
     }

@@ -204,11 +204,11 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
             StrictEqual(4, newRankings.Where(r => r.GroupName.Equals("West")).Count());
             StrictEqual(4, newRankings.Where(r => r.GroupName.Equals("Central")).Count());
 
-            Single(newRankings.Where(r => r.GroupName.Equals("NHL") && r.Rank == 5 && r.Team.Name.Equals("Team 1")));
-            Single(newRankings.Where(r => r.GroupName.Equals("East") && r.Rank == 2 && r.Team.Name.Equals("Team 1")));
+            Single(newRankings.Where(r => r.GroupName.Equals("NHL") && r.Rank == 5 && r.SingleYearTeam.Name.Equals("Team 1")));
+            Single(newRankings.Where(r => r.GroupName.Equals("East") && r.Rank == 2 && r.SingleYearTeam.Name.Equals("Team 1")));
 
-            Single(newRankings.Where(r => r.GroupName.Equals("NHL") && r.Rank == 10 && r.Team.Name.Equals("Team 5")));
-            Single(newRankings.Where(r => r.GroupName.Equals("West") && r.Rank == 4 && r.Team.Name.Equals("Team 5")));
+            Single(newRankings.Where(r => r.GroupName.Equals("NHL") && r.Rank == 10 && r.SingleYearTeam.Name.Equals("Team 5")));
+            Single(newRankings.Where(r => r.GroupName.Equals("West") && r.Rank == 4 && r.SingleYearTeam.Name.Equals("Team 5")));
         }
 
         [Fact]
@@ -224,7 +224,7 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
             playoffConfig.CopyRankingsFromCompetition(newPlayoff, oldPlayoff);
 
             StrictEqual(4, newPlayoff.Rankings.Count());
-            Single(newPlayoff.Rankings.Where(r => r.GroupName.Equals("NHL") && r.Rank == 6 && r.Team.Name.Equals("Team 6")));
+            Single(newPlayoff.Rankings.Where(r => r.GroupName.Equals("NHL") && r.Rank == 6 && r.SingleYearTeam.Name.Equals("Team 6")));
         }
         [Fact]
         public void ShouldCreateTeamRankingsFromAllRules()
@@ -250,33 +250,33 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
             StrictEqual(9, restOfTeams.Count());
             StrictEqual(7, combined.Count());
 
-            var seedName = topSeeds.Select(r => r.Team.Name).ToList();
-            var restNames = restOfTeams.Select(r => r.Team.Name).ToList();            
+            var seedName = topSeeds.Select(r => r.SingleYearTeam.Name).ToList();
+            var restNames = restOfTeams.Select(r => r.SingleYearTeam.Name).ToList();            
 
             StrictEqual(0, seedName.Where(r => restNames.Contains(r)).ToList().Count());
             StrictEqual(9, restNames.Count);
                         
-            Equal("Team 6", topSeeds.Where(r => r.Rank == 1).First().Team.Name);
-            Equal("Team 10", topSeeds.Where(r => r.Rank == 2).First().Team.Name);
-            Equal("Team 2", topSeeds.Where(r => r.Rank == 3).First().Team.Name);
+            Equal("Team 6", topSeeds.Where(r => r.Rank == 1).First().SingleYearTeam.Name);
+            Equal("Team 10", topSeeds.Where(r => r.Rank == 2).First().SingleYearTeam.Name);
+            Equal("Team 2", topSeeds.Where(r => r.Rank == 3).First().SingleYearTeam.Name);
 
-            Equal("Team 7", restOfTeams.Where(r => r.Rank == 1).First().Team.Name);
-            Equal("Team 1", restOfTeams.Where(r => r.Rank == 2).First().Team.Name);
-            Equal("Team 11", restOfTeams.Where(r => r.Rank == 3).First().Team.Name);
-            Equal("Team 9", restOfTeams.Where(r => r.Rank == 4).First().Team.Name);
-            Equal("Team 8", restOfTeams.Where(r => r.Rank == 5).First().Team.Name);
-            Equal("Team 12", restOfTeams.Where(r => r.Rank == 6).First().Team.Name);
-            Equal("Team 5", restOfTeams.Where(r => r.Rank == 7).First().Team.Name);
-            Equal("Team 4", restOfTeams.Where(r => r.Rank == 8).First().Team.Name);
-            Equal("Team 3", restOfTeams.Where(r => r.Rank == 9).First().Team.Name);
+            Equal("Team 7", restOfTeams.Where(r => r.Rank == 1).First().SingleYearTeam.Name);
+            Equal("Team 1", restOfTeams.Where(r => r.Rank == 2).First().SingleYearTeam.Name);
+            Equal("Team 11", restOfTeams.Where(r => r.Rank == 3).First().SingleYearTeam.Name);
+            Equal("Team 9", restOfTeams.Where(r => r.Rank == 4).First().SingleYearTeam.Name);
+            Equal("Team 8", restOfTeams.Where(r => r.Rank == 5).First().SingleYearTeam.Name);
+            Equal("Team 12", restOfTeams.Where(r => r.Rank == 6).First().SingleYearTeam.Name);
+            Equal("Team 5", restOfTeams.Where(r => r.Rank == 7).First().SingleYearTeam.Name);
+            Equal("Team 4", restOfTeams.Where(r => r.Rank == 8).First().SingleYearTeam.Name);
+            Equal("Team 3", restOfTeams.Where(r => r.Rank == 9).First().SingleYearTeam.Name);
 
-            Equal("Team 6", combined.Where(r => r.Rank == 1).First().Team.Name);
-            Equal("Team 10", combined.Where(r => r.Rank == 2).First().Team.Name);
-            Equal("Team 9", combined.Where(r => r.Rank == 3).First().Team.Name);
-            Equal("Team 8", combined.Where(r => r.Rank == 4).First().Team.Name);
-            Equal("Team 12", combined.Where(r => r.Rank == 5).First().Team.Name);
-            Equal("Team 5", combined.Where(r => r.Rank == 6).First().Team.Name);
-            Equal("Team 4", combined.Where(r => r.Rank == 7).First().Team.Name);            
+            Equal("Team 6", combined.Where(r => r.Rank == 1).First().SingleYearTeam.Name);
+            Equal("Team 10", combined.Where(r => r.Rank == 2).First().SingleYearTeam.Name);
+            Equal("Team 9", combined.Where(r => r.Rank == 3).First().SingleYearTeam.Name);
+            Equal("Team 8", combined.Where(r => r.Rank == 4).First().SingleYearTeam.Name);
+            Equal("Team 12", combined.Where(r => r.Rank == 5).First().SingleYearTeam.Name);
+            Equal("Team 5", combined.Where(r => r.Rank == 6).First().SingleYearTeam.Name);
+            Equal("Team 4", combined.Where(r => r.Rank == 7).First().SingleYearTeam.Name);            
         }
         //this only tests a single level group, to test mulitple elvels need to use the higher method
         [Fact]
@@ -305,28 +305,28 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs.Config
             StrictEqual(3, topSeeds.Count());
             StrictEqual(9, restOfTeams.Count());            
 
-            var seedName = topSeeds.Select(r => r.Team.Name).ToList();
-            var restNames = restOfTeams.Select(r => r.Team.Name).ToList();
+            var seedName = topSeeds.Select(r => r.SingleYearTeam.Name).ToList();
+            var restNames = restOfTeams.Select(r => r.SingleYearTeam.Name).ToList();
 
             playoff.SeedRankingsGroups();
 
             StrictEqual(0, seedName.Where(r => restNames.Contains(r)).ToList().Count());
             StrictEqual(9, restNames.Count);
                         
-            Equal("Team 6", topSeeds.Where(r => r.Rank == 1).First().Team.Name);
-            Equal("Team 10", topSeeds.Where(r => r.Rank == 2).First().Team.Name);
-            Equal("Team 2", topSeeds.Where(r => r.Rank == 3).First().Team.Name);
+            Equal("Team 6", topSeeds.Where(r => r.Rank == 1).First().SingleYearTeam.Name);
+            Equal("Team 10", topSeeds.Where(r => r.Rank == 2).First().SingleYearTeam.Name);
+            Equal("Team 2", topSeeds.Where(r => r.Rank == 3).First().SingleYearTeam.Name);
 
 
-            Equal("Team 7", restOfTeams.Where(r => r.Rank == 1).First().Team.Name);
-            Equal("Team 1", restOfTeams.Where(r => r.Rank == 2).First().Team.Name);
-            Equal("Team 11", restOfTeams.Where(r => r.Rank == 3).First().Team.Name);
-            Equal("Team 9", restOfTeams.Where(r => r.Rank == 4).First().Team.Name);
-            Equal("Team 8", restOfTeams.Where(r => r.Rank == 5).First().Team.Name);
-            Equal("Team 12", restOfTeams.Where(r => r.Rank == 6).First().Team.Name);
-            Equal("Team 5", restOfTeams.Where(r => r.Rank == 7).First().Team.Name);
-            Equal("Team 4", restOfTeams.Where(r => r.Rank == 8).First().Team.Name);
-            Equal("Team 3", restOfTeams.Where(r => r.Rank == 9).First().Team.Name);
+            Equal("Team 7", restOfTeams.Where(r => r.Rank == 1).First().SingleYearTeam.Name);
+            Equal("Team 1", restOfTeams.Where(r => r.Rank == 2).First().SingleYearTeam.Name);
+            Equal("Team 11", restOfTeams.Where(r => r.Rank == 3).First().SingleYearTeam.Name);
+            Equal("Team 9", restOfTeams.Where(r => r.Rank == 4).First().SingleYearTeam.Name);
+            Equal("Team 8", restOfTeams.Where(r => r.Rank == 5).First().SingleYearTeam.Name);
+            Equal("Team 12", restOfTeams.Where(r => r.Rank == 6).First().SingleYearTeam.Name);
+            Equal("Team 5", restOfTeams.Where(r => r.Rank == 7).First().SingleYearTeam.Name);
+            Equal("Team 4", restOfTeams.Where(r => r.Rank == 8).First().SingleYearTeam.Name);
+            Equal("Team 3", restOfTeams.Where(r => r.Rank == 9).First().SingleYearTeam.Name);
 
         }
 

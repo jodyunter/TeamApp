@@ -17,7 +17,14 @@ namespace TeamApp.Data.Relational.Repositories
         {
             var competition = compRepo.Get(competitionId);
 
-            return baseRepo.Where(st => st.Competition == competition).ToList();
+            var result = new List<SeasonTeam>();
+
+            competition.Teams.ToList().ForEach(team =>
+            {
+                result.Add((SeasonTeam)team);
+            });
+
+            return result;
         }
     }
 }
