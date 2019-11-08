@@ -20,7 +20,14 @@ namespace TeamApp.Domain.Games.Actions
 
         public override void PreProcess()
         {
-            Game.WriteToLog("Period " + Game.CurrentPeriod + " is starting.");            
+            if (Game.CurrentPeriod > Game.Rules.MinimumPeriods)
+            {
+                Game.WriteToLog("Over Time Begin! Period Number " + Game.CurrentPeriod);
+            }
+            else
+            {
+                Game.WriteToLog("Period " + Game.CurrentPeriod + " is starting.");
+            }
         }
 
         public override bool Process()

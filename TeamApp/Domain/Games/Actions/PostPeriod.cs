@@ -7,17 +7,24 @@ namespace TeamApp.Domain.Games.Actions
     public class PostPeriod : Action
     {
         public override ActionType ActionType => throw new NotImplementedException();
-
+       
         public override Action GetNextAction()
-        {
-            if (Game.CurrentPeriod > NewGame.GAME_PERIODS)
-            {
+        {            
+            bool isTied = Game.IsTied();
+            bool canTie = Game.Rules.CanTie;                                               
+
+            if ((IsInOverTime() && !isTied) //game over because someone scored in overtime or we ended the game not tied||
+                || ((OverTimePeriodsPlayed() > Game.Rules.MaxOverTimePeriods) && canTie) //game over because we have played the max overtime periods we're allowed to
+                )
+                
+            {                
                 return GetAction(ActionType.GameOver, Game);
             }
-            else
-            {                
+            else 
+            {
                 return GetAction(ActionType.PrePeriod, Game);
             }
+
         }
 
         public override void PostProcess()

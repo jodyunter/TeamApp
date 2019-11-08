@@ -20,13 +20,25 @@ namespace TeamApp.Domain.Games.Actions
         {
             Game.CurrentTime += TimeIncrement;
 
-            if (Game.CurrentTime >= NewGame.GAME_PERIOD_LENGTH)
+            if (Game.CurrentTime >= Game.Rules.TimePerPeriod)
             {
-                return GetAction(ActionType.PeriodEnd, Game);
+                return GetAction(ActionType.PostPeriod, Game);
             }
             {
                 return GetNextAction();
             }
+        }
+
+        public virtual int OverTimePeriodsPlayed()
+        {
+            int overTimePeriods = Game.CurrentPeriod - Game.Rules.MinimumPeriods;
+            return overTimePeriods < 0 ? 0 : overTimePeriods;
+
+        }
+        public virtual bool IsInOverTime()
+        {
+
+            return OverTimePeriodsPlayed() > 0;
         }
 
         public static Action GetAction(ActionType actionType, NewGame game)
@@ -51,7 +63,7 @@ namespace TeamApp.Domain.Games.Actions
                     return new GameOver() { Game = game, TimeIncrement = 0 };
                 case ActionType.PreGame:
                     return new PreGame() { Game = game, TimeIncrement = 0 };
-                case ActionType.PeriodEnd:
+                case ActionType.PostPeriod:
                     return new PostPeriod() { Game = game, TimeIncrement = 0 };
                 case ActionType.PrePeriod:
                     return new PrePeriod() { Game = game, TimeIncrement = 0 };
@@ -72,7 +84,7 @@ namespace TeamApp.Domain.Games.Actions
         Rebound = 6,
         GameOver = 7,
         PreGame = 8,
-        PeriodEnd = 9,
+        PostPeriod = 9,
         PrePeriod = 10
     }
 

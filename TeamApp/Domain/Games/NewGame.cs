@@ -29,8 +29,7 @@ namespace TeamApp.Domain.Games
         public Line AwayLine { get; set; } = new Line();
         
         public GamePlayer PuckCarrier { get; set; }
-
-
+        
         public GamePlayer Assist1 { get; set; } = null;
 
         public GamePlayer Assist2 { get; set; } = null;
@@ -42,8 +41,8 @@ namespace TeamApp.Domain.Games
         public int DefenseBonus { get; set; } = 0;
         public int GoalieBonus { get; set; } = 20;
 
-        //replace with rules
-        public const int GAME_PERIOD_LENGTH = 120;
+        //replace with rules        
+
         public const int GAME_PERIODS = 3;
 
         public bool OutputPlayByPlay { get; set; } = true;
@@ -69,6 +68,10 @@ namespace TeamApp.Domain.Games
 
         }
 
+        public bool IsTied()
+        {
+            return HomeScore == AwayScore;
+        }
 
         public void AddAssist(GamePlayer assister)
         {

@@ -33,9 +33,15 @@ namespace TeamApp.Console
                 teamList.Add(team);
             }
 
-            var g = new NewGame() { Home = teamList[1], Away = teamList[2] };
+            var g = new NewGame() {
+                Home = teamList[1],
+                Away = teamList[2],
+                Rules = new GameRules("My Rules", false, 2, 1, 10, true)
+            };
 
-            g.Play(new Random());
+            var rand = new Random(1123213);
+            
+            g.Play(rand);
 
             WriteLine("Press Enter to Close the app");
             ReadLine();

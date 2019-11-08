@@ -11,6 +11,10 @@
         {
             if (Result)
             {
+                if (IsInOverTime() && Game.Rules.IsGoldenGoal)
+                {
+                    return GetAction(ActionType.PostPeriod, Game);
+                }
                 return GetAction(ActionType.FaceOff, Game);
             }
             else
