@@ -18,12 +18,11 @@ namespace TeamApp.Domain.Competitions
         public virtual bool Finished { get; set; }
         public virtual int? StartDay { get; set; }
         public virtual int? EndDay { get; set; }
+        public virtual IEnumerable<ScheduleGame> Games { get; set; }
         public abstract IEnumerable<ScheduleGame> ProcessGame(ScheduleGame game, int currentDay); //this might add new games that need to be saved
         public abstract bool AreGamesComplete();
         public abstract void ProcessEndOfCompetitionDetails(int endingDay);
         public abstract List<TeamRanking> GetFinalRankings();
-        public virtual IEnumerable<ScheduleGame> Games { get; set; }
-
         public virtual void ProcessEndOfCompetition(int endingDay)
         {
             EndDay = endingDay;
@@ -32,7 +31,7 @@ namespace TeamApp.Domain.Competitions
             Rankings.ToList().AddRange(GetFinalRankings());
         }
 
-        public Competition() : base() { }
+        protected Competition():base() { }
         protected Competition(CompetitionConfig competitionConfig, string name, int year, Schedule schedule, IList<TeamRanking> rankings, List<CompetitionTeam> teams, bool started, bool finished, int? startDay, int? endDay)
         {
             CompetitionConfig = competitionConfig;
@@ -55,9 +54,9 @@ namespace TeamApp.Domain.Competitions
         {
             if (!game.IsComplete())
             {
-                var homeCompetitionTeam = Teams.Where(t => t.Name.Equals(game.HomeTeam.Name) && t.NickName.Equals(game.HomeTeam.NickName)).First();
-                var awayCompetitionTeam = Teams.Where(t => t.Name.Equals(game.AwayTeam.Name) && t.NickName.Equals(game.AwayTeam.NickName)).First();
-                game.Play(random, homeCompetitionTeam.Skill, awayCompetitionTeam.Skill);
+                var homeCompetitionTeam = Teams.Where(t => t.Name.Equals(game.Home.Name) && t.NickName.Equals(game.Away.NickName)).First();
+                var awayCompetitionTeam = Teams.Where(t => t.Name.Equals(game.Home.Name) && t.NickName.Equals(game.Away.NickName)).First();
+                game.Play(random);
             }
         }
 

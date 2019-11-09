@@ -15,8 +15,8 @@ namespace TeamApp.Domain.Schedules
         public virtual bool Processed { get; set; }
 
         public ScheduleGame() : base() { }
-        public ScheduleGame(Competition competition, int gameNumber, int day, int year, Team homeTeam, Team awayTeam, int homeScore, int awayScore, bool complete, int currentPeriod, GameRules rules, bool processed)
-            :base(homeTeam, awayTeam, homeScore, awayScore, complete, currentPeriod, rules)
+        public ScheduleGame(Competition competition, int gameNumber, int day, int year, Team homeTeam, Team awayTeam, int homeScore, int awayScore, bool complete, int currentPeriod, int currentTime, GameRules rules, bool processed)            
+            :base(homeTeam, awayTeam, rules, homeScore, awayScore, complete, currentPeriod, currentTime)
         {
             Competition = competition;         
             GameNumber = gameNumber;

@@ -8,6 +8,35 @@ using TeamApp.Domain.Competitions.Seasons;
 
 namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
 {
+    public class CompetitionMap:BaseMap<Competition>
+    {
+        public CompetitionMap()
+        {
+            HasOne(x => x.CompetitionConfig);
+            Map(x => x.Name);
+            Map(x => x.Year);
+            HasMany(x => x.Rankings);
+            HasMany(x => x.Teams);
+            Map(x => x.Started);
+            Map(x => x.Finished);
+            Map(x => x.StartDay);
+            Map(x => x.EndDay);
+            HasMany(x => x.Games);
+
+            DiscriminateSubClassesOnColumn<string>("Type").AlwaysSelectWithValue();
+
+        }
+    }
+
+    public class SeasonMap:SubclassMap<Season>
+    {
+        public SeasonMap()
+        {
+            DiscriminatorValue("Season");
+
+            HasMany(x => x.Divisions);
+        }
+    }
     public class CompetitionPlayerMap : BaseTimePeriod<CompetitionPlayer>
     {
 
@@ -60,6 +89,17 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
         public PlayoffTeamMap()
         {
             DiscriminatorValue("Playoff");
+        }
+    }
+
+    public class TeamRankingMap:BaseMap<TeamRanking>
+    {
+        public TeamRankingMap()
+        {
+            Map(x => x.Rank);
+            Map(x => x.GroupLevel);
+            Map(x => x.GroupName);
+            HasOne(x => x.CompetitionTeam);
         }
     }
 }

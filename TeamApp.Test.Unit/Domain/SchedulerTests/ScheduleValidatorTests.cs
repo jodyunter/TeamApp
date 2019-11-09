@@ -54,7 +54,7 @@ namespace TeamApp.Test.Domain.SchedulerTests
         public static Schedule CreateBalancedScheduleNoHomeAndAway()
         {         
             var schedule = new Schedule();
-            var rules = new GameRules(null, true, 1, 0, 7, 6);
+            var rules = new GameRules(null, true, 1, 3, 120, true);
 
             schedule = Scheduler.CreateGames(null, 1, 5, 1,
                 new List<Team>()
@@ -67,7 +67,7 @@ namespace TeamApp.Test.Domain.SchedulerTests
         public static Schedule CreateBalancedScheduleWithHomeAndAway()
         {            
             var schedule = new Schedule();
-            var rules = new GameRules(null, true, 1, 0, 7, 6);
+            var rules = new GameRules(null, true, 1, 3, 120, true);
 
             schedule = Scheduler.CreateGames(null, 1, 5, 1,
                 new List<Team>()

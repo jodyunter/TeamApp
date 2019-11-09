@@ -26,8 +26,8 @@ namespace TeamApp.Domain.Schedules
 
             Games.ForEach(game =>
             {
-                if (game.HomeTeam.Id == teamId) result = true;
-                else if (game.AwayTeam.Id == teamId) result = true;
+                if (game.Home.Id == teamId) result = true;
+                else if (game.Away.Id == teamId) result = true;
             });
 
             return result;
@@ -44,7 +44,7 @@ namespace TeamApp.Domain.Schedules
 
             other.Games.ForEach(game =>
             {
-                result = result || DoesTeamPlayInDay(game.HomeTeam.Id) || DoesTeamPlayInDay(game.AwayTeam.Id);
+                result = result || DoesTeamPlayInDay(game.Home.Id) || DoesTeamPlayInDay(game.Away.Id);
             });
 
             return result;

@@ -70,14 +70,14 @@ namespace TeamApp.Domain.Schedules
 
             Days.Values.ToList().ForEach(day =>
             {                
-                day.Games.Where(g => g.HomeTeam.Name.Equals(teamName) && opponents.Contains(g.AwayTeam.Name)).ToList().ForEach(game =>
+                day.Games.Where(g => g.Home.Name.Equals(teamName) && opponents.Contains(g.Away.Name)).ToList().ForEach(game =>
                 {
-                    if (!result.ContainsKey(game.AwayTeam.Name))
+                    if (!result.ContainsKey(game.Away.Name))
                     {
-                        result[game.AwayTeam.Name] = 0;
+                        result[game.Away.Name] = 0;
                     }
 
-                    result[game.AwayTeam.Name]++;
+                    result[game.Away.Name]++;
                 });
 
                 
@@ -104,14 +104,14 @@ namespace TeamApp.Domain.Schedules
 
             Days.Values.ToList().ForEach(day =>
             {
-                day.Games.Where(g => g.AwayTeam.Name.Equals(teamName) && opponents.Contains(g.HomeTeam.Name)).ToList().ForEach(game =>
+                day.Games.Where(g => g.Away.Name.Equals(teamName) && opponents.Contains(g.Home.Name)).ToList().ForEach(game =>
                 {
-                    if (!result.ContainsKey(game.HomeTeam.Name))
+                    if (!result.ContainsKey(game.Home.Name))
                     {
-                        result[game.HomeTeam.Name] = 0;
+                        result[game.Home.Name] = 0;
                     }
 
-                    result[game.HomeTeam.Name]++;
+                    result[game.Home.Name]++;
                 });
 
 

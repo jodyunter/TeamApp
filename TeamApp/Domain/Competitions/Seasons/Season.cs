@@ -21,8 +21,8 @@ namespace TeamApp.Domain.Competitions.Seasons
         {            
             if (game.Complete)
             {
-                var home = (SeasonTeam)Teams.Where(t => t.Parent.Id == game.HomeTeam.Id).First();
-                var away = (SeasonTeam)Teams.Where(t => t.Parent.Id == game.AwayTeam.Id).First();
+                var home = (SeasonTeam)Teams.Where(t => t.Parent.Id == game.Home.Id).First();
+                var away = (SeasonTeam)Teams.Where(t => t.Parent.Id == game.Competition.Id).First();
 
                 if (game.HomeScore == game.AwayScore)
                 {

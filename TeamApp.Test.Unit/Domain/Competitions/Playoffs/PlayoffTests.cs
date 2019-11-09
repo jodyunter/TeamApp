@@ -28,7 +28,7 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs
                 playoff.Rankings.Add(new TeamRanking(i + 1, "R1", playoff.Teams.Where(t => t.Name.Equals(name)).First() , 1));
             }
 
-            var gameRules = new GameRules("Rule 1", false, 3, 1, 7, 6);
+            var gameRules = new GameRules("Rule 1", false, 0, 3, 10, true);
 
             var seriesA = new BestOfSeries(playoff, "Series A", 2, 15, (PlayoffTeam)playoff.Teams.Where(t => t.Name.Equals("Team 1")).First(), (PlayoffTeam)playoff.Teams.Where(t => t.Name.Equals("Team 2")).First(), 4, 3, 4, null, null);
 

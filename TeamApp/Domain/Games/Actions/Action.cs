@@ -4,7 +4,7 @@ namespace TeamApp.Domain.Games.Actions
 {
     public abstract class Action
     {
-        public virtual NewGame Game { get; set; }
+        public virtual Game Game { get; set; }
         public virtual bool Result { get; set; }
         public virtual int TimeIncrement { get; set; }
         public abstract void PreProcess();
@@ -41,7 +41,7 @@ namespace TeamApp.Domain.Games.Actions
             return OverTimePeriodsPlayed() > 0;
         }
 
-        public static Action GetAction(ActionType actionType, NewGame game)
+        public static Action GetAction(ActionType actionType, Game game)
         {
             switch (actionType)
             {

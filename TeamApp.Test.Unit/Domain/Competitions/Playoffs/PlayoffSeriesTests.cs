@@ -103,7 +103,7 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs
         }
         public static PlayoffGame CreateGame(int homeScore, int awayScore, bool complete, PlayoffTeam team1, PlayoffTeam team2)
         {
-            return new PlayoffGame(null, null, -1, -1, -1, team1.Parent, team2.Parent, homeScore, awayScore, complete, 1, null, false);
+            return new PlayoffGame(null, null, -1, -1, -1, team1.Parent, team2.Parent, homeScore, awayScore, complete, 1, 0, null, false);
         }
         public static PlayoffTeam CreateTeam(string name, int id, int parentId)
         {
@@ -214,7 +214,7 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs
         {
             var number = testNo;
 
-            var gameRules = new GameRules("Test", false, 3, 1, 7, 6);
+            var gameRules = new GameRules("Test", false, 1, 3, 10, true);
             var playoffConfig = new PlayoffCompetitionConfig("My Playoff", null, 1, 55, gameRules, 1, null, null, null, null, null); //todo eventually can't use this constructor
             var playoff = new Playoff(playoffConfig, "My Playoff", 1, 1, null, null, null, null, true, false, 1, null);
             
@@ -230,13 +230,13 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs
 
             if (expectedResult == 0)
             {
-                Equal("A Team", game.HomeTeam.Name);
-                Equal("B Team", game.AwayTeam.Name);
+                Equal("A Team", game.Home.Name);
+                Equal("B Team", game.Away.Name);
             }
             else
             {
-                Equal("B Team", game.HomeTeam.Name);
-                Equal("A Team", game.AwayTeam.Name);
+                Equal("B Team", game.Home.Name);
+                Equal("A Team", game.Away.Name);
             }
         }
 

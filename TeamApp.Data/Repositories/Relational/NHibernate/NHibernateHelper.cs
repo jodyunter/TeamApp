@@ -61,17 +61,22 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
                    .CurrentSessionContext("thread_static")
                    .Mappings(m =>
                    {
-                       m.FluentMappings.Add<TeamMap>().ExportTo(hbmExport);
-                       m.FluentMappings.Add<PlayerMap>().ExportTo(hbmExport);
-                       m.FluentMappings.Add<LeagueMap>().ExportTo(hbmExport);
-                       m.FluentMappings.Add<CompetitionConfigMap>().ExportTo(hbmExport);
-                       m.FluentMappings.Add<CompetitionConfigFinalRankingRuleMap>().ExportTo(hbmExport);
-                       m.FluentMappings.Add<CompetitionTeamMap>().ExportTo(hbmExport);
-                       m.FluentMappings.Add<SeasonTeamMap>().ExportTo(hbmExport);
-                       m.FluentMappings.Add<PlayoffTeamMap>().ExportTo(hbmExport);
-                       m.FluentMappings.Add<GameDataMap>().ExportTo(hbmExport);
-                       m.FluentMappings.Add<PlayerMap>().ExportTo(hbmExport);
-                       m.FluentMappings.Add<GameRulesMap>().ExportTo(hbmExport);
+                       m.FluentMappings.Add<TeamMap>();
+                       m.FluentMappings.Add<PlayerMap>();
+                       m.FluentMappings.Add<LeagueMap>();
+                       m.FluentMappings.Add<CompetitionConfigMap>();
+                       m.FluentMappings.Add<CompetitionConfigFinalRankingRuleMap>();
+                       m.FluentMappings.Add<CompetitionMap>();
+                       m.FluentMappings.Add<CompetitionTeamMap>();
+                       m.FluentMappings.Add<SeasonMap>();
+                       m.FluentMappings.Add<SeasonTeamMap>();
+                       m.FluentMappings.Add<PlayoffTeamMap>();
+                       m.FluentMappings.Add<TeamRankingMap>();
+                       m.FluentMappings.Add<GameDataMap>();
+                       m.FluentMappings.Add<PlayerMap>();
+                       m.FluentMappings.Add<GameMap>();
+                       m.FluentMappings.Add<ScheduleGameMap>();
+                       m.FluentMappings.Add<GameRulesMap>();
 
                        /*
                        m.AutoMappings.Add(
@@ -82,7 +87,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
                            .IncludeBase<Competition>()
                            .IncludeBase<CompetitionConfigFinalRankingRule>()
                            .Conventions.Add(DefaultCascade.All())
-                           ).ExportTo(hbmExport);
+                           );
                            */
                    })
                        .ExposeConfiguration(c => c.EventListeners.PreUpdateEventListeners

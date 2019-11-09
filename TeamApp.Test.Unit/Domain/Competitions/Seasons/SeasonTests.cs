@@ -19,12 +19,12 @@ namespace TeamApp.Test.Domain.Competitions.Seasons
             var seasonConfig = new SeasonCompetitionConfig("Test", null, 1, null, null, 1, null, null, null, null, null, null);
             var season = new Season(seasonConfig, seasonConfig.Name, 1, null, null, null, null, true, false, 1, null);
             var teams = new List<Team>() { CreateTeam("Team 1", 1), CreateTeam("Team 2", 2), CreateTeam("Team 3", 3), CreateTeam("Team 4", 4) };
-            var rules = new GameRules(null, true, 1, 0, 7, 6);
+            var rules = new GameRules(null, true, 1, 3, 10, true);            
             var games = new List<ScheduleGame>()
             {
-                new ScheduleGame(null, 1, 1, 1, teams[0], teams[1], 1, 1, true, 1, rules, false),
-                new ScheduleGame(null, 1, 1, 1, teams[0], teams[2], 3, 1, true, 1, rules, false),
-                new ScheduleGame(null, 1, 1, 1, teams[0], teams[3], 1, 4, true, 1, rules, false)
+                new ScheduleGame(null, 1, 1, 1, teams[0], teams[1], 1, 1, true, 1, 0, rules, false),
+                new ScheduleGame(null, 1, 1, 1, teams[0], teams[2], 3, 1, true, 1, 0, rules, false),
+                new ScheduleGame(null, 1, 1, 1, teams[0], teams[3], 1, 4, true, 1, 0, rules, false)
             };
 
             var team1 = new SeasonTeam(null, teams[0], "Team 1", null, null, 5, null, 1, null, null);

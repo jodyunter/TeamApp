@@ -222,12 +222,12 @@ namespace TeamApp.Test.Data
             //IEnumerable<ScheduleGame> GetGamesForDay(int day, int year);
             for (int i = 0; i < 7; i++)
             {
-                gameRepo.Update(new ScheduleGame(null, i, i % 2, 1, null, null, 0, 0, false, 1, null, false));
+                gameRepo.Update(new ScheduleGame(null, i, i % 2, 1, null, null, 0, 0, false, 1, 0, null, false));
             }
 
             for (int i = 7; i < 22; i++)
             {
-                gameRepo.Update(new ScheduleGame(null, i, i % 2 + 2, 2, null, null, 0, 0, false, 1, null, false));
+                gameRepo.Update(new ScheduleGame(null, i, i % 2 + 2, 2, null, null, 0, 0, false, 1, 0, null, false));
             }
 
             StrictEqual(4, gameRepo.GetGamesForDay(0, 1).Count());
@@ -236,8 +236,8 @@ namespace TeamApp.Test.Data
             StrictEqual(8, gameRepo.GetGamesForDay(3, 2).Count());
 
             //IEnumerable<ScheduleGame> GetInCompleteGamesForDay(int day, int year);
-            gameRepo.Update(new ScheduleGame(null, 22, 3, 2, null, null, 0, 0, true, 1, null, false));
-            gameRepo.Update(new ScheduleGame(null, 23, 3, 2, null, null, 0, 0, true, 1, null, false));
+            gameRepo.Update(new ScheduleGame(null, 22, 3, 2, null, null, 0, 0, true, 1, 0, null, false));
+            gameRepo.Update(new ScheduleGame(null, 23, 3, 2, null, null, 0, 0, true, 1, 0, null, false));
             StrictEqual(10, gameRepo.GetGamesForDay(3, 2).Count());
             StrictEqual(8, gameRepo.GetInCompleteGamesForDay(3, 2).Count());
 

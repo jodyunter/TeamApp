@@ -77,7 +77,7 @@ namespace TeamApp.Domain.Competitions.Playoffs
 
             return new PlayoffGame(Playoff, this, gameNumber, -1, Playoff.Year, 
                 homeValue == 0 ? HomeTeam.Parent: AwayTeam.Parent, homeValue == 0 ? AwayTeam.Parent: HomeTeam.Parent,
-                0, 0, false, 1, Playoff.CompetitionConfig.GameRules, false);
+                0, 0, false, 1, 0, Playoff.CompetitionConfig.GameRules, false);
         }
 
         public virtual int GetHomeValueForGame(int gameNumber)

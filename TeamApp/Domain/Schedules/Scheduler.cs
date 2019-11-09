@@ -86,7 +86,7 @@ namespace TeamApp.Domain.Schedules
                 {
                     var game = new ScheduleGame(competition, 0, currentDay, year,
                         reverseHomeAndAway ? bTeam:aTeam, reverseHomeAndAway ? aTeam:bTeam,
-                        0, 0, false, 1, rules, false);
+                        0, 0, false, 1, 0, rules, false);
                     schedule.Days[currentDay].AddGame(game);
                     
                     currentDay = GetNextDay(currentDay, startDay, maxDay, 1);
@@ -248,8 +248,8 @@ namespace TeamApp.Domain.Schedules
                 if (schedule.Days.ContainsKey(currentDay))
                 {
                     bool canAdd = true;
-                    canAdd = canAdd && !schedule.Days[currentDay].DoesTeamPlayInDay(game.HomeTeam.Id);
-                    canAdd = canAdd && !schedule.Days[currentDay].DoesTeamPlayInDay(game.AwayTeam.Id);
+                    canAdd = canAdd && !schedule.Days[currentDay].DoesTeamPlayInDay(game.Home.Id);
+                    canAdd = canAdd && !schedule.Days[currentDay].DoesTeamPlayInDay(game.Away.Id);
 
                     if (canAdd) foundDayToAddTeamTo = true;
 
@@ -290,7 +290,7 @@ namespace TeamApp.Domain.Schedules
                 {
                     if (array[i, 0] != -1)
                     {
-                        var g = new ScheduleGame(competition, 0, i, year, teams[array[i, 0]], teams[array[i, 1]], 0, 0, false, 1, rules, false);
+                        var g = new ScheduleGame(competition, 0, i, year, teams[array[i, 0]], teams[array[i, 1]], 0, 0, false, 1, 0, rules, false);
                         schedule.Days[d].Games.Add(g);
                     }
 
@@ -320,7 +320,7 @@ namespace TeamApp.Domain.Schedules
 
                 schedule.Days[dayNumber].Games.ForEach(game =>
                 {
-                    var g = new ScheduleGame(game.Competition, 0, newDay, game.Year, game.AwayTeam, game.HomeTeam, 0, 0, false, 1, rules, false);
+                    var g = new ScheduleGame(game.Competition, 0, newDay, game.Year, game.Away, game.Home, 0, 0, false, 1, 0, rules, false);
                     schedule.Days[newDay].Games.Add(g);
 
                 });

@@ -4,137 +4,16 @@ using static Xunit.Assert;
 using TeamApp.Domain.Games;
 using static TeamApp.Test.Domain.SchedulerTests.SchedulerTests;
 using TeamApp.Test.Helpers;
+using System;
 
 namespace TeamApp.Test.Domain
 {
-    public class GameTests
+    public class GameTest
     {
-        [Fact]
-        public void ShouldGetWinnerAndLoser()
+      [Fact]
+      public void ShouldSetupGameTests()
         {
-            var rules = new GameRules(null, true, 1, 0, 7, 6);
-        
-            var g = new Game(CreateTeam("Team 1", 1), CreateTeam("Team 2",2), 5, 3, true, 0, rules);
-
-            Equal("Team 1", g.GetWinner().Name);
-            Equal("Team 2", g.GetLoser().Name);
-        }
-
-
-        [Fact]
-        public void ShouldGetTier()
-        {
-            var rules = new GameRules(null, true, 1, 0, 7, 6);
-
-            var g = new Game(CreateTeam("Team 1", 1), CreateTeam("Team 2", 2), 3, 3, true, 0, rules);
-            Null(g.GetWinner());
-            Null(g.GetLoser());
-        }
-
-
-        public static IEnumerable<object[]> GetShouldPlayGamesData()
-        {
-            var rules1 = new GameRules(null, true, 3, 0, 7, 6);
-            var rules2 = new GameRules(null, true, 3, 3, 7, 6);
-            var rules3 = new GameRules(null, false, 3, 1, 7, 6);
-
-            yield return new object[] { 1, new Game(CreateTeam("Team 1",1), CreateTeam("Team 2",2), 0, 0, false, 1, rules1), new int[] { 1, 0, 2, 3, 0, 0 }, 3, 3, 4 };            
-            yield return new object[] { 2, new Game(CreateTeam("Team 3",3), CreateTeam("Team 4",4), 0, 0, false, 1, rules2), new int[] { 1, 0, 2, 3, 0, 0, 5, 5, 5 }, 3, 3, 7 };
-            yield return new object[] { 3, new Game(CreateTeam("Team 5",5), CreateTeam("Team 6",6), 0, 0, false, 1, rules3), new int[] { 1, 0, 2, 3, 0, 0, 5, 5, 6}, 4, 3, 7 };
-
-        }
-
-        [Theory]
-        [MemberData(nameof(GetShouldPlayGamesData))]
-        public void ShouldPlayGame(int testNumber, Game game, int[] RandomizedValues, int expectedHome, int expectedAway, int expectedPeriod)
-        {          
-            var r = new GameTestRandom(RandomizedValues);
-
-            testNumber += 1;
-
-            game.Play(r);
-
-            StrictEqual(expectedHome, game.HomeScore);
-            StrictEqual(expectedAway, game.AwayScore);
-            StrictEqual(expectedPeriod, game.CurrentPeriod);
-            True(game.Complete);                        
-
-        }
-
-        public static IEnumerable<object[]> GetIsGameCompleteData()
-        {
-            var rules1 = new GameRules(null, true, 1, 0, 7, 6);
-            var rules2 = new GameRules(null, true, 1, 0, 7, 6);
-            var rules3 = new GameRules(null, false, 1, 2, 7, 6);
-            var rules4 = new GameRules(null, true, 5, 2, 7, 6);
-
-            yield return new object[] { 1, new Game(CreateTeam("Team 1",1), CreateTeam("Team 2",2), 0, 0, true, 1, rules1), false };
-            yield return new object[] { 2, new Game(CreateTeam("Team 1", 1), CreateTeam("Team 2", 2), 0, 0, true, 2, rules2), true };
-            yield return new object[] { 3, new Game(CreateTeam("Team 1", 1), CreateTeam("Team 2", 2), 0, 0, true, 4, rules3), false };
-            yield return new object[] { 4, new Game(CreateTeam("Team 1", 1), CreateTeam("Team 2", 2), 0, 0, true, 8, rules4), true };
-        }
-
-        [Theory]
-        [MemberData(nameof(GetIsGameCompleteData))]
-        public void IsGameComplete(int testNumber, Game game, bool expected)
-        {
-            testNumber += 1;
-
-            StrictEqual(expected, game.IsComplete());
-        }
-
-        [Fact]
-        public void ShouldPlayOverTimePeriod()
-        {
-            var rules = new GameRules(null, true, 1, 0, 7, 6);
-
-            var g = new Game(CreateTeam("Team 1",1), CreateTeam("Team 2",2), 0, 0, false, 1, rules);
-
-            var random = new GameTestRandom(new int[] { 5, 5, 10, 2 });
-
-            g.PlayOverTimePeriod(random);
-            StrictEqual(0, g.HomeScore);
-            StrictEqual(0, g.AwayScore);
-
-            g.PlayOverTimePeriod(random);
-            StrictEqual(0, g.HomeScore);
-            StrictEqual(0, g.AwayScore);
-
-            g.PlayOverTimePeriod(random);
-            StrictEqual(1, g.HomeScore);
-            StrictEqual(0, g.AwayScore);
-
-            g.PlayOverTimePeriod(random);
-            StrictEqual(1, g.HomeScore);
-            StrictEqual(1, g.AwayScore);
-
-        }
-
-        [Fact]
-        public void ShouldPlayRegulationPeriod()
-        {
-            var rules = new GameRules(null, true, 1, 0, 7, 6);
-
-            var g = new Game(CreateTeam("Team 1",1), CreateTeam("Team 2",2), 0, 0, false, 1, rules);
-
-            var random = new GameTestRandom(new int[] { 5, 5, 10, 2, 0, 3, 3, 0 });
-
-            g.PlayRegulationPeriod(random, g.HomeTeam.Skill, g.AwayTeam.Skill);
-            StrictEqual(5, g.HomeScore);
-            StrictEqual(5, g.AwayScore);
-
-            g.PlayRegulationPeriod(random, g.HomeTeam.Skill, g.AwayTeam.Skill);
-            StrictEqual(15, g.HomeScore);
-            StrictEqual(7, g.AwayScore);
-
-            g.PlayRegulationPeriod(random, g.HomeTeam.Skill, g.AwayTeam.Skill);
-            StrictEqual(15, g.HomeScore);
-            StrictEqual(10, g.AwayScore);
-
-            g.PlayRegulationPeriod(random, g.HomeTeam.Skill, g.AwayTeam.Skill);
-            StrictEqual(18, g.HomeScore);
-            StrictEqual(10, g.AwayScore);
-
+            throw new NotImplementedException();
         }
 
     }

@@ -1,10 +1,5 @@
 ﻿using System;
 using static System.Console;
-using TeamApp.Console.App;
-using System.Threading;
-using System.Linq;
-using TeamApp.Console.Views.Season;
-using TeamApp.Domain.Competitions;
 using System.Collections.Generic;
 using TeamApp.Domain.Games;
 using TeamApp.Domain;
@@ -13,14 +8,13 @@ namespace TeamApp.Console
 {
     class Program
     {
-
-        
-        static void Main(string[] args)
+        static void Other()
         {
-
             var teamList = new List<Team>();
+            int numberOfTeams = 10;
+            var rand = new Random();
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < numberOfTeams; i++)
             {
                 var team = new Team("Team " + i, "The " + i + "'s", "T" + i, 5, "Me", 1, null, true, new List<Player>());
 
@@ -33,16 +27,30 @@ namespace TeamApp.Console
                 teamList.Add(team);
             }
 
-            var g = new NewGame() {
-                Home = teamList[1],
-                Away = teamList[2],
-                Rules = new GameRules("My Rules", false, 2, 1, 10, true)
-            };
+            for (int i = 0; i < numberOfTeams - 1; i++)
+            {
+                for (int j = i + 1; j < numberOfTeams; j++)
+                {
+                    var g = new Game()
+                    {
+                        Home = teamList[i],
+                        Away = teamList[j],
+                        Rules = new GameRules("My Rules", true, 2, 3, 120, true),
+                        OutputPlayByPlay = false
+                    };
 
-            var rand = new Random(1123213);
+                    g.Play(rand);
+                    WriteLine(g);
+                }
+            }
+        }
+        
+        static void Main(string[] args)
+        {
+
+            var go = new SeasonProgram();
+            go.Run();
             
-            g.Play(rand);
-
             WriteLine("Press Enter to Close the app");
             ReadLine();
 

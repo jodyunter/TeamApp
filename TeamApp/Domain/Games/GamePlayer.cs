@@ -15,7 +15,7 @@ namespace TeamApp.Domain.Games
         public virtual int? FirstYear { get; set; }
         public virtual int? LastYear { get; set; }
 
-        public virtual NewGame Game { get; set; }
+        public virtual Game Game { get; set; }
         public virtual IPlayer Parent { get; set; }
         public virtual PlayerStats Stats { get; set; }
         public virtual ITeam Team { get; set; }        
@@ -25,7 +25,7 @@ namespace TeamApp.Domain.Games
 
         }
 
-        public GamePlayer(NewGame g, IPlayer p, ITeam team, int? year)
+        public GamePlayer(Game g, IPlayer p, ITeam team, int? year)
         {
             Stats = new PlayerStats();
             Name = p.Name;

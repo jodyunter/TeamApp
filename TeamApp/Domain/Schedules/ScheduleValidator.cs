@@ -147,7 +147,7 @@ namespace TeamApp.Domain.Schedules
         public ScheduleGameValidator(ScheduleGame game)
         {
             Messages = new List<string>();
-            IsValid = !(game.HomeTeam.Id == game.AwayTeam.Id);
+            IsValid = !(game.Home.Id == game.Away.Id);
             if (!IsValid) Messages.Add("Game:" + game.GameNumber + " day: " + game.Day + " has the same Home and Away team");
         }
     }
@@ -171,8 +171,8 @@ namespace TeamApp.Domain.Schedules
 
             day.Games.ForEach(g =>
             {
-                AddHomeTeam(g.HomeTeam.Name);
-                AddAwayTeam(g.AwayTeam.Name);
+                AddHomeTeam(g.Home.Name);
+                AddAwayTeam(g.Away.Name);
             });
         }
 

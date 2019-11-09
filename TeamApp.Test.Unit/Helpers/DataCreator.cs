@@ -58,7 +58,7 @@ namespace TeamApp.Test.Helpers
         {
             var seasonConfig = new SeasonCompetitionConfig("Regular Season", league, startingDay, order, null, 1, null, null, null, null, null, null);
 
-            seasonConfig.GameRules = new GameRules("Season Rules", true, 3, 1, 7, 6);
+            seasonConfig.GameRules = new GameRules("Season Rules", true, 1, 3, 120, true);
 
             seasonConfig.Parents = parents;
 
@@ -95,7 +95,7 @@ namespace TeamApp.Test.Helpers
         {
             var seasonConfig = new SeasonCompetitionConfig("Regular Season", league, startingDay, order, null, 1, null, null, null, null, null, null);
 
-            seasonConfig.GameRules = new GameRules("Season Rules", true, 3, 1, 7, 6);
+            seasonConfig.GameRules = new GameRules("Season Rules", true, 1, 3, 120, true);
 
             seasonConfig.Parents = parents;
 
@@ -138,7 +138,7 @@ namespace TeamApp.Test.Helpers
         {
             var playoffConfig = new PlayoffCompetitionConfig("My Playoff", league, order, startingDay, null, firstYear, lastYear, null, null, parents, null);
 
-            var gameRules = new GameRules("Playoff Rules", false, 3, 1, 7, 6);
+            var gameRules = new GameRules("Playoff Rules", false, 1, 3, 120, true);
 
             playoffConfig.GameRules = gameRules;
 
@@ -163,9 +163,9 @@ namespace TeamApp.Test.Helpers
 
         public static SeasonCompetitionConfig CreateLargeSeasonConfiguration(League league, List<Team> teamList, List<CompetitionConfig> parents, int? startingDay, int order)
         {
-            var seasonConfig = new SeasonCompetitionConfig("Regular Season", league, startingDay, order, null, 1, null, null, null, null, null, null);            
+            var seasonConfig = new SeasonCompetitionConfig("Regular Season", league, startingDay, order, null, 1, null, null, null, null, null, null);
 
-            seasonConfig.GameRules = new GameRules("Season Rules", true, 3, 1, 7, 6);
+            seasonConfig.GameRules = new GameRules("Season Rules", true, 1, 3, 120, true);
 
             seasonConfig.Parents = parents;
 
@@ -246,7 +246,7 @@ namespace TeamApp.Test.Helpers
         {
             var playoffConfig = new PlayoffCompetitionConfig("My Playoff", league, order, startingDay, null, firstYear, lastYear, null, null, parents, null);
 
-            var gameRules = new GameRules("Playoff Rules", false, 3, 1, 7, 6);
+            var gameRules = new GameRules("Playoff Rules", false, 1, 3, 120, true);
 
             playoffConfig.GameRules = gameRules;
 
