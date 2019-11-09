@@ -34,7 +34,7 @@ namespace TeamApp.Data.Relational.Repositories
 
         public Competition GetCompetitionForCompetitionConfig(CompetitionConfig config, int year)
         {
-            return baseRepo.Where(c => c.CompetitionConfig == config && c.Year == year).FirstOrDefault();
+            return baseRepo.Where(c => c.CompetitionConfig.Id == config.Id && c.Year == year).FirstOrDefault();
         }
 
         public IEnumerable<Competition> GetParentCompetitionsForCompetitionConfig(CompetitionConfig config, int year)

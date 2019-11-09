@@ -54,8 +54,8 @@ namespace TeamApp.Domain.Competitions
         {
             if (!game.IsComplete())
             {
-                var homeCompetitionTeam = Teams.Where(t => t.Name.Equals(game.Home.Name) && t.NickName.Equals(game.Away.NickName)).First();
-                var awayCompetitionTeam = Teams.Where(t => t.Name.Equals(game.Home.Name) && t.NickName.Equals(game.Away.NickName)).First();
+                var homeCompetitionTeam = Teams.Where(t => t.Name.Equals(game.Home.Name) && t.NickName.Equals(game.Home.NickName)).First();
+                var awayCompetitionTeam = Teams.Where(t => t.Name.Equals(game.Away.Name) && t.NickName.Equals(game.Away.NickName)).First();
                 game.Play(random);
             }
         }

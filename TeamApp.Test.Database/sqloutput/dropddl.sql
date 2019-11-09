@@ -19,36 +19,36 @@ BEGIN
 
 EXEC sp_MSforeachtable "ALTER TABLE ? NOCHECK CONSTRAINT all"
 
-
-IF OBJECT_ID (N'GameData', N'U') IS NOT NULL drop table GameData
-IF OBJECT_ID (N'TeamRanking', N'U') IS NOT NULL drop table TeamRanking
-IF OBJECT_ID (N'PlayoffSeriesRule', N'U') IS NOT NULL drop table PlayoffSeriesRule
-IF OBJECT_ID (N'PlayoffSeries', N'U') IS NOT NULL drop Table PlayoffSeries
-IF OBJECT_ID (N'SeasonTeamRule', N'U') IS NOT NULL drop table SeasonTeamRule
-IF OBJECT_ID (N'SeasonTeamStats', N'U') IS NOT NULL drop table SeasonTeamStats
-IF OBJECT_ID (N'SeasonScheduleRule', N'U') IS NOT NULL drop table SeasonScheduleRule
+--competitionconfigs first
 IF OBJECT_ID (N'CompetitionTeam', N'U') IS NOT NULL drop table CompetitionTeam
-IF OBJECT_ID (N'Playoff', N'U') IS NOT NULL drop table Playoff
-IF OBJECT_ID (N'Season', N'U') IS NOT NULL drop table Season
-IF OBJECT_ID (N'PlayoffRankingRule', N'U') IS NOT NULL drop table PlayoffRankingRule
-IF OBJECT_ID (N'PlayoffCompetitionConfig', N'U') IS NOT NULL drop table PlayoffCompetitionConfig
-IF OBJECT_ID (N'GamePlayer', N'U') IS NOT NULL drop table GamePlayer
-IF OBJECT_ID (N'PlayerStats', N'U') IS NOT NULL drop table PlayerStats
-IF OBJECT_ID (N'Player', N'U') IS NOT NULL drop table Player
-IF OBJECT_ID (N'SeasonDivision', N'U') IS NOT NULL drop table SeasonDivision
-IF OBJECT_ID (N'Game', N'U') IS NOT NULL  drop table Game
-IF OBJECT_ID (N'SeasonDivisionRule', N'U') IS NOT NULL drop table SeasonDivisionRule
-IF OBJECT_ID (N'SeasonCompetitionConfig', N'U') IS NOT NULL drop table SeasonCompetitionConfig
-IF OBJECT_ID (N'SeasonCompetitionConfigFinalRankingRule', N'U') IS NOT NULL drop table SeasonCompetitionConfigFinalRankingRule
 IF OBJECT_ID (N'CompetitionConfigFinalRankingRule', N'U') IS NOT NULL drop table CompetitionConfigFinalRankingRule
+IF OBJECT_ID (N'SeasonTeamRule', N'U') IS NOT NULL drop table SeasonTeamRule
+IF OBJECT_ID (N'SeasonScheduleRule', N'U') IS NOT NULL drop table SeasonScheduleRule
+IF OBJECT_ID (N'SeasonDivisionRule', N'U') IS NOT NULL drop table SeasonDivisionRule
 IF OBJECT_ID (N'CompetitionConfig', N'U') IS NOT NULL drop table CompetitionConfig
-IF OBJECT_ID (N'CompetitionTeam', N'U') IS NOT NULL drop table CompetitionTeam
-IF OBJECT_ID (N'Competition', N'U') IS NOT NULL drop table Competition
+
+IF OBJECT_ID (N'TeamRanking', N'U') IS NOT NULL drop table TeamRanking
+IF OBJECT_ID (N'SeasonDivision', N'U') IS NOT NULL drop table SeasonDivision
+IF OBJECT_ID (N'SeasonTeamStats', N'U') IS NOT NULL drop table SeasonTeamStats
+
+--may need to move in the future
+IF OBJECT_ID (N'Player', N'U') IS NOT NULL drop table Player
 IF OBJECT_ID (N'Team', N'U') IS NOT NULL drop table Team
-IF OBJECT_ID (N'League', N'U') IS NOT NULL drop table League
+IF OBJECT_ID (N'Game', N'U') IS NOT NULL drop table Game
+IF OBJECT_ID (N'PlayoffSeries', N'U') IS NOT NULL drop table PlayoffSeries
+IF OBJECT_ID (N'GameData', N'U') IS NOT NULL drop table GameData
+
 IF OBJECT_ID (N'GameRules', N'U') IS NOT NULL drop table GameRules
+
+IF OBJECT_ID (N'Competition', N'U') IS NOT NULL drop table Competition
+IF OBJECT_ID (N'League', N'U') IS NOT NULL drop table League
+
 
 
 END
 
---exec DropAllTables
+/*
+
+exec DropAllTables
+
+*/

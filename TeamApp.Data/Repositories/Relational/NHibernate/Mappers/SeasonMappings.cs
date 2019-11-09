@@ -10,7 +10,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
         {
             DiscriminatorValue("Season");
 
-            HasMany(x => x.Divisions);
+            HasMany(x => x.Divisions).Cascade.All();
         }
     }
 

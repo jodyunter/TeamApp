@@ -15,8 +15,8 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
             HasOne(x => x.CompetitionConfig).Cascade.All();
             Map(x => x.Name);
             Map(x => x.Year);
-            HasMany(x => x.Rankings);
-            HasMany(x => x.Teams);
+            HasMany(x => x.Rankings).Cascade.All();
+            HasMany(x => x.Teams).Cascade.All();
             Map(x => x.Started);
             Map(x => x.Finished);
             Map(x => x.StartDay);

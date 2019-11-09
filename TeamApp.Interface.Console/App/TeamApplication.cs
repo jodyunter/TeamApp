@@ -69,8 +69,8 @@ namespace TeamApp.Console.App
 
                 if (dropFirst)
                 {
-                    //var query = session.CreateSQLQuery("exec DropAllTables");
-                    //query.ExecuteUpdate();
+                    var query = session.CreateSQLQuery("exec DropAllTables");
+                    query.ExecuteUpdate();
                     //D:\Visual Studio Projects\gitrepos\TeamApp\TeamApp.Test.Database\sqloutput\dropddl.sql
 
                 }

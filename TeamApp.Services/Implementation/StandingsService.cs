@@ -12,6 +12,7 @@ namespace TeamApp.Services.Implementation
         private IStandingsRepository standingsRepository;
         private ITeamRankingRepository teamRankingRepository;
         private ICompetitionTeamRepository competitionTeamRepository;
+        private ICompetitionRepository competitionRepository;
         private SeasonTeamToStandingsTeamViewModelMapper mapper;
 
         public StandingsService(IStandingsRepository StandingsRepository, ITeamRankingRepository TeamRankingRepository, ICompetitionTeamRepository SingleYearTeamRepository)
@@ -29,11 +30,12 @@ namespace TeamApp.Services.Implementation
 
         public StandingsViewModel GetStandings(long competitionId)
         {
-            var teams = standingsRepository.GetByCompetition(competitionId);
+            var competition = competitionRepository.Get(competitionId);
+            var teams = competition.Teams;
 
             var models = mapper.MapDomainToModel(teams).ToList();
 
-            var ranks = teamRankingRepository.GetByCompetition(competitionId).ToList();
+            var ranks = competition.Rankings.ToList();
 
             models.ForEach(model =>
             {

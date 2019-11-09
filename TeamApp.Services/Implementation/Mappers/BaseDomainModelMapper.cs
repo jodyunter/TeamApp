@@ -6,6 +6,17 @@ namespace TeamApp.Services.Implementation.Mappers
 {    
     public class BaseDomainModelMapper<Domain, Model> 
     {
+        virtual public IEnumerable<Model> MapDomainToModel(IList<Domain> objs)
+        {
+            var result = new List<Model>();
+
+            objs.ToList().ForEach(obj =>
+            {
+                result.Add(MapDomainToModel(obj));
+            });
+
+            return result;
+        }
         virtual public IEnumerable<Model> MapDomainToModel(IEnumerable<Domain> objs)
         {
             var result = new List<Model>();

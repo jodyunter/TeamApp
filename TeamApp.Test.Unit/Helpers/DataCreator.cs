@@ -14,10 +14,25 @@ namespace TeamApp.Test.Helpers
         {
             return new League(name, 1, null);
         }
+        
 
+        public static int CreatePlayersForTeam(Team team, int totalPlayers)
+        {
+            if (team.Players == null) team.Players = new List<Player>();
+
+            for (int i = 0; i < 6; i++)
+            {
+                var player = new Player("Player_" + i, 20, 1, null, team);
+                team.Players.Add(player);
+                totalPlayers++;
+
+            }
+
+            return totalPlayers;
+        }
         public static List<Team> CreateTeams()
         {
-            return new List<Team>()
+            var teamList = new List<Team>()
             {
                 new Team("Toronto", "Maple Leafs", "TML", 1, null, 1, null, true, null),
                 new Team("Montreal", "Canadiens", "MTL", 1, null, 1, null, true, null),
@@ -53,6 +68,14 @@ namespace TeamApp.Test.Helpers
                 new Team("Hamilton", "Forge", "HAF", 1, null, 1, null, true, null),
 
             };
+
+            int totalPlayers = 0;
+            teamList.ForEach(team =>
+            {
+                totalPlayers = CreatePlayersForTeam(team, totalPlayers);
+            });
+
+            return teamList;
         }
         public static SeasonCompetitionConfig CreateSmallSeasonConfiguration(League league, List<Team> teamList, List<CompetitionConfig> parents, int? startingDay, int order)
         {
