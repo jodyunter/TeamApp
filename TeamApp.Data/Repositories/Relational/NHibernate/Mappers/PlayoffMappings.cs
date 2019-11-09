@@ -10,6 +10,9 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
         public PlayoffMap()
         {
             DiscriminatorValue("Playoff");
+
+            Map(x => x.CurrentRound);
+            HasMany(x => x.Series);
         }
     }
     public class PlayoffTeamMap : SubclassMap<PlayoffTeam>
