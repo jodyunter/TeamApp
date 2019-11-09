@@ -19,37 +19,34 @@ namespace TeamApp.Domain.Games
 
         public virtual GameRules Rules { get; set; }
 
-        public Team Offense { get; set; }
-        public Team Defense { get; set; }
+        /* not currently mapped members */
+        public virtual Team Offense { get; set; }
+        public virtual Team Defense { get; set; }
 
-        public Line OffenseLine { get; set; } = new Line();
-        public Line DefenseLine { get; set; } = new Line();
+        public virtual Line OffenseLine { get; set; } = new Line();
+        public virtual Line DefenseLine { get; set; } = new Line();
 
-        public Line HomeLine { get; set; } = new Line();
-        public Line AwayLine { get; set; } = new Line();
-        
-        public GamePlayer PuckCarrier { get; set; }
-        
-        public GamePlayer Assist1 { get; set; } = null;
+        public virtual Line HomeLine { get; set; } = new Line();
+        public virtual Line AwayLine { get; set; } = new Line();
 
-        public GamePlayer Assist2 { get; set; } = null;
+        public virtual GamePlayer PuckCarrier { get; set; }
 
-        public Random Random { get; set; } = null;
+        public virtual GamePlayer Assist1 { get; set; } = null;
 
-        public int ControlPoints { get; set; } = 0;
-        public int ControlPointMax { get; set; } = 8;
-        public int DefenseBonus { get; set; } = 0;
-        public int GoalieBonus { get; set; } = 20;
+        public virtual GamePlayer Assist2 { get; set; } = null;
 
-        //replace with rules        
+        public virtual Random Random { get; set; } = null;
 
-        public const int GAME_PERIODS = 3;
+        public virtual int ControlPoints { get; set; } = 0;
+        public virtual int ControlPointMax { get; set; } = 8;
+        public virtual int DefenseBonus { get; set; } = 0;
+        public virtual int GoalieBonus { get; set; } = 20;
 
-        public bool OutputPlayByPlay { get; set; } = true;
+        public virtual bool OutputPlayByPlay { get; set; } = false;
 
-        public bool PauseBetweenPeriods { get; set; } = false;
+        public virtual bool PauseBetweenPeriods { get; set; } = false;
 
-        public bool IsComplete()
+        public virtual bool IsComplete()
         {
             return Complete;
         }
@@ -65,14 +62,14 @@ namespace TeamApp.Domain.Games
             CurrentPeriod = currentPeriod;
             CurrentTime = currentTime;
         }
-        public void Play()
+        public virtual void Play()
         {
             Play(Random);
 
         }
 
 
-        public void Play(Random random)
+        public virtual void Play(Random random)
         {
             Random = random;
 
@@ -100,25 +97,25 @@ namespace TeamApp.Domain.Games
             else return null;
         }
 
-        public bool IsTied()
+        public virtual bool IsTied()
         {
             return HomeScore == AwayScore;
         }
 
-        public void AddAssist(GamePlayer assister)
+        public virtual void AddAssist(GamePlayer assister)
         {
             if (assister.Team.Name != PuckCarrier.Team.Name) throw new Exception("What the heck is with this goal!?");
             if (Assist1 != null) Assist2 = Assist1;
             Assist1 = assister;
         }
 
-        public void WriteToLog(string logEntry)
+        public virtual void WriteToLog(string logEntry)
         {
             if (OutputPlayByPlay)
                 Console.WriteLine(logEntry);
         }
 
-        public Actions.Action ProcessAction(Actions.Action action)
+        public virtual Actions.Action ProcessAction(Actions.Action action)
         {
             action.PreProcess();
             if (!action.Process())
@@ -137,12 +134,12 @@ namespace TeamApp.Domain.Games
         }
 
         //remove to actions
-        public Actions.Action PassCarryShoot(int passOdds, int carryOdds, int shootOdds)
+        public virtual Actions.Action PassCarryShoot(int passOdds, int carryOdds, int shootOdds)
         {
             return NextAction(new List<ActionType>() { ActionType.Pass, ActionType.Carry, ActionType.Shoot }, new List<int>() { passOdds, carryOdds, shootOdds });
         }
         //remove to actions
-        public Actions.Action PassCarryShoot()
+        public virtual Actions.Action PassCarryShoot()
         {
             var passOdds = 10;
             var carryOdds = 10;
@@ -152,12 +149,12 @@ namespace TeamApp.Domain.Games
 
         }
         //remove to actions
-        public Actions.Action NextAction(List<ActionType> possibleActions, List<int> odds)
+        public virtual Actions.Action NextAction(List<ActionType> possibleActions, List<int> odds)
         {
             return NextAction(possibleActions, odds, Random);
         }
         //remove to actions
-        public Actions.Action NextAction(List<ActionType> possibleActions, List<int> odds, Random random)
+        public virtual Actions.Action NextAction(List<ActionType> possibleActions, List<int> odds, Random random)
         {
             odds.ForEach(o =>
             {
@@ -185,7 +182,7 @@ namespace TeamApp.Domain.Games
             return null;
         }
 
-        public void SwitchOffense()
+        public virtual void SwitchOffense()
         {
             if (Offense.Name.Equals(Home.Name))
             {
@@ -211,29 +208,29 @@ namespace TeamApp.Domain.Games
         }
 
 
-        public void AddControlPoint()
+        public virtual void AddControlPoint()
         {
             ControlPoints++;
             if (ControlPoints > ControlPointMax) ControlPoints = ControlPointMax;
 
 
         }
-        public void ClearControlPoints()
+        public virtual void ClearControlPoints()
         {
             ControlPoints = 0;
         }
-        public void ClearAssists()
+        public virtual void ClearAssists()
         {
             Assist1 = null;
             Assist2 = null;
         }
 
-        public bool Success(int offenseSkill, int defenseSkill)
+        public virtual bool Success(int offenseSkill, int defenseSkill)
         {
             return Success(Offense, Defense, offenseSkill, defenseSkill, Random);
 
         }
-        public bool Success(Team offense, Team defense, int offenseSkill, int defenseSkill, Random random)
+        public virtual bool Success(Team offense, Team defense, int offenseSkill, int defenseSkill, Random random)
         {
             int teamDifferential = offense.Skill - defense.Skill;
             int playerDifferential = offenseSkill - defenseSkill;
@@ -246,11 +243,11 @@ namespace TeamApp.Domain.Games
         }
 
 
-        public GamePlayer PickPlayer(List<GamePlayer> playerList)
+        public virtual GamePlayer PickPlayer(List<GamePlayer> playerList)
         {
             return PickPlayer(playerList, Random);
         }
-        public GamePlayer PickPlayer(List<GamePlayer> playerList, Random random)
+        public virtual GamePlayer PickPlayer(List<GamePlayer> playerList, Random random)
         {
             return playerList[random.Next(playerList.Count)];
         }

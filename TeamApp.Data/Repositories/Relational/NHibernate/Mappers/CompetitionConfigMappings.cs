@@ -1,6 +1,8 @@
 ﻿
 
+using FluentNHibernate.Mapping;
 using TeamApp.Domain.Competitions.Config;
+using TeamApp.Domain.Competitions.Config.Seasons;
 
 namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
 {
@@ -17,8 +19,11 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
             HasMany(x => x.FinalRankingRules);
             Map(x => x.CompetitionStartingDay);
             Map(x => x.FinalRankingGroupName);
+
+            DiscriminateSubClassesOnColumn<string>("Type").AlwaysSelectWithValue();
         }
     }
+    
 
     public class CompetitionConfigFinalRankingRuleMap:BaseTimePeriod<CompetitionConfigFinalRankingRule>
     {
@@ -26,7 +31,11 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
         {
 
             Map(x => x.Name);
-            Map(x => x.Rank);            
+            Map(x => x.Rank);
+
+            DiscriminateSubClassesOnColumn<string>("Type").AlwaysSelectWithValue();
         }
     }
+
+
 }

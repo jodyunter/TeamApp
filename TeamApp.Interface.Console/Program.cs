@@ -85,9 +85,9 @@ namespace TeamApp.Console
         static void Main(string[] args)
         {
 
-            //var go = new SeasonProgram();
-            //go.Run();
-            SingleGame();
+            var go = new SeasonProgram();
+            go.Run();
+            //SingleGame();
             
             WriteLine("Press Enter to Close the app");
             ReadLine();

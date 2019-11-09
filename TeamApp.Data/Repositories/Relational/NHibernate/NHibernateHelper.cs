@@ -66,10 +66,16 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
                        m.FluentMappings.Add<LeagueMap>();
                        m.FluentMappings.Add<CompetitionConfigMap>();
                        m.FluentMappings.Add<CompetitionConfigFinalRankingRuleMap>();
+                       m.FluentMappings.Add<SeasonCompetitionConfigMap>();
+                       m.FluentMappings.Add<SeasonCompetitionConfigFinalRankingRuleMap>();
+                       m.FluentMappings.Add<SeasonDivisionRuleMap>();
+                       m.FluentMappings.Add<SeasonScheduleRuleMap>();
                        m.FluentMappings.Add<CompetitionMap>();
                        m.FluentMappings.Add<CompetitionTeamMap>();
                        m.FluentMappings.Add<SeasonMap>();
                        m.FluentMappings.Add<SeasonTeamMap>();
+                       m.FluentMappings.Add<SeasonTeamStatsMap>();
+                       m.FluentMappings.Add<SeasonDivisionMap>();
                        m.FluentMappings.Add<PlayoffTeamMap>();
                        m.FluentMappings.Add<TeamRankingMap>();
                        m.FluentMappings.Add<GameDataMap>();

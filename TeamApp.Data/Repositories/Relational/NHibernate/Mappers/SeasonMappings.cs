@@ -23,4 +23,33 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
             HasOne(x => x.Stats);
         }
     }
+
+    public class SeasonDivisionMap:BaseMap<SeasonDivision>
+    {
+
+        public SeasonDivisionMap()
+        {
+            HasOne(x => x.Season);
+            HasOne(x => x.ParentDivision);
+            Map(x => x.Year);
+            Map(x => x.Name);
+            HasMany(x => x.Teams);
+            Map(x => x.Level);
+            Map(x => x.Ordering);
+        }
+    }
+
+    public class SeasonTeamStatsMap:BaseMap<SeasonTeamStats>
+    {
+        public SeasonTeamStatsMap()
+        {
+            Map(x => x.Wins);
+            Map(x => x.Loses);
+            Map(x => x.Ties);
+            Map(x => x.GoalsFor);
+            Map(x => x.GoalsAgainst);
+            Map(x => x.PointsPerWin);
+            Map(x => x.PointsPerTie);            
+        }
+    }
 }
