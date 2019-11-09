@@ -37,6 +37,17 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
             HasMany(x => x.Divisions);
         }
     }
+
+    public class SeasonTeamMap : SubclassMap<SeasonTeam>
+    {
+        public SeasonTeamMap()
+        {
+            DiscriminatorValue("Season");
+            HasOne(x => x.Division);
+            HasOne(x => x.Stats);
+        }
+    }
+    
     public class CompetitionPlayerMap : BaseTimePeriod<CompetitionPlayer>
     {
 
@@ -72,16 +83,6 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
             DiscriminateSubClassesOnColumn<string>("Type").AlwaysSelectWithValue();
         }
 
-    }
-
-    public class SeasonTeamMap : SubclassMap<SeasonTeam>
-    {
-        public SeasonTeamMap()
-        {
-            DiscriminatorValue("Season");
-            HasOne(x => x.Division);
-            HasOne(x => x.Stats);
-        }
     }
 
     public class PlayoffTeamMap : SubclassMap<PlayoffTeam>
