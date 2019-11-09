@@ -28,26 +28,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
         }
     }
 
-    public class SeasonMap:SubclassMap<Season>
-    {
-        public SeasonMap()
-        {
-            DiscriminatorValue("Season");
-
-            HasMany(x => x.Divisions);
-        }
-    }
-
-    public class SeasonTeamMap : SubclassMap<SeasonTeam>
-    {
-        public SeasonTeamMap()
-        {
-            DiscriminatorValue("Season");
-            HasOne(x => x.Division);
-            HasOne(x => x.Stats);
-        }
-    }
-    
+       
     public class CompetitionPlayerMap : BaseTimePeriod<CompetitionPlayer>
     {
 
@@ -85,13 +66,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
 
     }
 
-    public class PlayoffTeamMap : SubclassMap<PlayoffTeam>
-    {
-        public PlayoffTeamMap()
-        {
-            DiscriminatorValue("Playoff");
-        }
-    }
+   
 
     public class TeamRankingMap:BaseMap<TeamRanking>
     {

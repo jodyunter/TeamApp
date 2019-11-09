@@ -14,7 +14,7 @@ namespace TeamApp.Domain.Games.Actions
             Game.ClearAssists();
             Game.ClearControlPoints();
             attacker = Game.OffenseLine.Centre;
-            defender = Game.OffenseLine.Centre;
+            defender = Game.DefenseLine.Centre;
 
         }
 
@@ -29,14 +29,14 @@ namespace TeamApp.Domain.Games.Actions
         public override void ProcessSuccess()
         { 
 
-            Game.WriteToLog(attacker.Name + "Wins the Face off");
+            Game.WriteToLog(attacker.Name + " Wins the Face off");
         }
 
         public override void ProcessFailure()
         {
             Game.SwitchOffense();
 
-            Game.WriteToLog(defender.Name + "Wins the Face off");
+            Game.WriteToLog(defender.Name + " Wins the Face off");
         }
 
         public override void ProcessStat()

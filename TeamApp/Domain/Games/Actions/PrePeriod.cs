@@ -26,7 +26,11 @@ namespace TeamApp.Domain.Games.Actions
             }
             else
             {
-                Game.WriteToLog("Period " + Game.CurrentPeriod + " is starting.");
+                Game.WriteToLog("Period " + Game.CurrentPeriod + " is starting.");       
+                if (Game.PauseBetweenPeriods)
+                {
+                    Console.ReadLine();
+                }
             }
         }
 

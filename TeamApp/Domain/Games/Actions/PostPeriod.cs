@@ -22,6 +22,12 @@ namespace TeamApp.Domain.Games.Actions
             }
             else 
             {
+                if (Game.PauseBetweenPeriods)
+                {
+                    Game.WriteToLog(Game.ToString());
+                    Game.WriteToLog("Press enter to start period " + Game.CurrentPeriod);                    
+                    Console.ReadLine();
+                }
                 return GetAction(ActionType.PrePeriod, Game);
             }
 
@@ -36,7 +42,7 @@ namespace TeamApp.Domain.Games.Actions
 
         public override void PreProcess()
         {            
-            Game.WriteToLog("Period " + Game.CurrentPeriod + " is over.");
+            Game.WriteToLog("Period " + Game.CurrentPeriod + " is over.");            
         }
 
         public override bool Process()

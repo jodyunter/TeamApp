@@ -47,6 +47,8 @@ namespace TeamApp.Domain.Games
 
         public bool OutputPlayByPlay { get; set; } = true;
 
+        public bool PauseBetweenPeriods { get; set; } = false;
+
         public bool IsComplete()
         {
             return Complete;
