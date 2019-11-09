@@ -8,7 +8,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
         public LeagueMap()
         {
             Map(x => x.Name);
-            HasMany(x => x.CompetitionConfigs);
+            HasMany(x => x.CompetitionConfigs).Cascade.All();
         }
     }
 }

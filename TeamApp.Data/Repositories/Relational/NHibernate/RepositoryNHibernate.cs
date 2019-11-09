@@ -67,7 +67,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
         }
 
         public void Flush()
-        {
+        {            
             session.Flush();
         }
 

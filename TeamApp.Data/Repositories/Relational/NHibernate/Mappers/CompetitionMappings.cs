@@ -12,7 +12,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
     {
         public CompetitionMap()
         {
-            HasOne(x => x.CompetitionConfig);
+            HasOne(x => x.CompetitionConfig).Cascade.All();
             Map(x => x.Name);
             Map(x => x.Year);
             HasMany(x => x.Rankings);
