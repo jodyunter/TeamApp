@@ -101,6 +101,11 @@ namespace TeamApp.Test.Domain.Competitions
         {
             throw new NotImplementedException();
         }
+
+        public override CompetitionTeam CreateCompetitionTeamDetails(Competition competition, Team parent)
+        {
+            throw new NotImplementedException();
+        }
     }
     public class MockCompetition : Competition
     {

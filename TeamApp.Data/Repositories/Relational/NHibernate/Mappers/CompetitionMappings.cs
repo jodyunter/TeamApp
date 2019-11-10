@@ -15,13 +15,13 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
             HasOne(x => x.CompetitionConfig).Cascade.All();
             Map(x => x.Name);
             Map(x => x.Year);
-            HasMany(x => x.Rankings).Cascade.All();
             HasMany(x => x.Teams).Cascade.All();
+            HasMany(x => x.Rankings).Cascade.All();            
             Map(x => x.Started);
             Map(x => x.Finished);
             Map(x => x.StartDay);
             Map(x => x.EndDay);
-            HasMany(x => x.Games);
+            HasMany(x => x.Games).Cascade.All();
 
             DiscriminateSubClassesOnColumn<string>("Type").AlwaysSelectWithValue();
 
@@ -42,7 +42,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
             Map(x => x.Offense);
             Map(x => x.Defense);
             Map(x => x.Goaltending);
-            Not.Map(x => x.Team);
+            //Not.Map(x => x.Team);
 
         }
     }
@@ -59,6 +59,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
             Map(x => x.ShortName);
             Map(x => x.Skill);
             Map(x => x.Owner);
+            HasMany(x => x.Players);
 
 
             DiscriminateSubClassesOnColumn<string>("Type").AlwaysSelectWithValue();

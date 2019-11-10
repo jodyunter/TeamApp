@@ -12,11 +12,11 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
         public CompetitionConfigMap()
         {
             Map(x => x.Name);
-            HasOne(x => x.League);
-            Map(x => x.Ordering);
-            HasOne(x => x.GameRules);
-            HasMany(x => x.Parents);
-            HasMany(x => x.FinalRankingRules);
+            HasOne(x => x.League).Cascade.All();
+            Map(x => x.Ordering);            
+            HasOne(x => x.GameRules).Cascade.All();
+            HasMany(x => x.Parents).Cascade.All();
+            HasMany(x => x.FinalRankingRules).Cascade.All();
             Map(x => x.CompetitionStartingDay);
             Map(x => x.FinalRankingGroupName);
 

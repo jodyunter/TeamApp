@@ -1,4 +1,5 @@
-﻿using TeamApp.Domain.Competitions;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace TeamApp.Domain.Competitions
 {
@@ -13,9 +14,12 @@ namespace TeamApp.Domain.Competitions
         public virtual string Owner { get; set; }
         public virtual int? FirstYear { get; set; }
         public virtual int? LastYear { get { return FirstYear; } set { } }
+        public virtual IList<CompetitionPlayer> Players {get; set; }
+                    
+       
 
         public CompetitionTeam() { }
-        public CompetitionTeam(Competition competition, Team parent, string name, string nickName, string shortName, int skill, string owner, int? year)
+        public CompetitionTeam(Competition competition, Team parent, string name, string nickName, string shortName, int skill, string owner, int? year, IList<CompetitionPlayer> players)
         {
             Competition = competition;
             Parent = parent;
@@ -26,6 +30,7 @@ namespace TeamApp.Domain.Competitions
             Owner = owner;
             FirstYear = year;
             LastYear = year;
+            Players = players;
         }
     }
 }

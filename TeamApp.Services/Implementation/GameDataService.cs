@@ -75,6 +75,7 @@ namespace TeamApp.Services.Implementation
 
             gamesToPlay.ForEach(game =>
             {
+                //setup the game players here
                 var competition = game.Competition;
                 competition.PlayGame(game, random);
                 scheduleGameRepo.Update(game);
@@ -94,6 +95,7 @@ namespace TeamApp.Services.Implementation
                
             gamesToProcess.ForEach(game =>
             {
+                //here we want to add all the player stats to the competition player stats
                 var competition = competitionList[game.Competition.Id];
                 var newGames = competition.ProcessGame(game, gameData.CurrentDay);
                 if (competition.GetType() == typeof(Season)) ((Season)competition).SortAllTeams();

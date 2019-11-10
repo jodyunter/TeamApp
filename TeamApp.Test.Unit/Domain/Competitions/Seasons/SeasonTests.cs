@@ -27,10 +27,10 @@ namespace TeamApp.Test.Domain.Competitions.Seasons
                 new ScheduleGame(null, 1, 1, 1, teams[0], teams[3], 1, 4, true, 1, 0, rules, false)
             };
 
-            var team1 = new SeasonTeam(null, teams[0], "Team 1", null, null, 5, null, 1, null, null);
-            var team2 = new SeasonTeam(null, teams[1], "Team 2", null, null, 5, null, 1, null, null);
-            var team3 = new SeasonTeam(null, teams[2], "Team 3", null, null, 5, null, 1, null, null);
-            var team4 = new SeasonTeam(null, teams[3], "Team 4", null, null, 5, null, 1, null, null);
+            var team1 = new SeasonTeam(null, teams[0], "Team 1", null, null, 5, null, 1, null, null, null);
+            var team2 = new SeasonTeam(null, teams[1], "Team 2", null, null, 5, null, 1, null, null, null);
+            var team3 = new SeasonTeam(null, teams[2], "Team 3", null, null, 5, null, 1, null, null, null);
+            var team4 = new SeasonTeam(null, teams[3], "Team 4", null, null, 5, null, 1, null, null, null);
 
             season.Teams = new List<CompetitionTeam>() { team1, team2, team3, team4 };
 

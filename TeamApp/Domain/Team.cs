@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using TeamApp.Domain.Games;
-
+using System.Linq;
 namespace TeamApp.Domain
 {
    
@@ -16,7 +14,7 @@ namespace TeamApp.Domain
         public virtual int? FirstYear { get; set; }
         public virtual int? LastYear { get; set; }
         public virtual bool Active { get; set; }
-        public virtual IList<Player> Players { get; set; }
+        public virtual IList<Player> Players { get; set;  }
 
         public Team():base() { }
         public Team(string name, string nickName, string shortName, int skill, string owner, int? firstYear, int? lastYear, bool active, IList<Player> players):base()

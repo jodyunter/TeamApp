@@ -15,7 +15,7 @@ namespace TeamApp.Domain.Competitions
         public virtual Game Game { get; set; }
         
         public virtual PlayerStats Stats { get; set; }
-        public ITeam Team
+        public virtual ITeam Team
         {
             get { return CompetitionTeam; }
             set { CompetitionTeam = (CompetitionTeam)value; }

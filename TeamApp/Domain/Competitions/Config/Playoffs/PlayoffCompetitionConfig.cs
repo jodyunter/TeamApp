@@ -63,12 +63,11 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
                 playoff.Series.Add(SetupSeriesFromRule(playoff, rule));
             });
         }
-      
-        
-        public override CompetitionTeam CreateCompetitionTeam(Competition playoff, Team parent)
+
+        public override CompetitionTeam CreateCompetitionTeamDetails(Competition playoff, Team parent)
         {
             return new PlayoffTeam(playoff, parent, parent.Name, parent.NickName, parent.ShortName,
-                        parent.Skill, parent.Owner, playoff.Year);
+                        parent.Skill, parent.Owner, playoff.Year, null);
         }
 
         public virtual void CreateRankingsFromRule(Playoff playoff, PlayoffRankingRule rule)
@@ -92,14 +91,14 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
 
             var sourceTeamRankings = groupOfTeams.Where(rank => rank.Rank >= firstRankToGet && rank.Rank <= lastRankToGet).ToList();
 
-            sourceTeamRankings.ForEach(sourceRanking =>
+            sourceTeamRankings.ForEach((Action<TeamRanking>)(sourceRanking =>
             {
                 var team = playoff.Teams.Where(t => t.Parent.Id == sourceRanking.CompetitionTeam.Parent.Id).FirstOrDefault();
                 if (team == null) team = CreateCompetitionTeam(playoff, sourceRanking.CompetitionTeam.Parent);
                 var rank = playoff.Rankings.Where(r => r.GroupName.Equals(groupToGetRankFrom) && r.CompetitionTeam.Parent.Id == team.Parent.Id).First().Rank;
 
                 newRankings.Add(new TeamRanking(rank, groupToPutTeamIn, team, 1));
-            });
+            }));
             
             if (rule.DestinationFirstRank != null)
             {

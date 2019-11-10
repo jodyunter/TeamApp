@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Competitions.Seasons;
 using TeamApp.ViewModels.Views.Standings;
 
@@ -8,6 +9,19 @@ namespace TeamApp.Services.Implementation.Mappers
 {
     public class SeasonTeamToStandingsTeamViewModelMapper:BaseDomainModelMapper<SeasonTeam, StandingsTeamViewModel>
     {
+
+        public IEnumerable<StandingsTeamViewModel> MapMulitpleDomainToModel(IEnumerable<CompetitionTeam> objs)
+        {
+            var result = new List<StandingsTeamViewModel>();
+
+            objs.ToList().ForEach(team =>
+            {
+                result.Add(MapDomainToModel((SeasonTeam)team));
+            });
+
+            return result;
+        }
+
         public override StandingsTeamViewModel MapDomainToModel(SeasonTeam obj)
         {
             var model = new StandingsTeamViewModel
@@ -26,7 +40,7 @@ namespace TeamApp.Services.Implementation.Mappers
                 Points = obj.Stats.Points,
                 Skill = obj.Skill
             };
-
+            
             return model;
         }
     }

@@ -16,8 +16,9 @@ namespace TeamApp.Domain.Competitions.Config
         public virtual int? FirstYear { get; set; }
         public virtual int? LastYear { get; set; }
         public virtual int? CompetitionStartingDay { get; set; }
-        public virtual string FinalRankingGroupName { get; set; }
-        public abstract CompetitionTeam CreateCompetitionTeam(Competition competition, Team parent);
+        public virtual string FinalRankingGroupName { get; set; }        
+        public abstract CompetitionTeam CreateCompetitionTeamDetails(Competition competition, Team parent);
+
         public abstract Competition CreateCompetitionDetails(int day, int year, IList<Competition> parents);
 
         protected CompetitionConfig() { }
@@ -74,13 +75,13 @@ namespace TeamApp.Domain.Competitions.Config
         {
             if (destinationCompetition.Teams == null) destinationCompetition.Teams = new List<CompetitionTeam>();
 
-            sourceCompetition.Teams.ToList().ForEach(sourceTeam =>
+            sourceCompetition.Teams.ToList().ForEach((System.Action<CompetitionTeam>)(sourceTeam =>
             {
                 //does the team already exist?
                 var team = destinationCompetition.Teams.Where(t => t.Parent.Id == sourceTeam.Parent.Id).FirstOrDefault();
-                if (team == null) team = CreateCompetitionTeam(destinationCompetition, sourceTeam.Parent);
+                if (team == null) team = CreateCompetitionTeam(destinationCompetition, sourceTeam.Parent);                
                 destinationCompetition.Teams.Add(team);
-            });
+            }));
         }
         
         //what if we have two parent competitions, and therefore end up copying this twice?
@@ -95,6 +96,25 @@ namespace TeamApp.Domain.Competitions.Config
                 destinationCompetition.Rankings.Add(new TeamRanking(sourceRanking.Rank, sourceRanking.GroupName, team, sourceRanking.GroupLevel));
             });
 
+        }
+
+        public virtual CompetitionTeam CreateCompetitionTeam(Competition competition, Team parent)
+        {
+            var team = CreateCompetitionTeamDetails(competition, parent);
+
+            team.Players = new List<CompetitionPlayer>();
+
+            parent.Players.ToList().ForEach(player =>
+            {
+                team.Players.Add(CreateCompetitionPlayer(competition, player, team));
+            });
+
+            return team;
+        }
+
+        public virtual CompetitionPlayer CreateCompetitionPlayer(Competition competition, Player parent, CompetitionTeam competitionTeam)
+        {
+            return new CompetitionPlayer(parent, competition, competitionTeam, parent.Name, parent.Age, parent.Offense, parent.Defense, parent.Goaltending, competition.Year, competition.Year);
         }
     }
 }

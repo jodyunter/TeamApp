@@ -107,7 +107,7 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs
         }
         public static PlayoffTeam CreateTeam(string name, int id, int parentId)
         {
-            return new PlayoffTeam(null, new Team(name, null, null, 5, null, 1, null, true, null) { Id = parentId }, name, null, null, 5, null, 1) { Id = id };
+            return new PlayoffTeam(null, new Team(name, null, null, 5, null, 1, null, true, null) { Id = parentId }, name, null, null, 5, null, 1, null) { Id = id };
         }
         [Theory]
         [MemberData(nameof(SeriesForInCompleteGames))]

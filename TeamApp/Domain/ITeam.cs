@@ -11,6 +11,7 @@ namespace TeamApp.Domain
         string ShortName { get; set; }
         int Skill { get; set; }
         string Owner { get; set; }   
+
        
     }
 }

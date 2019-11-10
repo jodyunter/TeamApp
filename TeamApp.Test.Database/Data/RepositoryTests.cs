@@ -269,13 +269,13 @@ namespace TeamApp.Test.Data
             var season = new Season(null, "Season 1", 1, null, null, null, null, true, false, 1, null);
             var seasonTeams = new List<CompetitionTeam>()
             {
-                new SeasonTeam(season, null, "Team 1", null, null, 5, null, 1, null, null),
-                new SeasonTeam(season, null, "Team 2", null, null, 5, null, 1, null, null),
-                new SeasonTeam(season, null, "Team 3", null, null, 5, null, 1, null, null),
-                new SeasonTeam(season, null, "Team 4", null, null, 5, null, 1, null, null),
-                new SeasonTeam(season, null, "Team 5", null, null, 5, null, 1, null, null),
-                new SeasonTeam(season, null, "Team 6", null, null, 5, null, 1, null, null),
-                new SeasonTeam(season, null, "Team 7", null, null, 5, null, 1, null, null),
+                new SeasonTeam(season, null, "Team 1", null, null, 5, null, 1, null, null, null),
+                new SeasonTeam(season, null, "Team 2", null, null, 5, null, 1, null, null, null),
+                new SeasonTeam(season, null, "Team 3", null, null, 5, null, 1, null, null, null),
+                new SeasonTeam(season, null, "Team 4", null, null, 5, null, 1, null, null, null),
+                new SeasonTeam(season, null, "Team 5", null, null, 5, null, 1, null, null, null),
+                new SeasonTeam(season, null, "Team 6", null, null, 5, null, 1, null, null, null),
+                new SeasonTeam(season, null, "Team 7", null, null, 5, null, 1, null, null, null),
             };
             season.Teams = seasonTeams;
             compRepo.Update(season);
@@ -336,13 +336,13 @@ namespace TeamApp.Test.Data
 
             for (int i = 0; i < 10; i++)
             {
-                var ranking = new TeamRanking(1, "Group 1", new CompetitionTeam(comp1, null, "Team " + (i * 10), null, null, 5, null, 1), 1);
+                var ranking = new TeamRanking(1, "Group 1", new CompetitionTeam(comp1, null, "Team " + (i * 10), null, null, 5, null, 1, null), 1);
                 repo.Update(ranking);
             }
 
             for (int i = 0; i < 5; i++)
             {
-                var ranking = new TeamRanking(1, "Group 5", new CompetitionTeam(comp2, null, "Team " + (i * 100), null, null, 5, null, 1), 1);
+                var ranking = new TeamRanking(1, "Group 5", new CompetitionTeam(comp2, null, "Team " + (i * 100), null, null, 5, null, 1, null), 1);
                 repo.Update(ranking);
             }
 
@@ -368,13 +368,13 @@ namespace TeamApp.Test.Data
 
             for (int i = 0; i < 10; i++)
             {
-                var syt = new CompetitionTeam(comp1, null, "Team " + i, null, null, 5, null, 1);
+                var syt = new CompetitionTeam(comp1, null, "Team " + i, null, null, 5, null, 1, null);
                 repo.Update(syt);
             }
 
             for (int i = 0; i < 5; i++)
             {
-                var syt = new CompetitionTeam(comp2, null, "Team " + (i*100), null, null, 5, null, 1);
+                var syt = new CompetitionTeam(comp2, null, "Team " + (i*100), null, null, 5, null, 1, null);
                 repo.Update(syt);
             }
 

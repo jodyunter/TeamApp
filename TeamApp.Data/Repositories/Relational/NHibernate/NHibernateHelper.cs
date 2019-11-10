@@ -1,12 +1,18 @@
-﻿using FluentNHibernate.Automapping;
+﻿using FluentNHibernate;
+using FluentNHibernate.Automapping;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using FluentNHibernate.Conventions.Helpers;
+using FluentNHibernate.Mapping;
+using FluentNHibernate.Mapping.Providers;
 using Microsoft.Extensions.Configuration;
 using NHibernate;
 using NHibernate.Context;
 using NHibernate.Event;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using TeamApp.Data.Repositories.Relational.NHibernate.Mappers;
 using TeamApp.Domain;
 using TeamApp.Domain.Competitions;
@@ -48,7 +54,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
 
             var storeConfig = new StoreConfiguration();
 
-            var hbmExport = @"C:\Users\jody_unterschutz\source\repos\TeamApp\TeamApp.Test.Database\HBM Files\";
+            //var hbmExport = @"C:\Users\jody_unterschutz\source\repos\TeamApp\TeamApp.Test.Database\HBM Files\"; use this if we want to export hbm xml files
             //we need to remap all of the classes explicitly.
             //https://github.com/FluentNHibernate/fluent-nhibernate/wiki
             return Fluently.Configure()
@@ -61,34 +67,8 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
                    .CurrentSessionContext("thread_static")
                    .Mappings(m =>
                    {
-                       m.FluentMappings.Add<TeamMap>();
-                       m.FluentMappings.Add<PlayerMap>();
-                       m.FluentMappings.Add<LeagueMap>();
-                       m.FluentMappings.Add<CompetitionConfigMap>();
-                       m.FluentMappings.Add<CompetitionConfigFinalRankingRuleMap>();
-                       m.FluentMappings.Add<SeasonCompetitionConfigMap>();
-                       m.FluentMappings.Add<SeasonCompetitionConfigFinalRankingRuleMap>();
-                       m.FluentMappings.Add<SeasonDivisionRuleMap>();
-                       m.FluentMappings.Add<SeasonScheduleRuleMap>();
-                       m.FluentMappings.Add<SeasonTeamRuleMap>();
-                       m.FluentMappings.Add<CompetitionMap>();
-                       m.FluentMappings.Add<CompetitionTeamMap>();
-                       m.FluentMappings.Add<SeasonMap>();
-                       m.FluentMappings.Add<SeasonTeamMap>();
-                       m.FluentMappings.Add<SeasonTeamStatsMap>();
-                       m.FluentMappings.Add<SeasonDivisionMap>();                       
-                       m.FluentMappings.Add<PlayoffMap>();
-                       m.FluentMappings.Add<PlayoffSeriesMap>();
-                       m.FluentMappings.Add<PlayoffTeamMap>();
-                       m.FluentMappings.Add<PlayoffGameMap>();
-                       m.FluentMappings.Add<BestOfSeriesMap>();
-                       m.FluentMappings.Add<TotalGoalsSeriesMap>();
-                       m.FluentMappings.Add<TeamRankingMap>();
-                       m.FluentMappings.Add<GameDataMap>();
-                       m.FluentMappings.Add<PlayerMap>();
-                       m.FluentMappings.Add<GameMap>();
-                       m.FluentMappings.Add<ScheduleGameMap>();
-                       m.FluentMappings.Add<GameRulesMap>();
+                       m.FluentMappings.AddFromNamespaceOf<LeagueMap>().Conventions.Add(DefaultCascade.All());
+                      
 
                        /*
                        m.AutoMappings.Add(
@@ -134,5 +114,36 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
         }
 
 
+
+    }
+
+    public static class FluentNHibernateExtensions
+    {
+        public static FluentMappingsContainer AddFromNamespaceOf<T>(
+            this FluentMappingsContainer fmc)
+        {
+            string ns = typeof(T).Namespace;
+            IEnumerable<Type> types = typeof(T).Assembly.GetExportedTypes()
+                .Where(t => t.Namespace == ns)
+                .Where(x => IsMappingOf<IMappingProvider>(x) ||
+                            IsMappingOf<IIndeterminateSubclassMappingProvider>(x) ||
+                            IsMappingOf<IExternalComponentMappingProvider>(x) ||
+                            IsMappingOf<IFilterDefinition>(x));
+
+            foreach (Type t in types)
+            {
+                fmc.Add(t);
+            }
+
+            return fmc;
+        }
+
+        /// <summary>
+        /// Private helper method cribbed from FNH source (PersistenModel.cs:151)
+        /// </summary>
+        private static bool IsMappingOf<T>(Type type)
+        {
+            return !type.IsGenericType && typeof(T).IsAssignableFrom(type);
+        }
     }
 }

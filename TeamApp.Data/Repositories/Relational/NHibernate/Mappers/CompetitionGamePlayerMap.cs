@@ -35,6 +35,6 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
 
         public virtual CompetitionTeam CompetitionTeam { get; set; }
         */
-    }
+        }
     }
 }

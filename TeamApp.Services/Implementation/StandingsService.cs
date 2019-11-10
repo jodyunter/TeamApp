@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Competitions.Seasons;
 using TeamApp.Domain.Repositories;
 using TeamApp.Services.Implementation.Mappers;
@@ -9,17 +10,14 @@ namespace TeamApp.Services.Implementation
 {
     public class StandingsService: IStandingsService
     {
-        private IStandingsRepository standingsRepository;
-        private ITeamRankingRepository teamRankingRepository;
-        private ICompetitionTeamRepository competitionTeamRepository;
+        private IStandingsRepository standingsRepository;            
         private ICompetitionRepository competitionRepository;
         private SeasonTeamToStandingsTeamViewModelMapper mapper;
 
-        public StandingsService(IStandingsRepository StandingsRepository, ITeamRankingRepository TeamRankingRepository, ICompetitionTeamRepository SingleYearTeamRepository)
+        public StandingsService(IStandingsRepository StandingsRepository, ICompetitionRepository CompetitionRepository)
         {
-            standingsRepository = StandingsRepository;
-            teamRankingRepository = TeamRankingRepository;
-            competitionTeamRepository = SingleYearTeamRepository;
+            standingsRepository = StandingsRepository;            
+            competitionRepository = CompetitionRepository;
             mapper = new SeasonTeamToStandingsTeamViewModelMapper();
         }
 
@@ -31,9 +29,10 @@ namespace TeamApp.Services.Implementation
         public StandingsViewModel GetStandings(long competitionId)
         {
             var competition = competitionRepository.Get(competitionId);
+            
             var teams = competition.Teams;
-
-            var models = mapper.MapDomainToModel(teams).ToList();
+                        
+            var models = mapper.MapMulitpleDomainToModel(teams).ToList();
 
             var ranks = competition.Rankings.ToList();
 

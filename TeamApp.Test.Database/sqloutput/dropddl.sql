@@ -20,6 +20,8 @@ BEGIN
 EXEC sp_MSforeachtable "ALTER TABLE ? NOCHECK CONSTRAINT all"
 
 --competitionconfigs first
+IF OBJECT_ID (N'CompetitionGamePlayer', N'U') IS NOT NULL drop table CompetitionGamePlayer
+IF OBJECT_ID (N'CompetitionPlayer', N'U') IS NOT NULL drop table CompetitionPlayer
 IF OBJECT_ID (N'CompetitionTeam', N'U') IS NOT NULL drop table CompetitionTeam
 IF OBJECT_ID (N'CompetitionConfigFinalRankingRule', N'U') IS NOT NULL drop table CompetitionConfigFinalRankingRule
 IF OBJECT_ID (N'SeasonTeamRule', N'U') IS NOT NULL drop table SeasonTeamRule

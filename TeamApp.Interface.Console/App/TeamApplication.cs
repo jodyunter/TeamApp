@@ -52,7 +52,7 @@ namespace TeamApp.Console.App
             competitionTeamRepository = new CompetitionTeamRepository(new RepositoryNHibernate<CompetitionTeam>());
 
             LeagueService = new LeagueService(leagueRepository);
-            StandingsService = new StandingsService(standingsRepository, teamRankingRepository, competitionTeamRepository);
+            StandingsService = new StandingsService(standingsRepository, competitionRepository);
             TeamService = new TeamService(teamRepository);
             GameDataService = new GameDataService(gameDataRepository, leagueRepository, scheduleGameRepository, competitionRepository, competitionConfigRepository, TeamService);
             ScheduleGameService = new ScheduleGameService(scheduleGameRepository);
