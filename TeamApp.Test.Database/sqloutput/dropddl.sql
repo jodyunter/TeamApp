@@ -34,6 +34,8 @@ IF OBJECT_ID (N'SeasonDivision', N'U') IS NOT NULL drop table SeasonDivision
 IF OBJECT_ID (N'SeasonTeamStats', N'U') IS NOT NULL drop table SeasonTeamStats
 
 --may need to move in the future
+IF OBJECT_ID (N'PlayerStats', N'U') IS NOT NULL drop table PlayerStats
+IF OBJECT_ID (N'GamePlayer', N'U') IS NOT NULL drop table GamePlayer
 IF OBJECT_ID (N'Player', N'U') IS NOT NULL drop table Player
 IF OBJECT_ID (N'Team', N'U') IS NOT NULL drop table Team
 IF OBJECT_ID (N'Game', N'U') IS NOT NULL drop table Game

@@ -19,10 +19,13 @@ namespace TeamApp.Domain.Games
 
         public virtual GameRules Rules { get; set; }
 
+        public virtual IList<GamePlayer> HomePlayers { get; set; }
+        public virtual IList<GamePlayer> AwayPlayers { get; set; }
+
         /* not currently mapped members */
         public virtual Team Offense { get; set; }
         public virtual Team Defense { get; set; }
-
+        
         public virtual Line OffenseLine { get; set; } = new Line();
         public virtual Line DefenseLine { get; set; } = new Line();
 
@@ -45,7 +48,26 @@ namespace TeamApp.Domain.Games
         public virtual bool OutputPlayByPlay { get; set; } = false;
 
         public virtual bool PauseBetweenPeriods { get; set; } = false;
+        
+        public virtual void SetupGamePlayers()
+        {
+            HomePlayers = SetupPlayers(Home);
+            AwayPlayers = SetupPlayers(Away);
+        }
+        //override this for competition game players
+        public virtual IList<GamePlayer> SetupPlayers(Team team)
+        {
+            var result = new List<GamePlayer>();
 
+            team.Players.ToList().ForEach(player =>
+            {
+                result.Add(
+                    new GamePlayer(this, player, team, player.FirstYear)
+                    );
+            });
+
+            return result;
+        }
         public virtual bool IsComplete()
         {
             return Complete;

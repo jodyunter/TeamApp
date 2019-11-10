@@ -77,7 +77,7 @@ namespace TeamApp.Services.Implementation
             {
                 //setup the game players here
                 var competition = game.Competition;
-                competition.PlayGame(game, random);
+                competition.PlayGame(game, random);                
                 scheduleGameRepo.Update(game);
             });
 

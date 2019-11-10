@@ -13,7 +13,7 @@ namespace TeamApp.Domain.Schedules
         //todo set this into the constructors?
         public virtual Competition Competition { get; set; }
         public virtual bool Processed { get; set; }
-
+        
         public ScheduleGame() : base() { }
         public ScheduleGame(Competition competition, int gameNumber, int day, int year, Team homeTeam, Team awayTeam, int homeScore, int awayScore, bool complete, int currentPeriod, int currentTime, GameRules rules, bool processed)            
             :base(homeTeam, awayTeam, rules, homeScore, awayScore, complete, currentPeriod, currentTime)

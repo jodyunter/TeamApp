@@ -1,4 +1,6 @@
-﻿
+﻿using System.Linq;
+using System.Collections.Generic;
+
 namespace TeamApp.Domain.Games.Actions
 {
     public class PreGame : Action
@@ -17,6 +19,7 @@ namespace TeamApp.Domain.Games.Actions
             Game.CurrentPeriod = 1;
         }
 
+        
         public override void PreProcess()
         {
             var Home = Game.Home;
@@ -25,23 +28,29 @@ namespace TeamApp.Domain.Games.Actions
             Game.Offense = Home;
             Game.Defense = Away;
 
+            Game.SetupGamePlayers();
+
+            var HomePlayers = Game.HomePlayers;
+            var AwayPlayers = Game.AwayPlayers;
+
+
             Game.HomeLine = new Line()
             {
-                Centre = new GamePlayer(Game, Home.Players[0], Home, Home.Players[0].FirstYear),
-                LeftWing = new GamePlayer(Game, Home.Players[1], Home, Home.Players[1].FirstYear),
-                RightWing = new GamePlayer(Game, Home.Players[2], Home, Home.Players[2].FirstYear),
-                LeftDefense = new GamePlayer(Game, Home.Players[3], Home, Home.Players[3].FirstYear),
-                RightDefense = new GamePlayer(Game, Home.Players[4], Home, Home.Players[4].FirstYear),
-                Goalie = new GamePlayer(Game, Home.Players[5], Home, Home.Players[5].FirstYear),
+                Centre = HomePlayers[0],
+                LeftWing = HomePlayers[1],
+                RightWing = HomePlayers[2],
+                LeftDefense = HomePlayers[3],
+                RightDefense = HomePlayers[4],
+                Goalie = HomePlayers[5]
             };
             Game.AwayLine = new Line()
             {
-                Centre = new GamePlayer(Game, Away.Players[0], Away, Away.Players[0].FirstYear),
-                LeftWing = new GamePlayer(Game, Away.Players[1], Away, Away.Players[1].FirstYear),
-                RightWing = new GamePlayer(Game, Away.Players[2], Away, Away.Players[2].FirstYear),
-                LeftDefense = new GamePlayer(Game, Away.Players[3], Away, Away.Players[3].FirstYear),
-                RightDefense = new GamePlayer(Game, Away.Players[4], Away, Away.Players[4].FirstYear),
-                Goalie = new GamePlayer(Game, Away.Players[5], Away, Away.Players[5].FirstYear),
+                Centre = AwayPlayers[0],
+                LeftWing = AwayPlayers[1],
+                RightWing = AwayPlayers[2],
+                LeftDefense = AwayPlayers[3],
+                RightDefense = AwayPlayers[4],
+                Goalie = AwayPlayers[5]
             };
         }
 

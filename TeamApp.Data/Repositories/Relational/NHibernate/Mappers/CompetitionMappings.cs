@@ -67,7 +67,16 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
 
     }
 
-   
+    public class CompetitionGamePlayerMap : SubclassMap<CompetitionGamePlayer>
+    {
+        public CompetitionGamePlayerMap()
+        {
+            DiscriminatorValue("Competition");
+
+            HasOne(x => x.CompetitionParent);
+            HasOne(x => x.CompetitionTeam);
+        }
+    }
 
     public class TeamRankingMap:BaseMap<TeamRanking>
     {

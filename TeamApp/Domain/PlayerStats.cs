@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TeamApp.Domain.Games;
 
 namespace TeamApp.Domain
 {
     public class PlayerStats : BaseDataObject
     {        
+        public virtual GamePlayer Player { get; set; }
         public virtual int FaceOffsWon { get; set; } = 0;
         public virtual int FaceOffsLoses { get; set; } = 0;
 
@@ -35,6 +37,8 @@ namespace TeamApp.Domain
         public virtual int GamesPlayed { get; set; } = 0;
         public virtual int Wins { get; set; } = 0;
         public virtual int Loses { get; set; } = 0;
-        public virtual int Ties { get; set; } = 0;        
+        public virtual int Ties { get; set; } = 0;
+
+        public PlayerStats() { }
     }
 }

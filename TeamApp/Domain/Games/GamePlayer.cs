@@ -12,20 +12,21 @@ namespace TeamApp.Domain.Games
         public virtual int Offense { get; set; } = 10;
         public virtual int Defense { get; set; } = 10;
         public virtual int Goaltending { get; set; } = 10;
-        public virtual int? FirstYear { get; set; }
-        public virtual int? LastYear { get; set; }
-
         public virtual Game Game { get; set; }
-        public virtual IPlayer Parent { get; set; }
+        public virtual IPlayer Parent { get { return ParentPlayer; } set { ParentPlayer = (Player)value; } }
         public virtual PlayerStats Stats { get; set; }
-        public virtual ITeam Team { get; set; }        
+        public virtual ITeam Team { get { return CurrentTeam; } set { CurrentTeam = (Team)value; } }
+        public virtual int? FirstYear { get; set; }
+        public virtual int? LastYear { get; set; }  
+        public virtual Team CurrentTeam { get; set; }
+        public virtual Player ParentPlayer { get; set; }
 
         public GamePlayer()
         {
 
         }
 
-        public GamePlayer(Game g, IPlayer p, ITeam team, int? year)
+        public GamePlayer(Game g, Player p, Team team, int? year)
         {
             Stats = new PlayerStats();
             Name = p.Name;
