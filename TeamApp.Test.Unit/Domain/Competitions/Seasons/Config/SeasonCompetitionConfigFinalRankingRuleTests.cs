@@ -13,7 +13,7 @@ namespace TeamApp.Test.Domain.Competitions.Seasons.Config
         //turn to theory with each option
         public void ShouldTestGetTeamFromRule()
         {
-            var rule = new SeasonCompetitionConfigFinalRankingRule("Test Rule", 5, "NHL", 1, 6, 1, null);
+            var rule = new SeasonCompetitionConfigFinalRankingRule(null, "Test Rule", 5, "NHL", 1, 6, 1, null);
         }
     }
 }

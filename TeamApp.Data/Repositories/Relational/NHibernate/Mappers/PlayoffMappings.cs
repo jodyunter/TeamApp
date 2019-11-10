@@ -23,7 +23,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
         {
             DiscriminatorValue("Playoff");
 
-            HasOne(x => x.Series);
+            References(x => x.Series);
         }
     }
 
@@ -41,12 +41,12 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
         {
             DiscriminateSubClassesOnColumn<string>("Type").AlwaysSelectWithValue();
 
-            HasOne(x => x.Playoff);
+            References(x => x.Playoff);
             Map(x => x.Name);
             Map(x => x.Round);
             Map(x => x.StartingDay);
-            HasOne(x => x.HomeTeam);
-            HasOne(x => x.AwayTeam);
+            References(x => x.HomeTeam);
+            References(x => x.AwayTeam);
             HasMany(x => x.Games);
         }
     }

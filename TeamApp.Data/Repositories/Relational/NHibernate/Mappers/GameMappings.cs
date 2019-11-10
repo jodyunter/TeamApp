@@ -12,14 +12,14 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
     {
         public GameMap()
         {
-            HasOne(x => x.Home);
-            HasOne(x => x.Away);
+            References(x => x.Home);
+            References(x => x.Away);
             Map(x => x.HomeScore);
             Map(x => x.AwayScore);
             Map(x => x.Complete);
             Map(x => x.CurrentPeriod);
             Map(x => x.CurrentTime);
-            HasOne(x => x.Rules);
+            References(x => x.Rules);
             HasMany(x => x.HomePlayers);
             HasMany(x => x.AwayPlayers);
 
@@ -34,7 +34,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
             Map(x => x.GameNumber);
             Map(x => x.Day);
             Map(x => x.Year);
-            HasOne(x => x.Competition);
+            References(x => x.Competition);
             Map(x => x.Processed);
 
             DiscriminatorValue("ScheduleGame");
@@ -63,10 +63,10 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
             Map(x => x.Offense);
             Map(x => x.Defense);
             Map(x => x.Goaltending);
-            HasOne(x => x.Game);
+            References(x => x.Game);
             HasOne(x => x.Stats);
-            HasOne(x => x.CurrentTeam);
-            HasOne(x => x.ParentPlayer);
+            References(x => x.CurrentTeam);
+            References(x => x.ParentPlayer);
 
             DiscriminateSubClassesOnColumn<string>("Type").AlwaysSelectWithValue();
         }
@@ -76,7 +76,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
     {
         public PlayerStatsMap()
         {
-            HasOne(x => x.Player);
+            References(x => x.Player);
             Map(x => x.FaceOffsWon);
             Map(x => x.FaceOffsLoses);
             Map(x => x.CarrySuccess);

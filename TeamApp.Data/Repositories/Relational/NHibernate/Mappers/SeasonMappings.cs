@@ -19,8 +19,8 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
         public SeasonTeamMap()
         {
             DiscriminatorValue("Season");
-            HasOne(x => x.Division);
-            HasOne(x => x.Stats);
+            References(x => x.Division);
+            References(x => x.Stats);
         }
     }
 
@@ -29,8 +29,8 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
 
         public SeasonDivisionMap()
         {
-            HasOne(x => x.Season);
-            HasOne(x => x.ParentDivision);
+            References(x => x.Season);
+            References(x => x.ParentDivision);
             Map(x => x.Year);
             Map(x => x.Name);
             HasMany(x => x.Teams);

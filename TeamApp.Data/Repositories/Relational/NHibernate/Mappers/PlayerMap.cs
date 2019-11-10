@@ -9,7 +9,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
            
             Map(x => x.Name);
             Map(x => x.Age);
-            HasOne(x => x.CurrentTeam);
+            References(x => x.CurrentTeam);
             Map(x => x.Offense);
             Map(x => x.Defense);
             Map(x => x.Goaltending);

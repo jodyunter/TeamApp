@@ -12,9 +12,9 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
         {
             DiscriminatorValue("Season");
 
-            HasMany(x => x.TeamRules).Cascade.All();
-            HasMany(x => x.DivisionRules).Cascade.All();
-            HasMany(x => x.ScheduleRules).Cascade.All();
+            HasMany(x => x.TeamRules);
+            HasMany(x => x.DivisionRules);
+            HasMany(x => x.ScheduleRules);
         }
 
 
@@ -25,6 +25,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
         public SeasonCompetitionConfigFinalRankingRuleMap()
         {
             DiscriminatorValue("Season");
+
             Map(x => x.TeamsComeFromGroup);
             Map(x => x.StartingRank);
             Map(x => x.EndingRank);
@@ -35,9 +36,9 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
     {
         public SeasonDivisionRuleMap()
         {
-            HasOne(x => x.Competition);
+            References(x => x.Competition);
             Map(x => x.DivisionName);
-            HasOne(x => x.Parent);
+            References(x => x.Parent);
             Map(x => x.Level);
             Map(x => x.Ordering);
             HasMany(x => x.Teams);
@@ -49,11 +50,11 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
         public SeasonScheduleRuleMap()
         {
 
-            HasOne(x => x.Competition);
-            HasOne(x => x.HomeTeam);
-            HasOne(x => x.AwayTeam);
-            HasOne(x => x.HomeDivisionRule);
-            HasOne(x => x.AwayDivisionRule);
+            References(x => x.Competition);
+            References(x => x.HomeTeam);
+            References(x => x.AwayTeam);
+            References(x => x.HomeDivisionRule);
+            References(x => x.AwayDivisionRule);
             Map(x => x.Iterations);
             Map(x => x.HomeAndAway);            
         }
@@ -63,9 +64,9 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
     {
         public SeasonTeamRuleMap()
         {
-            HasOne(x => x.Competition);
-            HasOne(x => x.Team);
-            HasOne(x => x.Division);
+            References(x => x.Competition);
+            References(x => x.Team);
+            References(x => x.Division);
         
         }
     }

@@ -12,7 +12,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
     {
         public CompetitionMap()
         {
-            HasOne(x => x.CompetitionConfig).Cascade.All();
+            References(x => x.CompetitionConfig).Cascade.All();
             Map(x => x.Name);
             Map(x => x.Year);
             HasMany(x => x.Teams).Cascade.All();
@@ -34,9 +34,9 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
 
         public CompetitionPlayerMap()
         {
-            HasOne(x => x.Parent);
-            HasOne(x => x.CompetitionTeam);
-            HasOne(x => x.Competition);
+            References(x => x.Parent);
+            References(x => x.CompetitionTeam);
+            References(x => x.Competition);
             Map(x => x.Name);
             Map(x => x.Age);
             Map(x => x.Offense);
@@ -52,8 +52,8 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
 
         public CompetitionTeamMap()
         {
-            HasOne(x => x.Competition);
-            HasOne(x => x.Parent);
+            References(x => x.Competition);
+            References(x => x.Parent);
             Map(x => x.Name);
             Map(x => x.NickName);
             Map(x => x.ShortName);
@@ -73,8 +73,8 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
         {
             DiscriminatorValue("Competition");
 
-            HasOne(x => x.CompetitionParent);
-            HasOne(x => x.CompetitionTeam);
+            References(x => x.CompetitionParent);
+            References(x => x.CompetitionTeam);
         }
     }
 
@@ -85,7 +85,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
             Map(x => x.Rank);
             Map(x => x.GroupLevel);
             Map(x => x.GroupName);
-            HasOne(x => x.CompetitionTeam);
+            References(x => x.CompetitionTeam);
         }
     }
 }
