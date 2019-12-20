@@ -3,7 +3,9 @@
 namespace TeamApp.Domain.Competitions.Config.Playoffs
 {
     public class PlayoffSeriesRule : BaseDataObject, ITimePeriod
-    {        
+    {
+        private int[] homeGameProgression;
+
         public enum Type { BestOf, TotalGoals };
         public enum Result { Winner, Loser };        
 
@@ -20,11 +22,39 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
         public virtual int AwayFromValue { get; set; }
         public virtual int? FirstYear { get; set; }
         public virtual int? LastYear { get; set; }
-        public virtual int[] HomeGameProgression { get; set; }
+        public virtual int[] HomeGameProgression
+        {
+            get
+            {
+                if (homeGameProgression == null) return homeGameProgression;
+                else
+                {
+                    var splitString = HomeGameProgressionString.Split(",");
+                    var result = new int[splitString.Length];
+                    for (int i = 0; i < splitString.Length; i++)
+                    {
+                        result[i] = int.Parse(splitString[i]);
+                    }
+                    return result;
+                }
+            }
+            set
+            {
+                homeGameProgression = value;
+                HomeGameProgressionString = "";
+                for (int i = 0; i < value.Length; i++)
+                {
+                    if (i != 0) HomeGameProgressionString += ",";
+                    HomeGameProgressionString += value[i];
+                }
+            }
+        }
         public virtual string WinnerGroupName { get; set; } //this is where the winner goes to after the series is done
         public virtual string WinnerRankFrom { get; set; }  //this is the group from where the ranking number will be taken
         public virtual string LoserGroupName { get; set; }
         public virtual string LoserRankFrom { get; set; }
+
+        public string HomeGameProgressionString { get; set; }
 
         public PlayoffSeriesRule()
         {
