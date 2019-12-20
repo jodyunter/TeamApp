@@ -22,30 +22,6 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
     {
         public PlayoffSeriesRuleMap()
         {
-
-            /*
-                    public enum Type { BestOf, TotalGoals };
-        public enum Result { Winner, Loser };
-
-        public virtual PlayoffCompetitionConfig PlayoffConfig { get; set; }
-        public virtual string Name { get; set; }
-        public virtual int Round { get; set; }
-        public virtual Type SeriesType { get; set; }
-        public virtual int SeriesNumber { get; set; } //total games for total goals, or required wins
-        public virtual GameRules GameRules { get; set; } //can be different!
-
-        public virtual string HomeFromName { get; set; } //ranking group name
-        public virtual int HomeFromValue { get; set; } //ranking number, or winner or loser        
-        public virtual string AwayFromName { get; set; }
-        public virtual int AwayFromValue { get; set; }
-        public virtual int? FirstYear { get; set; }
-        public virtual int? LastYear { get; set; }
-        public virtual int[] HomeGameProgression { get; set; }
-        public virtual string WinnerGroupName { get; set; } //this is where the winner goes to after the series is done
-        public virtual string WinnerRankFrom { get; set; }  //this is the group from where the ranking number will be taken
-        public virtual string LoserGroupName { get; set; }
-        public virtual string LoserRankFrom { get; set; }
-        */
             References(x => x.PlayoffConfig);
             Map(x => x.Name);
             Map(x => x.Round);
@@ -62,6 +38,22 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
             Map(x => x.LoserGroupName);
             Map(x => x.LoserRankFrom);
             
+        }
+    }
+
+    public class PlayoffRankingRuleMap:BaseTimePeriod<PlayoffRankingRule>
+    {
+
+        public PlayoffRankingRuleMap()
+        {
+            References(x => x.PlayoffConfig);
+            Map(x => x.GroupName);
+            Map(x => x.RankingGroupName);
+            Map(x => x.SourceGroupName);
+            Map(x => x.SourceFirstRank);
+            Map(x => x.SourceLastRank);
+            Map(x => x.DestinationFirstRank);
+            Map(x => x.GroupSetupLevel);
         }
     }
 }

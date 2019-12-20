@@ -54,7 +54,7 @@ namespace TeamApp.Domain.Competitions.Config.Playoffs
         public virtual string LoserGroupName { get; set; }
         public virtual string LoserRankFrom { get; set; }
 
-        public string HomeGameProgressionString { get; set; }
+        public virtual string HomeGameProgressionString { get; set; }
 
         public PlayoffSeriesRule()
         {
