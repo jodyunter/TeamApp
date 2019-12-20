@@ -1,4 +1,5 @@
 ﻿using NHibernate.Tool.hbm2ddl;
+using System;
 using System.Collections.Generic;
 using TeamApp.Data.Relational.Repositories;
 using TeamApp.Data.Repositories.Relational;
@@ -70,7 +71,9 @@ namespace TeamApp.Console.App
                 if (dropFirst)
                 {
                     var query = session.CreateSQLQuery("exec DropAllTables");
+
                     query.ExecuteUpdate();
+
                     //D:\Visual Studio Projects\gitrepos\TeamApp\TeamApp.Test.Database\sqloutput\dropddl.sql
 
                 }

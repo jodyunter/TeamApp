@@ -103,7 +103,7 @@ namespace TeamApp.Test.Domain.Competitions.Playoffs
         }
         public static PlayoffGame CreateGame(int homeScore, int awayScore, bool complete, PlayoffTeam team1, PlayoffTeam team2)
         {
-            return new PlayoffGame(null, null, -1, -1, -1, team1.Parent, team2.Parent, homeScore, awayScore, complete, 1, 0, null, false);
+            return new PlayoffGame(null, null, -1, -1, -1, team1.Parent, team1,  team2.Parent, team2, homeScore, awayScore, complete, 1, 0, null, false);
         }
         public static PlayoffTeam CreateTeam(string name, int id, int parentId)
         {

@@ -125,6 +125,7 @@ namespace TeamApp.Domain.Competitions.Config.Seasons
             int day = 1;
 
             season.Schedule = new Schedule();
+            var gameCreator = new SeasonGameCreator(season);
 
             ScheduleRules.Where(sr => sr.IsActive(season.Year)).ToList().ForEach(rule =>
             {                
@@ -137,11 +138,12 @@ namespace TeamApp.Domain.Competitions.Config.Seasons
                     season.Year,
                     1,
                     day,
-                    homeTeams.Select(st => st.Parent).ToList(),
-                    (awayTeams == null || awayTeams.Count == 0) ? null : awayTeams.Select(st => st.Parent).ToList(),
+                    homeTeams.ToList<ITeam>(),
+                    (awayTeams == null || awayTeams.Count == 0) ? null : awayTeams.ToList<ITeam>(),
                     rule.Iterations,
                     rule.HomeAndAway,
-                    season.CompetitionConfig.GameRules);
+                    season.CompetitionConfig.GameRules,
+                    gameCreator);
 
                 day = Scheduler.MergeSchedulesTryToCompress(season.Schedule, nextSchedule) + 1;
             });

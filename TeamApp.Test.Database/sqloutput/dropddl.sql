@@ -17,42 +17,29 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-EXEC sp_MSforeachtable "ALTER TABLE ? NOCHECK CONSTRAINT all"
-
---competitionconfigs first
-IF OBJECT_ID (N'CompetitionGamePlayer', N'U') IS NOT NULL drop table CompetitionGamePlayer
-IF OBJECT_ID (N'CompetitionPlayer', N'U') IS NOT NULL drop table CompetitionPlayer
-IF OBJECT_ID (N'CompetitionTeam', N'U') IS NOT NULL drop table CompetitionTeam
-IF OBJECT_ID (N'CompetitionConfigFinalRankingRule', N'U') IS NOT NULL drop table CompetitionConfigFinalRankingRule
-IF OBJECT_ID (N'SeasonTeamRule', N'U') IS NOT NULL drop table SeasonTeamRule
-IF OBJECT_ID (N'SeasonScheduleRule', N'U') IS NOT NULL drop table SeasonScheduleRule
-IF OBJECT_ID (N'SeasonDivisionRule', N'U') IS NOT NULL drop table SeasonDivisionRule
-IF OBJECT_ID (N'CompetitionConfig', N'U') IS NOT NULL drop table CompetitionConfig
-
-IF OBJECT_ID (N'TeamRanking', N'U') IS NOT NULL drop table TeamRanking
-IF OBJECT_ID (N'SeasonDivision', N'U') IS NOT NULL drop table SeasonDivision
-IF OBJECT_ID (N'SeasonTeamStats', N'U') IS NOT NULL drop table SeasonTeamStats
-
---may need to move in the future
-IF OBJECT_ID (N'PlayerStats', N'U') IS NOT NULL drop table PlayerStats
-IF OBJECT_ID (N'GamePlayer', N'U') IS NOT NULL drop table GamePlayer
-IF OBJECT_ID (N'Player', N'U') IS NOT NULL drop table Player
-IF OBJECT_ID (N'Team', N'U') IS NOT NULL drop table Team
-IF OBJECT_ID (N'Game', N'U') IS NOT NULL drop table Game
-IF OBJECT_ID (N'PlayoffSeries', N'U') IS NOT NULL drop table PlayoffSeries
-IF OBJECT_ID (N'GameData', N'U') IS NOT NULL drop table GameData
-
-IF OBJECT_ID (N'GameRules', N'U') IS NOT NULL drop table GameRules
-
-IF OBJECT_ID (N'Competition', N'U') IS NOT NULL drop table Competition
-IF OBJECT_ID (N'League', N'U') IS NOT NULL drop table League
-
-
-
+if exists (select * from dbo.sysobjects where id = object_id(N'[CompetitionConfigFinalRankingRule]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [CompetitionConfigFinalRankingRule]
+if exists (select * from dbo.sysobjects where id = object_id(N'[SeasonScheduleRule]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [SeasonScheduleRule]
+if exists (select * from dbo.sysobjects where id = object_id(N'[SeasonTeamRule]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [SeasonTeamRule]
+if exists (select * from dbo.sysobjects where id = object_id(N'[SeasonDivisionRule]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [SeasonDivisionRule]
+if exists (select * from dbo.sysobjects where id = object_id(N'[TeamRanking]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [TeamRanking]
+if exists (select * from dbo.sysobjects where id = object_id(N'[GameData]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [GameData]
+if exists (select * from dbo.sysobjects where id = object_id(N'[PlayerStats]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [PlayerStats]
+if exists (select * from dbo.sysobjects where id = object_id(N'GamePlayer') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table GamePlayer
+if exists (select * from dbo.sysobjects where id = object_id(N'[Game]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [Game]
+if exists (select * from dbo.sysobjects where id = object_id(N'[PlayoffSeries]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [PlayoffSeries]
+if exists (select * from dbo.sysobjects where id = object_id(N'[CompetitionPlayer]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [CompetitionPlayer]
+if exists (select * from dbo.sysobjects where id = object_id(N'[CompetitionTeam]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [CompetitionTeam]
+if exists (select * from dbo.sysobjects where id = object_id(N'[SeasonDivision]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [SeasonDivision]
+if exists (select * from dbo.sysobjects where id = object_id(N'[SeasonTeamStats]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [SeasonTeamStats]
+if exists (select * from dbo.sysobjects where id = object_id(N'[Player]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [Player]
+if exists (select * from dbo.sysobjects where id = object_id(N'[Competition]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [Competition]
+if exists (select * from dbo.sysobjects where id = object_id(N'[CompetitionConfig]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [CompetitionConfig]
+if exists (select * from dbo.sysobjects where id = object_id(N'[Team]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [Team]
+if exists (select * from dbo.sysobjects where id = object_id(N'[GameRules]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [GameRules]
+if exists (select * from dbo.sysobjects where id = object_id(N'[League]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [League]
 END
 
 /*
-
 exec DropAllTables
-
 */
+

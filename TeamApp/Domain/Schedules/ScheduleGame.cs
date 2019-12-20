@@ -20,7 +20,7 @@ namespace TeamApp.Domain.Schedules
 
         
         public ScheduleGame() : base() { }
-        public ScheduleGame(Competition competition, int gameNumber, int day, int year, Team homeTeam, Team awayTeam, int homeScore, int awayScore, bool complete, int currentPeriod, int currentTime, GameRules rules, bool processed)            
+        public ScheduleGame(Competition competition, int gameNumber, int day, int year, Team homeTeam, CompetitionTeam homeCompetitionTeam, Team awayTeam, CompetitionTeam awayCompetitionTeam, int homeScore, int awayScore, bool complete, int currentPeriod, int currentTime, GameRules rules, bool processed)            
             :base(homeTeam, awayTeam, rules, homeScore, awayScore, complete, currentPeriod, currentTime)
         {
             Competition = competition;         
@@ -28,24 +28,25 @@ namespace TeamApp.Domain.Schedules
             Day = day;
             Year = year;
             Processed = processed;
+            HomeTeam = homeCompetitionTeam;
+            AwayTeam = awayCompetitionTeam;
+            
         }
 
         public override void SetupGamePlayers()
         {
-            HomePlayers = SetupPlayers(Home);
-            AwayPlayers = SetupPlayers(Away);
+            HomePlayers = SetupCompetitionPlayers(HomeTeam);
+            AwayPlayers = SetupCompetitionPlayers(AwayTeam);
         }
         //override this for competition game players
-        public virtual IList<GamePlayer> SetupPlayers(CompetitionTeam team)
+        public virtual IList<GamePlayer> SetupCompetitionPlayers(CompetitionTeam team)
         {
-            var result = new List<GamePlayer>();
-
-            var competitionTeam = 
+            var result = new List<GamePlayer>();            
 
             team.Players.ToList().ForEach(player =>
             {
                 result.Add(
-                    new CompetitionGamePlayer(this, player, team, player.FirstYear, competitionTeam, compPlayer)
+                    new CompetitionGamePlayer(this, player.Parent, team.Parent, player.FirstYear, player, team)
                     );
             });
 

@@ -12,18 +12,18 @@ namespace TeamApp.Domain.Schedules
     {
 
         /* these are the two entry methods if multiple iterations of a series of games are needed */
-        public static Schedule CreateGames(Competition competition, int year, int lastGameNumber, int startDay, List<Team> teams, int iterations, bool homeAndAway, GameRules rules)
+        public static Schedule CreateGames(Competition competition, int year, int lastGameNumber, int startDay, List<ITeam> teams, int iterations, bool homeAndAway, GameRules rules, IGameCreator gameCreator)
         {
-            return CreateGames(competition, year, lastGameNumber, startDay, teams, null, iterations, homeAndAway, rules);
+            return CreateGames(competition, year, lastGameNumber, startDay, teams, null, iterations, homeAndAway, rules, gameCreator);
         }
-        public static Schedule CreateGames(Competition competition, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, int iterations, bool homeAndAway, GameRules rules)
+        public static Schedule CreateGames(Competition competition, int year, int lastGameNumber, int startDay, List<ITeam> homeTeams, List<ITeam> awayTeams, int iterations, bool homeAndAway, GameRules rules, IGameCreator gameCreator)
         {
             var result = new Schedule();
 
             for (int i = 0; i < iterations; i++)
             {                
-                if (awayTeams == null || awayTeams.Count == 0) lastGameNumber = MergeSchedules(result, CreateGamesSingleGroup(competition, year, lastGameNumber, startDay, homeTeams, homeAndAway, rules));
-                else lastGameNumber = MergeSchedules(result, CreateGamesTwoDifferentGroups(competition, year, lastGameNumber, startDay, homeTeams, awayTeams, homeAndAway, rules));
+                if (awayTeams == null || awayTeams.Count == 0) lastGameNumber = MergeSchedules(result, CreateGamesSingleGroup(competition, year, lastGameNumber, startDay, homeTeams, homeAndAway, rules, gameCreator));
+                else lastGameNumber = MergeSchedules(result, CreateGamesTwoDifferentGroups(competition, year, lastGameNumber, startDay, homeTeams, awayTeams, homeAndAway, rules, gameCreator));
             }
 
             //this will overwrite whatever game number work was done in the other methods
@@ -43,12 +43,12 @@ namespace TeamApp.Domain.Schedules
         
         //Assumption is that they can add days afterwards.  Different methods need to handle adding games to already established days
         //todo need to rework this
-        public static Schedule CreateGamesTwoDifferentGroups(Competition competition, int year, int lastGameNumber, int startDay, List<Team> homeTeams, List<Team> awayTeams, bool homeAndAway, GameRules rules)
+        public static Schedule CreateGamesTwoDifferentGroups(Competition competition, int year, int lastGameNumber, int startDay, List<ITeam> homeTeams, List<ITeam> awayTeams, bool homeAndAway, GameRules rules, IGameCreator gameCreator)
         {
             
             int initialDays = 0;
-            var aTeamList = new List<Team>();
-            var bTeamList = new List<Team>();
+            var aTeamList = new List<ITeam>();
+            var bTeamList = new List<ITeam>();
             bool reverseHomeAndAway = false;
 
             //the larger team list has to be the top loop
@@ -83,10 +83,13 @@ namespace TeamApp.Domain.Schedules
                 currentDay = teamStartDay;
                 //for each home team loop through the away teams, increment the day by one and add the next game.
                 bTeamList.ForEach(bTeam =>
-                {
-                    var game = new ScheduleGame(competition, 0, currentDay, year,
+                {                    
+                    var game = gameCreator.CreateGame(0, currentDay, year, reverseHomeAndAway ? bTeam : aTeam, reverseHomeAndAway ? aTeam : bTeam, rules);
+                    /*
+                     *var game = new ScheduleGame(competition, 0, currentDay, year,
                         reverseHomeAndAway ? bTeam:aTeam, reverseHomeAndAway ? aTeam:bTeam,
                         0, 0, false, 1, 0, rules, false);
+                        */
                     schedule.Days[currentDay].AddGame(game);
                     
                     currentDay = GetNextDay(currentDay, startDay, maxDay, 1);
@@ -97,7 +100,7 @@ namespace TeamApp.Domain.Schedules
             });
 
 
-            if (homeAndAway) CreateAwayGamesForHomeAndAway(schedule, maxDay + 1, rules);
+            if (homeAndAway) CreateAwayGamesForHomeAndAway(schedule, maxDay + 1, rules, gameCreator);
             //do the game numbers last so that they are in order by day
             foreach (KeyValuePair<int, ScheduleDay> data in schedule.Days)
             {
@@ -270,7 +273,7 @@ namespace TeamApp.Domain.Schedules
             return currentDay;
         }
 
-        public static Schedule CreateGamesSingleGroup(Competition competition, int year, int lastGameNumber, int startDay, List<Team> teams, bool homeAndAway, GameRules rules)
+        public static Schedule CreateGamesSingleGroup(Competition competition, int year, int lastGameNumber, int startDay, List<ITeam> teams, bool homeAndAway, GameRules rules, IGameCreator gameCreator)
         {        
 
             int[,] array = CreateArrayForScheduling(teams.Count);            
@@ -290,7 +293,8 @@ namespace TeamApp.Domain.Schedules
                 {
                     if (array[i, 0] != -1)
                     {
-                        var g = new ScheduleGame(competition, 0, i, year, teams[array[i, 0]], teams[array[i, 1]], 0, 0, false, 1, 0, rules, false);
+                        var g = gameCreator.CreateGame(0, i, year, teams[array[i, 0]], teams[array[i, 1]], rules);
+                       //var g = new ScheduleGame(competition, 0, i, year, teams[array[i, 0]], teams[array[i, 1]], 0, 0, false, 1, 0, rules, false);
                         schedule.Days[d].Games.Add(g);
                     }
 
@@ -299,7 +303,7 @@ namespace TeamApp.Domain.Schedules
                 array = ProcessNextPosition(array);
             }
 
-            if (homeAndAway) CreateAwayGamesForHomeAndAway(schedule, totalDays + startDay, rules);
+            if (homeAndAway) CreateAwayGamesForHomeAndAway(schedule, totalDays + startDay, rules, gameCreator);
 
             foreach (KeyValuePair<int, ScheduleDay> data in schedule.Days)
             {
@@ -309,7 +313,7 @@ namespace TeamApp.Domain.Schedules
             return schedule;
         }
 
-        public static Schedule CreateAwayGamesForHomeAndAway(Schedule schedule, int dayToStartHomeAndAway, GameRules rules)
+        public static Schedule CreateAwayGamesForHomeAndAway(Schedule schedule, int dayToStartHomeAndAway, GameRules rules, IGameCreator gameCreator)
         {
             int count = 0;
 
@@ -320,7 +324,8 @@ namespace TeamApp.Domain.Schedules
 
                 schedule.Days[dayNumber].Games.ForEach(game =>
                 {
-                    var g = new ScheduleGame(game.Competition, 0, newDay, game.Year, game.Away, game.Home, 0, 0, false, 1, 0, rules, false);
+                    var g = gameCreator.CreateGame(0, newDay, game.Year, game.Away, game.Home, rules);
+                    //var g = new ScheduleGame(game.Competition, 0, newDay, game.Year, game.Away, game.Home, 0, 0, false, 1, 0, rules, false);
                     schedule.Days[newDay].Games.Add(g);
 
                 });

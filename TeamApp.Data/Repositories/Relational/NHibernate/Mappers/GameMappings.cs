@@ -36,6 +36,8 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
             Map(x => x.Year);
             References(x => x.Competition);
             Map(x => x.Processed);
+            References(x => x.HomeTeam);
+            References(x => x.AwayTeam);
 
             DiscriminatorValue("ScheduleGame");
         }
@@ -68,7 +70,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
             References(x => x.CurrentTeam);
             References(x => x.ParentPlayer);
 
-            DiscriminateSubClassesOnColumn<string>("Type").AlwaysSelectWithValue();
+            DiscriminateSubClassesOnColumn<string>("Type").AlwaysSelectWithValue();            
         }
     }
 

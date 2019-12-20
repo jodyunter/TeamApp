@@ -45,10 +45,10 @@ namespace TeamApp.Test.Domain.SchedulerTests
 
         [Theory]
         [MemberData(nameof(TwoDifferentGroupsOfTeams))]
-        public void ShouldCreateScheduleTwoDifferentGroups(List<Team> HomeTeams, List<Team> AwayTeams, int expectedDays, int iterations, bool homeAndAway, GameRules rules)
+        public void ShouldCreateScheduleTwoDifferentGroups(List<ITeam> HomeTeams, List<ITeam> AwayTeams, int expectedDays, int iterations, bool homeAndAway, GameRules rules)
         {            
             var days = Scheduler.CreateGames(null, 1, 0, 1,
-                HomeTeams, AwayTeams, iterations, homeAndAway, rules);
+                HomeTeams, AwayTeams, iterations, homeAndAway, rules, new BaseScheduleGameCreator());
 
             var messages = new List<string>();
 
@@ -93,10 +93,10 @@ namespace TeamApp.Test.Domain.SchedulerTests
 
         [Theory]
         [MemberData(nameof(OneGroupOfTeams))]
-        public void ShouldCreateScheduleForOneGroupofTeams(List<Team> Teams, int expectedDays, int iterations, bool homeAndAway,GameRules rules)
+        public void ShouldCreateScheduleForOneGroupofTeams(List<ITeam> Teams, int expectedDays, int iterations, bool homeAndAway,GameRules rules)
         {            
             var days = Scheduler.CreateGames(null, 1, 0, 1,
-                Teams, iterations, homeAndAway, rules);
+                Teams, iterations, homeAndAway, rules, new BaseScheduleGameCreator());
 
             var messages = new List<string>();
 
@@ -128,7 +128,7 @@ namespace TeamApp.Test.Domain.SchedulerTests
                         
         public static ScheduleGame CreateGame(string homeTeamName, int homeId, string awayTeamName, int awayId)
         {
-            return new ScheduleGame(null, -1, -1, -1, CreateTeam(homeTeamName, homeId), CreateTeam(awayTeamName, awayId), 0, 0, false, 1, 0, null,false);
+            return new ScheduleGame(null, -1, -1, -1, CreateTeam(homeTeamName, homeId), null, CreateTeam(awayTeamName, awayId), null, 0, 0, false, 1, 0, null,false);
         }
 
     }

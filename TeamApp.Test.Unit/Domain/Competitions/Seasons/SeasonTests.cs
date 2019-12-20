@@ -22,9 +22,9 @@ namespace TeamApp.Test.Domain.Competitions.Seasons
             var rules = new GameRules(null, true, 1, 3, 10, true);            
             var games = new List<ScheduleGame>()
             {
-                new ScheduleGame(null, 1, 1, 1, teams[0], teams[1], 1, 1, true, 1, 0, rules, false),
-                new ScheduleGame(null, 1, 1, 1, teams[0], teams[2], 3, 1, true, 1, 0, rules, false),
-                new ScheduleGame(null, 1, 1, 1, teams[0], teams[3], 1, 4, true, 1, 0, rules, false)
+                new ScheduleGame(null, 1, 1, 1, teams[0], null, teams[1],null, 1, 1, true, 1, 0, rules, false),
+                new ScheduleGame(null, 1, 1, 1, teams[0], null,teams[2],null, 3, 1, true, 1, 0, rules, false),
+                new ScheduleGame(null, 1, 1, 1, teams[0], null,teams[3],null, 1, 4, true, 1, 0, rules, false)
             };
 
             var team1 = new SeasonTeam(null, teams[0], "Team 1", null, null, 5, null, 1, null, null, null);

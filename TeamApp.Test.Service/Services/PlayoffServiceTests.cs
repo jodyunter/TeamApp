@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TeamApp.Domain;
 using TeamApp.Domain.Competitions.Config.Playoffs;
@@ -61,7 +62,7 @@ namespace TeamApp.Test.Services
         [Fact]
         public void ShouldGetPlayoffSummary()
         {
-            True(false);
+            throw new NotImplementedException();
         }
     }
 }

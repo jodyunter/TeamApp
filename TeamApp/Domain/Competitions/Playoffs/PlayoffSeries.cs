@@ -76,7 +76,10 @@ namespace TeamApp.Domain.Competitions.Playoffs
             var homeValue = GetHomeValueForGame(gameNumber);
 
             return new PlayoffGame(Playoff, this, gameNumber, -1, Playoff.Year, 
-                homeValue == 0 ? HomeTeam.Parent: AwayTeam.Parent, homeValue == 0 ? AwayTeam.Parent: HomeTeam.Parent,
+                homeValue == 0 ? HomeTeam.Parent: AwayTeam.Parent,
+                homeValue == 0 ? HomeTeam : AwayTeam,
+                homeValue == 0 ? AwayTeam.Parent: HomeTeam.Parent,
+                homeValue == 0 ? AwayTeam : HomeTeam,
                 0, 0, false, 1, 0, Playoff.CompetitionConfig.GameRules, false);
         }
 

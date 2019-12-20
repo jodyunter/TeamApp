@@ -10,7 +10,7 @@ namespace TeamApp.Test.Services
         [Fact]
         public void ShouldTestGetGamesForDay()
         {
-            True(false);
+            throw new NotImplementedException();
         }
     }
 }

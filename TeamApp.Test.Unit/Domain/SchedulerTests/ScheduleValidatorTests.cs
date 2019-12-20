@@ -55,11 +55,11 @@ namespace TeamApp.Test.Domain.SchedulerTests
         {         
             var schedule = new Schedule();
             var rules = new GameRules(null, true, 1, 3, 120, true);
-
+            
             schedule = Scheduler.CreateGames(null, 1, 5, 1,
-                new List<Team>()
+                new List<ITeam>()
                     { CreateTeam("Team 1",1), CreateTeam("Team 2",2), CreateTeam("Team 3",3), CreateTeam("Team 4",4), CreateTeam("Team 5",5), CreateTeam("Team 6",6) },
-                2, false, rules);
+                2, false, rules, new BaseScheduleGameCreator());
 
             return schedule;
         }
@@ -70,9 +70,9 @@ namespace TeamApp.Test.Domain.SchedulerTests
             var rules = new GameRules(null, true, 1, 3, 120, true);
 
             schedule = Scheduler.CreateGames(null, 1, 5, 1,
-                new List<Team>()
+                new List<ITeam>()
                     { CreateTeam("Team 1",1), CreateTeam("Team 2",2), CreateTeam("Team 3",3), CreateTeam("Team 4",4), CreateTeam("Team 5",5), CreateTeam("Team 6",6) },
-                2, true, rules);
+                2, true, rules, new BaseScheduleGameCreator());
 
             return schedule;
         }
