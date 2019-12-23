@@ -5,7 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\UpdateViews\" />
+    <Compile Remove="ViewModels\UpdateViews\**" />
+    <EmbeddedResource Remove="ViewModels\UpdateViews\**" />
+    <None Remove="ViewModels\UpdateViews\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="ViewModels\Views\CompetitionConfig\Playoff\" />
   </ItemGroup>
 
