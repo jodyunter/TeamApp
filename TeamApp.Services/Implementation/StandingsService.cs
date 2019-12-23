@@ -27,7 +27,14 @@ namespace TeamApp.Services.Implementation
             return null;   
         }
 
-        public Task<StandingsViewModel> GetStandings(long competitionId)
+        public Task<StandingsViewModel> GetStandings(long competitionConfigId, int year, int sortingLevel)
+        {
+            var competitions = competitionRepository.GetByYear(year).ToList();
+            var competition = competitions.Where(c => c.CompetitionConfig.Id == competitionConfigId).First();
+
+            return GetStandings(competition.Id, sortingLevel);
+        }
+        public Task<StandingsViewModel> GetStandings(long competitionId, int sortingLevel)
         {
             var competition = competitionRepository.Get(competitionId);
             
@@ -50,7 +57,7 @@ namespace TeamApp.Services.Implementation
                 Teams = models
             };
 
-            result.SortByLevel(1);
+            result.SortByLevel(sortingLevel);
 
             return Task.FromResult(result);
 

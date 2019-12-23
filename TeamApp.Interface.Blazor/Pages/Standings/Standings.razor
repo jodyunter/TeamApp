@@ -1,0 +1,34 @@
+﻿@page "/standings/model"
+
+<h3>Standings</h3>
+
+@if (model == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowSorting="true" Data="@model.Teams" TItem="StandingsTeamViewModel" ColumnWidth="100%">
+        <Columns>
+            <RadzenGridColumn TItem="StandingsTeamViewModel" Property="Division" Title="Div" />
+            <RadzenGridColumn TItem="StandingsTeamViewModel" Property="Rank" Title="R" />
+            <RadzenGridColumn TItem="StandingsTeamViewModel" Property="TeamName" Title="Name" />
+            <RadzenGridColumn TItem="StandingsTeamViewModel" Property="Wins" Title="W" />
+            <RadzenGridColumn TItem="StandingsTeamViewModel" Property="Loses" Title="L" />
+            <RadzenGridColumn TItem="StandingsTeamViewModel" Property="Ties" Title="T" />
+            <RadzenGridColumn TItem="StandingsTeamViewModel" Property="Points" Title="Pts" />
+            <RadzenGridColumn TItem="StandingsTeamViewModel" Property="GamesPlayed" Title="GP" />
+            <RadzenGridColumn TItem="StandingsTeamViewModel" Property="GoalsFor" Title="GF" />
+            <RadzenGridColumn TItem="StandingsTeamViewModel" Property="GoalsAgainst" Title="GA" />
+            <RadzenGridColumn TItem="StandingsTeamViewModel" Property="GoalDifference" Title="GD" />
+
+        </Columns>
+    </RadzenGrid>
+}
+
+@code {
+
+    [Parameter]
+    public StandingsViewModel model { get; set; }
+
+}

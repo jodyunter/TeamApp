@@ -69,7 +69,7 @@ namespace TeamApp.Console
                     {
                         if (m.Type == "Season")
                         {
-                            var standings = teamApp.StandingsService.GetStandings(m.Id).Result;
+                            var standings = teamApp.StandingsService.GetStandings(m.Id, 1).Result;
                             var view = new StandingsView(standings);
 
                             WriteLine(view.GetView(StandingsView.LEAGUE));
@@ -96,7 +96,7 @@ namespace TeamApp.Console
                         if (
                         m.Type == "Season")
                         {
-                            var standings = teamApp.StandingsService.GetStandings(m.Id).Result;
+                            var standings = teamApp.StandingsService.GetStandings(m.Id, 1).Result;
                             var view = new StandingsView(standings);
 
                             WriteLine(view.GetView(StandingsView.LEAGUE));

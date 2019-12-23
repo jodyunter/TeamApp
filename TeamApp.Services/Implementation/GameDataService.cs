@@ -209,5 +209,17 @@ namespace TeamApp.Services.Implementation
 
             return Task.FromResult(summary);
         }
+
+        public void PlayAndProcessDay()
+        {
+            var data = gameDataRepo.GetCurrentData();
+            SetupComeptitionsForDay(data.CurrentDay, data.CurrentYear);
+            ProcessDay();
+            PlayDay(new Random());
+            ProcessDay();
+            IncrementDay();
+            gameDataRepo.Flush();
+
+        }
     }
 }

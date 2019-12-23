@@ -21,9 +21,9 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
         private void UpdateAuditTrail(object[] state, string[] names, IDataObject entity, bool isCreate)
         {
             DateTime now = DateTime.Now;
-
+            var identity = "Temporary"; // Thread.CurrentPrincipal.Identity.Name;
             var idx = Array.FindIndex(names, n => n == "LastModifiedBy");
-            state[idx] = Thread.CurrentPrincipal.Identity.Name;
+            state[idx] = identity;
             entity.LastModifiedBy = state[idx].ToString();
             idx = Array.FindIndex(names, n => n == "LastModifiedOn");            
             state[idx] = now;
@@ -32,7 +32,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate
             if (isCreate)
             {
                 idx = Array.FindIndex(names, n => n == "CreatedBy");
-                state[idx] = Thread.CurrentPrincipal.Identity.Name;
+                state[idx] = identity;
                 entity.CreatedBy = state[idx].ToString();
                 idx = Array.FindIndex(names, n => n == "CreatedOn");
                 state[idx] = now;

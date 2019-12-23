@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TeamApp.ViewModels.Views
+namespace TeamApp.ViewModels.Views.Games
 {
-    public class GameViewModel
+    public class GameSummaryViewModel
     {
         public string League { get; set; }
         public string Competition { get; set; }

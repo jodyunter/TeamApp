@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Test.Database", "Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Test.Service", "TeamApp.Test.Service\TeamApp.Test.Service.csproj", "{F12F2431-ABFA-4FF4-B153-095C3D3F7296}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamApp.Interface.Blazor", "TeamApp.Interface.Blazor\TeamApp.Interface.Blazor.csproj", "{F9750AD0-A348-4211-B21B-AD28169B06B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Interface.Blazor", "TeamApp.Interface.Blazor\TeamApp.Interface.Blazor.csproj", "{F9750AD0-A348-4211-B21B-AD28169B06B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

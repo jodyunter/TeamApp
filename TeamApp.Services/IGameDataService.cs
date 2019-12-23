@@ -13,6 +13,7 @@ namespace TeamApp.Services
         bool IncrementYear();
         void PlayDay(Random random);
         void ProcessDay();
+        void PlayAndProcessDay();
         bool IncrementDay();
         void SetupComeptitionsForDay(int day, int year);
         void RandomlyChangeSkillLevels(Random random);
