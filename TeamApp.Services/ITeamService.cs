@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TeamApp.Services.ViewModels.Views;
+using TeamApp.ViewModels.Views;
 
 namespace TeamApp.Services
 {

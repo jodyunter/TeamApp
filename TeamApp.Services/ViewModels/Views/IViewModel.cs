@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TeamApp.Services.ViewModels.Views
+namespace TeamApp.ViewModels.Views
 {
     public interface IViewModel
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TeamApp.Services.ViewModels.Views.Competition.Playoff
+namespace TeamApp.ViewModels.Views.Competition.Playoff
 {
     public class BestOfSeriesSummaryViewModel
     {

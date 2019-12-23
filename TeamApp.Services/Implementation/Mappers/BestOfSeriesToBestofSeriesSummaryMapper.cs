@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TeamApp.Domain.Competitions.Playoffs.Series;
-using TeamApp.Services.ViewModels.Views.Competition.Playoff;
+using TeamApp.ViewModels.Views.Competition.Playoff;
 
 namespace TeamApp.Services.Implementation.Mappers
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TeamApp.ViewModels.Views.Competition;
 
-namespace TeamApp.Services.ViewModels.Views.Competition.Playoff
+namespace TeamApp.ViewModels.Views.Competition.Playoff
 {
     public class PlayoffSummaryViewModel:CompetitionSimpleViewModel
     {

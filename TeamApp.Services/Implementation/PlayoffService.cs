@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TeamApp.Domain.Competitions.Playoffs;
+﻿using TeamApp.Domain.Competitions.Playoffs;
 using TeamApp.Domain.Repositories;
 using TeamApp.Services.Implementation.Mappers;
-using TeamApp.Services.ViewModels.Views.Competition.Playoff;
+using TeamApp.ViewModels.Views.Competition.Playoff;
 
 namespace TeamApp.Services.Implementation
 {

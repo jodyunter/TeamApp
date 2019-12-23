@@ -5,7 +5,7 @@ using TeamApp.Domain.Repositories;
 using TeamApp.Domain;
 using Moq;
 using TeamApp.Services.Implementation;
-using TeamApp.Services.ViewModels.Views;
+using TeamApp.ViewModels.Views;
 using TeamApp.Domain.Competitions.Config;
 using TeamApp.Domain.Competitions.Config.Seasons;
 using TeamApp.Domain.Competitions.Config.Playoffs;

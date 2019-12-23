@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using TeamApp.Domain.Repositories;
-using TeamApp.Services.ViewModels.Views;
+using TeamApp.ViewModels.Views;
 
 namespace TeamApp.Services
 {

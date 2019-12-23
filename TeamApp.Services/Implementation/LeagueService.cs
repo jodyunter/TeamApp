@@ -5,9 +5,9 @@ using TeamApp.Domain;
 using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Repositories;
 using TeamApp.Services.Implementation.Mappers;
-using TeamApp.Services.ViewModels.Views;
-using TeamApp.Services.ViewModels.Views.CompetitionConfig;
-using TeamApp.Services.ViewModels.Views.CompetitionConfig.Season;
+using TeamApp.ViewModels.Views;
+using TeamApp.ViewModels.Views.CompetitionConfig;
+using TeamApp.ViewModels.Views.CompetitionConfig.Season;
 
 namespace TeamApp.Services.Implementation
 {

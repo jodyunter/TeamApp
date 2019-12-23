@@ -3,7 +3,7 @@ using System.Linq;
 using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Competitions.Playoffs;
 using TeamApp.Domain.Competitions.Playoffs.Series;
-using TeamApp.Services.ViewModels.Views.Competition.Playoff;
+using TeamApp.ViewModels.Views.Competition.Playoff;
 using TeamApp.ViewModels.Views.Competition;
 
 namespace TeamApp.Services.Implementation.Mappers

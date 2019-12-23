@@ -1,7 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using TeamApp.Domain.Repositories;
-using TeamApp.Services.ViewModels.Views;
+using TeamApp.ViewModels.Views;
 using TeamApp.Domain;
 using System.Linq;
 using TeamApp.Services.Implementation.Mappers;

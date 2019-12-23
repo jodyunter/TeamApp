@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TeamApp.Services.ViewModels.Views;
-using TeamApp.Services.ViewModels.Views.CompetitionConfig;
-using TeamApp.Services.ViewModels.Views.CompetitionConfig.Season;
+using TeamApp.ViewModels.Views;
+using TeamApp.ViewModels.Views.CompetitionConfig;
+using TeamApp.ViewModels.Views.CompetitionConfig.Season;
 
 namespace TeamApp.Services
 {
