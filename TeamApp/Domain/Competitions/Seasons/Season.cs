@@ -29,10 +29,15 @@ namespace TeamApp.Domain.Competitions.Seasons
                     home.Stats.Ties++;
                     away.Stats.Ties++;
                 }
-                else
-                {                          
-                    ((SeasonTeam)Teams.Where(t => t.Id == game.GetCompettitionWinner().Id).First()).Stats.Wins++;
-                    ((SeasonTeam)Teams.Where(t => t.Id == game.GetCompetitionLoser().Id).First()).Stats.Loses++;
+                else if (game.HomeScore > game.AwayScore) 
+                {
+                    home.Stats.Wins++;
+                    away.Stats.Loses++;                                        
+                }
+                else if (game.AwayScore > game.HomeScore)
+                {
+                    home.Stats.Loses++;
+                    away.Stats.Wins++;
                 }
 
                 home.Stats.GoalsFor += game.HomeScore;

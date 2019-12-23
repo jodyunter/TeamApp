@@ -1,13 +1,7 @@
-﻿@page "/standings/model"
+﻿@page "/standings"
 
 <h3>Standings</h3>
 
-@if (model == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
     <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowSorting="true" Data="@model.Teams" TItem="StandingsTeamViewModel" ColumnWidth="100%">
         <Columns>
             <RadzenGridColumn TItem="StandingsTeamViewModel" Property="Division" Title="Div" />
@@ -24,7 +18,7 @@ else
 
         </Columns>
     </RadzenGrid>
-}
+
 
 @code {
 

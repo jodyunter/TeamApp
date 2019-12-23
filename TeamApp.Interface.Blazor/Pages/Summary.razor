@@ -1,11 +1,14 @@
 ﻿@page "/summary"
 
 @using TeamApp.Interface.Blazor.Pages.Standings
+@using TeamApp.Interface.Blazor.Pages.Games
 @using TeamApp.Services
 @using TeamApp.ViewModels.Views
+@using TeamApp.ViewModels.Views.Games
 @inject IGameDataService GameDataService
 @inject ICompetitionService CompetitionService
 @inject IStandingsService StandingsService
+@inject IScheduleGameService GameService
 
 <h1>Daily View</h1>
 <b>Current Year </b>@summary.CurrentYear
@@ -13,34 +16,49 @@
 <b>Current Day</b>@summary.CurrentDay
 <br />
 
+@if (previousDay != null)
+{
+    <ScheduleDaySummary Day="previousDay" />
+}
+<ScheduleDaySummary Day="currentDay" />
 <RadzenButton Click="@((args) => Click(args, "PlayDay"))" Text="Play Day">Play Day</RadzenButton><br />
-
 <Standings model="standings" />
 
 
 @code {
-    GameSummary summary;    
+    GameSummary summary;
+    StandingsViewModel standings;
+    ScheduleDaySummaryViewModel currentDay;
+    ScheduleDaySummaryViewModel previousDay;
 
     protected override async Task OnInitializedAsync()
     {
-            summary = await GameDataService.GetGameSummary();
-            standings = await StandingsService.GetStandings(1, summary.CurrentYear, 1);
+        RefreshData();
+
     }
 
+    private async void RefreshData()
+    {
+        summary = await GameDataService.GetGameSummary();
+        standings = await StandingsService.GetStandings(1, summary.CurrentYear, 1);
+        currentDay = await GameService.GetScheduleDay(summary.CurrentDay, summary.CurrentYear);
+        if (summary.CurrentDay > 1)
+        {
+            previousDay = await GameService.GetScheduleDay(summary.CurrentDay - 1, summary.CurrentYear);
+        }
 
-    StandingsViewModel standings;
+        StateHasChanged();
+
+    }
 
     async void Click(MouseEventArgs args, string buttonName)
     {
         if (buttonName.Equals("PlayDay"))
         {
             GameDataService.PlayAndProcessDay();
-            summary = await GameDataService.GetGameSummary();
-            standings = await StandingsService.GetStandings(1, summary.CurrentYear, 1);
+            RefreshData();
 
         }
-
-        StateHasChanged();
     }
 
 }

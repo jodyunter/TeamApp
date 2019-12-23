@@ -21,6 +21,7 @@ namespace TeamApp.Services
             services.AddSingleton<ITeamService, TeamService>();
             services.AddSingleton<ICompetitionService, CompetitionService>();
             services.AddSingleton<IStandingsService, StandingsService>();
+            services.AddSingleton<IScheduleGameService, ScheduleGameService>();
 
             services.AddSingleton<IGameDataRepository, GameDataRepository>();
             services.AddSingleton<ILeagueRepository, LeagueRepository>();

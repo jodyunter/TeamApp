@@ -52,7 +52,8 @@ namespace TeamApp.Domain.Schedules
 
             return result;
         }
-
+        
+        //these suck don't use
         public virtual CompetitionTeam GetCompettitionWinner()
         {
             var winner = GetWinner();
@@ -64,9 +65,9 @@ namespace TeamApp.Domain.Schedules
 
         public virtual CompetitionTeam GetCompetitionLoser()
         {
-            var winner = GetLoser();
-            if (winner.Id == Away.Id) return CompetitionHomeTeam;
-            else if (winner.Id == Home.Id) return CompetitionAwayTeam;
+            var loser = GetLoser();
+            if (loser.Id == Home.Id) return CompetitionHomeTeam;
+            else if (loser.Id == Away.Id) return CompetitionAwayTeam;
 
             return null;
         }
