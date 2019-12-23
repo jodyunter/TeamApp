@@ -1,9 +1,10 @@
-﻿using TeamApp.ViewModels.Views.Standings;
+﻿using System.Threading.Tasks;
+using TeamApp.ViewModels.Views.Standings;
 
 namespace TeamApp.Services
 {
     public interface IStandingsService
     {
-        StandingsViewModel GetStandings(long competitionId);        
+        Task<StandingsViewModel> GetStandings(long competitionId);        
     }
 }

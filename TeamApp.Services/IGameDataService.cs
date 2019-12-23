@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using TeamApp.Domain;
+using TeamApp.ViewModels.Views;
 
 namespace TeamApp.Services
 {
@@ -15,6 +17,7 @@ namespace TeamApp.Services
         void SetupComeptitionsForDay(int day, int year);
         void RandomlyChangeSkillLevels(Random random);
         GameData GetCurrentData();//need to change to a view model!
+        Task<GameSummary> GetGameSummary();
         void SaveCurrentData(GameData data);
     }
 }

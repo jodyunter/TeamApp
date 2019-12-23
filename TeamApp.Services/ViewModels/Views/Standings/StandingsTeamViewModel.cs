@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace TeamApp.ViewModels.Views.Standings
 {
@@ -21,5 +21,12 @@ namespace TeamApp.ViewModels.Views.Standings
         public int Points { get; set; }
         public int Skill { get; set; }
         public IList<StandingsRankingViewModel> Rankings { get; set; }
+
+        public void SetRankByLevel(int level)
+        {
+            var rank = Rankings.Where(r => r.GroupLevel == level).First().Rank;
+
+            Rank = rank;
+        }
     }
 }

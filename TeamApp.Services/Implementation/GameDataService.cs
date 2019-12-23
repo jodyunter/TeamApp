@@ -2,10 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TeamApp.Domain;
 using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Competitions.Seasons;
 using TeamApp.Domain.Repositories;
+using TeamApp.ViewModels.Views;
 
 namespace TeamApp.Services.Implementation
 {
@@ -193,6 +195,19 @@ namespace TeamApp.Services.Implementation
             var currentData = GetCurrentData();
 
             teamService.RandomlyChangeSkillLevels(currentData.CurrentYear, random);
+        }
+
+
+        public Task<GameSummary> GetGameSummary()
+        {
+            var data = gameDataRepo.GetCurrentData();
+            var summary = new GameSummary()
+            {
+                CurrentDay = data.CurrentDay,
+                CurrentYear = data.CurrentYear
+            };
+
+            return Task.FromResult(summary);
         }
     }
 }

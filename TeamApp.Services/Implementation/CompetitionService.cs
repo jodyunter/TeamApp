@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Repositories;
 using TeamApp.Services.Implementation.Mappers;
@@ -40,11 +41,13 @@ namespace TeamApp.Services.Implementation
             return simpleViewMapper.MapDomainToModel(competitions);
         }
 
-        public IEnumerable<CompetitionSimpleViewModel> GetCompetitionsByYear(int year)
+        public Task<CompetitionSimpleViewModel[]> GetCompetitionsByYear(int year)
         {
             var competitions = competitionRepository.GetByYear(year);
 
-            return simpleViewMapper.MapDomainToModel(competitions);
+            var result = simpleViewMapper.MapDomainToModel(competitions);
+
+            return Task.FromResult(result.ToArray());
         }
 
         public CompetitionSimpleViewModel GetCompetition(long id)

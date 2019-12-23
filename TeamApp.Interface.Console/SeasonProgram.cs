@@ -60,7 +60,7 @@ namespace TeamApp.Console
                 }
 
 
-                var displayComps = teamApp.CompetitionService.GetCompetitionsByYear(currentData.CurrentYear).ToList();
+                var displayComps = teamApp.CompetitionService.GetCompetitionsByYear(currentData.CurrentYear).Result.ToList();
                 var activeComps = teamApp.CompetitionService.GetActiveCompetitions(currentData.CurrentYear).ToList();
 
                 if (activeComps.Count > 0)
@@ -69,7 +69,7 @@ namespace TeamApp.Console
                     {
                         if (m.Type == "Season")
                         {
-                            var standings = teamApp.StandingsService.GetStandings(m.Id);
+                            var standings = teamApp.StandingsService.GetStandings(m.Id).Result;
                             var view = new StandingsView(standings);
 
                             WriteLine(view.GetView(StandingsView.LEAGUE));
@@ -91,12 +91,12 @@ namespace TeamApp.Console
                 }
                 else
                 {
-                    teamApp.CompetitionService.GetCompetitionsByYear(currentData.CurrentYear).ToList().ForEach(m =>
+                    teamApp.CompetitionService.GetCompetitionsByYear(currentData.CurrentYear).Result.ToList().ForEach(m =>
                     {
                         if (
                         m.Type == "Season")
                         {
-                            var standings = teamApp.StandingsService.GetStandings(m.Id);
+                            var standings = teamApp.StandingsService.GetStandings(m.Id).Result;
                             var view = new StandingsView(standings);
 
                             WriteLine(view.GetView(StandingsView.LEAGUE));

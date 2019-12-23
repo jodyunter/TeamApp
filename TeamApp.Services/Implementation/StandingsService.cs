@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Competitions.Seasons;
 using TeamApp.Domain.Repositories;
@@ -26,7 +27,7 @@ namespace TeamApp.Services.Implementation
             return null;   
         }
 
-        public StandingsViewModel GetStandings(long competitionId)
+        public Task<StandingsViewModel> GetStandings(long competitionId)
         {
             var competition = competitionRepository.Get(competitionId);
             
@@ -44,11 +45,15 @@ namespace TeamApp.Services.Implementation
                 });
             });
 
-            return new StandingsViewModel()
+            var result = new StandingsViewModel()
             {
                 Teams = models
             };
-            
+
+            result.SortByLevel(1);
+
+            return Task.FromResult(result);
+
         }
         
 
