@@ -1,0 +1,21 @@
+﻿@page "/summary"
+
+@using TeamApp.Interface.Blazor.Data
+@using TeamApp.ViewModels.Views
+@inject GameDataService GameDataService
+
+
+<h1>@summary.CurrentYear</h1>
+<h1>@summary.CurrentDay</h1>
+
+
+@code {
+    GameSummary summary;
+
+    protected override async Task OnInitializedAsync()
+    {
+        summary = await GameDataService.GetGameSummary();
+    }
+
+
+}
