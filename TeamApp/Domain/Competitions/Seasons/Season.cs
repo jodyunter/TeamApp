@@ -21,18 +21,18 @@ namespace TeamApp.Domain.Competitions.Seasons
         {            
             if (game.Complete)
             {
-                var home = (SeasonTeam)Teams.Where(t => t.Parent.Id == game.Home.Id).First();
-                var away = (SeasonTeam)Teams.Where(t => t.Parent.Id == game.Away.Id).First();
-
+                var home = (SeasonTeam)Teams.Where(t => t.Id == game.CompetitionHomeTeam.Id).First();
+                var away = (SeasonTeam)Teams.Where(t => t.Id == game.CompetitionAwayTeam.Id).First();
+                
                 if (game.HomeScore == game.AwayScore)
                 {
                     home.Stats.Ties++;
                     away.Stats.Ties++;
                 }
                 else
-                {
-                    ((SeasonTeam)Teams.Where(t => t.Parent.Id == game.GetWinner().Id).First()).Stats.Wins++;
-                    ((SeasonTeam)Teams.Where(t => t.Parent.Id == game.GetLoser().Id).First()).Stats.Loses++;
+                {                          
+                    ((SeasonTeam)Teams.Where(t => t.Id == game.GetCompettitionWinner().Id).First()).Stats.Wins++;
+                    ((SeasonTeam)Teams.Where(t => t.Id == game.GetCompetitionLoser().Id).First()).Stats.Loses++;
                 }
 
                 home.Stats.GoalsFor += game.HomeScore;

@@ -11,6 +11,6 @@ namespace TeamApp.Domain
         ITeam Team { get; set; }
         int Offense { get; set; }
         int Defense { get; set; }
-        int Goaltending { get; set; }
+        int Goaltending { get; set; }        
     }
 }

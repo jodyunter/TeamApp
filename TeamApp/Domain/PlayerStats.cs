@@ -7,7 +7,7 @@ namespace TeamApp.Domain
 {
     public class PlayerStats : BaseDataObject
     {        
-        public virtual GamePlayer Player { get; set; }
+        //no game player, this should be referenced by each type of player istead
         public virtual int FaceOffsWon { get; set; } = 0;
         public virtual int FaceOffsLoses { get; set; } = 0;
 

@@ -15,8 +15,8 @@ namespace TeamApp.Domain.Schedules
         //todo set this into the constructors?
         public virtual Competition Competition { get; set; }
         public virtual bool Processed { get; set; }
-        public virtual CompetitionTeam HomeTeam { get; set; }
-        public virtual CompetitionTeam AwayTeam { get; set; }
+        public virtual CompetitionTeam CompetitionHomeTeam { get; set; }
+        public virtual CompetitionTeam CompetitionAwayTeam { get; set; }
 
         
         public ScheduleGame() : base() { }
@@ -28,15 +28,15 @@ namespace TeamApp.Domain.Schedules
             Day = day;
             Year = year;
             Processed = processed;
-            HomeTeam = homeCompetitionTeam;
-            AwayTeam = awayCompetitionTeam;
+            CompetitionHomeTeam = homeCompetitionTeam;
+            CompetitionAwayTeam = awayCompetitionTeam;
             
         }
 
         public override void SetupGamePlayers()
         {
-            HomePlayers = SetupCompetitionPlayers(HomeTeam);
-            AwayPlayers = SetupCompetitionPlayers(AwayTeam);
+            HomePlayers = SetupCompetitionPlayers(CompetitionHomeTeam);
+            AwayPlayers = SetupCompetitionPlayers(CompetitionAwayTeam);
         }
         //override this for competition game players
         public virtual IList<GamePlayer> SetupCompetitionPlayers(CompetitionTeam team)
@@ -52,5 +52,24 @@ namespace TeamApp.Domain.Schedules
 
             return result;
         }
+
+        public virtual CompetitionTeam GetCompettitionWinner()
+        {
+            var winner = GetWinner();
+            if (winner.Id == Home.Id) return CompetitionHomeTeam;
+            else if (winner.Id == Away.Id) return CompetitionAwayTeam;
+
+            return null;
+        }
+
+        public virtual CompetitionTeam GetCompetitionLoser()
+        {
+            var winner = GetLoser();
+            if (winner.Id == Away.Id) return CompetitionHomeTeam;
+            else if (winner.Id == Home.Id) return CompetitionAwayTeam;
+
+            return null;
+        }
+
     }
 }

@@ -36,8 +36,8 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
             Map(x => x.Year);
             References(x => x.Competition);
             Map(x => x.Processed);
-            References(x => x.HomeTeam);
-            References(x => x.AwayTeam);
+            References(x => x.CompetitionHomeTeam);
+            References(x => x.CompetitionAwayTeam);
 
             DiscriminatorValue("ScheduleGame");
         }
@@ -66,7 +66,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
             Map(x => x.Defense);
             Map(x => x.Goaltending);
             References(x => x.Game);
-            HasOne(x => x.Stats);
+            References(x => x.Stats);
             References(x => x.CurrentTeam);
             References(x => x.ParentPlayer);
 
@@ -77,8 +77,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
     public class PlayerStatsMap:BaseMap<PlayerStats>
     {
         public PlayerStatsMap()
-        {
-            References(x => x.Player);
+        {            
             Map(x => x.FaceOffsWon);
             Map(x => x.FaceOffsLoses);
             Map(x => x.CarrySuccess);

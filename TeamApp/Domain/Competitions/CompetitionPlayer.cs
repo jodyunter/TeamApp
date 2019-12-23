@@ -13,9 +13,10 @@ namespace TeamApp.Domain.Competitions
         public virtual int Goaltending { get; set; } = 10;
         public virtual CompetitionTeam CompetitionTeam { get; set; }
         public virtual Competition Competition { get; set; }
-        public virtual Player Parent { get; set; }
+        public virtual Player Parent { get; set; }        
         public virtual int? FirstYear { get; set; }
-        public virtual int? LastYear { get { return FirstYear; } set { } }        
+        public virtual int? LastYear { get { return FirstYear; } set { } }   
+        public virtual PlayerStats Stats { get; set; }
         
         public virtual ITeam Team
         {
@@ -29,7 +30,7 @@ namespace TeamApp.Domain.Competitions
 
         }
 
-        public  CompetitionPlayer(Player parent, Competition competition, CompetitionTeam competitionTeam, string name, int age, int offense, int defense, int goaltending, int? firstYear, int? lastYear)
+        public  CompetitionPlayer(Player parent, Competition competition, CompetitionTeam competitionTeam, PlayerStats stats, string name, int age, int offense, int defense, int goaltending, int? firstYear, int? lastYear)
         {
             Parent = parent;
             Competition = competition;
@@ -41,6 +42,7 @@ namespace TeamApp.Domain.Competitions
             Goaltending = goaltending;
             FirstYear = firstYear;
             LastYear = lastYear;
+            Stats = stats;
         }
     }
 }

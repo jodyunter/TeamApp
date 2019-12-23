@@ -12,16 +12,16 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
     {
         public CompetitionMap()
         {
-            References(x => x.CompetitionConfig).Cascade.All();
+            References(x => x.CompetitionConfig);
             Map(x => x.Name);
             Map(x => x.Year);
-            HasMany(x => x.Teams).Cascade.All();
-            HasMany(x => x.Rankings).Cascade.All();            
+            HasMany(x => x.Teams).Not.LazyLoad();
+            HasMany(x => x.Rankings);
             Map(x => x.Started);
             Map(x => x.Finished);
             Map(x => x.StartDay);
             Map(x => x.EndDay);
-            HasMany(x => x.Games).Cascade.All();
+            HasMany(x => x.Games);
 
             DiscriminateSubClassesOnColumn<string>("Type").AlwaysSelectWithValue();
 
@@ -37,6 +37,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
             References(x => x.Parent);
             References(x => x.CompetitionTeam);
             References(x => x.Competition);
+            References(x => x.Stats);
             Map(x => x.Name);
             Map(x => x.Age);
             Map(x => x.Offense);

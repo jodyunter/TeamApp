@@ -18,5 +18,6 @@ namespace TeamApp.Services.Implementation
         {
             return scheduleGameRepository.GetGamesForDay(day, year);
         }
+
     }
 }

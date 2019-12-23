@@ -13,7 +13,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
             DiscriminatorValue("Playoff");
 
             Map(x => x.CurrentRound);
-            HasMany(x => x.Series);
+            HasMany(x => x.Series).Not.LazyLoad();
         }
     }
 

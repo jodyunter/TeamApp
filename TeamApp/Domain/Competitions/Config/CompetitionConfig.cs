@@ -114,7 +114,7 @@ namespace TeamApp.Domain.Competitions.Config
 
         public virtual CompetitionPlayer CreateCompetitionPlayer(Competition competition, Player parent, CompetitionTeam competitionTeam)
         {
-            return new CompetitionPlayer(parent, competition, competitionTeam, parent.Name, parent.Age, parent.Offense, parent.Defense, parent.Goaltending, competition.Year, competition.Year);
+            return new CompetitionPlayer(parent, competition, competitionTeam, new PlayerStats(), parent.Name, parent.Age, parent.Offense, parent.Defense, parent.Goaltending, competition.Year, competition.Year);
         }
     }
 }

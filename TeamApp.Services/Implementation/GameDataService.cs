@@ -11,6 +11,7 @@ namespace TeamApp.Services.Implementation
 {
     public class GameDataService: IGameDataService
     {
+        //todo most of these shouldn't be repos
         private IGameDataRepository gameDataRepo;
         private ILeagueRepository leagueRepo;
         private IScheduleGameRepository scheduleGameRepo;
@@ -90,7 +91,7 @@ namespace TeamApp.Services.Implementation
 
             //var gamesToProcess = scheduleGameRepository.GetGamesForDay(gameData.CurrentDay, gameData.CurrentYear).Where(g => g.Complete && !g.Processed).ToList();
             var gamesToProcess = scheduleGameRepo.GetCompleteAndUnProcessedGamesForDay(gameData.CurrentDay, gameData.CurrentYear).ToList();
-
+            
             var competitionList = competitionRepo.GetStartedAndUnfinishedCompetitionsByYear(gameData.CurrentYear).ToDictionary(key => key.Id);
                
             gamesToProcess.ForEach(game =>

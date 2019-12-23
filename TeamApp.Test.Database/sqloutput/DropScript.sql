@@ -23,7 +23,6 @@ if exists (select * from dbo.sysobjects where id = object_id(N'[SeasonTeamRule]'
 if exists (select * from dbo.sysobjects where id = object_id(N'[SeasonDivisionRule]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [SeasonDivisionRule]
 if exists (select * from dbo.sysobjects where id = object_id(N'[TeamRanking]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [TeamRanking]
 if exists (select * from dbo.sysobjects where id = object_id(N'[GameData]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [GameData]
-if exists (select * from dbo.sysobjects where id = object_id(N'[PlayerStats]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [PlayerStats]
 if exists (select * from dbo.sysobjects where id = object_id(N'GamePlayer') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table GamePlayer
 if exists (select * from dbo.sysobjects where id = object_id(N'[Game]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [Game]
 if exists (select * from dbo.sysobjects where id = object_id(N'[PlayoffSeries]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [PlayoffSeries]
@@ -31,9 +30,9 @@ if exists (select * from dbo.sysobjects where id = object_id(N'[CompetitionPlaye
 if exists (select * from dbo.sysobjects where id = object_id(N'[CompetitionTeam]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [CompetitionTeam]
 if exists (select * from dbo.sysobjects where id = object_id(N'[SeasonDivision]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [SeasonDivision]
 if exists (select * from dbo.sysobjects where id = object_id(N'[SeasonTeamStats]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [SeasonTeamStats]
+if exists (select * from dbo.sysobjects where id = object_id(N'[PlayerStats]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [PlayerStats]
 if exists (select * from dbo.sysobjects where id = object_id(N'[Player]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [Player]
 if exists (select * from dbo.sysobjects where id = object_id(N'[Competition]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [Competition]
-if exists (select * from dbo.sysobjects where id = object_id(N'[CompetitionConfig]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [CompetitionConfig]
 if exists (select * from dbo.sysobjects where id = object_id(N'[PlayoffSeriesRule]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table PlayoffSeriesRule
 if exists (select * from dbo.sysobjects where id = object_id(N'[PlayoffRankingRule]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table PlayoffRankingRule
 if exists (select * from dbo.sysobjects where id = object_id(N'[CompetitionConfig]') and OBJECTPROPERTY(id, N'IsUserTable') = 1) drop table [CompetitionConfig]
