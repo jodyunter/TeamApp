@@ -2,28 +2,29 @@
 
 @using TeamApp.ViewModels.Views.Games
 
-Day: @Day.Day <br />
-    <table>        
-        <tr>
-            <th>Home</th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th>Away</th>
-        </tr>
-        @foreach (var game in Day.Games)
-        {
-        <tr>
-            <td>@game.HomeTeamName</td>
-            <td>@game.HomeScore</td>
-            <td>-</td>      
-            <td>@game.AwayScore</td>
-            <td>@game.AwayTeamName</td>
-        </tr>
-        }
+    <RadzenCard Style="width:30%">
+        Day: @Day.Day <br />
+        <table>
+            <tr>
+                <th>Home</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>Away</th>
+            </tr>
+            @foreach (var game in Day.Games)
+            {
+                <tr>
+                    <td>@game.HomeTeamName</td>
+                    <td>@game.HomeScore</td>
+                    <td>-</td>
+                    <td>@game.AwayScore</td>
+                    <td>@game.AwayTeamName</td>
+                </tr>
+            }
 
-    </table>
-
+        </table>
+    </RadzenCard>
 @code {
     [Parameter]
     public ScheduleDaySummaryViewModel Day { get; set; }

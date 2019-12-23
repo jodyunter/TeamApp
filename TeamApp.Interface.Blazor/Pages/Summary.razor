@@ -16,20 +16,26 @@
 <b>Current Day</b>@summary.CurrentDay
 <br />
 
-@if (previousDay != null)
-{
-    <ScheduleDaySummary Day="previousDay" />
-}
-<ScheduleDaySummary Day="currentDay" />
-<RadzenButton Click="@((args) => Click(args, "PlayDay"))" Text="Play Day">Play Day</RadzenButton><br />
+<RadzenTabs>
+    <Tabs>
+        @foreach (var day in days)
+        {
+            
+            <RadzenTabsItem Text=@GetDayString(day.Day, summary.CurrentDay) Selected="@GetSelected(day.Day, summary.CurrentDay)">
+                <ScheduleDaySummary Day="@day" />
+            </RadzenTabsItem>
+        }
+    </Tabs>
+</RadzenTabs>
+
 <Standings model="standings" />
-
-
+<RadzenButton Click="@((args) => Click(args, "PlayDay"))" Text="Play Day">Play Day</RadzenButton>
+<br />
 @code {
     GameSummary summary;
     StandingsViewModel standings;
-    ScheduleDaySummaryViewModel currentDay;
-    ScheduleDaySummaryViewModel previousDay;
+    ScheduleDaySummaryViewModel[] days;
+    string dayString = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -40,17 +46,29 @@
     private async void RefreshData()
     {
         summary = await GameDataService.GetGameSummary();
-        standings = await StandingsService.GetStandings(1, summary.CurrentYear, 1);
-        currentDay = await GameService.GetScheduleDay(summary.CurrentDay, summary.CurrentYear);
-        if (summary.CurrentDay > 1)
-        {
-            previousDay = await GameService.GetScheduleDay(summary.CurrentDay - 1, summary.CurrentYear);
-        }
+        days = await GameService.GetScheduleDays(summary.CurrentDay - 2, 4, summary.CurrentYear);
+
 
         StateHasChanged();
 
     }
 
+    protected bool GetSelected(int day, int currentDay)
+    {
+        if (day == currentDay)
+            return true;
+        else
+            return false;
+    }
+
+    protected string GetDayString(int dayNumber, int currentDay)
+    {
+        if (dayNumber == currentDay)
+        {
+            return "Today - Day " + dayNumber;
+        }
+        return "Day " + dayNumber;
+    }
     async void Click(MouseEventArgs args, string buttonName)
     {
         if (buttonName.Equals("PlayDay"))

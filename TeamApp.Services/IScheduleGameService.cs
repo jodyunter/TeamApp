@@ -12,5 +12,6 @@ namespace TeamApp.Services
         //convert to viewmodel at some point
         IEnumerable<ScheduleGame> GetGamesForDay(int day, int year);
         Task<ScheduleDaySummaryViewModel> GetScheduleDay(int day, int year);
+        Task<ScheduleDaySummaryViewModel[]> GetScheduleDays(int startingDay, int daysToGet, int year);
     }
 }
