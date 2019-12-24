@@ -29,7 +29,9 @@
 </RadzenTabs>
 
 <Standings model="standings" />
-<RadzenButton Click="@((args) => Click(args, "PlayDay"))" Text="Play Day">Play Day</RadzenButton>
+<RadzenButton Click="@((args) => Click(args, "PlayDay"))" Text="Play Day" Visible="@ShowPlayDay()"></RadzenButton>
+<RadzenButton Click="@((args) => Click(args, "StartNextYear"))" Text="Start Next Year" Visible="@ShowStartNextYear()"></RadzenButton>
+<RadzenButton Click="@((args) => Click(args, "StartNextCompetition"))" Text="Start Next Competition" Visible="@ShowStartNextCompetition()"></RadzenButton>
 <br />
 @code {
     GameSummary summary;
@@ -53,6 +55,20 @@
 
     }
 
+    protected bool ShowPlayDay()
+    {
+        return summary.AllowPlayGames;
+    }
+
+    protected bool ShowStartNextYear()
+    {
+        return summary.AllowIncrementYear;
+    }
+
+    protected bool ShowStartNextCompetition()
+    {
+        return summary.AllowStartNextCompetition;
+    }
     protected bool GetSelected(int day, int currentDay)
     {
         if (day == (currentDay - 1))
@@ -73,10 +89,18 @@
     {
         if (buttonName.Equals("PlayDay"))
         {
-            GameDataService.PlayAndProcessDay();
-            RefreshData();
-
+            GameDataService.PlayAndProcessDay();            
         }
+        else if (buttonName.Equals("StartNextYear"))
+        {
+            GameDataService.StartNextYear();
+        }
+        else if (buttonName.Equals("StartNextCompetition"))
+        {
+            GameDataService.StartNextCompetition();
+        }
+
+        RefreshData();
     }
 
 }

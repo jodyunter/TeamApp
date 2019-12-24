@@ -20,5 +20,8 @@ namespace TeamApp.Services
         GameData GetCurrentData();//need to change to a view model!
         Task<GameSummary> GetGameSummary();
         void SaveCurrentData(GameData data);
+        public void StartNextCompetition();
+
+        public void StartNextYear();
     }
 }

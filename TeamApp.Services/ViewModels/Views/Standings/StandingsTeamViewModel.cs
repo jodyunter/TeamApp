@@ -20,13 +20,15 @@ namespace TeamApp.ViewModels.Views.Standings
         public int GoalDifference { get; set; }
         public int Points { get; set; }
         public int Skill { get; set; }
-        public IList<StandingsRankingViewModel> Rankings { get; set; }
+        public IList<StandingsRankingViewModel> Rankings { get; set; } = new List<StandingsRankingViewModel>();
 
         public void SetRankByLevel(int level)
         {
-            var rank = Rankings.Where(r => r.GroupLevel == level).First().Rank;
+            var rank = Rankings.Where(r => r.GroupLevel == level).FirstOrDefault();
 
-            Rank = rank;
+            if (rank == null) Rank = 1;
+            else
+                Rank = rank.Rank;
         }
     }
 }

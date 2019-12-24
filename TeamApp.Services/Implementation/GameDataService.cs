@@ -20,9 +20,10 @@ namespace TeamApp.Services.Implementation
         private ICompetitionRepository competitionRepo;
         private ICompetitionConfigRepository competitionConfigRepo;
         private ITeamService teamService;
+        private ICompetitionService competitionService;
 
         public string DebugError { get; set; }
-        public GameDataService(IGameDataRepository gameDataRepository, ILeagueRepository leagueRepository, IScheduleGameRepository scheduleGameRepository, ICompetitionRepository competitionRepository, ICompetitionConfigRepository competitionConfigRepository, ITeamService teamServ)
+        public GameDataService(IGameDataRepository gameDataRepository, ILeagueRepository leagueRepository, IScheduleGameRepository scheduleGameRepository, ICompetitionRepository competitionRepository, ICompetitionConfigRepository competitionConfigRepository, ITeamService teamServ, ICompetitionService compService)
         {
             gameDataRepo = gameDataRepository;
             leagueRepo = leagueRepository;
@@ -30,6 +31,7 @@ namespace TeamApp.Services.Implementation
             competitionRepo = competitionRepository;
             competitionConfigRepo = competitionConfigRepository;
             teamService = teamServ;
+            competitionService = compService;
         }
 
         public bool IsYearComplete(int year)
@@ -202,25 +204,83 @@ namespace TeamApp.Services.Implementation
         public Task<GameSummary> GetGameSummary()
         {
             var data = gameDataRepo.GetCurrentData();
+            var competitions = competitionService.GetCompetitionsByYear(data.CurrentYear).Result;
+
             var summary = new GameSummary()
             {
                 CurrentDay = data.CurrentDay,
-                CurrentYear = data.CurrentYear
+                CurrentYear = data.CurrentYear,
+                CompetitionForCurrentYear = competitions
             };
+
+            var noCompetitionStartedYet = competitions.Where(c => !c.Started).Count() > 0;
+            var areAllCompetitionsStartedAndFinished = competitions.Where(c => c.Started && c.Complete).Count() == competitions.Count();            
+            var areSomeCompetitionsStartedAndNotFinished = competitions.Where(c => c.Started && !c.Complete).Count() > 0;
+            
+            var totalCompetitions = competitions.Count();
+            bool allowIncrementYear = false;
+            bool allowPlayGames = false;
+            bool allowStartNextCompetition = false;
+
+            if (noCompetitionStartedYet)
+            {
+                allowStartNextCompetition = true;
+            }
+
+            //this should mean that no competition is running, and not all are done
+            if (!areSomeCompetitionsStartedAndNotFinished && !areAllCompetitionsStartedAndFinished)
+            {
+                allowStartNextCompetition = true;
+            }
+
+            if (areSomeCompetitionsStartedAndNotFinished)
+            {
+                allowPlayGames = true;
+                allowStartNextCompetition = false;
+                allowIncrementYear = false;
+            }
+
+            if (areAllCompetitionsStartedAndFinished)
+            {
+                allowIncrementYear = true;
+                allowPlayGames = false;
+                allowStartNextCompetition = false;
+            }
+
+            summary.AllowIncrementYear = allowIncrementYear;
+            summary.AllowPlayGames = allowPlayGames;
+            summary.AllowStartNextCompetition = allowStartNextCompetition;
+
+            
+            //if ther eare not started competitions, and there are more competitio
+            
+
+            //you can start a competition IF there are none started 
 
             return Task.FromResult(summary);
         }
 
         public void PlayAndProcessDay()
         {
-            var data = gameDataRepo.GetCurrentData();
-            SetupComeptitionsForDay(data.CurrentDay, data.CurrentYear);
+            var data = gameDataRepo.GetCurrentData();            
             ProcessDay();
             PlayDay(new Random());
             ProcessDay();
             IncrementDay();
             gameDataRepo.Flush();
 
+        }
+
+        public void StartNextCompetition()
+        {
+            var data = gameDataRepo.GetCurrentData();
+            SetupComeptitionsForDay(data.CurrentDay, data.CurrentYear);
+        }
+
+        public void StartNextYear()
+        {
+            IncrementYear();
+            RandomlyChangeSkillLevels(new Random());
         }
     }
 }
