@@ -47,7 +47,7 @@
     {
         summary = await GameDataService.GetGameSummary();
         days = await GameService.GetScheduleDays(summary.CurrentDay - 2, 4, summary.CurrentYear);
-
+        standings = await StandingsService.GetStandings(1, summary.CurrentYear, 1);
 
         StateHasChanged();
 

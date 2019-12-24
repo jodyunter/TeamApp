@@ -31,7 +31,7 @@ namespace TeamApp.Services.Implementation
         {
             var competitions = competitionRepository.GetByYear(year).ToList();
             var competition = competitions.Where(c => c.CompetitionConfig.Id == competitionConfigId).First();
-
+            
             return GetStandings(competition.Id, sortingLevel);
         }
         public Task<StandingsViewModel> GetStandings(long competitionId, int sortingLevel)

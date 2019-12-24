@@ -21,7 +21,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
             Map(x => x.Finished);
             Map(x => x.StartDay);
             Map(x => x.EndDay);
-            HasMany(x => x.Games);
+            HasMany(x => x.Games).Not.LazyLoad();
 
             DiscriminateSubClassesOnColumn<string>("Type").AlwaysSelectWithValue();
 
@@ -35,7 +35,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
         public CompetitionPlayerMap()
         {
             References(x => x.Parent);
-            References(x => x.CompetitionTeam);
+            References(x => x.CompetitionTeam).Not.LazyLoad();
             References(x => x.Competition);
             References(x => x.Stats);
             Map(x => x.Name);

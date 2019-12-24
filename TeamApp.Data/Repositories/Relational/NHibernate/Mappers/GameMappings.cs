@@ -36,8 +36,8 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
             Map(x => x.Year);
             References(x => x.Competition);
             Map(x => x.Processed);
-            References(x => x.CompetitionHomeTeam);
-            References(x => x.CompetitionAwayTeam);
+            References(x => x.CompetitionHomeTeam).Not.LazyLoad();
+            References(x => x.CompetitionAwayTeam).Not.LazyLoad();
 
             DiscriminatorValue("ScheduleGame");
         }
