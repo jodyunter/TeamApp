@@ -55,7 +55,7 @@
 
     protected bool GetSelected(int day, int currentDay)
     {
-        if (day == currentDay)
+        if (day == (currentDay - 1))
             return true;
         else
             return false;
@@ -63,9 +63,9 @@
 
     protected string GetDayString(int dayNumber, int currentDay)
     {
-        if (dayNumber == currentDay)
+        if (dayNumber == (currentDay - 1))
         {
-            return "Today - Day " + dayNumber;
+            return "Today - Day " + (dayNumber - 1);
         }
         return "Day " + dayNumber;
     }

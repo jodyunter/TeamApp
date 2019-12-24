@@ -101,7 +101,8 @@ namespace TeamApp.Services.Implementation
                 //here we want to add all the player stats to the competition player stats
                 var competition = competitionList[game.Competition.Id];
                 var newGames = competition.ProcessGame(game, gameData.CurrentDay);
-                if (competition.GetType() == typeof(Season)) ((Season)competition).SortAllTeams();
+                if (competition.GetType() == typeof(Season) || competition.GetType().FullName.Contains("SeasonProxy"))
+                    ((Season)competition).SortAllTeams();
                 scheduleGameRepo.Update(game);
                 scheduleGameRepo.UpdateAll(newGames);
                 competitionRepo.Update(competition);
