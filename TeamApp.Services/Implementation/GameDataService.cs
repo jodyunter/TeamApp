@@ -142,7 +142,8 @@ namespace TeamApp.Services.Implementation
             else
             {
                 gameData.CurrentDay = gameData.CurrentDay + 1;
-                SetupComeptitionsForDay(gameData.CurrentDay, gameData.CurrentYear);
+                //this should be a manual process
+                //SetupComeptitionsForDay(gameData.CurrentDay, gameData.CurrentYear);
                 gameDataRepo.Update(gameData);
                 gameDataRepo.Flush();
 
