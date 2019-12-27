@@ -16,17 +16,31 @@ namespace TeamApp.Services.Implementation.Mappers
         public override PlayoffSummaryViewModel MapDomainToModel(Playoff obj)
         {            
             var series = new List<BestOfSeriesSummaryViewModel>();
-            
+            var rounds = new List<PlayoffRoundViewModel>();
+
+            if (obj == null) return null;
+
             if (obj.Series != null)
             {
                 obj.Series.ToList().ForEach(s =>
                 {
-                    series.Add(seriesMapper.MapDomainToModel((BestOfSeries)s.Self));
+                    var seriesModel = seriesMapper.MapDomainToModel((BestOfSeries)s.Self);
+                    series.Add(seriesModel);
+                    var round = rounds.Where(r => r.RoundNumber == seriesModel.Round).FirstOrDefault();
+                    if (round == null)
+                    {
+                        round = new PlayoffRoundViewModel() { Name = "Round " + seriesModel.Round, RoundNumber = seriesModel.Round, Series = new List<BestOfSeriesSummaryViewModel>() };
+                        rounds.Add(round);
+                    }
+                    var seriesModels = round.Series.ToList();
+                    seriesModels.Add(seriesModel);
+                    round.Series = seriesModels;
+
                 });
             }
                 
 
-            var model = new PlayoffSummaryViewModel(compMapper.MapDomainToModel(obj), obj.CurrentRound, series);
+            var model = new PlayoffSummaryViewModel(compMapper.MapDomainToModel(obj), obj.CurrentRound, series, rounds);
 
             return model;
 

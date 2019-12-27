@@ -206,7 +206,8 @@ namespace TeamApp.Services.Implementation
         {
             var data = gameDataRepo.GetCurrentData();
             var competitions = competitionService.GetCompetitionsByYear(data.CurrentYear).Result;
-
+            
+            
             var summary = new GameSummary()
             {
                 CurrentDay = data.CurrentDay,
@@ -215,7 +216,22 @@ namespace TeamApp.Services.Implementation
             };
 
             var noCompetitionStartedYet = competitions.Where(c => !c.Started).Count() > 0;
-            var areAllCompetitionsStartedAndFinished = competitions.Where(c => c.Started && c.Complete).Count() == competitions.Count();            
+            var areAllCompetitionsStartedAndFinished = competitions.Where(c => c.Started && c.Complete).Count() == competitions.Count();
+            
+            //see if all competitions have been started for the year
+            var configs = competitionConfigRepo.GetConfigByYear(data.CurrentYear);
+
+            configs.ToList().ForEach(config =>
+            {
+                var found = competitions.Where(c => c.Equals(config.Name)).FirstOrDefault() != null;
+
+                if (!found)
+                {
+                    areAllCompetitionsStartedAndFinished = false;
+                }
+            });
+
+
             var areSomeCompetitionsStartedAndNotFinished = competitions.Where(c => c.Started && !c.Complete).Count() > 0;
             
             var totalCompetitions = competitions.Count();

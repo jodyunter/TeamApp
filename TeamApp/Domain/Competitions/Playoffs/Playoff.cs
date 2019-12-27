@@ -152,20 +152,38 @@ namespace TeamApp.Domain.Competitions.Playoffs
         {
             int lastDay = -1;
 
-            Schedule.Days.Values.ToList().ForEach(day =>
+            if ((Schedule == null || Schedule.Days == null || Schedule.Days.Count == 0) && (StartDay != null))
             {
-                day.Games.ForEach(g =>
+                //assume it was populated properly
+                if (Schedule == null)
                 {
-                    if (g.GetType() == typeof(PlayoffGame))
+                    Schedule = new Schedule();                    
+                }
+                if (Schedule.Days == null || Schedule.Days.Count == 0)
+                {
+                    Schedule.Days.Add(StartDay.Value, new ScheduleDay(StartDay.Value));
+                }
+
+                return StartDay.Value;
+            }
+            else
+            {
+
+                Schedule.Days.Values.ToList().ForEach(day =>
+                {
+                    day.Games.ForEach(g =>
                     {
-                        var pg = (PlayoffGame)g;
-                        if (pg.Series.Round == roundNumber && pg.Day > lastDay) lastDay = pg.Day;
-                    }
+                        if (g.GetType() == typeof(PlayoffGame))
+                        {
+                            var pg = (PlayoffGame)g;
+                            if (pg.Series.Round == roundNumber && pg.Day > lastDay) lastDay = pg.Day;
+                        }
 
+                    });
                 });
-            });
 
-            return lastDay;
+                return lastDay;
+            }
         }
 
         public virtual void ProcessEndOfSeries(PlayoffSeries series)

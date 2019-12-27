@@ -50,12 +50,12 @@ namespace TeamApp.Console.App
             gameDataRepository = new GameDataRepository(new RepositoryNHibernate<GameData>());
             competitionConfigRepository = new CompetitionConfigRepository(new RepositoryNHibernate<CompetitionConfig>());
             seasonRepository = new SeasonRepository(new RepositoryNHibernate<Season>());
-            competitionTeamRepository = new CompetitionTeamRepository(new RepositoryNHibernate<CompetitionTeam>());
+            competitionTeamRepository = new CompetitionTeamRepository(new RepositoryNHibernate<CompetitionTeam>());            
 
             LeagueService = new LeagueService(leagueRepository);
             StandingsService = new StandingsService(standingsRepository, competitionRepository);
             TeamService = new TeamService(teamRepository);
-            GameDataService = new GameDataService(gameDataRepository, leagueRepository, scheduleGameRepository, competitionRepository, competitionConfigRepository, TeamService);
+            GameDataService = new GameDataService(gameDataRepository, leagueRepository, scheduleGameRepository, competitionRepository, competitionConfigRepository, TeamService, CompetitionService);
             ScheduleGameService = new ScheduleGameService(scheduleGameRepository);
             CompetitionService = new CompetitionService(competitionRepository);
             PlayoffService = new PlayoffService(competitionRepository);

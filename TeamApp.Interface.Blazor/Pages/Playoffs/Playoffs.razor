@@ -1,41 +1,70 @@
 ﻿@page "/playoffs"
 
-<div>
-    <div class="roundName">
-        Round 1
-    </div>
-    <div class="matchup teamFloat">
-        <div class="teamScore">
-            <div class="team teamFloat winner">Calgary</div>
-            <div class="score teamFloat">4</div>
-        </div>
-        <div class="teamScore">
-            <div class="team teamFloat">Edmonton</div>
-            <div class="score teamFloat">2</div>
-        </div>
-    </div>
-    <div class="matchup teamFloat">
-        <div class="teamScore">
-            <div class="team teamFloat">Calgary</div>
-            <div class="score teamFloat">4</div>
-        </div>
-        <div class="teamScore">
-            <div class="team teamFloat">Edmonton</div>
-            <div class="score teamFloat">2</div>
-        </div>
-    </div>
-    <div class="matchup teamFloat">
-        <div class="teamScore">
-            <div class="team teamFloat">Calgary</div>
-            <div class="score teamFloat">4</div>
-        </div>
-        <div class="teamScore">
-            <div class="team teamFloat">Edmonton</div>
-            <div class="score teamFloat">2</div>
-        </div>
-    </div>
-</div>
+@using TeamApp.ViewModels.Views.Competition.Playoff;
 
+@if (model != null)
+{
+    <div class="playoff">
+    @foreach (var round in model.Rounds)
+    {
+        <br />
+        <div class="roundName">@round.Name</div>
+        @foreach (var series in round.Series)
+        {
+            <div class="matchup teamFloat">
+                <div class="teamScore">
+                    <div class="team teamFloat">@series.HomeTeamName</div>
+                    <div class="score teamFloat">@series.HomeWins</div>
+                </div>
+                <div class="teamScore">
+                    <div class="team teamFloat">@series.AwayTeamName</div>
+                    <div class="score teamFloat">@series.AwayWins</div>
+                </div>
+            </div>
+        }
+
+    }
+    </div>
+    /*
+    <div>
+        <div class="roundName">
+            Round 1
+        </div>
+        <div class="matchup teamFloat">
+            <div class="teamScore">
+                <div class="team teamFloat winner">Calgary</div>
+                <div class="score teamFloat">4</div>
+            </div>
+            <div class="teamScore">
+                <div class="team teamFloat">Edmonton</div>
+                <div class="score teamFloat">2</div>
+            </div>
+        </div>
+        <div class="matchup teamFloat">
+            <div class="teamScore">
+                <div class="team teamFloat">Calgary</div>
+                <div class="score teamFloat">4</div>
+            </div>
+            <div class="teamScore">
+                <div class="team teamFloat">Edmonton</div>
+                <div class="score teamFloat">2</div>
+            </div>
+        </div>
+        <div class="matchup teamFloat">
+            <div class="teamScore">
+                <div class="team teamFloat">Calgary</div>
+                <div class="score teamFloat">4</div>
+            </div>
+            <div class="teamScore">
+                <div class="team teamFloat">Edmonton</div>
+                <div class="score teamFloat">2</div>
+            </div>
+        </div>
+    </div>
+    */
+}
 @code {
+    [Parameter]
+    public PlayoffSummaryViewModel model { get; set; }
 
 }

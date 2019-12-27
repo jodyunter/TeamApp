@@ -30,6 +30,7 @@ namespace TeamApp.Services.Implementation.Mappers
             model.Started = obj.Started;
             model.Year = obj.Year;            
             model.Type = type;
+            model.Name = obj.Name;
 
             return model;
         }

@@ -1,14 +1,17 @@
 ﻿@page "/summary"
 
 @using TeamApp.Interface.Blazor.Pages.Standings
+@using TeamApp.Interface.Blazor.Pages.Playoffs
 @using TeamApp.Interface.Blazor.Pages.Games
 @using TeamApp.Services
 @using TeamApp.ViewModels.Views
 @using TeamApp.ViewModels.Views.Games
+@using TeamApp.ViewModels.Views.Competition.Playoff
 @inject IGameDataService GameDataService
 @inject ICompetitionService CompetitionService
 @inject IStandingsService StandingsService
 @inject IScheduleGameService GameService
+@inject IPlayoffService PlayoffService
 
 <h1>Daily View</h1>
 <b>Current Year </b>@summary.CurrentYear
@@ -20,7 +23,7 @@
     <Tabs>
         @foreach (var day in days)
         {
-            
+
             <RadzenTabsItem Text=@GetDayString(day.Day, summary.CurrentDay) Selected="@GetSelected(day.Day, summary.CurrentDay)">
                 <ScheduleDaySummary Day="@day" />
             </RadzenTabsItem>
@@ -29,6 +32,7 @@
 </RadzenTabs>
 
 <Standings model="standings" />
+<Playoffs model="playoffs" />
 <RadzenButton Click="@((args) => Click(args, "PlayDay"))" Text="Play Day" Visible="@ShowPlayDay()"></RadzenButton>
 <RadzenButton Click="@((args) => Click(args, "StartNextYear"))" Text="Start Next Year" Visible="@ShowStartNextYear()"></RadzenButton>
 <RadzenButton Click="@((args) => Click(args, "StartNextCompetition"))" Text="Start Next Competition" Visible="@ShowStartNextCompetition()"></RadzenButton>
@@ -37,6 +41,8 @@
     GameSummary summary;
     StandingsViewModel standings;
     ScheduleDaySummaryViewModel[] days;
+    PlayoffSummaryViewModel playoffs;
+
     string dayString = "";
 
     protected override async Task OnInitializedAsync()
@@ -50,7 +56,7 @@
         summary = await GameDataService.GetGameSummary();
         days = await GameService.GetScheduleDays(summary.CurrentDay - 2, 4, summary.CurrentYear);
         standings = await StandingsService.GetStandings(1, summary.CurrentYear, 1);
-
+        playoffs = await PlayoffService.GetPlayoffSummary(2);
         StateHasChanged();
 
     }
@@ -89,7 +95,7 @@
     {
         if (buttonName.Equals("PlayDay"))
         {
-            GameDataService.PlayAndProcessDay();            
+            GameDataService.PlayAndProcessDay();
         }
         else if (buttonName.Equals("StartNextYear"))
         {
