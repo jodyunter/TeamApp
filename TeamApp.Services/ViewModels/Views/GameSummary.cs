@@ -15,6 +15,7 @@ namespace TeamApp.ViewModels.Views
         public bool AllowStartNextCompetition { get; set; }
         public bool AllowIncrementYear { get; set; }        
         public List<string> ErrorMessages { get; set; }
+        public List<int> Years { get; set; } = new List<int>();
 
         public void AddErrorMessage(string message)
         {

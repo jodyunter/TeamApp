@@ -19,6 +19,12 @@
 <b>Current Day</b>@summary.CurrentDay
 <br />
 
+<h3>Years</h3>
+<RadzenDropDown AllowClear="true" TValue="string" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowFiltering="true" Data="@summary.Years" TextProperty="Seasons" ValueProperty="SelectedYear" Style="margin-bottom: 20px" Change="@(args => Change(args, "DropDown"))" />
+<h3>Actions</h3>
+<RadzenButton Click="@((args) => Click(args, "PlayDay"))" Text="Play Day" Visible="@ShowPlayDay()"></RadzenButton>
+<RadzenButton Click="@((args) => Click(args, "StartNextYear"))" Text="Start Next Year" Visible="@ShowStartNextYear()"></RadzenButton>
+<RadzenButton Click="@((args) => Click(args, "StartNextCompetition"))" Text="Start Next Competition" Visible="@ShowStartNextCompetition()"></RadzenButton>
 <RadzenTabs>
     <Tabs>
         @foreach (var day in days)
@@ -41,9 +47,6 @@
         </RadzenTabsItem>
     </Tabs>
 </RadzenTabs>
-<RadzenButton Click="@((args) => Click(args, "PlayDay"))" Text="Play Day" Visible="@ShowPlayDay()"></RadzenButton>
-<RadzenButton Click="@((args) => Click(args, "StartNextYear"))" Text="Start Next Year" Visible="@ShowStartNextYear()"></RadzenButton>
-<RadzenButton Click="@((args) => Click(args, "StartNextCompetition"))" Text="Start Next Competition" Visible="@ShowStartNextCompetition()"></RadzenButton>
 <br />
 @code {
     GameSummary summary;
@@ -115,6 +118,11 @@
         }
 
         RefreshData();
+    }
+
+    void Change(object value, string name)
+    {
+
     }
 
 }

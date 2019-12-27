@@ -247,6 +247,10 @@ namespace TeamApp.Services.Implementation
             summary.AllowPlayGames = allowPlayGames;
             summary.AllowStartNextCompetition = allowStartNextCompetition;
 
+            for (int i = 1; i <= summary.CurrentYear;i++)
+            {
+                summary.Years.Add(i);
+            }
       
             return Task.FromResult(summary);
         }
