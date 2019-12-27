@@ -1,0 +1,40 @@
+﻿.roundName {
+    border: 1px solid black;
+    width: 25rem;
+    border-radius: 3px;
+    color: white;
+    background: #ccccff;
+    text-align: center;
+}
+
+.matchup {
+    border: 1px solid black;
+    border-radius: 3px;
+    background: #ccddff;
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
+.winner {
+    font-weight: bold;
+}
+
+.team {
+    width: 5rem;
+}
+
+.score {
+    width: 2rem;
+    text-align: right;
+}
+
+.teamFloat {
+    float: left;
+    padding: 1px;
+}
+
+.teamScore ::after {
+    content: "";
+    clear: both;
+    display: table;
+}
