@@ -12,7 +12,7 @@ namespace TeamApp.Data.Repositories.Relational.NHibernate.Mappers
     {
         public CompetitionMap()
         {
-            References(x => x.CompetitionConfig);
+            References(x => x.CompetitionConfig).Not.LazyLoad();
             Map(x => x.Name);
             Map(x => x.Year);
             HasMany(x => x.Teams).Not.LazyLoad();

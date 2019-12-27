@@ -8,6 +8,7 @@ namespace TeamApp.Services
 {
     public interface IPlayoffService
     {
-        Task<PlayoffSummaryViewModel> GetPlayoffSummary(long competitionId);        
+        Task<PlayoffSummaryViewModel> GetPlayoffSummary(long competitionId);
+        Task<PlayoffSummaryViewModel> GetPlayoffSummary(long competitionConfigId, int year);
     }
 }

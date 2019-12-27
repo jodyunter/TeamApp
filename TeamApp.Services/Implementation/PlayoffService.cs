@@ -3,6 +3,7 @@ using TeamApp.Domain.Competitions.Playoffs;
 using TeamApp.Domain.Repositories;
 using TeamApp.Services.Implementation.Mappers;
 using TeamApp.ViewModels.Views.Competition.Playoff;
+using System.Linq;
 
 namespace TeamApp.Services.Implementation
 {
@@ -27,5 +28,13 @@ namespace TeamApp.Services.Implementation
 
             return Task.FromResult(mapper.MapDomainToModel(competition));
         }
+
+        public Task<PlayoffSummaryViewModel> GetPlayoffSummary(long competitionConfigId, int year)
+        {
+            var competition = (Playoff)competitionRepo.GetByYearAndConfigId(competitionConfigId, year);
+
+            return Task.FromResult(mapper.MapDomainToModel(competition));
+        }
+
     }
 }

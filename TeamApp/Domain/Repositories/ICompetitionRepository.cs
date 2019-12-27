@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TeamApp.Domain.Competitions;
 using TeamApp.Domain.Competitions.Config;
+using TeamApp.Domain.Competitions.Playoffs;
 
 namespace TeamApp.Domain.Repositories
 {
@@ -17,5 +18,6 @@ namespace TeamApp.Domain.Repositories
         IEnumerable<Competition> GetParentCompetitionsForCompetitionConfig(CompetitionConfig config, int year);
         bool IsCompetitionCompleteForYear(int year, CompetitionConfig config);
         Competition GetCompetition(long id);
+        Competition GetByYearAndConfigId(long competitionConfigId, int year);
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TeamApp.Domain;
 using TeamApp.Domain.Competitions;
+using TeamApp.Domain.Competitions.Config;
 using TeamApp.Domain.Competitions.Seasons;
 using TeamApp.Domain.Repositories;
 using TeamApp.ViewModels.Views;
@@ -152,6 +153,20 @@ namespace TeamApp.Services.Implementation
                       
         }
 
+        //maybe move to a different sevice method
+        public bool IsCompetitionReadyToStart(CompetitionConfig config, int year)
+        {
+            if (config.IsActive(year))
+            {
+                var comp = competitionRepo.GetCompetitionForCompetitionConfig(config, year);
+                var parents = competitionRepo.GetParentCompetitionsForCompetitionConfig(config, year).ToList();
+                return config.AreAllParentsDone(year, parents) && (comp == null);
+            }
+            else
+            {
+                return false;
+            }
+        }
         public void SetupComeptitionsForDay(int day, int year)
         {
             //this doesn't let us start at an unknown date.
@@ -206,74 +221,33 @@ namespace TeamApp.Services.Implementation
         {
             var data = gameDataRepo.GetCurrentData();
             var competitions = competitionService.GetCompetitionsByYear(data.CurrentYear).Result;
-            
-            
+            var configs = competitionConfigRepo.GetConfigByYear(data.CurrentYear).ToList();
+
             var summary = new GameSummary()
             {
                 CurrentDay = data.CurrentDay,
                 CurrentYear = data.CurrentYear,
                 CompetitionForCurrentYear = competitions
-            };
+            };            
 
-            var noCompetitionStartedYet = competitions.Where(c => !c.Started).Count() > 0;
-            var areAllCompetitionsStartedAndFinished = competitions.Where(c => c.Started && c.Complete).Count() == competitions.Count();
-            
-            //see if all competitions have been started for the year
-            var configs = competitionConfigRepo.GetConfigByYear(data.CurrentYear);
-
-            configs.ToList().ForEach(config =>
+            bool allowIncrementYear = IsYearComplete(data.CurrentYear);
+            bool allowStartNextCompetition = false;
+            //check if any competition is ready to start
+            configs.ForEach(c =>
             {
-                var found = competitions.Where(c => c.Equals(config.Name)).FirstOrDefault() != null;
-
-                if (!found)
+                if (IsCompetitionReadyToStart(c, data.CurrentYear))
                 {
-                    areAllCompetitionsStartedAndFinished = false;
+                    allowStartNextCompetition = true;
                 }
             });
-
-
-            var areSomeCompetitionsStartedAndNotFinished = competitions.Where(c => c.Started && !c.Complete).Count() > 0;
+            //first check is if we have an active competition, then disable if a competition needs to start
+            bool allowPlayGames = competitions.Where(c => c.Started && !c.Complete).FirstOrDefault() != null && !allowStartNextCompetition;
             
-            var totalCompetitions = competitions.Count();
-            bool allowIncrementYear = false;
-            bool allowPlayGames = false;
-            bool allowStartNextCompetition = false;
-
-            if (noCompetitionStartedYet)
-            {
-                allowStartNextCompetition = true;
-            }
-
-            //this should mean that no competition is running, and not all are done
-            if (!areSomeCompetitionsStartedAndNotFinished && !areAllCompetitionsStartedAndFinished)
-            {
-                allowStartNextCompetition = true;
-            }
-
-            if (areSomeCompetitionsStartedAndNotFinished)
-            {
-                allowPlayGames = true;
-                allowStartNextCompetition = false;
-                allowIncrementYear = false;
-            }
-
-            if (areAllCompetitionsStartedAndFinished)
-            {
-                allowIncrementYear = true;
-                allowPlayGames = false;
-                allowStartNextCompetition = false;
-            }
-
             summary.AllowIncrementYear = allowIncrementYear;
             summary.AllowPlayGames = allowPlayGames;
             summary.AllowStartNextCompetition = allowStartNextCompetition;
 
-            
-            //if ther eare not started competitions, and there are more competitio
-            
-
-            //you can start a competition IF there are none started 
-
+      
             return Task.FromResult(summary);
         }
 

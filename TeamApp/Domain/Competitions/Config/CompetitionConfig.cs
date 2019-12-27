@@ -43,8 +43,8 @@ namespace TeamApp.Domain.Competitions.Config
             else
                 FinalRankingRules = finalRankingRules;
         }
-                
-        public virtual Competition CreateCompetition(int day, int year, IList<Competition> parents)
+                   
+        public virtual bool AreAllParentsDone(int year, IList<Competition> parents)
         {
             bool areAllParentsDone = true; ;
 
@@ -55,6 +55,13 @@ namespace TeamApp.Domain.Competitions.Config
                     areAllParentsDone = areAllParentsDone && competition.Finished;
                 });
             }
+
+            return areAllParentsDone;
+        }
+
+        public virtual Competition CreateCompetition(int day, int year, IList<Competition> parents)
+        {
+            bool areAllParentsDone = AreAllParentsDone(year, parents);
 
             if (areAllParentsDone)
                 return CreateCompetitionDetails(day, year, parents);

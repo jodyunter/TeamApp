@@ -59,12 +59,17 @@ namespace TeamApp.Data.Relational.Repositories
 
         public bool IsCompetitionCompleteForYear(int year, CompetitionConfig config)
         {
-            return baseRepo.Where(c => c.Finished && c.CompetitionConfig.Id == config.Id).Count() > 0;
+            return baseRepo.Where(c => c.Finished && c.CompetitionConfig.Id == config.Id && c.Year == year).Count() > 0;
         }
 
         public Competition GetCompetition(long id)
         {
             return baseRepo.Get(id);
+        }
+
+        public Competition GetByYearAndConfigId(long competitionConfigId, int year)
+        {
+            return baseRepo.Where(c => c.CompetitionConfig.Id == competitionConfigId && c.Year == year).FirstOrDefault();
         }
     }
 }

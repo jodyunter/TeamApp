@@ -31,8 +31,16 @@
     </Tabs>
 </RadzenTabs>
 
-<Standings model="standings" />
-<Playoffs model="playoffs" />
+<RadzenTabs>
+    <Tabs>
+        <RadzenTabsItem Text="Standings">
+            <Standings model="standings" />
+        </RadzenTabsItem>
+        <RadzenTabsItem Text="Playofs">
+            <Playoffs model="playoffs" />
+        </RadzenTabsItem>
+    </Tabs>
+</RadzenTabs>
 <RadzenButton Click="@((args) => Click(args, "PlayDay"))" Text="Play Day" Visible="@ShowPlayDay()"></RadzenButton>
 <RadzenButton Click="@((args) => Click(args, "StartNextYear"))" Text="Start Next Year" Visible="@ShowStartNextYear()"></RadzenButton>
 <RadzenButton Click="@((args) => Click(args, "StartNextCompetition"))" Text="Start Next Competition" Visible="@ShowStartNextCompetition()"></RadzenButton>
@@ -54,9 +62,9 @@
     private async void RefreshData()
     {
         summary = await GameDataService.GetGameSummary();
-        days = await GameService.GetScheduleDays(summary.CurrentDay - 2, 4, summary.CurrentYear);
+        days = await GameService.GetScheduleDays(summary.CurrentDay - 1, 3, summary.CurrentYear);
         standings = await StandingsService.GetStandings(1, summary.CurrentYear, 1);
-        playoffs = await PlayoffService.GetPlayoffSummary(2);
+        playoffs = await PlayoffService.GetPlayoffSummary(2, summary.CurrentYear);
         StateHasChanged();
 
     }
