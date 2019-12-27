@@ -12,6 +12,7 @@
     <None Include="settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="wwwroot\css\brackets.css" />
   </ItemGroup>
 
   <ItemGroup>
