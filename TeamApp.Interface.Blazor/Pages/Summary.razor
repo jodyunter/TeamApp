@@ -24,34 +24,36 @@
 <BSButton Value="StartNextYear" OnClick="StartNextYear" IsActive="@ShowStartNextYear()">Start Next Year</BSButton>
 <BSButton Value="StartNextCompetition" OnClick="StartNextCompetition" IsActive="@ShowStartNextCompetition()">Start Next Competition</BSButton>
 <BSTabGroup>
-    <BSTabList>
+    <BSTabList IsPills="true" IsList="true">
         @foreach (var day in days)
         {
 
             <BSTab InitialSelection="@GetSelected(day.Day, summary.CurrentDay)">
-                <BSTabLabel>@GetDayString(day.Day, summary.CurrentDay)</BSTabLabel>                
+                <BSTabLabel>@GetDayString(day.Day, summary.CurrentDay)</BSTabLabel>
                 <BSTabContent>
-                    blah blah
-                    <ScheduleDaySummary Day="@day" />
+                    <ScheduleDaySummary Day=@day />
                 </BSTabContent>
             </BSTab>
         }
     </BSTabList>
+    <BSTabSelectedContent />
 </BSTabGroup>
-
 <BSTabGroup>
-    <BSTabList>
+    <BSTabList IsPills="true" IsList="true">
         <BSTab>
             <BSTabLabel>Standings</BSTabLabel>
             <BSTabContent>
-                <Standings model="standings" />
+                <Standings model=@standings />
             </BSTabContent>
         </BSTab>
         <BSTab>
             <BSTabLabel>Playofs</BSTabLabel>
-            <BSTabContent><Playoffs model="playoffs" /></BSTabContent>
+            <BSTabContent>
+                <Playoffs model=@playoffs />
+            </BSTabContent>
         </BSTab>
     </BSTabList>
+    <BSTabSelectedContent />
 </BSTabGroup>
 <br />
 @code {
@@ -104,7 +106,7 @@
     {
         if (dayNumber == (currentDay - 1))
         {
-            return "Today - Day " + (dayNumber - 1);
+            return "Today - Day " + dayNumber;
         }
         return "Day " + dayNumber;
     }

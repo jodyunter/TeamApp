@@ -2,9 +2,14 @@
 
 @using TeamApp.ViewModels.Views.Games
 
-    <RadzenCard Style="width:30%">
-        Day: @Day.Day <br />
+    <BSTable IsSmall="true" IsStriped="true">
+        
         <table>
+            <thead>
+                <tr>
+                    <th colspan="5">Day: @Day.Day</th>
+                </tr>
+            </thead>
             <tr>
                 <th>Home</th>
                 <th></th>
@@ -24,7 +29,7 @@
             }
 
         </table>
-    </RadzenCard>
+    </BSTable>    
 @code {
     [Parameter]
     public ScheduleDaySummaryViewModel Day { get; set; }

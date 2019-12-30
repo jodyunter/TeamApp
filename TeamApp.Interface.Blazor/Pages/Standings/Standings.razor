@@ -2,7 +2,7 @@
 
 <h3>@model.StandingsName</h3>
 
-<BSTable>
+<BSTable Class="standings-table" IsStriped="true" IsSmall="true">
     <thead>
         <tr>
             <th scope="col">Div</th>
@@ -21,7 +21,7 @@
     <tbody>
         @foreach (var row in model.Teams)
         {
-        <tr>
+        <tr class="standings-row">
             <td>@row.Division</td>
             <td>@row.Rank</td>
             <td>@row.TeamName</td>
