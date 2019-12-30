@@ -8,11 +8,11 @@
 .round {
     border: 1px solid black;
     margin-top: 10px;
-    height: 200px;
+    height: 125px;
     background: #0044cc;
     border-radius: 30px;
-    width: 50%;
-    padding: 15px;
+    width: 100%;
+    padding: 0px;
 }
 
 .matchup {
@@ -22,9 +22,8 @@
     float: left;
     background: #ccddff;
     color: black;
-    position: relative;
-    top: 25px;
-    width: 125px;
+    position: relative;    
+    width: 150px;
 }
 
 .roundName {
@@ -35,17 +34,16 @@
 }
 
 .team {
-    width: 75px;
+    width: 110px;
     float: left;
-    padding: 2px;
 }
 
 .score {
     width: 20px;
-    float: left;
-    padding: 2px;
+    float: left;    
     text-align: right;
 }
+
 /*
 .playoff {
 	height:600px;

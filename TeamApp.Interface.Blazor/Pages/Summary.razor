@@ -20,31 +20,39 @@
 <br />
 
 <h3>Actions</h3>
-<RadzenButton Click="@((args) => Click(args, "PlayDay"))" Text="Play Day" Visible="@ShowPlayDay()"></RadzenButton>
-<RadzenButton Click="@((args) => Click(args, "StartNextYear"))" Text="Start Next Year" Visible="@ShowStartNextYear()"></RadzenButton>
-<RadzenButton Click="@((args) => Click(args, "StartNextCompetition"))" Text="Start Next Competition" Visible="@ShowStartNextCompetition()"></RadzenButton>
-<RadzenTabs>
-    <Tabs>
+<BSButton Value="PlayDay" OnClick="PlayDay"   IsActive="@ShowPlayDay()">Play Day</BSButton>
+<BSButton Value="StartNextYear" OnClick="StartNextYear" IsActive="@ShowStartNextYear()">Start Next Year</BSButton>
+<BSButton Value="StartNextCompetition" OnClick="StartNextCompetition" IsActive="@ShowStartNextCompetition()">Start Next Competition</BSButton>
+<BSTabGroup>
+    <BSTabList>
         @foreach (var day in days)
         {
 
-            <RadzenTabsItem Text=@GetDayString(day.Day, summary.CurrentDay) Selected="@GetSelected(day.Day, summary.CurrentDay)">
-                <ScheduleDaySummary Day="@day" />
-            </RadzenTabsItem>
+            <BSTab InitialSelection="@GetSelected(day.Day, summary.CurrentDay)">
+                <BSTabLabel>@GetDayString(day.Day, summary.CurrentDay)</BSTabLabel>                
+                <BSTabContent>
+                    blah blah
+                    <ScheduleDaySummary Day="@day" />
+                </BSTabContent>
+            </BSTab>
         }
-    </Tabs>
-</RadzenTabs>
+    </BSTabList>
+</BSTabGroup>
 
-<RadzenTabs>
-    <Tabs>
-        <RadzenTabsItem Text="Standings">
-            <Standings model="standings" />
-        </RadzenTabsItem>
-        <RadzenTabsItem Text="Playofs">
-            <Playoffs model="playoffs" />
-        </RadzenTabsItem>
-    </Tabs>
-</RadzenTabs>
+<BSTabGroup>
+    <BSTabList>
+        <BSTab>
+            <BSTabLabel>Standings</BSTabLabel>
+            <BSTabContent>
+                <Standings model="standings" />
+            </BSTabContent>
+        </BSTab>
+        <BSTab>
+            <BSTabLabel>Playofs</BSTabLabel>
+            <BSTabContent><Playoffs model="playoffs" /></BSTabContent>
+        </BSTab>
+    </BSTabList>
+</BSTabGroup>
 <br />
 @code {
     GameSummary summary;
@@ -100,27 +108,24 @@
         }
         return "Day " + dayNumber;
     }
-    async void Click(MouseEventArgs args, string buttonName)
-    {
-        if (buttonName.Equals("PlayDay"))
-        {
-            GameDataService.PlayAndProcessDay();
-        }
-        else if (buttonName.Equals("StartNextYear"))
-        {
-            GameDataService.StartNextYear();
-        }
-        else if (buttonName.Equals("StartNextCompetition"))
-        {
-            GameDataService.StartNextCompetition();
-        }
 
+    void PlayDay(MouseEventArgs args)
+    {
+        GameDataService.PlayAndProcessDay();
         RefreshData();
     }
 
-    void Change(object value, string name)
+    public void StartNextCompetition(MouseEventArgs args)
     {
-
+        GameDataService.StartNextCompetition();
+        RefreshData();
     }
+
+    public void StartNextYear(MouseEventArgs args)
+    {
+        GameDataService.StartNextYear();
+        RefreshData();
+    }
+
 
 }

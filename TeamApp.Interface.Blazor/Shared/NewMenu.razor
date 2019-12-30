@@ -1,23 +1,26 @@
 ﻿@page "/menu"
-    
-<RadzenCard>
-    <RadzenMenu>
-        <RadzenMenuItem Text="Main">
-            <RadzenMenuItem Text="Home" Path="/home"></RadzenMenuItem>
-            <RadzenMenuItem Text="Year Summary" Path="/summary"></RadzenMenuItem>
-        </RadzenMenuItem>
-        <RadzenMenuItem Text="Configuration">
-            <RadzenMenuItem Text="League"></RadzenMenuItem>
-            <RadzenMenuItem Text="Owners"></RadzenMenuItem>
-            <RadzenMenuItem Text="Seasons"></RadzenMenuItem>
-            <RadzenMenuItem Text="Playoffs"></RadzenMenuItem>
-            <RadzenMenuItem Text="Schedule"></RadzenMenuItem>
-        </RadzenMenuItem>
-        <RadzenMenuItem Text="Stats">
-            <RadzenMenuItem Text="Players"></RadzenMenuItem>
-            <RadzenMenuItem Text="Teams"></RadzenMenuItem>
-        </RadzenMenuItem>
-    </RadzenMenu>
-</RadzenCard>
-    
-
+<BSNav IsList="true" Alignment="Alignment.Center">
+    <BSNavItem>
+        <BSNavLink IsActive="true" href="/home">Home</BSNavLink>
+    </BSNavItem>
+    <BSNavItem>
+        <BSNavLink href="/summary">Summary</BSNavLink>
+    </BSNavItem>
+    <BSNavItem>
+        <BSNavLink href="#">Another Link</BSNavLink>
+    </BSNavItem>
+</BSNav>
+<BSNav IsList="true" Alignment="Alignment.Right">
+    <BSNavItem>
+        <BSNavLink IsActive="true" href="#">Active</BSNavLink>
+    </BSNavItem>
+    <BSNavItem>
+        <BSNavLink href="#">Link</BSNavLink>
+    </BSNavItem>
+    <BSNavItem>
+        <BSNavLink href="#">Another Link</BSNavLink>
+    </BSNavItem>
+    <BSNavItem>
+        <BSNavLink IsDisabled="true" href="#">Disabled</BSNavLink>
+    </BSNavItem>
+</BSNav>
