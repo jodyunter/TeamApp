@@ -1,21 +1,12 @@
 ﻿@inherits LayoutComponentBase
 @inject IBootstrapCSS BootstrapCSS
-<!--
-<div class="sidebar">
-    <NavMenu />
-</div>
-    -->
-<div class="mainmenu">
-    <NewMenu />
-</div>
-<br />
 <div class="mainbody">
     <div>
         @Body
     </div>
 </div>
 
-@code {    
+@code {
     protected override async Task OnInitializedAsync()
     {
         //await BootstrapCSS.SetBootstrapCSS("4.3.1");

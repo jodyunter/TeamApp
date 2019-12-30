@@ -33,4 +33,11 @@
 @code {
     [Parameter]
     public ScheduleDaySummaryViewModel Day { get; set; }
+
+    public async Task DayChanged(ScheduleDaySummaryViewModel newDay)
+    {
+        Day = newDay;
+        StateHasChanged();
+    }
+
 }

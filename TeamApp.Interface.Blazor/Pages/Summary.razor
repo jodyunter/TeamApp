@@ -10,72 +10,77 @@
 @inject IGameDataService GameDataService
 @inject ICompetitionService CompetitionService
 @inject IStandingsService StandingsService
-@inject IScheduleGameService GameService
 @inject IPlayoffService PlayoffService
 
-<h1>Daily View</h1>
-<b>Current Year </b>@summary.CurrentYear
-<br />
-<b>Current Day</b>@summary.CurrentDay
-<br />
+    <div class="grid-container">
+        <div class="mainmenu grid-menu">
+            <NewMenu />
+        </div>
+        <br />
 
-<h3>Actions</h3>
-<BSButton Value="PlayDay" OnClick="PlayDay"   IsActive="@ShowPlayDay()">Play Day</BSButton>
-<BSButton Value="StartNextYear" OnClick="StartNextYear" IsActive="@ShowStartNextYear()">Start Next Year</BSButton>
-<BSButton Value="StartNextCompetition" OnClick="StartNextCompetition" IsActive="@ShowStartNextCompetition()">Start Next Competition</BSButton>
-<BSTabGroup>
-    <BSTabList IsPills="true" IsList="true">
-        @foreach (var day in days)
-        {
+        <div class="grid-header">
+            <h1>Daily View</h1>
+            <b>Current Year </b>@summary.CurrentYear
+            <br />
+            <b>Current Day</b>@summary.CurrentDay
+            <br />
 
-            <BSTab InitialSelection="@GetSelected(day.Day, summary.CurrentDay)">
-                <BSTabLabel>@GetDayString(day.Day, summary.CurrentDay)</BSTabLabel>
-                <BSTabContent>
-                    <ScheduleDaySummary Day=@day />
-                </BSTabContent>
-            </BSTab>
-        }
-    </BSTabList>
-    <BSTabSelectedContent />
-</BSTabGroup>
-<BSTabGroup>
-    <BSTabList IsPills="true" IsList="true">
-        <BSTab>
-            <BSTabLabel>Standings</BSTabLabel>
-            <BSTabContent>
-                <Standings model=@standings />
-            </BSTabContent>
-        </BSTab>
-        <BSTab>
-            <BSTabLabel>Playofs</BSTabLabel>
-            <BSTabContent>
-                <Playoffs model=@playoffs />
-            </BSTabContent>
-        </BSTab>
-    </BSTabList>
-    <BSTabSelectedContent />
-</BSTabGroup>
-<br />
+            <h3>Actions</h3>
+            <BSButton Value="PlayDay" OnClick="PlayDay" IsActive=@ShowPlayDay()>Play Day</BSButton>
+            <BSButton Value="StartNextYear" OnClick="StartNextYear" IsActive=@ShowStartNextYear()>Start Next Year</BSButton>
+            <BSButton Value="StartNextCompetition" OnClick="StartNextCompetition" IsActive=@ShowStartNextCompetition()>Start Next Competition</BSButton>
+        </div>
+        <div class="grid-scores">
+            <ScheduleDaySummaryTabs @ref="DayTabs" FirstDay="@FirstDay" Year="@summary.CurrentYear" CurrentDay="@summary.CurrentDay" />          
+        </div>
+        <div class="grid-main">
+            <BSTabGroup>
+                <BSTabList IsPills="true" IsList="true">
+                    <BSTab>
+                        <BSTabLabel>Standings</BSTabLabel>
+                        <BSTabContent>
+                            <Standings model=@standings />
+                        </BSTabContent>
+                    </BSTab>
+                    <BSTab>
+                        <BSTabLabel>Playoffs</BSTabLabel>
+                        <BSTabContent>
+                            <Playoffs model=@playoffs />
+                        </BSTabContent>
+                    </BSTab>
+                </BSTabList>
+                <BSTabSelectedContent />
+            </BSTabGroup>
+        </div>
+    </div>
 @code {
-    GameSummary summary;
-    StandingsViewModel standings;
-    ScheduleDaySummaryViewModel[] days;
-    PlayoffSummaryViewModel playoffs;
+        GameSummary summary;
+        StandingsViewModel standings;
+        ScheduleDaySummaryViewModel[] days;
+        PlayoffSummaryViewModel playoffs;
+        ScheduleDaySummaryTabs DayTabs;
 
-    string dayString = "";
+        int FirstDay { get; set; }
+
 
     protected override async Task OnInitializedAsync()
     {
-        RefreshData();
+        await RefreshData();
 
     }
 
-    private async void RefreshData()
+    private async Task RefreshData()
     {
         summary = await GameDataService.GetGameSummary();
-        days = await GameService.GetScheduleDays(summary.CurrentDay - 1, 3, summary.CurrentYear);
+        FirstDay = summary.CurrentDay - 1;
         standings = await StandingsService.GetStandings(1, summary.CurrentYear, 1);
         playoffs = await PlayoffService.GetPlayoffSummary(2, summary.CurrentYear);
+
+        if (DayTabs != null)
+        {
+            await DayTabs.FirstDayChanged(FirstDay);
+        }
+
         StateHasChanged();
 
     }
@@ -94,39 +99,23 @@
     {
         return summary.AllowStartNextCompetition;
     }
-    protected bool GetSelected(int day, int currentDay)
-    {
-        if (day == (currentDay - 1))
-            return true;
-        else
-            return false;
-    }
 
-    protected string GetDayString(int dayNumber, int currentDay)
-    {
-        if (dayNumber == (currentDay - 1))
-        {
-            return "Today - Day " + dayNumber;
-        }
-        return "Day " + dayNumber;
-    }
-
-    void PlayDay(MouseEventArgs args)
+    async void PlayDay(MouseEventArgs args)
     {
         GameDataService.PlayAndProcessDay();
-        RefreshData();
+        await RefreshData();
     }
 
-    public void StartNextCompetition(MouseEventArgs args)
+    async public void StartNextCompetition(MouseEventArgs args)
     {
         GameDataService.StartNextCompetition();
-        RefreshData();
+        await RefreshData();
     }
 
-    public void StartNextYear(MouseEventArgs args)
+    async public void StartNextYear(MouseEventArgs args)
     {
         GameDataService.StartNextYear();
-        RefreshData();
+        await RefreshData();
     }
 
 

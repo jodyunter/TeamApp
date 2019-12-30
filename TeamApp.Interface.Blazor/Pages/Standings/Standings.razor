@@ -16,6 +16,7 @@
             <th scope="col">GF</th>
             <th scope="col">GA</th>
             <th scope="col">GD</th>
+            <th scope="col">Sk</th>
         </tr>
     </thead>
     <tbody>
@@ -24,7 +25,7 @@
         <tr class="standings-row">
             <td>@row.Division</td>
             <td>@row.Rank</td>
-            <td>@row.TeamName</td>
+            <td>@(row.TeamName + " " + row.TeamNickName)</td>
             <td>@row.Wins</td>
             <td>@row.Loses</td>
             <td>@row.Ties</td>
@@ -33,6 +34,7 @@
             <td>@row.GoalsFor</td>
             <td>@row.GoalsAgainst</td>
             <td>@row.GoalDifference</td>
+            <td>@row.Skill</td>
 
         </tr>
             
