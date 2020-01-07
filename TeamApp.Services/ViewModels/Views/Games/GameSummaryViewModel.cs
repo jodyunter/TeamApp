@@ -6,6 +6,7 @@ namespace TeamApp.ViewModels.Views.Games
 {
     public class GameSummaryViewModel
     {
+        public int DayNumber { get; set; }
         public string League { get; set; }
         public string Competition { get; set; }
         public bool Complete { get; set; }

@@ -1,5 +1,5 @@
 ﻿@using TeamApp.ViewModels.Views.Games
-
+@inherits ScheduledaySummaryTabBase
 <BSTab>
     <BSTabLabel >@GetDayString(Day.Day)</BSTabLabel>
     <BSTabContent>
@@ -7,14 +7,3 @@
     </BSTabContent>
 </BSTab>
 
-@code {
-    [Parameter]
-    public ScheduleDaySummaryViewModel Day { get; set; }
-    [Parameter]
-    public int CurrentDay { get; set; }
-
-    protected string GetDayString(int dayNumber)
-    {
-        return "Day " + dayNumber;
-    }
-}

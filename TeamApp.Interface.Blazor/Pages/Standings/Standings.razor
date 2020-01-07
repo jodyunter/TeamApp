@@ -1,4 +1,5 @@
 ﻿@page "/standings"
+@inherits StandingsCode
 
 <h3>@model.StandingsName</h3>
 
@@ -43,9 +44,3 @@
 </BSTable>    
 
 
-@code {    
-
-    [Parameter]
-    public StandingsViewModel model { get; set; }
-
-}

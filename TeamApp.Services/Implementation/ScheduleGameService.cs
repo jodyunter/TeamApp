@@ -5,16 +5,19 @@ using TeamApp.ViewModels.Views.Games;
 using TeamApp.Domain.Repositories;
 using TeamApp.Domain.Schedules;
 using System.Threading.Tasks;
+using TeamApp.Services.Implementation.Mappers;
 
 namespace TeamApp.Services.Implementation
 {
     public class ScheduleGameService : IScheduleGameService
     {
         private IScheduleGameRepository scheduleGameRepository;
+        private GameSummaryMapper gameMapper;
 
         public ScheduleGameService(IScheduleGameRepository repo)
         {
             scheduleGameRepository = repo;
+            gameMapper = new GameSummaryMapper();
         }
         public IEnumerable<ScheduleGame> GetGamesForDay(int day, int year)
         {
@@ -32,36 +35,9 @@ namespace TeamApp.Services.Implementation
 
             for (int i = startingDay; i < startingDay + daysToGet; i++)
             {
-                var games = scheduleGameRepository.GetGamesForDay(i, year);
-
-                var gameSummaries = new List<GameSummaryViewModel>();
-
-                var daySummary = new ScheduleDaySummaryViewModel()
-                {
-                    Day = i,
-                    Year = year,
-                    Games = new List<GameSummaryViewModel>()
-                };
-
-                games.ToList().ForEach(g =>
-                {
-                    var gameSummary = new GameSummaryViewModel()
-                    {
-                        HomeTeamName = g.CompetitionHomeTeam.Name,
-                        AwayTeamName = g.CompetitionAwayTeam.Name,
-                        HomeScore = g.HomeScore,
-                        AwayScore = g.AwayScore
-                    };
-
-                    gameSummaries.Add(gameSummary);
-                });
-
-                daySummary.Games = gameSummaries;
-
+                var daySummary = GetScheduleDay(i, year).Result;
                 days.Add(daySummary);
-
             }
-
 
             return Task.FromResult(days.ToArray());
 
@@ -71,9 +47,7 @@ namespace TeamApp.Services.Implementation
 
         public Task<ScheduleDaySummaryViewModel> GetScheduleDay(int day, int year)
         {
-            var games = scheduleGameRepository.GetGamesForDay(day, year);
-
-            var gameSummaries = new List<GameSummaryViewModel>();
+            var games = scheduleGameRepository.GetGamesForDay(day, year);            
 
             var daySummary = new ScheduleDaySummaryViewModel()
             {
@@ -82,18 +56,7 @@ namespace TeamApp.Services.Implementation
                 Games = new List<GameSummaryViewModel>()
             };
 
-            games.ToList().ForEach(g =>
-            {
-                var gameSummary = new GameSummaryViewModel()
-                {
-                    HomeTeamName = g.CompetitionHomeTeam.Name,
-                    AwayTeamName = g.CompetitionAwayTeam.Name,
-                    HomeScore = g.HomeScore,
-                    AwayScore = g.AwayScore
-                };
-
-                gameSummaries.Add(gameSummary);
-            });
+            var gameSummaries = gameMapper.MapDomainToModel(games).ToList<GameSummaryViewModel>();
 
             daySummary.Games = gameSummaries;
 

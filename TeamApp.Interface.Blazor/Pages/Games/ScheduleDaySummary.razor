@@ -1,5 +1,5 @@
 ﻿@page "/schedule"
-
+@inherits ScheduleDaySummaryBase
 @using TeamApp.ViewModels.Views.Games
 
     <BSTable IsSmall="true" IsStriped="true">
@@ -30,14 +30,4 @@
 
         </table>
     </BSTable>    
-@code {
-    [Parameter]
-    public ScheduleDaySummaryViewModel Day { get; set; }
 
-    public async Task DayChanged(ScheduleDaySummaryViewModel newDay)
-    {
-        Day = newDay;
-        StateHasChanged();
-    }
-
-}

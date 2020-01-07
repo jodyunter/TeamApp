@@ -1,5 +1,6 @@
 ﻿@page "/summary"
 
+@inherits SummaryCode
 @using TeamApp.Interface.Blazor.Pages.Standings
 @using TeamApp.Interface.Blazor.Pages.Playoffs
 @using TeamApp.Interface.Blazor.Pages.Games
@@ -7,10 +8,7 @@
 @using TeamApp.ViewModels.Views
 @using TeamApp.ViewModels.Views.Games
 @using TeamApp.ViewModels.Views.Competition.Playoff
-@inject IGameDataService GameDataService
-@inject ICompetitionService CompetitionService
-@inject IStandingsService StandingsService
-@inject IPlayoffService PlayoffService
+
 
     <div class="grid-container">
         <div class="mainmenu grid-menu">
@@ -53,70 +51,4 @@
             </BSTabGroup>
         </div>
     </div>
-@code {
-        GameSummary summary;
-        StandingsViewModel standings;
-        ScheduleDaySummaryViewModel[] days;
-        PlayoffSummaryViewModel playoffs;
-        ScheduleDaySummaryTabs DayTabs;
 
-        int FirstDay { get; set; }
-
-
-    protected override async Task OnInitializedAsync()
-    {
-        await RefreshData();
-
-    }
-
-    private async Task RefreshData()
-    {
-        summary = await GameDataService.GetGameSummary();
-        FirstDay = summary.CurrentDay - 1;
-        standings = await StandingsService.GetStandings(1, summary.CurrentYear, 1);
-        playoffs = await PlayoffService.GetPlayoffSummary(2, summary.CurrentYear);
-
-        if (DayTabs != null)
-        {
-            await DayTabs.FirstDayChanged(FirstDay);
-        }
-
-        StateHasChanged();
-
-    }
-
-    protected bool ShowPlayDay()
-    {
-        return summary.AllowPlayGames;
-    }
-
-    protected bool ShowStartNextYear()
-    {
-        return summary.AllowIncrementYear;
-    }
-
-    protected bool ShowStartNextCompetition()
-    {
-        return summary.AllowStartNextCompetition;
-    }
-
-    async void PlayDay(MouseEventArgs args)
-    {
-        GameDataService.PlayAndProcessDay();
-        await RefreshData();
-    }
-
-    async public void StartNextCompetition(MouseEventArgs args)
-    {
-        GameDataService.StartNextCompetition();
-        await RefreshData();
-    }
-
-    async public void StartNextYear(MouseEventArgs args)
-    {
-        GameDataService.StartNextYear();
-        await RefreshData();
-    }
-
-
-}

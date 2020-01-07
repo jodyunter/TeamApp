@@ -1,5 +1,5 @@
 ﻿@page "/playoffs"
-
+@inherits PlayoffsBase
 @using TeamApp.ViewModels.Views.Competition.Playoff;
 
 @if (model != null)
@@ -27,8 +27,4 @@
 
     </div> 
 }
-@code {
-    [Parameter]
-    public PlayoffSummaryViewModel model { get; set; }
 
-}
