@@ -2,20 +2,12 @@
 @using TeamApp.Services
 @inherits ScheduleDaySummaryTabsBase
 
-@if (Days != null)
-{
     <BSTabGroup>
-        <BSTabList IsPills="true" IsList="true">
-            @if (Days.Count() >= 1) { 
-                <ScheduleDaySummaryTab @ref="Day1" Day="Days[0]" CurrentDay="@CurrentDay" />
-            }
-            @if(Days.Count() >= 2) { 
-                <ScheduleDaySummaryTab @ref="Day2" Day="Days[1]" CurrentDay="@CurrentDay" />
-            }
-            @if(Days.Count() >= 3) { 
-                <ScheduleDaySummaryTab @ref="Day3" Day="Days[2]" CurrentDay="@CurrentDay" />
-            }
+        <BSTabList IsPills="true" IsList="true">            
+            <ScheduleDaySummaryTab CurrentDay="@Yesterday" />                        
+            <ScheduleDaySummaryTab CurrentDay="@Today" />                        
+                <ScheduleDaySummaryTab CurrentDay="@Tomorrow" />            
         </BSTabList>
         <BSTabSelectedContent />
     </BSTabGroup>
-}
+

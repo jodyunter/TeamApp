@@ -28,8 +28,31 @@
             <BSButton Value="StartNextYear" OnClick="StartNextYear" IsActive=@ShowStartNextYear()>Start Next Year</BSButton>
             <BSButton Value="StartNextCompetition" OnClick="StartNextCompetition" IsActive=@ShowStartNextCompetition()>Start Next Competition</BSButton>
         </div>
-        <div class="grid-scores">            
-            <ScheduleDaySummaryTabs @ref="DayTabs" FirstDay="@FirstDay" Year="@summary.CurrentYear" CurrentDay="@summary.CurrentDay" />          
+        <div class="grid-scores">
+            <BSTabGroup>
+                <BSTabList IsPills="true" IsList="true">
+                    <BSTab InitialSelection="true">
+                        <BSTabLabel>Yesterday</BSTabLabel>
+                        <BSTabContent>
+                            <ScheduleDaySummary @ref="Yesterday" GivenDay="@summary.Yesterday" GivenYear="@summary.CurrentYear" />
+                        </BSTabContent>
+                    </BSTab>
+                    <BSTab>
+                        <BSTabLabel>Today</BSTabLabel>
+                        <BSTabContent>
+                            <ScheduleDaySummary @ref="Today"  GivenDay="@summary.Today" GivenYear="@summary.CurrentYear" />
+                        </BSTabContent>
+                    </BSTab>
+                    <BSTab>
+                        <BSTabLabel>Tomorrow</BSTabLabel>
+                        <BSTabContent>
+                            <ScheduleDaySummary @ref="Tomorrow"  GivenDay="@summary.Tomorrow" GivenYear="@summary.CurrentYear" />
+                        </BSTabContent>
+                    </BSTab>
+                </BSTabList>
+                <BSTabSelectedContent />
+            </BSTabGroup>
+            <!--<ScheduleDaySummaryTabs @ref="DayTabs" FirstDay="@FirstDay" Year="@summary.CurrentYear" CurrentDay="@summary.CurrentDay" />-->
         </div>
         <div class="grid-main">
             <BSTabGroup>

@@ -9,14 +9,8 @@ using TeamApp.ViewModels.Views.Games;
 namespace TeamApp.Interface.Blazor.Pages.Games
 {
     public partial class ScheduleDaySummaryTabsBase : ComponentBase
-    {
-        private int daysToShow = 3;
+    {        
 
-        public ScheduleDaySummaryViewModel[] Days { get; set; }        
-
-        public ScheduleDaySummaryTab Day1 { get; set; }
-        public ScheduleDaySummaryTab Day2 { get; set; }
-        public ScheduleDaySummaryTab Day3 { get; set; }
         [Parameter]
         public int FirstDay { get; set; }
         [Parameter]
@@ -26,7 +20,9 @@ namespace TeamApp.Interface.Blazor.Pages.Games
 
         [Inject] public IScheduleGameService GameService { get; set; }
 
-
+        public int Yesterday { get { return CurrentDay - 1; } }
+        public int Today { get { return CurrentDay - 1; } }
+        public int Tomorrow  { get { return CurrentDay +1; } }
 
     }
 }
