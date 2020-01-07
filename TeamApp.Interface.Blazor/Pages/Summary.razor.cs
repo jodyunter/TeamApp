@@ -18,17 +18,20 @@ namespace TeamApp.Interface.Blazor.Pages
     {
         public GameSummary summary;
         public StandingsViewModel standings;
-        public ScheduleDaySummaryViewModel[] days;
+        public ScheduleDaySummaryViewModel day1;
+        public ScheduleDaySummaryViewModel day2;
+        public ScheduleDaySummaryViewModel day3;
         public PlayoffSummaryViewModel playoffs;
         public ScheduleDaySummaryTabs DayTabs;
 
+        [Inject] public IScheduleGameService GameService { get; set; }
         [Inject] IGameDataService GameDataService { get; set; }
         [Inject] ICompetitionService CompetitionService { get; set; }
         [Inject] IStandingsService StandingsService { get; set; }
         [Inject] IPlayoffService PlayoffService { get; set; }
 
         public int FirstDay { get; set; }
-
+        private int daysToShow = 3;
 
         protected override async Task OnInitializedAsync()
         {
@@ -42,11 +45,11 @@ namespace TeamApp.Interface.Blazor.Pages
             FirstDay = summary.CurrentDay - 1;
             standings = await StandingsService.GetStandings(1, summary.CurrentYear, 1);
             playoffs = await PlayoffService.GetPlayoffSummary(2, summary.CurrentYear);
-
-            if (DayTabs != null)
-            {
-                await DayTabs.FirstDayChanged(FirstDay);
-            }
+            
+            var days = await GameService.GetScheduleDays(FirstDay, daysToShow, @summary.CurrentYear);
+            day1 = days[0];
+            day2 = days[1];
+            day3 = days[2];
 
             StateHasChanged();
 

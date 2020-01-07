@@ -5,10 +5,15 @@
 @if (Days != null)
 {
     <BSTabGroup>
-        <BSTabList IsPills="true" IsList="true">            
-            @for (int i = 0; i < Days.Count(); i++)
-            {
-                <ScheduleDaySummaryTab  Day="Days[i]" CurrentDay="@CurrentDay" />
+        <BSTabList IsPills="true" IsList="true">
+            @if (Days.Count() >= 1) { 
+                <ScheduleDaySummaryTab @ref="Day1" Day="Days[0]" CurrentDay="@CurrentDay" />
+            }
+            @if(Days.Count() >= 2) { 
+                <ScheduleDaySummaryTab @ref="Day2" Day="Days[1]" CurrentDay="@CurrentDay" />
+            }
+            @if(Days.Count() >= 3) { 
+                <ScheduleDaySummaryTab @ref="Day3" Day="Days[2]" CurrentDay="@CurrentDay" />
             }
         </BSTabList>
         <BSTabSelectedContent />

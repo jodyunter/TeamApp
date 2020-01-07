@@ -12,8 +12,11 @@ namespace TeamApp.Interface.Blazor.Pages.Games
     {
         private int daysToShow = 3;
 
-        public ScheduleDaySummaryViewModel[] Days { get; set; }
+        public ScheduleDaySummaryViewModel[] Days { get; set; }        
 
+        public ScheduleDaySummaryTab Day1 { get; set; }
+        public ScheduleDaySummaryTab Day2 { get; set; }
+        public ScheduleDaySummaryTab Day3 { get; set; }
         [Parameter]
         public int FirstDay { get; set; }
         [Parameter]
@@ -23,24 +26,6 @@ namespace TeamApp.Interface.Blazor.Pages.Games
 
         [Inject] public IScheduleGameService GameService { get; set; }
 
-        protected override async Task OnInitializedAsync()
-        {
-            await RefreshData();
-
-        }
-
-        public async Task FirstDayChanged(int newFirstDay)
-        {
-            FirstDay = newFirstDay;
-
-            await RefreshData();
-        }
-        private async Task RefreshData()
-        {
-            Days = await GameService.GetScheduleDays(FirstDay, daysToShow, Year);
-            StateHasChanged();
-
-        }
 
 
     }

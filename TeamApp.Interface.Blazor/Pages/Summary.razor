@@ -1,4 +1,4 @@
-﻿@page "/summary"
+﻿@page "/"
 
 @inherits SummaryCode
 @using TeamApp.Interface.Blazor.Pages.Standings
@@ -28,7 +28,7 @@
             <BSButton Value="StartNextYear" OnClick="StartNextYear" IsActive=@ShowStartNextYear()>Start Next Year</BSButton>
             <BSButton Value="StartNextCompetition" OnClick="StartNextCompetition" IsActive=@ShowStartNextCompetition()>Start Next Competition</BSButton>
         </div>
-        <div class="grid-scores">
+        <div class="grid-scores">            
             <ScheduleDaySummaryTabs @ref="DayTabs" FirstDay="@FirstDay" Year="@summary.CurrentYear" CurrentDay="@summary.CurrentDay" />          
         </div>
         <div class="grid-main">
