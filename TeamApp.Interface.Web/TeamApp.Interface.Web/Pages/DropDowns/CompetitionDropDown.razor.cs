@@ -14,7 +14,7 @@ namespace TeamApp.Interface.Web.Pages.DropDowns
     {
         [Inject] ICompetitionService CompetitionService { get; set; }
         [Inject] AppState AppState { get; set; }
-        [Parameter] public IList<CompetitionViewModel> Leagues { get; set; }
+        [Parameter] public IList<CompetitionViewModel> Competitions { get; set; }
         
         public LeagueViewModel SelectedLeague { get; set; }        
 
@@ -28,9 +28,9 @@ namespace TeamApp.Interface.Web.Pages.DropDowns
         }
         protected override void OnInitialized()
         {
-            if (Leagues == null)
+            if (Competitions == null)
             {
-                Leagues = LeagueService.GetAll().ToList();
+                Competitions =CompetitionService.GetCompetitionListLeaugeAndYear(AppState.SelectedLeague.Year = LeagueService.GetAll().ToList();
             }
 
 
