@@ -24,7 +24,7 @@ namespace TeamApp.Services.Implementation
 
         public IEnumerable<LeagueViewModel> GetAll()
         {
-            throw new NotImplementedException();
+            return mapper.MapDomainToModel(leagueRepository.GetAll());
         }
 
         public LeagueViewModel GetByName(string name)

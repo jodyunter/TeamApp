@@ -32,7 +32,7 @@ namespace TeamApp.Console
 
                 WriteLine("League: " + leagueView.Name + " loaded.");
 
-                var currentData = teamApp.GameDataService.GetCurrentData();
+                var currentData = teamApp.GameDataService.GetGameSummary().Result;
                 teamApp.GameDataService.SetupComeptitionsForDay(currentData.CurrentDay, currentData.CurrentYear);
                 teamApp.GameDataService.ProcessDay();
                 teamApp.GameDataService.PlayDay(random);

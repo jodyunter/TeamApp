@@ -16,8 +16,7 @@ namespace TeamApp.Services
         void PlayAndProcessDay();
         bool IncrementDay();
         void SetupComeptitionsForDay(int day, int year);
-        void RandomlyChangeSkillLevels(Random random);
-        GameData GetCurrentData();//need to change to a view model!
+        void RandomlyChangeSkillLevels(Random random);        
         Task<GameSummary> GetGameSummary();
         void SaveCurrentData(GameData data);
         void StartNextCompetition();

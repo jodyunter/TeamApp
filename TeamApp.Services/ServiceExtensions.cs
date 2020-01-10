@@ -23,6 +23,7 @@ namespace TeamApp.Services
             services.AddSingleton<IStandingsService, StandingsService>();
             services.AddSingleton<IScheduleGameService, ScheduleGameService>();
             services.AddSingleton<IPlayoffService, PlayoffService>();
+            services.AddSingleton<ILeagueService, LeagueService>();
 
             services.AddSingleton<IGameDataRepository, GameDataRepository>();
             services.AddSingleton<ILeagueRepository, LeagueRepository>();
@@ -31,6 +32,7 @@ namespace TeamApp.Services
             services.AddSingleton<ICompetitionConfigRepository, CompetitionConfigRepository>();
             services.AddSingleton<ITeamRepository, TeamRepository>();
             services.AddSingleton<IStandingsRepository, StandingsRepository>();
+            services.AddSingleton<ILeagueRepository, LeagueRepository>();
 
             services.AddSingleton(typeof(IRelationalRepository<GameData>), typeof(RepositoryNHibernate<GameData>));
             services.AddSingleton(typeof(IRelationalRepository<League>), typeof(RepositoryNHibernate<League>));
@@ -39,26 +41,8 @@ namespace TeamApp.Services
             services.AddSingleton(typeof(IRelationalRepository<CompetitionConfig>), typeof(RepositoryNHibernate<CompetitionConfig>));
             services.AddSingleton(typeof(IRelationalRepository<Team>), typeof(RepositoryNHibernate<Team>));
             services.AddSingleton(typeof(IRelationalRepository<SeasonTeam>), typeof(RepositoryNHibernate<SeasonTeam>));
-            /* old
-            services.AddSingleton<ITeamRepository, TeamRepository>();
-            services.AddSingleton<IStandingsRepository, StandingsRepository>();
-            services.AddSingleton<ITeamRankingRepository, TeamRankingRepository>();
-            services.AddSingleton<ICompetitionRepository, CompetitionRepository>();
-            services.AddSingleton<ILeagueRepository, LeagueRepository>();
-            services.AddSingleton<IScheduleGameRepository, ScheduleGameRepository>();
-            services.AddSingleton<ICompetitionConfigRepository, CompetitionConfigRepository>();
-            services.AddSingleton<IGameDataRepository, GameDataRepository>();
-            services.AddSingleton<ICompetitionTeamRepository, CompetitionTeamRepository>();
-
             services.AddSingleton(typeof(IRelationalRepository<League>), typeof(RepositoryNHibernate<League>));
-            services.AddSingleton(typeof(IRelationalRepository<Team>), typeof(RepositoryNHibernate<Team>));
-            services.AddSingleton(typeof(IRelationalRepository<ScheduleGame>), typeof(RepositoryNHibernate<ScheduleGame>));
-            services.AddSingleton(typeof(IRelationalRepository<SeasonTeam>), typeof(RepositoryNHibernate<SeasonTeam>));
-            services.AddSingleton(typeof(IRelationalRepository<Competition>), typeof(RepositoryNHibernate<Competition>));
-            services.AddSingleton(typeof(IRelationalRepository<TeamRanking>), typeof(RepositoryNHibernate<TeamRanking>));
-            services.AddSingleton(typeof(IRelationalRepository<CompetitionConfig>), typeof(RepositoryNHibernate<CompetitionConfig>));
-            */
-
+            
             return services;
         }
     }
