@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Test.Service", "Tea
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Interface.Blazor", "TeamApp.Interface.Blazor\TeamApp.Interface.Blazor.csproj", "{F9750AD0-A348-4211-B21B-AD28169B06B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamApp.Interface.Web", "TeamApp.Interface.Web\TeamApp.Interface.Web\TeamApp.Interface.Web.csproj", "{4A8C2190-6FCA-45D1-9805-C28E7707B151}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamApp.Interface.Web", "TeamApp.Interface.Web\TeamApp.Interface.Web\TeamApp.Interface.Web.csproj", "{4A8C2190-6FCA-45D1-9805-C28E7707B151}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

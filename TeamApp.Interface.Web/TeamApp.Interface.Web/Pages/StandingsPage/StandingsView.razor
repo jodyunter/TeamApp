@@ -1,0 +1,38 @@
+﻿@page "/standings"
+@inherits TeamApp.Interface.Web.Pages.StandingsPage.StandingsViewBase
+
+<h3>@StandingsModel.StandingsName</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Rank</th>
+            <th scope="col">Name</th>
+            <th scope="col">W</th>
+            <th scope="col">L</th>
+            <th scope="col">T</th>
+            <th scope="col">Pts</th>
+            <th scope="col">GP</th>
+            <th scope="col">GF</th>
+            <th scope="col">GA</th>
+            <th scope="col">GD</th>
+            <th scope="col">Sk</th>
+        </tr>
+    @foreach (var team in @StandingsModel.Teams)
+    {
+        <tr>
+            <td>@team.Rank</td>
+            <td>@team.TeamName @team.TeamNickName</td>
+            <td>@team.Wins</td>
+            <td>@team.Loses</td>
+            <td>@team.Ties</td>
+            <td>@team.Points</td>
+            <td>@team.GamesPlayed</td>
+            <td>@team.GoalDifference</td>
+            <td>@team.GoalsFor</td>
+            <td>@team.GoalsAgainst</td>
+            <td>@team.Skill</td>
+        </tr>
+    }
+    </thead>
+</table>
+

@@ -54,6 +54,7 @@ namespace TeamApp.Services.Implementation
 
             var result = new StandingsViewModel()
             {
+                StandingsName = competition.Name + " Standings",
                 Teams = models
             };
 
