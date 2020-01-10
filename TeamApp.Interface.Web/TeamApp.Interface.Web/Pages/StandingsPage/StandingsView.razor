@@ -11,15 +11,14 @@
             Current Day @GameData.CurrentDay
         </div>
     </div>
-    <div class="row dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="leagueDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            League
-        </button>     
-        <div class="dropdown-menu" aria-labelledby="leagueDropDown">
-        @foreach (var league in Leagues)
-        {
-         <button class="dropdown-item" type="button">@league.Name</button>   
-        }
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown button
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <button class="dropdown-item">Action</button>
+            <button class="dropdown-item">Another action</button>
+            <button class="dropdown-item">Something else here</button>
         </div>
     </div>
 </div>
