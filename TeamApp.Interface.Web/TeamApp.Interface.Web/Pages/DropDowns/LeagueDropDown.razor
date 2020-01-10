@@ -1,0 +1,16 @@
+﻿@inherits LeagueDropDownBase
+
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="leagueDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        @DropDownHeaderValue
+    </button>
+    <div class="dropdown-menu" aria-labelledby="leagueDropDown">
+
+        @foreach (var league in Leagues)
+        {
+            <button class="dropdown-item" @onclick="@(() => ChooseLeague(league))">@league.Name</button>
+        
+        }
+    </div>
+</div>
+

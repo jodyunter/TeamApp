@@ -1,6 +1,7 @@
 ﻿@page "/standings"
-@inherits StandingsViewBase
+@using TeamApp.Interface.Web.Pages.DropDowns
 
+@inherits StandingsViewBase
 
 <div class="container">
     <div class="row">
@@ -10,53 +11,51 @@
         <div class="col">
             Current Day @GameData.CurrentDay
         </div>
-    </div>
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown button
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <button class="dropdown-item">Action</button>
-            <button class="dropdown-item">Another action</button>
-            <button class="dropdown-item">Something else here</button>
-        </div>
-    </div>
+    </div>    
+        <LeagueDropDown />
+
+        The selected league is :
+        @if (@AppState.SelectedLeague != null)
+        {
+            @AppState.SelectedLeague.Name;
+        }
+    
 </div>
 @if (StandingsModel != null)
 {
-<h3>@StandingsModel.StandingsName</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Rank</th>
-            <th scope="col">Name</th>
-            <th scope="col">W</th>
-            <th scope="col">L</th>
-            <th scope="col">T</th>
-            <th scope="col">Pts</th>
-            <th scope="col">GP</th>
-            <th scope="col">GF</th>
-            <th scope="col">GA</th>
-            <th scope="col">GD</th>
-            <th scope="col">Sk</th>
-        </tr>
-    @foreach (var team in @StandingsModel.Teams)
-    {
-        <tr>
-            <td>@team.Rank</td>
-            <td>@team.TeamName @team.TeamNickName</td>
-            <td>@team.Wins</td>
-            <td>@team.Loses</td>
-            <td>@team.Ties</td>
-            <td>@team.Points</td>
-            <td>@team.GamesPlayed</td>
-            <td>@team.GoalDifference</td>
-            <td>@team.GoalsFor</td>
-            <td>@team.GoalsAgainst</td>
-            <td>@team.Skill</td>
-        </tr>
-    }
-    </thead>
-</table>
+    <h3>@StandingsModel.StandingsName</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Rank</th>
+                <th scope="col">Name</th>
+                <th scope="col">W</th>
+                <th scope="col">L</th>
+                <th scope="col">T</th>
+                <th scope="col">Pts</th>
+                <th scope="col">GP</th>
+                <th scope="col">GF</th>
+                <th scope="col">GA</th>
+                <th scope="col">GD</th>
+                <th scope="col">Sk</th>
+            </tr>
+            @foreach (var team in @StandingsModel.Teams)
+            {
+                <tr>
+                    <td>@team.Rank</td>
+                    <td>@team.TeamName @team.TeamNickName</td>
+                    <td>@team.Wins</td>
+                    <td>@team.Loses</td>
+                    <td>@team.Ties</td>
+                    <td>@team.Points</td>
+                    <td>@team.GamesPlayed</td>
+                    <td>@team.GoalDifference</td>
+                    <td>@team.GoalsFor</td>
+                    <td>@team.GoalsAgainst</td>
+                    <td>@team.Skill</td>
+                </tr>
+            }
+        </thead>
+    </table>
 }
 

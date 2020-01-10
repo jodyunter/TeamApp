@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TeamApp.Interface.Web.Data;
+using TeamApp.Interface.Web.States;
 using TeamApp.Services;
 
 namespace TeamApp.Interface.Web
@@ -31,6 +32,7 @@ namespace TeamApp.Interface.Web
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
             services.RegisterServices();
+            services.AddSingleton<AppState>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

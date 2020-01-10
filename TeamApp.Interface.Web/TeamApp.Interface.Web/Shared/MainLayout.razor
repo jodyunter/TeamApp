@@ -1,5 +1,9 @@
 ﻿@inherits LayoutComponentBase
 
+@using TeamApp.Interface.Web.States
+@inject AppState  AppState
+@implements IDisposable
+
 <div class="sidebar">
     <NavMenu />
 </div>
@@ -13,3 +17,17 @@
         @Body
     </div>
 </div>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        AppState.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        AppState.OnChange -= StateHasChanged;
+    }
+
+}
