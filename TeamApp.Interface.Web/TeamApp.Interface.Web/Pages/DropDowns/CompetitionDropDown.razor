@@ -1,4 +1,4 @@
-﻿@inherits YearDropDownBase
+﻿@inherits CompetitionDropDownBase
 
 <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="yearDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -6,9 +6,9 @@
     </button>
     <div class="dropdown-menu" aria-labelledby="yearDropDown">
 
-        @foreach (var year in Years)
+        @foreach (var competition in Competitions)
         {
-            <button class="dropdown-item" @onclick="@(() => ChooseYear(year))">Year @year</button>
+            <button class="dropdown-item" @onclick="@(() => ChooseCompetition(competition))">@competition.Name</button>
 
         }
     </div>

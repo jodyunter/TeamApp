@@ -7,39 +7,47 @@ using TeamApp.Interface.Web.States;
 using TeamApp.Services;
 using TeamApp.ViewModels.Views;
 using TeamApp.ViewModels.Views.Competition;
+using TeamApp.ViewModels.Views.CompetitionConfig;
 
 namespace TeamApp.Interface.Web.Pages.DropDowns
 {
-    public partial class CompetitionDropDown:ComponentBase
+    public partial class CompetitionDropDownBase:ComponentBase
     {
-        [Inject] ICompetitionService CompetitionService { get; set; }
+        [Inject] ILeagueService LeagueService { get; set; }
         [Inject] DropDownState DropDownState { get; set; }
-        [Parameter] public IList<CompetitionViewModel> Competitions { get; set; }
+        [Parameter] public IList<CompetitionConfigViewModel> Competitions { get; set; }
         
-        public string SelectedYear { get; set; }        
-
+        public LeagueViewModel SelectedLeague { get; set; }        
+        public CompetitionConfigViewModel SelectedCompetition { get; set; }
         public string DropDownHeaderValue
         {
             get
             {
-                var result = "League";
-                return SelectedLeague == null ? result : result + " - " + SelectedLeague.Name;
+                var result = SelectedLeague == null ? "" : SelectedLeague.Name;
+
+                if (SelectedCompetition != null)
+                {
+                    result += " - "  + SelectedCompetition.Name;
+                }
+
+                return result;
             }
         }
         protected override void OnInitialized()
         {
             if (Competitions == null)
             {
-                Competitions =CompetitionService.GetCompetitionListLeaugeAndYear(AppState.SelectedLeague.Year = LeagueService.GetAll().ToList();
+                Competitions = LeagueService.GetCompetitionConfigs(SelectedLeague.Id).ToList();
             }
 
+            DropDownState.OnChange += StateHasChanged;
 
         }
 
-        protected void ChooseLeague(LeagueViewModel chosenLeague)
+        protected void ChooseCompetition(CompetitionConfigViewModel chosenCompetition)
         {
-            SelectedLeague = chosenLeague;
-            AppState.SetLeague(SelectedLeague);
+            SelectedCompetition = chosenCompetition;
+            DropDownState.SetSelectedCompetition(SelectedCompetition);
         }
     }
 }

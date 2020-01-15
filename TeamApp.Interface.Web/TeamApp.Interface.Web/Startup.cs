@@ -32,7 +32,7 @@ namespace TeamApp.Interface.Web
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
             services.RegisterServices();
-            services.AddSingleton<AppState>();
+            services.AddSingleton<DropDownState>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

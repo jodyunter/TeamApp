@@ -1,7 +1,7 @@
 ﻿@inherits LayoutComponentBase
 
 @using TeamApp.Interface.Web.States
-@inject AppState  AppState
+@inject DropDownState DropDownState
 @implements IDisposable
 
 <div class="sidebar">
@@ -22,12 +22,12 @@
 
     protected override void OnInitialized()
     {
-        AppState.OnChange += StateHasChanged;
+        DropDownState.OnChange += StateHasChanged;
     }
 
     public void Dispose()
     {
-        AppState.OnChange -= StateHasChanged;
+        DropDownState.OnChange -= StateHasChanged;
     }
 
 }

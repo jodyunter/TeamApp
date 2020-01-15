@@ -41,7 +41,7 @@ namespace TeamApp.Interface.Web.Pages.StandingsPage
                 StandingsModel = null;
             }
 
-            DropwDownState.OnChange += StateHasChanged;
+            DropDownState.OnChange += StateHasChanged;
         }
 
         public void Dispose()

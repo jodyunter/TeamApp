@@ -6,5 +6,7 @@ namespace TeamApp.ViewModels.Views.CompetitionConfig
 {
     public class CompetitionConfigViewModel
     {
+        public long Id { get; set; }
+        public string Name { get; set; }
     }
 }
