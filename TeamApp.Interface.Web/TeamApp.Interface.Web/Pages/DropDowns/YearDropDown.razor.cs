@@ -12,25 +12,20 @@ namespace TeamApp.Interface.Web.Pages.DropDowns
     public partial class YearDropDown:ComponentBase
     {
         [Inject] ICompetitionService LeagueService { get; set; }
-        [Inject] AppState AppState { get; set; }
-        [Parameter] public IList<LeagueViewModel> Leagues { get; set; }
-        
-        public LeagueViewModel SelectedLeague { get; set; }        
+        [Inject] DropDownState DropDownState { get; set; }
+        [Parameter] public LeagueViewModel SelectedLeague { get; set; }
+                
 
         public string DropDownHeaderValue
         {
             get
             {
                 var result = "League";
-                return SelectedLeague == null ? result : result + " - " + SelectedLeague.Name;
+                return SelectedLeague == null ? result : result + " - " + SelectedLeague.Name
             }
         }
         protected override void OnInitialized()
-        {
-            if (Leagues == null)
-            {
-                Leagues = LeagueService.GetAll().ToList();
-            }
+        {            
 
 
         }
@@ -38,7 +33,7 @@ namespace TeamApp.Interface.Web.Pages.DropDowns
         protected void ChooseLeague(LeagueViewModel chosenLeague)
         {
             SelectedLeague = chosenLeague;
-            AppState.SetLeague(SelectedLeague);
+            DropDownState.SetLeague(SelectedLeague);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace TeamApp.Interface.Web.Pages.StandingsPage
         [Inject] IGameDataService GameDataService { get; set; }
         [Inject] ICompetitionService CompetitionService { get; set; }
 
-        [Inject] public AppState AppState { get; set; }
+        [Inject] public DropDownState DropDownState { get; set; }
 
         [Parameter] public int CompetitionConfigId { get; set; }
         [Parameter] public int Year { get; set; }
@@ -41,12 +41,12 @@ namespace TeamApp.Interface.Web.Pages.StandingsPage
                 StandingsModel = null;
             }
 
-            AppState.OnChange += StateHasChanged;
+            DropwDownState.OnChange += StateHasChanged;
         }
 
         public void Dispose()
         {
-            AppState.OnChange -= StateHasChanged;
+            DropDownState.OnChange -= StateHasChanged;
         }
     }
 }

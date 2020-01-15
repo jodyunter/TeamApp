@@ -12,7 +12,7 @@ namespace TeamApp.Interface.Web.Pages.DropDowns
     public partial class LeagueDropDownBase:ComponentBase
     {
         [Inject] ILeagueService LeagueService { get; set; }
-        [Inject] AppState AppState { get; set; }
+        [Inject] DropDownState DropDownState { get; set; }
         [Parameter] public IList<LeagueViewModel> Leagues { get; set; }
         
         public LeagueViewModel SelectedLeague { get; set; }        
@@ -38,7 +38,7 @@ namespace TeamApp.Interface.Web.Pages.DropDowns
         protected void ChooseLeague(LeagueViewModel chosenLeague)
         {
             SelectedLeague = chosenLeague;
-            AppState.SetLeague(SelectedLeague);
+            DropDownState.SetLeague(SelectedLeague);
         }
     }
 }

@@ -10,13 +10,13 @@ using TeamApp.ViewModels.Views.Competition;
 
 namespace TeamApp.Interface.Web.Pages.DropDowns
 {
-    public partial class YearDropDown:ComponentBase
+    public partial class CompetitionDropDown:ComponentBase
     {
         [Inject] ICompetitionService CompetitionService { get; set; }
-        [Inject] AppState AppState { get; set; }
+        [Inject] DropDownState DropDownState { get; set; }
         [Parameter] public IList<CompetitionViewModel> Competitions { get; set; }
         
-        public LeagueViewModel SelectedLeague { get; set; }        
+        public string SelectedYear { get; set; }        
 
         public string DropDownHeaderValue
         {

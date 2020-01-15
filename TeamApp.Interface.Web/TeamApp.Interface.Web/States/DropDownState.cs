@@ -6,9 +6,10 @@ using TeamApp.ViewModels.Views;
 
 namespace TeamApp.Interface.Web.States
 {
-    public class AppState
+    public class DropDownState
     {
         public LeagueViewModel SelectedLeague { get; private set; }
+        public CompetitionViewModel SelectedCompetition { get; private set; }
 
         public event Action OnChange;
 
