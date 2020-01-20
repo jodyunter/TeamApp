@@ -8,5 +8,6 @@ namespace TeamApp.ViewModels.Views.CompetitionConfig
     {
         public long Id { get; set; }
         public string Name { get; set; }
+        public IEnumerable<int> Years { get; set; }
     }
 }
